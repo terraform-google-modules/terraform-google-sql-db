@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 output instance_name {
   description = "The name of the database instance"
   value       = "${google_sql_database_instance.master.name}"

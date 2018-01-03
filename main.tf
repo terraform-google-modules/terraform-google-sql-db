@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 resource "google_sql_database_instance" "master" {
   name             = "${var.name}"
   project          = "${var.project}"
@@ -29,6 +29,10 @@ resource "google_sql_database_instance" "master" {
     ip_configuration            = ["${var.ip_configuration}"]
     location_preference         = ["${var.location_preference}"]
     maintenance_window          = ["${var.maintenance_window}"]
+    disk_size                   = "${var.disk_size}"
+    disk_type                   = "${var.disk_type}"
+    pricing_plan                = "${var.pricing_plan}"
+    replication_type            = "${var.replication_type}"
   }
 
   replica_configuration = ["${var.replica_configuration}"]
