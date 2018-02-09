@@ -30,6 +30,14 @@ provider google {
   region = "${var.region}"
 }
 
+data "google_client_config" "current" {}
+
+data "google_compute_subnetwork" "default-us-central1" {
+  project = "${data.google_client_config.current.project}"
+  region = "${var.region}"
+  name   = "default"
+}
+
 resource "random_id" "name" {
   byte_length = 2
 }
@@ -39,6 +47,12 @@ module "mysql-db" {
   source           = "../../"
   name             = "example-mysql-${random_id.name.hex}"
   database_version = "MYSQL_5_6"
+  ip_configuration = [{
+    authorized_networks = [{
+      name = "default"
+      value = "${data.google_compute_subnetwork.default-us-central1.ip_cidr_range}"
+    }]
+  }]
 }
 
 module "postgresql-db" {
@@ -47,4 +61,10 @@ module "postgresql-db" {
   name             = "example-postgresql-${random_id.name.hex}"
   user_host        = ""
   database_version = "POSTGRES_9_6"
+  ip_configuration = [{
+    authorized_networks = [{
+      name = "default"
+      value = "${data.google_compute_subnetwork.default-us-central1.ip_cidr_range}"
+    }]
+  }]
 }

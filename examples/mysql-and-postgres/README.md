@@ -21,7 +21,7 @@ Install the Cloud SQL Proxy: https://cloud.google.com/sql/docs/mysql/sql-proxy#i
 Run the Cloud SQL proxy for MySQL instance:
 
 ```
-GOOGLE_PROJECT=$(gcloud config get-value project)
+export GOOGLE_PROJECT=$(gcloud config get-value project)
 
 MYSQL_DB_NAME=$(terraform output -module mysql-db -json | jq -r '.instance_name.value')
 MYSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${MYSQL_DB_NAME}"
