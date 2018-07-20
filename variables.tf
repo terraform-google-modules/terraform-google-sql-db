@@ -54,7 +54,7 @@ variable db_charset {
 }
 
 variable db_collation {
-  description = "The collation for the default database. Example for MySQL databases: 'utf8', and Postgres: 'en_US.UTF8'"
+  description = "The collation for the default database. Example for MySQL databases: 'utf8_general_ci', and Postgres: 'en_US.UTF8'"
   default     = ""
 }
 
