@@ -15,10 +15,11 @@
  */
 
 resource "google_sql_database_instance" "master" {
-  name             = "${var.name}"
-  project          = "${var.project}"
-  region           = "${var.region}"
-  database_version = "${var.database_version}"
+  name                 = "${var.name}"
+  project              = "${var.project}"
+  region               = "${var.region}"
+  database_version     = "${var.database_version}"
+  master_instance_name = "${var.master_instance_name}"
 
   settings {
     tier                        = "${var.tier}"
@@ -33,6 +34,7 @@ resource "google_sql_database_instance" "master" {
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
     replication_type            = "${var.replication_type}"
+    database_flags              = ["${var.database_flags}"]
   }
 
   replica_configuration = ["${var.replica_configuration}"]
