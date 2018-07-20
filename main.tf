@@ -41,6 +41,7 @@ resource "google_sql_database_instance" "master" {
 }
 
 resource "google_sql_database" "default" {
+  count     = "${var.master_instance_name == "" ? 1 : 0}"
   name      = "${var.db_name}"
   project   = "${var.project}"
   instance  = "${google_sql_database_instance.master.name}"
@@ -53,6 +54,7 @@ resource "random_id" "user-password" {
 }
 
 resource "google_sql_user" "default" {
+  count    = "${var.master_instance_name == "" ? 1 : 0}"
   name     = "${var.user_name}"
   project  = "${var.project}"
   instance = "${google_sql_database_instance.master.name}"
