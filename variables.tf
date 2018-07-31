@@ -33,6 +33,11 @@ variable database_version {
   default     = "MYSQL_5_6"
 }
 
+variable master_instance_name {
+  description = "The name of the master instance to replicate"
+  default     = ""
+}
+
 variable tier {
   description = "The machine tier (First Generation) or type (Second Generation). See this page for supported tiers and pricing: https://cloud.google.com/sql/pricing"
   default     = "db-f1-micro"
@@ -49,7 +54,7 @@ variable db_charset {
 }
 
 variable db_collation {
-  description = "The collation for the default database. Example for MySQL databases: 'utf8', and Postgres: 'en_US.UTF8'"
+  description = "The collation for the default database. Example for MySQL databases: 'utf8_general_ci', and Postgres: 'en_US.UTF8'"
   default     = ""
 }
 
@@ -102,6 +107,11 @@ variable pricing_plan {
 variable replication_type {
   description = "Replication type for this instance, can be one of `ASYNCHRONOUS` or `SYNCHRONOUS`."
   default     = "SYNCHRONOUS"
+}
+
+variable database_flags {
+  description = "List of Cloud SQL flags that are applied to the database server"
+  default     = []
 }
 
 variable backup_configuration {
