@@ -34,8 +34,8 @@ data "google_client_config" "current" {}
 
 data "google_compute_subnetwork" "default-us-central1" {
   project = "${data.google_client_config.current.project}"
-  region = "${var.region}"
-  name   = "default"
+  region  = "${var.region}"
+  name    = "default"
 }
 
 resource "random_id" "name" {
@@ -47,12 +47,20 @@ module "mysql-db" {
   source           = "../../"
   name             = "example-mysql-${random_id.name.hex}"
   database_version = "MYSQL_5_6"
+
   ip_configuration = [{
     authorized_networks = [{
-      name = "default"
+      name  = "default"
       value = "${data.google_compute_subnetwork.default-us-central1.ip_cidr_range}"
     }]
   }]
+
+  database_flags = [
+    {
+      name  = "log_bin_trust_function_creators"
+      value = "on"
+    },
+  ]
 }
 
 module "postgresql-db" {
@@ -61,9 +69,10 @@ module "postgresql-db" {
   name             = "example-postgresql-${random_id.name.hex}"
   user_host        = ""
   database_version = "POSTGRES_9_6"
+
   ip_configuration = [{
     authorized_networks = [{
-      name = "default"
+      name  = "default"
       value = "${data.google_compute_subnetwork.default-us-central1.ip_cidr_range}"
     }]
   }]

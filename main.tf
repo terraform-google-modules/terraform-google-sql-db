@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-resource "google_sql_database_instance" "master" {
-  name             = "${var.name}"
-  project          = "${var.project}"
-  region           = "${var.region}"
-  database_version = "${var.database_version}"
+resource "google_sql_database_instance" "default" {
+  name                 = "${var.name}"
+  project              = "${var.project}"
+  region               = "${var.region}"
+  database_version     = "${var.database_version}"
+  master_instance_name = "${var.master_instance_name}"
 
   settings {
     tier                        = "${var.tier}"
@@ -33,15 +34,17 @@ resource "google_sql_database_instance" "master" {
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
     replication_type            = "${var.replication_type}"
+    database_flags              = ["${var.database_flags}"]
   }
 
   replica_configuration = ["${var.replica_configuration}"]
 }
 
 resource "google_sql_database" "default" {
+  count     = "${var.master_instance_name == "" ? 1 : 0}"
   name      = "${var.db_name}"
   project   = "${var.project}"
-  instance  = "${google_sql_database_instance.master.name}"
+  instance  = "${google_sql_database_instance.default.name}"
   charset   = "${var.db_charset}"
   collation = "${var.db_collation}"
 }
@@ -51,9 +54,10 @@ resource "random_id" "user-password" {
 }
 
 resource "google_sql_user" "default" {
+  count    = "${var.master_instance_name == "" ? 1 : 0}"
   name     = "${var.user_name}"
   project  = "${var.project}"
-  instance = "${google_sql_database_instance.master.name}"
+  instance = "${google_sql_database_instance.default.name}"
   host     = "${var.user_host}"
   password = "${var.user_password == "" ? random_id.user-password.hex : var.user_password}"
 }
