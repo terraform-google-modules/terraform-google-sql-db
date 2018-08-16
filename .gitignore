@@ -1,0 +1,6 @@
+**/terraform.tfstate*
+**/.terraform*
+**/backend.tf
+**/terraform.tfvars
+**/terraform.tfplan
+**/values-*.yaml

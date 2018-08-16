@@ -16,41 +16,30 @@ terraform apply
 
 ## Test connection to database
 
-Install the Cloud SQL Proxy: https://cloud.google.com/sql/docs/mysql/sql-proxy#install
+1. Install the Cloud SQL Proxy:
 
-Run the Cloud SQL proxy for MySQL instance:
-
-```
-export GOOGLE_PROJECT=$(gcloud config get-value project)
-
-MYSQL_DB_NAME=$(terraform output -module mysql-db -json | jq -r '.instance_name.value')
-MYSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${MYSQL_DB_NAME}"
-
-PGSQL_DB_NAME=$(terraform output -module postgresql-db -json | jq -r '.instance_name.value')
-PGSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${PGSQL_DB_NAME}"
-
-./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306,${PGSQL_CONN_NAME}=tcp:5432
+```bash
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.$(uname | tr '[:upper:]' '[:lower:]').amd64 -O cloud_sql_proxy
+chmod +x cloud_sql_proxy
 ```
 
-Start Cloud SQL Proxy for Postgres instance:
+2. Run the Cloud SQL proxy in the background:
 
-```
-GOOGLE_PROJECT=$(gcloud config get-value project)
+```bash
+MYSQL_CONN_NAME=$(terraform output mysql_conn)
+PSQL_CONN_NAME=$(terraform output psql_conn)
 
-PGSQL_DB_NAME=$(terraform output -module postgresql-db -json | jq -r '.instance_name.value')
-PGSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${PGSQL_DB_NAME}"
-
-./cloud_sql_proxy -instances=${PGSQL_CONN_NAME}=tcp:3306
+./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306,${PSQL_CONN_NAME}=tcp:5432 &
 ```
 
-Get the generated password:
+3. Get the generated user passwords:
 
 ```
-echo MYSQL_PASSWORD=$(terraform output -module mysql-db -json | jq -r '.generated_user_password.value') 
-echo PGSQL_PASSWORD=$(terraform output -module postgresql-db -json | jq -r '.generated_user_password.value') 
+echo MYSQL_PASSWORD=$(terraform output mysql_user_pass)
+echo PSQL_PASSWORD=$(terraform output psql_user_pass)
 ```
 
-Test the MySQL connection:
+4. Test the MySQL connection:
 
 ```
 mysql -udefault -p --host 127.0.0.1 default
@@ -58,10 +47,24 @@ mysql -udefault -p --host 127.0.0.1 default
 
 > When prompted, enter the value of MYSQL_PASSWORD
 
-Test the PostgreSQL connection:
+5. Test the PostgreSQL connection:
 
 ```
 psql -h 127.0.0.1 --user default
 ```
 
-> When prompted, enter the value of PGSQL_PASSWORD
+> When prompted, enter the value of PSQL_PASSWORD
+
+## Cleanup
+
+1. Stop the Cloud SQL Proxy:
+
+```bash
+killall cloud_sql_proxy
+```
+
+2. Remove all resources created by terraform:
+
+```bash
+terraform destroy
+```
