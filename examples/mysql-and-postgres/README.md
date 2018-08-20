@@ -23,13 +23,25 @@ wget https://dl.google.com/cloudsql/cloud_sql_proxy.$(uname | tr '[:upper:]' '[:
 chmod +x cloud_sql_proxy
 ```
 
+PGSQL_DB_NAME=$(terraform output -module postgresql-db -json | jq -r '.instance_name.value')
+PGSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${PGSQL_DB_NAME}"
+
+./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306
+```
+
+Start Cloud SQL Proxy for Postgres instance:
+
+```
+GOOGLE_PROJECT=$(gcloud config get-value project)
 2. Run the Cloud SQL proxy in the background:
+
 
 ```bash
 MYSQL_CONN_NAME=$(terraform output mysql_conn)
 PSQL_CONN_NAME=$(terraform output psql_conn)
 
-./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306,${PSQL_CONN_NAME}=tcp:5432 &
+
+./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306 &
 ```
 
 3. Get the generated user passwords:
@@ -52,6 +64,8 @@ mysql -udefault -p --host 127.0.0.1 default
 ```
 psql -h 127.0.0.1 --user default
 ```
+
+
 
 > When prompted, enter the value of PSQL_PASSWORD
 
