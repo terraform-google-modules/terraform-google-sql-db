@@ -29,7 +29,7 @@ MYSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${MYSQL_DB_NAME}"
 PGSQL_DB_NAME=$(terraform output -module postgresql-db -json | jq -r '.instance_name.value')
 PGSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${PGSQL_DB_NAME}"
 
-./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306,${PGSQL_CONN_NAME}=tcp:5432
+./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306
 ```
 
 Start Cloud SQL Proxy for Postgres instance:
@@ -40,7 +40,7 @@ GOOGLE_PROJECT=$(gcloud config get-value project)
 PGSQL_DB_NAME=$(terraform output -module postgresql-db -json | jq -r '.instance_name.value')
 PGSQL_CONN_NAME="${GOOGLE_PROJECT}:us-central1:${PGSQL_DB_NAME}"
 
-./cloud_sql_proxy -instances=${PGSQL_CONN_NAME}=tcp:3306
+./cloud_sql_proxy -instances=${PGSQL_CONN_NAME}=tcp:5432
 ```
 
 Get the generated password:
