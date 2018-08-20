@@ -14,44 +14,62 @@
  * limitations under the License.
  */
 
-variable region {
+variable "region" {
   default = "us-central1"
 }
 
-variable network {
+variable "network" {
   default = "default"
 }
 
-variable zone {
+variable "zone" {
   default = "us-central1-b"
 }
 
-provider google {
+variable "mysql_version" {
+  default = "MYSQL_5_6"
+}
+
+variable "postgresql_version" {
+  default = "POSTGRES_9_6"
+}
+
+provider "google" {
   region = "${var.region}"
 }
 
-data "google_client_config" "current" {}
-
-data "google_compute_subnetwork" "default-us-central1" {
-  project = "${data.google_client_config.current.project}"
-  region  = "${var.region}"
-  name    = "default"
+variable "network_name" {
+  default = "mysql-psql-example"
 }
+
+resource "google_compute_network" "default" {
+  name                    = "${var.network_name}"
+  auto_create_subnetworks = "false"
+}
+
+resource "google_compute_subnetwork" "default" {
+  name                     = "${var.network_name}"
+  ip_cidr_range            = "10.127.0.0/20"
+  network                  = "${google_compute_network.default.self_link}"
+  region                   = "${var.region}"
+  private_ip_google_access = true
+}
+
+data "google_client_config" "current" {}
 
 resource "random_id" "name" {
   byte_length = 2
 }
 
 module "mysql-db" {
-  // source           = "github.com/GoogleCloudPlatform/terraform-google-sql-db"
   source           = "../../"
   name             = "example-mysql-${random_id.name.hex}"
-  database_version = "MYSQL_5_6"
+  database_version = "${var.mysql_version}"
 
   ip_configuration = [{
     authorized_networks = [{
-      name  = "default"
-      value = "${data.google_compute_subnetwork.default-us-central1.ip_cidr_range}"
+      name  = "${var.network_name}"
+      value = "${google_compute_subnetwork.default.ip_cidr_range}"
     }]
   }]
 
@@ -64,16 +82,31 @@ module "mysql-db" {
 }
 
 module "postgresql-db" {
-  // source           = "github.com/GoogleCloudPlatform/terraform-google-sql-db"
   source           = "../../"
   name             = "example-postgresql-${random_id.name.hex}"
   user_host        = ""
-  database_version = "POSTGRES_9_6"
+  database_version = "${var.postgresql_version}"
 
   ip_configuration = [{
     authorized_networks = [{
-      name  = "default"
-      value = "${data.google_compute_subnetwork.default-us-central1.ip_cidr_range}"
+      name  = "${var.network_name}"
+      value = "${google_compute_subnetwork.default.ip_cidr_range}"
     }]
   }]
+}
+
+output "mysql_conn" {
+  value = "${data.google_client_config.current.project}:${var.region}:${module.mysql-db.instance_name}"
+}
+
+output "mysql_user_pass" {
+  value = "${module.mysql-db.generated_user_password}"
+}
+
+output "psql_conn" {
+  value = "${data.google_client_config.current.project}:${var.region}:${module.postgresql-db.instance_name}"
+}
+
+output "psql_user_pass" {
+  value = "${module.postgresql-db.generated_user_password}"
 }
