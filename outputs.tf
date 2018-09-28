@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+output connection_name {
+  description = "The connection name of the instance to be used in connection strings"
+  value       = "${google_sql_database_instance.default.connection_name}"
+}
+
 output instance_name {
   description = "The name of the database instance"
   value       = "${google_sql_database_instance.default.name}"
