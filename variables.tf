@@ -114,6 +114,11 @@ variable database_flags {
   default     = []
 }
 
+variable availability_type {
+  description = "Availability type for this instance, can be one of `REGIONAL` or `ZONAL`."
+  default     = "ZONAL"
+}
+
 variable backup_configuration {
   description = "The backup_configuration settings subblock for the database setings"
   type        = "map"
