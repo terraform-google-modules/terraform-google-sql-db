@@ -38,6 +38,10 @@ resource "google_sql_database_instance" "default" {
   }
 
   replica_configuration = ["${var.replica_configuration}"]
+
+  lifecycle {
+    ignore_changes = ["disk_size"]
+  }
 }
 
 resource "google_sql_database" "default" {
