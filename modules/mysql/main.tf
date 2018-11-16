@@ -27,8 +27,7 @@ locals {
   default_replication_type                = "SYNCHRONOUS"
   default_maintenance_window_update_track = "canary"
 
-  default_user_password = ""
-  default_user_host     = "%"
+  default_user_host = "%"
 
   primary_zone       = "${lookup(var.master, "zone")}"
   read_replica_zones = ["${compact(split(",", lookup(var.read_replica, "zones", "")))}"]
@@ -174,12 +173,20 @@ resource "google_sql_database" "default" {
   depends_on = ["google_sql_database_instance.master"]
 }
 
+resource "random_id" "password" {
+  keepers = {
+    name = "${google_sql_database_instance.master.name}"
+  }
+  byte_length = 8
+  depends_on = ["google_sql_database_instance.master"]
+}
+
 resource "google_sql_user" "users" {
   count      = "${length(var.users)}"
   project    = "${var.project_id}"
   instance   = "${google_sql_database_instance.master.name}"
   name       = "${lookup(var.users[count.index], "name")}"
-  password   = "${lookup(var.users[count.index], "password", local.default_user_password)}"
+  password   = "${lookup(var.users[count.index], "password", random_id.password.hex)}"
   host       = "${lookup(var.users[count.index], "host", local.default_user_host)}"
   depends_on = ["google_sql_database_instance.master"]
 }
