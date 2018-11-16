@@ -55,3 +55,15 @@ output "replicas_instance_server_ca_certs" {
 output "replicas_instance_service_account_email_addresses" {
   value = ["${google_sql_database_instance.replicas.*.service_account_email_address}"]
 }
+
+output "user_names" {
+  value = ["${google_sql_user.users.*.name}"]
+}
+
+output "user_passwords" {
+  value = ["${google_sql_user.users.*.password}"]
+}
+
+output "user_hosts" {
+  value = ["${google_sql_user.users.*.host}"]
+}
