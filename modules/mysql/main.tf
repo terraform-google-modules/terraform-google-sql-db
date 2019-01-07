@@ -164,11 +164,12 @@ resource "google_sql_database_instance" "failover-replica" {
   }
 }
 
-resource "google_sql_database" "default" {
+resource "google_sql_database" "databases" {
+  count      = "${length(var.databases)}"
   project    = "${var.project_id}"
-  name       = "${var.name}"
-  charset    = "${var.charset}"
-  collation  = "${var.collation}"
+  name       = "${lookup(var.databases[count.index], "name")}"
+  charset    = "${lookup(var.databases[count.index], "charset", "utf8mb4")}"
+  collation  = "${lookup(var.databases[count.index], "collation", "utf8mb4_general_ci")}"
   instance   = "${google_sql_database_instance.master.name}"
   depends_on = ["google_sql_database_instance.master"]
 }

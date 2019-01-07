@@ -24,8 +24,6 @@ module "mysql" {
   project_id       = "${var.project}"
   database_version = "MYSQL_5_7"
   region           = "us-central1"
-  charset          = "utf8mb4"
-  collation        = "utf8mb4_general_ci"
 
   // IP Configuration is used in all instances
   ip_configuration {
@@ -122,6 +120,14 @@ module "mysql" {
     {
       name     = "tftest"
       password = "foobar"
+    },
+  ]
+
+  databases = [
+    {
+      name      = "${var.mysql_ha_name}"
+      charset   = "utf8mb4"
+      collation = "utf8mb4_general_ci"
     },
   ]
 }

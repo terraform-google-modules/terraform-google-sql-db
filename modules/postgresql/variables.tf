@@ -158,15 +158,9 @@ EOF
 }
 
 // for google_sql_database
-variable "charset" {
-  default     = "utf8"
-  description = "The charset for the database"
-}
-
-// for google_sql_database
-variable "collation" {
-  default     = "en_US.UTF8"
-  description = "The collation for the database"
+variable "databases" {
+  default     = []
+  description = "The list of databases for the instacne"
 }
 
 // for google_sql_user

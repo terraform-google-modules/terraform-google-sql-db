@@ -88,3 +88,19 @@ output "user_passwords" {
 output "user_hosts" {
   value = ["${google_sql_user.users.*.host}"]
 }
+
+output "database_names" {
+  value = ["${google_sql_database.databases.*.name}"]
+}
+
+output "database_charsets" {
+  value = ["${google_sql_database.databases.*.charset}"]
+}
+
+output "database_collation" {
+  value = ["${google_sql_database.databases.*.collation}"]
+}
+
+output "database_self_links" {
+  value = ["${google_sql_database.databases.*.self_link}"]
+}
