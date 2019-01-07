@@ -8,9 +8,8 @@
 |------|-------------|:----:|:-----:|:-----:|
 | authorized_gae_applications | The authorized gae applications for the Cloud SQL instances | list | `<list>` | no |
 | backup_configuration | The backup configuration block of the Cloud SQL resources This argument will be passed through the master instance directrly.<br><br>See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html). | map | `<map>` | no |
-| charset | The charset for the database | string | `utf8` | no |
-| collation | The collation for the database | string | `en_US.UTF8` | no |
 | database_version | The database version to use | string | - | yes |
+| databases | The list of databases for the instacne | list | `<list>` | no |
 | ip_configuration | The ip configuration for the Cloud SQL instances. This argument will be passed through all instances as the settings.ip_configuration block. | map | `<map>` | no |
 | master | The master settings of the Cloud SQL resources. Following arguments are available:<br><br>tier - (Required) The tier for the master instance.<br><br>zone - (Required) The zone for the master instance, it should be something like: `a`, `c`.<br><br>activation_policy - (Optional) The activation policy for the master instance. Defaults to `ALWAYS`. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.<br><br>availability_type - (Optional) The availability type for the master instance. Defaults to `ZONAL`. This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.<br><br>authorized_gae_applications - (Optional) The list of authorized App Engine project names<br><br>disk_autoresize - (Optional) Configuration to increase storage size. Defaults to `true`.<br><br>disk_size - (Optional) The disk size for the master instance. Defaults to `10`.<br><br>disk_type - (Opitional) The disk type for the master instance. Defaults to `PD_SSD`.<br><br>pricing_plan - (Optional) The pricing plan for the master instance. Defaults to `PER_USE`.<br><br>database_flags - (Optional) The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)<br><br>maintenance_window_day - (Optional) The day of week (1-7) for the master instance maintenance.<br><br>maintenance_window_hour - (Optional) The hour of day (0-23) maintenance window for the master instance maintenance.<br><br>maintenance_window_update_track - (Optional) The update track of maintenance window for the master instance maintenance. Defaults to `canary`. Can be either `canary` or `stable`. | map | `<map>` | no |
 | master_database_flags | The database flasgs to set on the master instance | list | `<list>` | no |
@@ -28,15 +27,22 @@
 
 | Name | Description |
 |------|-------------|
-| master_instance_connection_name | - |
-| master_instance_first_ip_address | Master |
-| master_instance_self_link | - |
-| master_instance_server_ca_cert | - |
-| master_instance_service_account_email_address | - |
-| replicas_instance_connection_names | - |
-| replicas_instance_first_ip_addresses | Replicas |
-| replicas_instance_self_links | - |
-| replicas_instance_server_ca_certs | - |
-| replicas_instance_service_account_email_addresses | - |
+| database_charsets | The list of database charsets |
+| database_collation | The list of database collations |
+| database_names | The list of database names |
+| database_self_links | The URIs of the databases |
+| master_instance_connection_name | The connection name of the master instance to be used in connection strings |
+| master_instance_first_ip_address | The first IPv4 address of the addesses assigned for the master instance |
+| master_instance_self_link | The URI of the master instance |
+| master_instance_server_ca_cert | The CA certificate information used to connect to the SQL instance via SSL |
+| master_instance_service_account_email_address | The service account email address assigned to the master instance |
+| replicas_instance_connection_names | The connection names of the replica instances to be used in connection strings |
+| replicas_instance_first_ip_addresses | The first IPv4 addresses of the addesses assigned for the replica instances |
+| replicas_instance_self_links | The URIs of the replica instances |
+| replicas_instance_server_ca_certs | The CA certificates information used to connect to the replica instances via SSL |
+| replicas_instance_service_account_email_addresses | The service account email addresses assigned to the replica instances |
+| user_hosts | The list of user hosts for the database |
+| user_names | The list of user names for the database |
+| user_passwords | The list of user passwords for the database |
 
 [^]: (autogen_docs_end)
