@@ -15,7 +15,6 @@
 project_id = attribute('project_id')
 basename   = attribute('name')
 authorized_network = attribute('authorized_network')
-credentials_file_path = attribute('credentials_file_path')
 
 describe google_sql_database_instances(project: project_id).where(instance_name: /#{basename}/) do
   its(:count) { should eq 5 }

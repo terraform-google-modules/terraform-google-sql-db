@@ -54,7 +54,7 @@ module "pg" {
   master_database_flags = [
     {
       name  = "autovacuum"
-      value = false
+      value = "off"
     },
   ]
 
@@ -90,7 +90,7 @@ module "pg" {
   read_replica_database_flags = [
     {
       name  = "autovacuum"
-      value = false
+      value = "off"
     },
   ]
 
