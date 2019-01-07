@@ -24,8 +24,6 @@ module "pg" {
   project_id       = "${var.project}"
   database_version = "POSTGRES_9_6"
   region           = "us-central1"
-  charset          = "utf8"
-  collation        = "en_US.UTF8"
 
   // IP Configuration is used in all instances
   ip_configuration {
@@ -101,6 +99,14 @@ module "pg" {
     {
       name     = "tftest"
       password = "foobar"
+    },
+  ]
+
+  databases = [
+    {
+      name      = "${var.pg_ha_name}"
+      charset   = "UTF8"
+      collation = "en_US.UTF8"
     },
   ]
 }

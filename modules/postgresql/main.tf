@@ -125,11 +125,12 @@ resource "google_sql_database_instance" "replicas" {
   }
 }
 
-resource "google_sql_database" "default" {
+resource "google_sql_database" "databases" {
+  count      = "${length(var.databases)}"
   project    = "${var.project_id}"
-  name       = "${var.name}"
-  charset    = "${var.charset}"
-  collation  = "${var.collation}"
+  name       = "${lookup(var.databases[count.index], "name")}"
+  charset    = "${lookup(var.databases[count.index], "charset", "UTF8")}"
+  collation  = "${lookup(var.databases[count.index], "collation", "en_US.UTF8")}"
   instance   = "${google_sql_database_instance.master.name}"
   depends_on = ["google_sql_database_instance.master"]
 }
