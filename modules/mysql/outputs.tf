@@ -16,91 +16,113 @@
 
 // Master
 output "master_instance_first_ip_address" {
-  value = "${google_sql_database_instance.master.ip_address}"
+  value       = "${google_sql_database_instance.master.ip_address}"
+  description = "The first IPv4 address of the addesses assigned for the master instance"
 }
 
 output "master_instance_connection_name" {
-  value = "${google_sql_database_instance.master.connection_name}"
+  value       = "${google_sql_database_instance.master.connection_name}"
+  description = "The connection name of the master instance to be used in connection strings"
 }
 
 output "master_instance_self_link" {
-  value = "${google_sql_database_instance.master.self_link}"
+  value       = "${google_sql_database_instance.master.self_link}"
+  description = "The URI of the master instance"
 }
 
 output "master_instance_server_ca_cert" {
-  value = "${google_sql_database_instance.master.server_ca_cert}"
+  value       = "${google_sql_database_instance.master.server_ca_cert}"
+  description = "The CA certificate information used to connect to the SQL instance via SSL"
 }
 
 output "master_instance_service_account_email_address" {
-  value = "${google_sql_database_instance.master.service_account_email_address}"
+  value       = "${google_sql_database_instance.master.service_account_email_address}"
+  description = "The service account email address assigned to the master instance"
 }
 
 // Replicas
 output "replicas_instance_first_ip_addresses" {
-  value = ["${google_sql_database_instance.replicas.*.ip_address}"]
+  value       = ["${google_sql_database_instance.replicas.*.ip_address}"]
+  description = "The first IPv4 addresses of the addesses assigned for the replica instances"
 }
 
 output "replicas_instance_connection_names" {
-  value = ["${google_sql_database_instance.replicas.*.connection_name}"]
+  value       = ["${google_sql_database_instance.replicas.*.connection_name}"]
+  description = "The connection names of the replica instances to be used in connection strings"
 }
 
 output "replicas_instance_self_links" {
-  value = ["${google_sql_database_instance.replicas.*.self_link}"]
+  value       = ["${google_sql_database_instance.replicas.*.self_link}"]
+  description = "The URIs of the replica instances"
 }
 
 output "replicas_instance_server_ca_certs" {
-  value = ["${google_sql_database_instance.replicas.*.server_ca_cert}"]
+  value       = ["${google_sql_database_instance.replicas.*.server_ca_cert}"]
+  description = "The CA certificates information used to connect to the replica instances via SSL"
 }
 
 output "replicas_instance_service_account_email_addresses" {
-  value = ["${google_sql_database_instance.replicas.*.service_account_email_address}"]
+  value       = ["${google_sql_database_instance.replicas.*.service_account_email_address}"]
+  description = "The service account email addresses assigned to the replica instances"
 }
 
 // Failover Replicas
 output "failover-replica_instance_first_ip_address" {
-  value = "${google_sql_database_instance.failover-replica.*.ip_address}"
+  value       = "${google_sql_database_instance.failover-replica.*.ip_address}"
+  description = "The first IPv4 address of the addesses assigned for the failover-replica instance"
 }
 
 output "failover-replica_instance_connection_name" {
-  value = "${google_sql_database_instance.failover-replica.*.connection_name}"
+  value       = "${google_sql_database_instance.failover-replica.*.connection_name}"
+  description = "The connection name of the failover-replica instance to be used in connection strings"
 }
 
 output "failover-replica_instance_self_link" {
-  value = "${google_sql_database_instance.failover-replica.*.self_link}"
+  value       = "${google_sql_database_instance.failover-replica.*.self_link}"
+  description = "The URI of the failover-replica instance"
 }
 
 output "failover-replica_instance_server_ca_cert" {
-  value = "${google_sql_database_instance.failover-replica.*.server_ca_cert}"
+  value       = "${google_sql_database_instance.failover-replica.*.server_ca_cert}"
+  description = "The CA certificate information used to connect to the failover-replica instance via SSL"
 }
 
 output "failover-replica_instance_service_account_email_address" {
-  value = "${google_sql_database_instance.failover-replica.*.service_account_email_address}"
+  value       = "${google_sql_database_instance.failover-replica.*.service_account_email_address}"
+  description = "The service account email addresses assigned to the failover-replica instance"
 }
 
 output "user_names" {
-  value = ["${google_sql_user.users.*.name}"]
+  value       = ["${google_sql_user.users.*.name}"]
+  description = "The list of user names for the database"
 }
 
 output "user_passwords" {
-  value = ["${google_sql_user.users.*.password}"]
+  value       = ["${google_sql_user.users.*.password}"]
+  description = "The list of user passwords for the database"
 }
 
 output "user_hosts" {
-  value = ["${google_sql_user.users.*.host}"]
+  value       = ["${google_sql_user.users.*.host}"]
+  description = "The list of user hosts for the database"
 }
 
 output "database_names" {
-  value = ["${google_sql_database.databases.*.name}"]
+  value       = ["${google_sql_database.databases.*.name}"]
+  description = "The list of database names"
 }
 
 output "database_charsets" {
-  value = ["${google_sql_database.databases.*.charset}"]
+  value       = ["${google_sql_database.databases.*.charset}"]
+  description = "The list of database charsets"
 }
 
 output "database_collation" {
-  value = ["${google_sql_database.databases.*.collation}"]
+  value       = ["${google_sql_database.databases.*.collation}"]
+  description = "The list of database collations"
 }
 
 output "database_self_links" {
-  value = ["${google_sql_database.databases.*.self_link}"]
+  value       = ["${google_sql_database.databases.*.self_link}"]
+  description = "The URIs of the databases"
 }
