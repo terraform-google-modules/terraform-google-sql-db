@@ -178,8 +178,9 @@ resource "random_id" "password" {
   keepers = {
     name = "${google_sql_database_instance.master.name}"
   }
+
   byte_length = 8
-  depends_on = ["google_sql_database_instance.master"]
+  depends_on  = ["google_sql_database_instance.master"]
 }
 
 resource "google_sql_user" "users" {
