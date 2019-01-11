@@ -111,7 +111,7 @@ EOF
 
 variable "ip_configuration" {
   description = "The ip configuration for the master instance."
-  default = {}
+  default     = {}
 }
 
 // Read Replicas
@@ -198,7 +198,7 @@ variable "read_replica_user_labels" {
 
 variable "read_replica_ip_configuration" {
   description = "The ip configuration for the read replica instances."
-  default = {}
+  default     = {}
 }
 
 // Failover replica
@@ -285,7 +285,7 @@ variable "failover_replica_user_labels" {
 
 variable "failover_replica_ip_configuration" {
   description = "The ip configuration for the failover replica instances."
-  default = {}
+  default     = {}
 }
 
 // for google_sql_database

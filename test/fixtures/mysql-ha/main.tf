@@ -31,15 +31,18 @@ module "mysql" {
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
+
   database_flags = [
     {
       name  = "long_query_time"
       value = 1
     },
   ]
+
   user_labels = {
     foo = "bar"
   }
+
   ip_configuration {
     ipv4_enabled = true
     require_ssl  = true
@@ -49,6 +52,7 @@ module "mysql" {
       value = "${var.mysql_ha_external_ip_range}"
     }]
   }
+
   backup_configuration {
     enabled            = true
     binary_log_enabled = true
@@ -67,17 +71,21 @@ module "mysql" {
   read_replica_maintenance_window_day          = 1
   read_replica_maintenance_window_hour         = 22
   read_replica_maintenance_window_update_track = "stable"
+
   read_replica_user_labels = {
     bar = "baz"
   }
+
   read_replica_database_flags = [{
     name  = "long_query_time"
     value = "1"
   }]
+
   read_replica_configuration {
     dump_file_path         = "gs://${var.project}.appspot.com/tmp"
     connect_retry_interval = 5
   }
+
   read_replica_ip_configuration {
     ipv4_enabled = true
     require_ssl  = true
@@ -100,17 +108,21 @@ module "mysql" {
   failover_replica_maintenance_window_day          = 3
   failover_replica_maintenance_window_hour         = 20
   failover_replica_maintenance_window_update_track = "canary"
+
   failover_replica_user_labels = {
     baz = "boo"
   }
+
   failover_replica_database_flags = [{
     name  = "long_query_time"
     value = "1"
   }]
+
   failover_replica_configuration {
     dump_file_path         = "gs://${var.project}.appspot.com/tmp"
     connect_retry_interval = 5
   }
+
   failover_replica_ip_configuration {
     ipv4_enabled = true
     require_ssl  = true
