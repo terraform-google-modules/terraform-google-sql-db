@@ -15,6 +15,11 @@
  */
 
 // Master
+output "instance_name" {
+  value       = "${google_sql_database_instance.default.name}"
+  description = "The instance name for the master instance"
+}
+
 output "instance_ip_address" {
   value       = "${google_sql_database_instance.default.ip_address}"
   description = "The IPv4 address assigned for the master instance"
@@ -71,6 +76,11 @@ output "replicas_instance_service_account_email_addresses" {
   description = "The service account email addresses assigned to the replica instances"
 }
 
+output "read_replica_instance_names" {
+  value       = "${google_sql_database_instance.replicas.*.name}"
+  description = "The instance names for the read replica instances"
+}
+
 // Failover Replicas
 output "failover-replica_instance_first_ip_address" {
   value       = "${google_sql_database_instance.failover-replica.*.ip_address}"
@@ -95,6 +105,11 @@ output "failover-replica_instance_server_ca_cert" {
 output "failover-replica_instance_service_account_email_address" {
   value       = "${google_sql_database_instance.failover-replica.*.service_account_email_address}"
   description = "The service account email addresses assigned to the failover-replica instance"
+}
+
+output "failover-replica_instance_name" {
+  value       = "${google_sql_database_instance.failover-replica.*.name}"
+  description = "The instance name for the failover replica instance"
 }
 
 output "user_names" {
@@ -130,4 +145,10 @@ output "database_collation" {
 output "database_self_links" {
   value       = ["${google_sql_database.databases.*.self_link}"]
   description = "The URIs of the databases"
+}
+
+output "generated_user_password" {
+  description = "The auto generated default user password if not input password was provided"
+  value       = "${random_id.user-password.hex}"
+  sensitive   = true
 }
