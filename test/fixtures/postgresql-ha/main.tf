@@ -42,57 +42,47 @@ module "pg" {
   }
 
   // Master configurations
-  master = {
-    tier                            = "db-custom-2-13312"
-    zone                            = "c"
-    availability_type               = "REGIONAL"
-    maintenance_window_day          = 7
-    maintenance_window_hour         = 12
-    maintenance_window_update_track = "stable"
-  }
-
-  master_database_flags = [
+  tier                            = "db-custom-2-13312"
+  zone                            = "c"
+  availability_type               = "REGIONAL"
+  maintenance_window_day          = 7
+  maintenance_window_hour         = 12
+  maintenance_window_update_track = "stable"
+  database_flags = [
     {
       name  = "autovacuum"
       value = "off"
     },
   ]
-
-  master_labels = {
+  user_labels = {
     foo = "bar"
   }
 
-  // replica_configuration block is used in all replicas.
-  replica_configuration {
-    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
-    connect_retry_interval = 5
-  }
-
   // Read replica configurations
-  read_replica = {
-    length                          = 3
-    tier                            = "db-custom-2-13312"
-    zones                           = "a,b,c"
-    activation_policy               = "ALWAYS"
-    crash_safe_replication          = true
-    disk_autoresize                 = true
-    disk_type                       = "PD_HDD"
-    replication_type                = "SYNCHRONOUS"
-    maintenance_window_day          = 1
-    maintenance_window_hour         = 22
-    maintenance_window_update_track = "stable"
-  }
-
-  read_replica_labels = {
+  read_replica_size                            = 3
+  read_replica_tier                            = "db-custom-2-13312"
+  read_replica_zones                           = "a,b,c"
+  read_replica_activation_policy               = "ALWAYS"
+  read_replica_crash_safe_replication          = true
+  read_replica_disk_autoresize                 = true
+  read_replica_disk_type                       = "PD_HDD"
+  read_replica_replication_type                = "SYNCHRONOUS"
+  read_replica_maintenance_window_day          = 1
+  read_replica_maintenance_window_hour         = 22
+  read_replica_maintenance_window_update_track = "stable"
+  read_replica_user_labels = {
     bar = "baz"
   }
-
   read_replica_database_flags = [
     {
       name  = "autovacuum"
       value = "off"
     },
   ]
+  read_replica_configuration {
+    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
+    connect_retry_interval = 5
+  }
 
   // Users
   users = [

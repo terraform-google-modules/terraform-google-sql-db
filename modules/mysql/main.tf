@@ -15,22 +15,9 @@
  */
 
 locals {
-  default_tier                            = "db-n1-standard-1"
-  default_activation_policy               = "ALWAYS"           // ON_DEMAND
-  default_crash_safe_replication          = true
-  default_disk_autoresize                 = true
-  default_disk_size                       = 10
-  default_disk_type                       = "PD_SSD"
-  default_pricing_plan                    = "PER_USE"
-  default_maintenance_window_day          = 1
-  default_maintenance_window_hour         = 23
-  default_replication_type                = "SYNCHRONOUS"
-  default_maintenance_window_update_track = "canary"
-
-  default_user_host = "%"
-
-  primary_zone       = "${lookup(var.master, "zone")}"
-  read_replica_zones = ["${compact(split(",", lookup(var.read_replica, "zones", "")))}"]
+  default_user_host  = "%"
+  primary_zone       = "${var.zone}"
+  read_replica_zones = ["${compact(split(",", var.read_replica_zones))}"]
 
   zone_mapping = {
     enabled  = ["${local.read_replica_zones}"]
@@ -50,28 +37,28 @@ resource "google_sql_database_instance" "default" {
   region           = "${var.region}"
 
   settings {
-    tier                        = "${lookup(var.master, "tier", local.default_tier)}"
-    activation_policy           = "${lookup(var.master, "activation_policy", local.default_activation_policy)}"
+    tier                        = "${var.tier}"
+    activation_policy           = "${var.activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     backup_configuration        = ["${var.backup_configuration}"]
     ip_configuration            = ["${var.ip_configuration}"]
 
-    disk_autoresize = "${lookup(var.master, "disk_autoresize", local.default_disk_autoresize)}"
+    disk_autoresize = "${var.disk_autoresize}"
 
-    disk_size      = "${lookup(var.master, "disk_size", local.default_disk_size)}"
-    disk_type      = "${lookup(var.master, "disk_type", local.default_disk_type)}"
-    pricing_plan   = "${lookup(var.master, "pricing_plan", local.default_pricing_plan)}"
-    user_labels    = "${var.master_labels}"
-    database_flags = ["${var.master_database_flags}"]
+    disk_size      = "${var.disk_size}"
+    disk_type      = "${var.disk_type}"
+    pricing_plan   = "${var.pricing_plan}"
+    user_labels    = "${var.user_labels}"
+    database_flags = ["${var.database_flags}"]
 
     location_preference {
-      zone = "${var.region}-${lookup(var.master, "zone")}"
+      zone = "${var.region}-${var.zone}"
     }
 
     maintenance_window {
-      day          = "${lookup(var.master, "maintenance_window_day", local.default_maintenance_window_day)}"
-      hour         = "${lookup(var.master, "maintenance_window_hour", local.default_maintenance_window_hour)}"
-      update_track = "${lookup(var.master, "maintenance_window_update_track", local.default_maintenance_window_update_track)}"
+      day          = "${var.maintenance_window_day}"
+      hour         = "${var.maintenance_window_hour}"
+      update_track = "${var.maintenance_window_update_track}"
     }
   }
 
@@ -81,27 +68,27 @@ resource "google_sql_database_instance" "default" {
 }
 
 resource "google_sql_database_instance" "replicas" {
-  count                 = "${lookup(var.read_replica, "length", 0)}"
+  count                 = "${var.read_replica_size}"
   project               = "${var.project_id}"
   name                  = "${var.name}-replica${count.index}"
   database_version      = "${var.database_version}"
   region                = "${var.region}"
   master_instance_name  = "${google_sql_database_instance.default.name}"
-  replica_configuration = ["${merge(var.replica_configuration, map("failover_target", false))}"]
+  replica_configuration = ["${merge(var.read_replica_configuration, map("failover_target", false))}"]
 
   settings {
-    tier                        = "${lookup(var.read_replica, "tier", local.default_tier)}"
-    activation_policy           = "${lookup(var.read_replica, "activation_policy", local.default_activation_policy)}"
-    authorized_gae_applications = ["${var.authorized_gae_applications}"]
+    tier                        = "${var.read_replica_tier}"
+    activation_policy           = "${var.read_replica_activation_policy}"
     ip_configuration            = ["${var.ip_configuration}"]
+    authorized_gae_applications = ["${var.authorized_gae_applications}"]
 
-    crash_safe_replication = "${lookup(var.read_replica, "crash_safe_replication", local.default_crash_safe_replication)}"
-    disk_autoresize        = "${lookup(var.read_replica, "disk_autoresize", local.default_disk_autoresize)}"
-    disk_size              = "${lookup(var.read_replica, "disk_size", local.default_disk_size)}"
-    disk_type              = "${lookup(var.read_replica, "disk_type", local.default_disk_type)}"
-    pricing_plan           = "${lookup(var.read_replica, "pricing_plan", local.default_pricing_plan)}"
-    replication_type       = "${lookup(var.read_replica, "replication_type", local.default_replication_type)}"
-    user_labels            = "${var.read_replica_labels}"
+    crash_safe_replication = "${var.read_replica_crash_safe_replication}"
+    disk_autoresize        = "${var.read_replica_disk_autoresize}"
+    disk_size              = "${var.read_replica_disk_size}"
+    disk_type              = "${var.read_replica_disk_type}"
+    pricing_plan           = "${var.read_replica_pricing_plan}"
+    replication_type       = "${var.read_replica_replication_type}"
+    user_labels            = "${var.read_replica_user_labels}"
     database_flags         = ["${var.read_replica_database_flags}"]
 
     location_preference {
@@ -109,9 +96,9 @@ resource "google_sql_database_instance" "replicas" {
     }
 
     maintenance_window {
-      day          = "${lookup(var.read_replica, "maintenance_window_day", local.default_maintenance_window_day)}"
-      hour         = "${lookup(var.read_replica, "maintenance_window_hour", local.default_maintenance_window_hour)}"
-      update_track = "${lookup(var.read_replica, "maintenance_window_update_track", local.default_maintenance_window_update_track)}"
+      day          = "${var.read_replica_maintenance_window_day}"
+      hour         = "${var.read_replica_maintenance_window_hour}"
+      update_track = "${var.read_replica_maintenance_window_update_track}"
     }
   }
 
@@ -123,37 +110,37 @@ resource "google_sql_database_instance" "replicas" {
 }
 
 resource "google_sql_database_instance" "failover-replica" {
-  count                 = "${length(var.failover_replica) == 0 ? 0 : 1}"
+  count                 = "${var.failover_replica ? 1 : 0}"
   project               = "${var.project_id}"
   name                  = "${var.name}-failover"
   database_version      = "${var.database_version}"
   region                = "${var.region}"
   master_instance_name  = "${google_sql_database_instance.default.name}"
-  replica_configuration = ["${merge(var.replica_configuration, map("failover_target", true))}"]
+  replica_configuration = ["${merge(var.failover_replica_configuration, map("failover_target", true))}"]
 
   settings {
-    tier                        = "${lookup(var.failover_replica, "tier", local.default_tier)}"
-    activation_policy           = "${lookup(var.failover_replica, "activation_policy", local.default_activation_policy)}"
+    tier                        = "${var.failover_replica_tier}"
+    activation_policy           = "${var.failover_replica_activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     ip_configuration            = ["${var.ip_configuration}"]
 
-    crash_safe_replication = "${lookup(var.failover_replica, "crash_safe_replication", local.default_crash_safe_replication)}"
-    disk_autoresize        = "${lookup(var.failover_replica, "disk_autoresize", local.default_disk_autoresize)}"
-    disk_size              = "${lookup(var.failover_replica, "disk_size", local.default_disk_size)}"
-    disk_type              = "${lookup(var.failover_replica, "disk_type", local.default_disk_type)}"
-    pricing_plan           = "${lookup(var.failover_replica, "pricing_plan", local.default_pricing_plan)}"
-    replication_type       = "${lookup(var.failover_replica, "replication_type", local.default_replication_type)}"
-    user_labels            = "${var.failover_replica_labels}"
+    crash_safe_replication = "${var.failover_replica_crash_safe_replication}"
+    disk_autoresize        = "${var.failover_replica_disk_autoresize}"
+    disk_size              = "${var.failover_replica_disk_size}"
+    disk_type              = "${var.failover_replica_disk_type}"
+    pricing_plan           = "${var.failover_replica_pricing_plan}"
+    replication_type       = "${var.failover_replica_replication_type}"
+    user_labels            = "${var.failover_replica_user_labels}"
     database_flags         = ["${var.failover_replica_database_flags}"]
 
     location_preference {
-      zone = "${var.region}-${lookup(var.failover_replica, "zone")}"
+      zone = "${var.region}-${var.failover_replica_zone}"
     }
 
     maintenance_window {
-      day          = "${lookup(var.failover_replica, "maintenance_window_day", local.default_maintenance_window_day)}"
-      hour         = "${lookup(var.failover_replica, "maintenance_window_hour", local.default_maintenance_window_hour)}"
-      update_track = "${lookup(var.failover_replica, "maintenance_window_update_track", local.default_maintenance_window_update_track)}"
+      day          = "${var.failover_replica_maintenance_window_day}"
+      hour         = "${var.failover_replica_maintenance_window_hour}"
+      update_track = "${var.failover_replica_maintenance_window_update_track}"
     }
   }
 

@@ -25,8 +25,6 @@ module "pg" {
   database_version = "POSTGRES_9_6"
   region           = "us-central1"
 
-  master = {
-    tier = "db-f1-micro"
-    zone = "c"
-  }
+  tier = "db-f1-micro"
+  zone = "c"
 }
