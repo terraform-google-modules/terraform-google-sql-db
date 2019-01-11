@@ -25,23 +25,6 @@ module "mysql" {
   database_version = "MYSQL_5_7"
   region           = "us-central1"
 
-  // IP Configuration is used in all instances
-  ip_configuration {
-    ipv4_enabled = true
-    require_ssl  = true
-
-    authorized_networks = [{
-      name  = "${var.project}-cidr"
-      value = "${var.mysql_ha_external_ip_range}"
-    }]
-  }
-
-  backup_configuration {
-    enabled            = true
-    binary_log_enabled = true
-    start_time         = "20:55"
-  }
-
   // Master configurations
   tier                            = "db-n1-standard-1"
   zone                            = "c"
@@ -56,6 +39,20 @@ module "mysql" {
   ]
   user_labels = {
     foo = "bar"
+  }
+  ip_configuration {
+    ipv4_enabled = true
+    require_ssl  = true
+
+    authorized_networks = [{
+      name  = "${var.project}-cidr"
+      value = "${var.mysql_ha_external_ip_range}"
+    }]
+  }
+  backup_configuration {
+    enabled            = true
+    binary_log_enabled = true
+    start_time         = "20:55"
   }
 
   // Read replica configurations
@@ -81,6 +78,15 @@ module "mysql" {
     dump_file_path         = "gs://${var.project}.appspot.com/tmp"
     connect_retry_interval = 5
   }
+  read_replica_ip_configuration {
+    ipv4_enabled = true
+    require_ssl  = true
+
+    authorized_networks = [{
+      name  = "${var.project}-cidr"
+      value = "${var.mysql_ha_external_ip_range}"
+    }]
+  }
 
   // Failover replica configurations
   failover_replica                                 = true
@@ -104,6 +110,15 @@ module "mysql" {
   failover_replica_configuration {
     dump_file_path         = "gs://${var.project}.appspot.com/tmp"
     connect_retry_interval = 5
+  }
+  failover_replica_ip_configuration {
+    ipv4_enabled = true
+    require_ssl  = true
+
+    authorized_networks = [{
+      name  = "${var.project}-cidr"
+      value = "${var.mysql_ha_external_ip_range}"
+    }]
   }
 
   // Users
