@@ -43,7 +43,7 @@ locals {
   zones = "${local.zone_mapping["${local.zones_enabled ? "enabled" : "disabled"}"]}"
 }
 
-resource "google_sql_database_instance" "master" {
+resource "google_sql_database_instance" "default" {
   project          = "${var.project_id}"
   name             = "${var.name}"
   database_version = "${var.database_version}"
@@ -86,7 +86,7 @@ resource "google_sql_database_instance" "replicas" {
   name                  = "${var.name}-replica${count.index}"
   database_version      = "${var.database_version}"
   region                = "${var.region}"
-  master_instance_name  = "${google_sql_database_instance.master.name}"
+  master_instance_name  = "${google_sql_database_instance.default.name}"
   replica_configuration = ["${merge(var.replica_configuration, map("failover_target", false))}"]
 
   settings {
@@ -115,7 +115,7 @@ resource "google_sql_database_instance" "replicas" {
     }
   }
 
-  depends_on = ["google_sql_database_instance.master"]
+  depends_on = ["google_sql_database_instance.default"]
 
   lifecycle {
     ignore_changes = ["disk_size"]
@@ -128,7 +128,7 @@ resource "google_sql_database_instance" "failover-replica" {
   name                  = "${var.name}-failover"
   database_version      = "${var.database_version}"
   region                = "${var.region}"
-  master_instance_name  = "${google_sql_database_instance.master.name}"
+  master_instance_name  = "${google_sql_database_instance.default.name}"
   replica_configuration = ["${merge(var.replica_configuration, map("failover_target", true))}"]
 
   settings {
@@ -157,7 +157,7 @@ resource "google_sql_database_instance" "failover-replica" {
     }
   }
 
-  depends_on = ["google_sql_database_instance.master"]
+  depends_on = ["google_sql_database_instance.default"]
 
   lifecycle {
     ignore_changes = ["disk_size"]
@@ -170,25 +170,25 @@ resource "google_sql_database" "databases" {
   name       = "${lookup(var.databases[count.index], "name")}"
   charset    = "${lookup(var.databases[count.index], "charset", "utf8mb4")}"
   collation  = "${lookup(var.databases[count.index], "collation", "utf8mb4_general_ci")}"
-  instance   = "${google_sql_database_instance.master.name}"
-  depends_on = ["google_sql_database_instance.master"]
+  instance   = "${google_sql_database_instance.default.name}"
+  depends_on = ["google_sql_database_instance.default"]
 }
 
 resource "random_id" "password" {
   keepers = {
-    name = "${google_sql_database_instance.master.name}"
+    name = "${google_sql_database_instance.default.name}"
   }
 
   byte_length = 8
-  depends_on  = ["google_sql_database_instance.master"]
+  depends_on  = ["google_sql_database_instance.default"]
 }
 
 resource "google_sql_user" "users" {
   count      = "${length(var.users)}"
   project    = "${var.project_id}"
-  instance   = "${google_sql_database_instance.master.name}"
+  instance   = "${google_sql_database_instance.default.name}"
   name       = "${lookup(var.users[count.index], "name")}"
   password   = "${lookup(var.users[count.index], "password", random_id.password.hex)}"
   host       = "${lookup(var.users[count.index], "host", local.default_user_host)}"
-  depends_on = ["google_sql_database_instance.master"]
+  depends_on = ["google_sql_database_instance.default"]
 }
