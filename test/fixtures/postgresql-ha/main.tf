@@ -25,22 +25,6 @@ module "pg" {
   database_version = "POSTGRES_9_6"
   region           = "us-central1"
 
-  // IP Configuration is used in all instances
-  ip_configuration {
-    ipv4_enabled = true
-    require_ssl  = true
-
-    authorized_networks = [{
-      name  = "${var.project}-cidr"
-      value = "${var.pg_ha_external_ip_range}"
-    }]
-  }
-
-  backup_configuration {
-    enabled    = true
-    start_time = "20:55"
-  }
-
   // Master configurations
   tier                            = "db-custom-2-13312"
   zone                            = "c"
@@ -56,6 +40,19 @@ module "pg" {
   ]
   user_labels = {
     foo = "bar"
+  }
+  ip_configuration {
+    ipv4_enabled = true
+    require_ssl  = true
+
+    authorized_networks = [{
+      name  = "${var.project}-cidr"
+      value = "${var.pg_ha_external_ip_range}"
+    }]
+  }
+  backup_configuration {
+    enabled    = true
+    start_time = "20:55"
   }
 
   // Read replica configurations
@@ -82,6 +79,15 @@ module "pg" {
   read_replica_configuration {
     dump_file_path         = "gs://${var.project}.appspot.com/tmp"
     connect_retry_interval = 5
+  }
+  read_replica_ip_configuration {
+    ipv4_enabled = true
+    require_ssl  = true
+
+    authorized_networks = [{
+      name  = "${var.project}-cidr"
+      value = "${var.pg_ha_external_ip_range}"
+    }]
   }
 
   // Users

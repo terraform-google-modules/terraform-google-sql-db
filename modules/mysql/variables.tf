@@ -98,6 +98,22 @@ variable "user_labels" {
   description = "The key/value labels for the master instances."
 }
 
+variable "backup_configuration" {
+  default = {}
+
+  description = <<EOF
+The backup configuration block of the Cloud SQL resources
+This argument will be passed through the master instance directrly.
+
+See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html).
+EOF
+}
+
+variable "ip_configuration" {
+  description = "The ip configuration for the master instance."
+  default = {}
+}
+
 // Read Replicas
 
 variable "read_replica_configuration" {
@@ -178,6 +194,11 @@ variable "read_replica_maintenance_window_update_track" {
 variable "read_replica_user_labels" {
   default     = {}
   description = "The key/value labels for the read replica instances."
+}
+
+variable "read_replica_ip_configuration" {
+  description = "The ip configuration for the read replica instances."
+  default = {}
 }
 
 // Failover replica
@@ -262,24 +283,9 @@ variable "failover_replica_user_labels" {
   description = "The key/value labels for the failover replica instance."
 }
 
-variable "backup_configuration" {
+variable "failover_replica_ip_configuration" {
+  description = "The ip configuration for the failover replica instances."
   default = {}
-
-  description = <<EOF
-The backup configuration block of the Cloud SQL resources
-This argument will be passed through the master instance directrly.
-
-See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html).
-EOF
-}
-
-variable "ip_configuration" {
-  default = {}
-
-  description = <<EOF
-The ip configuration for the Cloud SQL instances.
-This argument will be passed through all instances as the settings.ip_configuration block.
-EOF
 }
 
 // for google_sql_database

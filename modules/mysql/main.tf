@@ -79,7 +79,7 @@ resource "google_sql_database_instance" "replicas" {
   settings {
     tier                        = "${var.read_replica_tier}"
     activation_policy           = "${var.read_replica_activation_policy}"
-    ip_configuration            = ["${var.ip_configuration}"]
+    ip_configuration            = ["${var.read_replica_ip_configuration}"]
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
 
     crash_safe_replication = "${var.read_replica_crash_safe_replication}"
@@ -122,7 +122,7 @@ resource "google_sql_database_instance" "failover-replica" {
     tier                        = "${var.failover_replica_tier}"
     activation_policy           = "${var.failover_replica_activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
-    ip_configuration            = ["${var.ip_configuration}"]
+    ip_configuration            = ["${var.failover_replica_ip_configuration}"]
 
     crash_safe_replication = "${var.failover_replica_crash_safe_replication}"
     disk_autoresize        = "${var.failover_replica_disk_autoresize}"

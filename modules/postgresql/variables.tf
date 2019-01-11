@@ -93,8 +93,28 @@ variable "database_flags" {
 }
 
 variable "user_labels" {
-  default     = {}
   description = "The key/value labels for the master instances."
+  default     = {}
+}
+
+variable "backup_configuration" {
+  default = {}
+  description = <<EOF
+The backup configuration block of the Cloud SQL resources
+This argument will be passed through the master instance directrly.
+
+See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html).
+EOF
+}
+
+variable "authorized_gae_applications" {
+  description = "The authorized gae applications for the Cloud SQL instances"
+  default     = []
+}
+
+variable "ip_configuration" {
+  description = "The ip configuration for the master instances."
+  default     = {}
 }
 
 variable "read_replica_size" {
@@ -182,29 +202,9 @@ variable "read_replica_replication_type" {
   default     = "SYNCHRONOUS"
 }
 
-variable "backup_configuration" {
-  default = {}
-
-  description = <<EOF
-The backup configuration block of the Cloud SQL resources
-This argument will be passed through the master instance directrly.
-
-See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html).
-EOF
-}
-
-variable "authorized_gae_applications" {
-  description = "The authorized gae applications for the Cloud SQL instances"
-  default     = []
-}
-
-variable "ip_configuration" {
-  default = {}
-
-  description = <<EOF
-The ip configuration for the Cloud SQL instances.
-This argument will be passed through all instances as the settings.ip_configuration block.
-EOF
+variable "read_replica_ip_configuration" {
+  description = "The ip configuration for the read instances."
+  default     = {}
 }
 
 // for google_sql_database
