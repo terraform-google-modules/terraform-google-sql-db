@@ -43,7 +43,7 @@ output "master_instance_service_account_email_address" {
 // Replicas
 output "replicas_instance_first_ip_addresses" {
   value       = ["${google_sql_database_instance.replicas.*.ip_address}"]
-  description = "The first IPv4 addresses of the addesses assigned for the replica instances"
+  description = "The first IPv4 addresses of the addresses assigned for the replica instances"
 }
 
 output "replicas_instance_connection_names" {
