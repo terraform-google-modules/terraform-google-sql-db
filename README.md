@@ -6,7 +6,7 @@ This module is consist of the following submodules:
 - [mysql](./modules/mysql)
 - [postgresql](./modules/postgresql)
 
-See more details for each module's README.
+See more details in each module's README.
 
 ## Requirements
 
