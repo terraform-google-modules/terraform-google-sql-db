@@ -65,7 +65,7 @@ resource "google_sql_database" "databases" {
   depends_on = ["google_sql_database_instance.default"]
 }
 
-resource "random_id" "password" {
+resource "random_id" "user-password" {
   keepers = {
     name = "${google_sql_database_instance.default.name}"
   }
@@ -79,7 +79,7 @@ resource "google_sql_user" "users" {
   project    = "${var.project_id}"
   instance   = "${google_sql_database_instance.default.name}"
   name       = "${lookup(var.users[count.index], "name")}"
-  password   = "${lookup(var.users[count.index], "password", random_id.password.hex)}"
+  password   = "${lookup(var.users[count.index], "password", random_id.user-password.hex)}"
   host       = "${lookup(var.users[count.index], "host", local.default_user_host)}"
   depends_on = ["google_sql_database_instance.default"]
 }

@@ -15,6 +15,11 @@
  */
 
 // Master
+output "instance_name" {
+  value       = "${google_sql_database_instance.default.name}"
+  description = "The instance name for the master instance"
+}
+
 output "instance_address" {
   value       = "${google_sql_database_instance.default.ip_address}"
   description = "The IPv4 addesses assigned for the master instance"
@@ -71,6 +76,11 @@ output "replicas_instance_service_account_email_addresses" {
   description = "The service account email addresses assigned to the replica instances"
 }
 
+output "read_replica_instance_names" {
+  value       = "${google_sql_database_instance.replicas.*.name}"
+  description = "The instance names for the read replica instances"
+}
+
 output "user_names" {
   value       = ["${google_sql_user.users.*.name}"]
   description = "The list of user names for the database"
@@ -104,4 +114,10 @@ output "database_collation" {
 output "database_self_links" {
   value       = ["${google_sql_database.databases.*.self_link}"]
   description = "The URIs of the databases"
+}
+
+output "generated_user_password" {
+  description = "The auto generated default user password if not input password was provided"
+  value       = "${random_id.user-password.hex}"
+  sensitive   = true
 }
