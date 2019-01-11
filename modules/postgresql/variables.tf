@@ -99,6 +99,7 @@ variable "user_labels" {
 
 variable "backup_configuration" {
   default = {}
+
   description = <<EOF
 The backup configuration block of the Cloud SQL resources
 This argument will be passed through the master instance directrly.
@@ -188,7 +189,7 @@ variable "read_replica_database_flags" {
 }
 
 variable "read_replica_configuration" {
-  default = {}
+  default     = {}
   description = "The replica configuration for use in read replica"
 }
 

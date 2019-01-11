@@ -32,15 +32,18 @@ module "pg" {
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
+
   database_flags = [
     {
       name  = "autovacuum"
       value = "off"
     },
   ]
+
   user_labels = {
     foo = "bar"
   }
+
   ip_configuration {
     ipv4_enabled = true
     require_ssl  = true
@@ -50,6 +53,7 @@ module "pg" {
       value = "${var.pg_ha_external_ip_range}"
     }]
   }
+
   backup_configuration {
     enabled    = true
     start_time = "20:55"
@@ -67,19 +71,23 @@ module "pg" {
   read_replica_maintenance_window_day          = 1
   read_replica_maintenance_window_hour         = 22
   read_replica_maintenance_window_update_track = "stable"
+
   read_replica_user_labels = {
     bar = "baz"
   }
+
   read_replica_database_flags = [
     {
       name  = "autovacuum"
       value = "off"
     },
   ]
+
   read_replica_configuration {
     dump_file_path         = "gs://${var.project}.appspot.com/tmp"
     connect_retry_interval = 5
   }
+
   read_replica_ip_configuration {
     ipv4_enabled = true
     require_ssl  = true

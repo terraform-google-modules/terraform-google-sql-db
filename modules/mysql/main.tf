@@ -15,7 +15,7 @@
  */
 
 locals {
-  default_user_host  = "%"
+  default_user_host = "%"
 }
 
 resource "google_sql_database_instance" "default" {
