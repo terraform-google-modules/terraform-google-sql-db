@@ -43,77 +43,68 @@ module "mysql" {
   }
 
   // Master configurations
-  master = {
-    tier                            = "db-n1-standard-1"
-    zone                            = "c"
-    maintenance_window_day          = 7
-    maintenance_window_hour         = 12
-    maintenance_window_update_track = "stable"
-  }
-
-  master_database_flags = [
+  tier                            = "db-n1-standard-1"
+  zone                            = "c"
+  maintenance_window_day          = 7
+  maintenance_window_hour         = 12
+  maintenance_window_update_track = "stable"
+  database_flags = [
     {
       name  = "long_query_time"
       value = 1
     },
   ]
-
-  master_labels = {
+  user_labels = {
     foo = "bar"
   }
 
-  // replica_configuration block is used in all replicas.
-  replica_configuration {
-    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
-    connect_retry_interval = 5
-  }
-
   // Read replica configurations
-  read_replica = {
-    length                          = 3
-    tier                            = "db-n1-standard-1"
-    zones                           = "a,b,c"
-    activation_policy               = "ALWAYS"
-    crash_safe_replication          = true
-    disk_autoresize                 = true
-    disk_type                       = "PD_HDD"
-    replication_type                = "SYNCHRONOUS"
-    maintenance_window_day          = 1
-    maintenance_window_hour         = 22
-    maintenance_window_update_track = "stable"
-  }
-
-  read_replica_labels = {
+  read_replica_size                            = 3
+  read_replica_tier                            = "db-n1-standard-1"
+  read_replica_zones                           = "a,b,c"
+  read_replica_activation_policy               = "ALWAYS"
+  read_replica_crash_safe_replication          = true
+  read_replica_disk_autoresize                 = true
+  read_replica_disk_type                       = "PD_HDD"
+  read_replica_replication_type                = "SYNCHRONOUS"
+  read_replica_maintenance_window_day          = 1
+  read_replica_maintenance_window_hour         = 22
+  read_replica_maintenance_window_update_track = "stable"
+  read_replica_user_labels = {
     bar = "baz"
   }
-
   read_replica_database_flags = [{
     name  = "long_query_time"
     value = "1"
   }]
+  read_replica_configuration {
+    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
+    connect_retry_interval = 5
+  }
 
   // Failover replica configurations
-  failover_replica = {
-    tier                            = "db-n1-standard-1"
-    zone                            = "a"
-    activation_policy               = "ALWAYS"
-    crash_safe_replication          = true
-    disk_autoresize                 = true
-    disk_type                       = "PD_SSD"
-    replication_type                = "SYNCHRONOUS"
-    maintenance_window_day          = 3
-    maintenance_window_hour         = 20
-    maintenance_window_update_track = "canary"
-  }
-
-  failover_replica_labels = {
+  failover_replica                                 = true
+  failover_replica_tier                            = "db-n1-standard-1"
+  failover_replica_zone                            = "a"
+  failover_replica_activation_policy               = "ALWAYS"
+  failover_replica_crash_safe_replication          = true
+  failover_replica_disk_autoresize                 = true
+  failover_replica_disk_type                       = "PD_SSD"
+  failover_replica_replication_type                = "SYNCHRONOUS"
+  failover_replica_maintenance_window_day          = 3
+  failover_replica_maintenance_window_hour         = 20
+  failover_replica_maintenance_window_update_track = "canary"
+  failover_replica_user_labels = {
     baz = "boo"
   }
-
   failover_replica_database_flags = [{
     name  = "long_query_time"
     value = "1"
   }]
+  failover_replica_configuration {
+    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
+    connect_retry_interval = 5
+  }
 
   // Users
   users = [
