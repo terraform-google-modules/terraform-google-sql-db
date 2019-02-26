@@ -96,6 +96,6 @@ end
   end
 end
 
-describe google_sql_users(project: project_id, database: basename).where(user_name: /\Atf/) do
+describe google_sql_users(project: project_id, database: basename).where(user_name: /\Atftest\z/) do
   it { should exist }
 end

@@ -81,41 +81,6 @@ output "read_replica_instance_names" {
   description = "The instance names for the read replica instances"
 }
 
-output "user_names" {
-  value       = ["${google_sql_user.users.*.name}"]
-  description = "The list of user names for the database"
-}
-
-output "user_passwords" {
-  value       = ["${google_sql_user.users.*.password}"]
-  description = "The list of user passwords for the database"
-}
-
-output "user_hosts" {
-  value       = ["${google_sql_user.users.*.host}"]
-  description = "The list of user hosts for the database"
-}
-
-output "database_names" {
-  value       = ["${google_sql_database.databases.*.name}"]
-  description = "The list of database names"
-}
-
-output "database_charsets" {
-  value       = ["${google_sql_database.databases.*.charset}"]
-  description = "The list of database charsets"
-}
-
-output "database_collation" {
-  value       = ["${google_sql_database.databases.*.collation}"]
-  description = "The list of database collations"
-}
-
-output "database_self_links" {
-  value       = ["${google_sql_database.databases.*.self_link}"]
-  description = "The URIs of the databases"
-}
-
 output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
   value       = "${random_id.user-password.hex}"

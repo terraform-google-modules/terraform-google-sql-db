@@ -11,7 +11,9 @@
 | backup_configuration | The backup configuration block of the Cloud SQL resources This argument will be passed through the master instance directrly.<br><br>See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html). | map | `<map>` | no |
 | database_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | list | `<list>` | no |
 | database_version | The database version to use | string | - | yes |
-| databases | The list of databases for the instacne | list | `<list>` | no |
+| db_charset | The charset for the default database | string | `` | no |
+| db_collation | The collation for the default database. Example: 'utf8_general_ci' | string | `` | no |
+| db_name | The name of the default database to create | string | `default` | no |
 | disk_autoresize | Configuration to increase storage size | string | `true` | no |
 | disk_size | The disk size for the master instance | string | `10` | no |
 | disk_type | The disk type for the master instance. | string | `PD_SSD` | no |
@@ -58,18 +60,16 @@
 | read_replica_zones | The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas. | string | `` | no |
 | region | The region of the Cloud SQL resources | string | `us-central1` | no |
 | tier | The tier for the master instance. | string | `db-n1-standard-1` | no |
+| user_host | The host for the default user | string | `%` | no |
 | user_labels | The key/value labels for the master instances. | map | `<map>` | no |
-| users | The list of users on the database | list | `<list>` | no |
+| user_name | The name of the default user | string | `default` | no |
+| user_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `` | no |
 | zone | The zone for the master instance, it should be something like: `a`, `c`. | string | - | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| database_charsets | The list of database charsets |
-| database_collation | The list of database collations |
-| database_names | The list of database names |
-| database_self_links | The URIs of the databases |
 | failover-replica_instance_connection_name | The connection name of the failover-replica instance to be used in connection strings |
 | failover-replica_instance_first_ip_address | The first IPv4 address of the addesses assigned for the failover-replica instance |
 | failover-replica_instance_name | The instance name for the failover replica instance |
@@ -90,8 +90,5 @@
 | replicas_instance_self_links | The URIs of the replica instances |
 | replicas_instance_server_ca_certs | The CA certificates information used to connect to the replica instances via SSL |
 | replicas_instance_service_account_email_addresses | The service account email addresses assigned to the replica instances |
-| user_hosts | The list of user hosts for the database |
-| user_names | The list of user names for the database |
-| user_passwords | The list of user passwords for the database |
 
 [^]: (autogen_docs_end)
