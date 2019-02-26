@@ -98,19 +98,9 @@ module "pg" {
     }]
   }
 
-  // Users
-  users = [
-    {
-      name     = "tftest"
-      password = "foobar"
-    },
-  ]
-
-  databases = [
-    {
-      name      = "${var.pg_ha_name}"
-      charset   = "UTF8"
-      collation = "en_US.UTF8"
-    },
-  ]
+  user_name     = "tftest"
+  user_password = "foobar"
+  db_name       = "${var.pg_ha_name}"
+  db_charset    = "UTF8"
+  db_collation  = "en_US.UTF8"
 }

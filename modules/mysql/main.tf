@@ -15,7 +15,13 @@
  */
 
 locals {
-  default_user_host = "%"
+  default_user_host        = "%"
+  ip_configuration_enabled = "${length(keys(var.ip_configuration)) > 0 ? true : false}"
+
+  ip_configurations = {
+    enabled  = "${list(var.ip_configuration)}"
+    disabled = "${list()}"
+  }
 }
 
 resource "google_sql_database_instance" "default" {
@@ -29,7 +35,7 @@ resource "google_sql_database_instance" "default" {
     activation_policy           = "${var.activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration            = ["${var.ip_configuration}"]
+    ip_configuration            = "${local.ip_configurations["${local.ip_configuration_enabled ? "enabled" : "disabled"}"]}"
 
     disk_autoresize = "${var.disk_autoresize}"
 
@@ -55,13 +61,12 @@ resource "google_sql_database_instance" "default" {
   }
 }
 
-resource "google_sql_database" "databases" {
-  count      = "${length(var.databases)}"
+resource "google_sql_database" "default" {
+  name       = "${var.db_name}"
   project    = "${var.project_id}"
-  name       = "${lookup(var.databases[count.index], "name")}"
-  charset    = "${lookup(var.databases[count.index], "charset", "utf8mb4")}"
-  collation  = "${lookup(var.databases[count.index], "collation", "utf8mb4_general_ci")}"
   instance   = "${google_sql_database_instance.default.name}"
+  charset    = "${var.db_charset}"
+  collation  = "${var.db_collation}"
   depends_on = ["google_sql_database_instance.default"]
 }
 
@@ -74,12 +79,11 @@ resource "random_id" "user-password" {
   depends_on  = ["google_sql_database_instance.default"]
 }
 
-resource "google_sql_user" "users" {
-  count      = "${length(var.users)}"
+resource "google_sql_user" "default" {
+  name       = "${var.user_name}"
   project    = "${var.project_id}"
   instance   = "${google_sql_database_instance.default.name}"
-  name       = "${lookup(var.users[count.index], "name")}"
-  password   = "${lookup(var.users[count.index], "password", random_id.user-password.hex)}"
-  host       = "${lookup(var.users[count.index], "host", local.default_user_host)}"
+  host       = "${var.user_host}"
+  password   = "${var.user_password == "" ? random_id.user-password.hex : var.user_password}"
   depends_on = ["google_sql_database_instance.default"]
 }

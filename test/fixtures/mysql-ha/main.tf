@@ -133,19 +133,9 @@ module "mysql" {
     }]
   }
 
-  // Users
-  users = [
-    {
-      name     = "tftest"
-      password = "foobar"
-    },
-  ]
-
-  databases = [
-    {
-      name      = "${var.mysql_ha_name}"
-      charset   = "utf8mb4"
-      collation = "utf8mb4_general_ci"
-    },
-  ]
+  user_name     = "tftest"
+  user_password = "foobar"
+  db_name       = "${var.mysql_ha_name}"
+  db_charset    = "utf8mb4"
+  db_collation  = "utf8mb4_general_ci"
 }

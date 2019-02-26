@@ -208,14 +208,32 @@ variable "read_replica_ip_configuration" {
   default     = {}
 }
 
-// for google_sql_database
-variable "databases" {
-  default     = []
-  description = "The list of databases for the instacne"
+variable "db_name" {
+  description = "The name of the default database to create"
+  default     = "default"
 }
 
-// for google_sql_user
-variable "users" {
-  default     = []
-  description = "The list of users on the database"
+variable "db_charset" {
+  description = "The charset for the default database"
+  default     = ""
+}
+
+variable "db_collation" {
+  description = "The collation for the default database. Example: 'en_US.UTF8'"
+  default     = ""
+}
+
+variable "user_name" {
+  description = "The name of the default user"
+  default     = "default"
+}
+
+variable "user_host" {
+  description = "The host for the default user"
+  default     = "%"
+}
+
+variable "user_password" {
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  default     = ""
 }

@@ -25,3 +25,7 @@ variable "project" {
 variable "mysql_simple_name" {
   description = "The name for Cloud SQL instance"
 }
+
+variable "mysql_simple_external_ip_range" {
+  description = "The ip range to allow connecting from/to Cloud SQL"
+}
