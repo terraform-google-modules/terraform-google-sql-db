@@ -1,0 +1,39 @@
+---
+provisioner:
+  name: terraform
+
+platforms:
+  - name: local
+
+transport:
+  name: exec
+  connection_timeout: 60
+
+verifier:
+  name: terraform
+  systems:
+    - name: system
+      backend: gcp
+      shell: true
+
+suites:
+  - name: mysql-simple
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/mysql-simple
+      command_timeout: 1800
+  - name: postgresql-simple
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/postgresql-simple
+      command_timeout: 1800
+  - name: mysql-ha
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/mysql-ha
+      command_timeout: 1800
+  - name: postgresql-ha
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/postgresql-ha
+      command_timeout: 1800
