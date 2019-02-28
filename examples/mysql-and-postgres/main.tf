@@ -62,9 +62,11 @@ resource "random_id" "name" {
 }
 
 module "mysql-db" {
-  source           = "../../"
+  source           = "../../modules/mysql"
   name             = "example-mysql-${random_id.name.hex}"
   database_version = "${var.mysql_version}"
+  project_id       = "${data.google_client_config.current.project}"
+  zone             = "c"
 
   ip_configuration = [{
     authorized_networks = [{
@@ -82,10 +84,11 @@ module "mysql-db" {
 }
 
 module "postgresql-db" {
-  source           = "../../"
+  source           = "../../modules/postgresql"
   name             = "example-postgresql-${random_id.name.hex}"
-  user_host        = ""
   database_version = "${var.postgresql_version}"
+  project_id       = "${data.google_client_config.current.project}"
+  zone             = "c"
 
   ip_configuration = [{
     authorized_networks = [{
