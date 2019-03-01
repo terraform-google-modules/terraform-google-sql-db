@@ -223,6 +223,11 @@ variable "db_collation" {
   default     = ""
 }
 
+variable "additional_databases" {
+  description = "The list of databases for the instacne"
+  default     = []
+}
+
 variable "user_name" {
   description = "The name of the default user"
   default     = "default"
