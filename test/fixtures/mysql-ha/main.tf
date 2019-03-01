@@ -138,4 +138,12 @@ module "mysql" {
   db_name       = "${var.mysql_ha_name}"
   db_charset    = "utf8mb4"
   db_collation  = "utf8mb4_general_ci"
+
+  additional_databases = [
+    {
+      name      = "${var.mysql_ha_name}-additional"
+      charset   = "utf8mb4"
+      collation = "utf8mb4_general_ci"
+    }
+  ]
 }

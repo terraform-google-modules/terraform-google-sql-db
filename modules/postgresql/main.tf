@@ -70,6 +70,16 @@ resource "google_sql_database" "default" {
   depends_on = ["google_sql_database_instance.default"]
 }
 
+resource "google_sql_database" "additional_databases" {
+  count      = "${length(var.additional_databases)}"
+  project    = "${var.project_id}"
+  name       = "${lookup(var.additional_databases[count.index], "name")}"
+  charset    = "${lookup(var.additional_databases[count.index], "charset", "")}"
+  collation  = "${lookup(var.additional_databases[count.index], "collation", "")}"
+  instance   = "${google_sql_database_instance.default.name}"
+  depends_on = ["google_sql_database_instance.default"]
+}
+
 resource "random_id" "user-password" {
   keepers = {
     name = "${google_sql_database_instance.default.name}"
