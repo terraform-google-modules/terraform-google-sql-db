@@ -241,6 +241,7 @@ variable "user_password" {
 variable "additional_users" {
   description = "A list of users to be created in your cluster"
   default     = []
+}
 
 variable create_timeout {
   description = "The optional timout that is applied to limit long database creates."
