@@ -4,3 +4,5 @@
 **/terraform.tfvars
 **/terraform.tfplan
 **/values-*.yaml
+.kitchen/
+default.profraw
