@@ -103,4 +103,12 @@ module "pg" {
   db_name       = "${var.pg_ha_name}"
   db_charset    = "UTF8"
   db_collation  = "en_US.UTF8"
+
+  additional_databases = [
+    {
+      name      = "${var.pg_ha_name}-additional"
+      charset   = "UTF8"
+      collation = "en_US.UTF8"
+    }
+  ]
 }
