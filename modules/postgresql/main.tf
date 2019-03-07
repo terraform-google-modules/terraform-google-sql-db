@@ -97,3 +97,13 @@ resource "google_sql_user" "default" {
   password   = "${var.user_password == "" ? random_id.user-password.hex : var.user_password}"
   depends_on = ["google_sql_database_instance.default"]
 }
+
+resource "google_sql_user" "additional_users" {
+  count      = "${length(var.additional_users)}"
+  project    = "${var.project_id}"
+  name       = "${lookup(var.additional_users[count.index], "name")}"
+  password   = "${lookup(var.additional_users[count.index], "password", random_id.user-password.hex)}"
+  host       = "${lookup(var.additional_users[count.index], "host", var.user_host)}"
+  instance   = "${google_sql_database_instance.default.name}"
+  depends_on = ["google_sql_database_instance.default"]
+}

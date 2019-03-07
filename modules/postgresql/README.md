@@ -7,6 +7,8 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | activation_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `ALWAYS` | no |
+| additional_databases | The list of databases for the instacne | list | `<list>` | no |
+| additional_users | The list of users for the instance | list | `<list>` | no |
 | authorized_gae_applications | The authorized gae applications for the Cloud SQL instances | list | `<list>` | no |
 | availability_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `ZONAL` | no |
 | backup_configuration | The backup configuration block of the Cloud SQL resources This argument will be passed through the master instance directrly.<br><br>See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html). | map | `<map>` | no |

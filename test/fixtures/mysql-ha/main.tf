@@ -133,17 +133,29 @@ module "mysql" {
     }]
   }
 
-  user_name     = "tftest"
-  user_password = "foobar"
-  db_name       = "${var.mysql_ha_name}"
-  db_charset    = "utf8mb4"
-  db_collation  = "utf8mb4_general_ci"
+  db_name      = "${var.mysql_ha_name}"
+  db_charset   = "utf8mb4"
+  db_collation = "utf8mb4_general_ci"
 
   additional_databases = [
     {
       name      = "${var.mysql_ha_name}-additional"
       charset   = "utf8mb4"
       collation = "utf8mb4_general_ci"
-    }
+    },
+  ]
+
+  user_name     = "tftest"
+  user_password = "foobar"
+
+  additional_users = [
+    {
+      name     = "tftest2"
+      password = "abcdefg"
+    },
+    {
+      name = "tftest3"
+      host = "localhost"
+    },
   ]
 }
