@@ -130,6 +130,11 @@ end
   end
 end
 
-describe google_sql_users(project: project_id, database: basename).where(user_name: /\Atftest\z/) do
+describe google_sql_users(project: project_id, database: basename).where(user_name: /\Atftest/) do
+  its(:count) { should be 3 }
+  it { should exist }
+end
+
+describe google_sql_users(project: project_id, database: basename).where(user_host: 'localhost') do
   it { should exist }
 end

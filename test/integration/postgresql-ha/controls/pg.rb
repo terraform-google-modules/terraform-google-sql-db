@@ -96,6 +96,8 @@ end
   end
 end
 
-describe google_sql_users(project: project_id, database: basename).where(user_name: /\Atftest\z/) do
+describe google_sql_users(project: project_id, database: basename).where(user_name: /\Atftest/) do
+  # NOTE: postgresql has `postgres` as a default user.
+  its(:count) { should be 4 }
   it { should exist }
 end

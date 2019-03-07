@@ -322,3 +322,8 @@ variable "user_password" {
   description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
   default     = ""
 }
+
+variable "additional_users" {
+  description = "The list of users for the instance"
+  default     = []
+}
