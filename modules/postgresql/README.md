@@ -47,7 +47,6 @@
 | read_replica_zones | The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas. | string | `` | no |
 | region | The region of the Cloud SQL resources | string | `us-central1` | no |
 | tier | The tier for the master instance. | string | `db-f1-micro` | no |
-| user_host | The host for the default user | string | `%` | no |
 | user_labels | The key/value labels for the master instances. | map | `<map>` | no |
 | user_name | The name of the default user | string | `default` | no |
 | user_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `` | no |
