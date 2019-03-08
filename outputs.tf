@@ -25,7 +25,7 @@ output instance_address {
 }
 
 output instance_address_time_to_retire {
-  description = "The time the master instance IP address will be reitred. RFC 3339 format."
+  description = "The time the master instance IP address will be retired. RFC 3339 format."
   value       = "${google_sql_database_instance.default.ip_address.0.time_to_retire}"
 }
 
