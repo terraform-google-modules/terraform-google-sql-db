@@ -224,7 +224,7 @@ variable "db_collation" {
 }
 
 variable "additional_databases" {
-  description = "The list of databases for the instacne"
+  description = "The list of databases for all instances"
   default     = []
 }
 
@@ -239,6 +239,6 @@ variable "user_password" {
 }
 
 variable "additional_users" {
-  description = "The list of users for the instance"
+  description = "The list of users for all instances"
   default     = []
 }
