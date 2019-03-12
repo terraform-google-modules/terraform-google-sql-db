@@ -304,7 +304,7 @@ variable "db_collation" {
 }
 
 variable "additional_databases" {
-  description = "A list of databases to create in your cluster"
+  description = "A list of databases to be created in your cluster"
   default     = []
 }
 
