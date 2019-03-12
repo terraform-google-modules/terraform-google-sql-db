@@ -324,6 +324,6 @@ variable "user_password" {
 }
 
 variable "additional_users" {
-  description = "The list of users for all instances"
+  description = "A list of users to be created in your cluster"
   default     = []
 }
