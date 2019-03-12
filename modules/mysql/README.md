@@ -7,8 +7,8 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | activation_policy | The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `ALWAYS` | no |
-| additional_databases | The list of databases for all instances | list | `<list>` | no |
-| additional_users | The list of users for all instances | list | `<list>` | no |
+| additional_databases | A list of databases to be created in your cluster | list | `<list>` | no |
+| additional_users | A list of users to be created in your cluster | list | `<list>` | no |
 | authorized_gae_applications | The list of authorized App Engine project names | list | `<list>` | no |
 | backup_configuration | The backup configuration block of the Cloud SQL resources This argument will be passed through the master instance directrly.<br><br>See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html). | map | `<map>` | no |
 | database_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | list | `<list>` | no |
