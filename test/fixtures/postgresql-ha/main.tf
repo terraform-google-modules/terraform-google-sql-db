@@ -98,17 +98,29 @@ module "pg" {
     }]
   }
 
-  user_name     = "tftest"
-  user_password = "foobar"
-  db_name       = "${var.pg_ha_name}"
-  db_charset    = "UTF8"
-  db_collation  = "en_US.UTF8"
+  db_name      = "${var.pg_ha_name}"
+  db_charset   = "UTF8"
+  db_collation = "en_US.UTF8"
 
   additional_databases = [
     {
       name      = "${var.pg_ha_name}-additional"
       charset   = "UTF8"
       collation = "en_US.UTF8"
-    }
+    },
+  ]
+
+  user_name     = "tftest"
+  user_password = "foobar"
+
+  additional_users = [
+    {
+      name     = "tftest2"
+      password = "abcdefg"
+    },
+    {
+      name = "tftest3"
+      host = "localhost"
+    },
   ]
 }
