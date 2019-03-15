@@ -15,7 +15,6 @@
  */
 
 locals {
-  default_user_host        = ""
   ip_configuration_enabled = "${length(keys(var.ip_configuration)) > 0 ? true : false}"
 
   ip_configurations = {
@@ -93,7 +92,15 @@ resource "google_sql_user" "default" {
   name       = "${var.user_name}"
   project    = "${var.project_id}"
   instance   = "${google_sql_database_instance.default.name}"
-  host       = "${var.user_host}"
   password   = "${var.user_password == "" ? random_id.user-password.hex : var.user_password}"
+  depends_on = ["google_sql_database_instance.default"]
+}
+
+resource "google_sql_user" "additional_users" {
+  count      = "${length(var.additional_users)}"
+  project    = "${var.project_id}"
+  name       = "${lookup(var.additional_users[count.index], "name")}"
+  password   = "${lookup(var.additional_users[count.index], "password", random_id.user-password.hex)}"
+  instance   = "${google_sql_database_instance.default.name}"
   depends_on = ["google_sql_database_instance.default"]
 }
