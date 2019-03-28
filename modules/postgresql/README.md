@@ -12,11 +12,13 @@
 | authorized_gae_applications | The authorized gae applications for the Cloud SQL instances | list | `<list>` | no |
 | availability_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `ZONAL` | no |
 | backup_configuration | The backup configuration block of the Cloud SQL resources This argument will be passed through the master instance directrly.<br><br>See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html). | map | `<map>` | no |
+| create_timeout | The optional timout that is applied to limit long database creates. | string | `10m` | no |
 | database_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | list | `<list>` | no |
-| database_version | The database version to use | string | - | yes |
+| database_version | The database version to use | string | n/a | yes |
 | db_charset | The charset for the default database | string | `` | no |
 | db_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `` | no |
 | db_name | The name of the default database to create | string | `default` | no |
+| delete_timeout | The optional timout that is applied to limit long database deletes. | string | `10m` | no |
 | disk_autoresize | Configuration to increase storage size. | string | `true` | no |
 | disk_size | The disk size for the master instance. | string | `10` | no |
 | disk_type | The disk type for the master instance. | string | `PD_SSD` | no |
@@ -24,9 +26,9 @@
 | maintenance_window_day | The day of week (1-7) for the master instance maintenance. | string | `1` | no |
 | maintenance_window_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | string | `23` | no |
 | maintenance_window_update_track | The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`. | string | `canary` | no |
-| name | The name of the Cloud SQL resources | string | - | yes |
+| name | The name of the Cloud SQL resources | string | n/a | yes |
 | pricing_plan | The pricing plan for the master instance. | string | `PER_USE` | no |
-| project_id | The project ID to manage the Cloud SQL resources | string | - | yes |
+| project_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
 | read_replica_activation_policy | The activation policy for the read replica instances.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `ALWAYS` | no |
 | read_replica_availability_type | The availability type for the read replica instances.This is only used to set up high availability for the PostgreSQL instances. Can be either `ZONAL` or `REGIONAL`. | string | `ZONAL` | no |
 | read_replica_configuration | The replica configuration for use in read replica | map | `<map>` | no |
@@ -47,10 +49,11 @@
 | read_replica_zones | The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas. | string | `` | no |
 | region | The region of the Cloud SQL resources | string | `us-central1` | no |
 | tier | The tier for the master instance. | string | `db-f1-micro` | no |
+| update_timeout | The optional timout that is applied to limit long database updates. | string | `10m` | no |
 | user_labels | The key/value labels for the master instances. | map | `<map>` | no |
 | user_name | The name of the default user | string | `default` | no |
 | user_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `` | no |
-| zone | The zone for the master instance, it should be something like: `a`, `c`. | string | - | yes |
+| zone | The zone for the master instance, it should be something like: `a`, `c`. | string | n/a | yes |
 
 ## Outputs
 
