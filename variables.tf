@@ -143,3 +143,9 @@ variable replica_configuration {
   type        = "list"
   default     = []
 }
+   
+variable "availability_type" {
+  description = "The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`."
+  default     = "ZONAL"
+}
+
