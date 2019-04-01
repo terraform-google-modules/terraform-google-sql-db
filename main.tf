@@ -24,6 +24,7 @@ resource "google_sql_database_instance" "default" {
   settings {
     tier                        = "${var.tier}"
     activation_policy           = "${var.activation_policy}"
+    availability_type           = "${var.availability_type}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     disk_autoresize             = "${var.disk_autoresize}"
     backup_configuration        = ["${var.backup_configuration}"]
