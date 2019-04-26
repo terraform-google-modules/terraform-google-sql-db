@@ -58,6 +58,12 @@ resource "google_sql_database_instance" "default" {
   lifecycle {
     ignore_changes = ["disk_size"]
   }
+
+  timeouts {
+    create = "${var.create_timeout}"
+    update = "${var.update_timeout}"
+    delete = "${var.delete_timeout}"
+  }
 }
 
 resource "google_sql_database" "default" {

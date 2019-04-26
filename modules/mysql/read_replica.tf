@@ -69,4 +69,10 @@ resource "google_sql_database_instance" "replicas" {
   lifecycle {
     ignore_changes = ["disk_size"]
   }
+
+  timeouts {
+    create = "${var.create_timeout}"
+    update = "${var.update_timeout}"
+    delete = "${var.delete_timeout}"
+  }
 }
