@@ -31,16 +31,5 @@ be able to accept your pull requests.
 
 ## Style
 
-Format your HCL code with [`hclfmt`](https://github.com/fatih/hclfmt).
-
-Make sure there are no differences between the `hclfmt` output and your .tf files:
-
-```
-diff -B <( cat *.tf ) <( hclfmt *.tf )
-```
-
-Write changes to the files:
-
-```
-hclfmt -w *.tf
-```
+Format your HCL code according to the [Hashicorp guidelines](https://github.com/hashicorp/hcl).
+You can lint your terraform code by running `make check_terraform` and lint the entire repo by running `make`. Note: `make` lints and generates docs.
