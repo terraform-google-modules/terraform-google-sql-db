@@ -1,4 +1,137 @@
-# terraform-google-sql for MySQL
+# terraform-google-sql for Secure MySQL
+
+The module sets up a MySQL installation that relies on Cloud IAM for
+authenticating its users. The use of Cloud IAM centralises identty
+management, access control, and permits to strengthen the credentials
+being used for authentication.
+
+## Cloud IAM Policy Recommendation
+
+We have two levels of access to Cloud SQL: access to the data, and
+administrative access to the server's configurations. There two
+level of access correspond to the `roles/cloudsql.admin` and
+`roles/cloudsql.client`.
+
+`roles/cloudsql.admin`:
+
+-   Modifications to the instance configurations should be very rare, we suggest
+    to assign such permissions only to automation users (e.g.,
+    Terraform run as part of a CI/CD pipeline), or as part of breakglass access
+    to the project's resources.
+
+`roles/cloudsql.client`
+
+-   Service accounts of applications can be bound directly to the role (e.g.,
+    `xxxx-prod@xxxx.iam.gserviceaccont.com`)
+
+-   Humans that need to access the data for debugging purposes should get the
+    access via membership group. Make sure that the group allows only members
+    from within the organization, and that only invited members can join.
+
+You can add the following Cloud IAM snippet to the project policy:
+
+```
+    - auditLogConfigs:
+    - logType: DATA_READ
+    - logType: DATA_WRITE
+    service: cloudsql.googleapis.com
+
+    - members:
+      - group:xxxx-breakglass@groups.your-org.com
+    role: roles/cloudsql.admin
+
+    - members:
+      - group:xxxx-data-access@groups.your-org.com
+      - serviceAccount:xxxx-prod@xxxx.iam.gserviceaccont.com
+    role: roles/cloudsql.client
+```
+
+## Define MySQL users and passwords on your instance
+
+MySQL usernames and passwords are a secondary access control mechanisms (after
+Cloud IAM) that can be used to further restrict access for reliability, safety
+purposes. For example, removing the ability of modifying tables from production
+users that don't need such a capability.
+
+The module, by default, creates users that:
+
+-   only allowed from host ~cloudsqlproxy to ensure that nobody can access the
+    data from outside cloudproxy.
+-   have randomly generated passwords, which can be stored in configuration
+    files. Such passwords can be considered as secure as API Keys rather than
+    strong credentials for access.
+
+To maintain the user list manageable, we suggest to consider MySQL users in a
+way similar to roles rather than individual human users. For example, a simple
+application could define the following roles:
+
+-   **admin**: root-like users with full permissions on all tables and data.
+    This can be used in breakglass emergencies, or as part of the release cycle
+    to perform structural modifications of the DB (e.g., add tables and columns)
+
+-   **app**: permissions required for running the application. Generally, it
+    will have read/write permissions on data, but no ability of performing
+    structural modifications to the DB.
+
+    *   Multiple roles for different apps can be defined if more protection
+        against accidental errors is desired.
+
+-   **readonly**: permissions required for reading data in the database for
+    debugging or customer support.
+
+*   Once users are created, you need to assign them
+    permissions by executing the following commands on a MySQL client.
+    *   The permissions can be customized further is more fine-grained access is
+        appropriate.
+
+```
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'app'@'cloudproxy~%';
+GRANT SELECT, INSERT, UPDATE, LOCK TABLES ON your_app_db.*
+  TO 'app'@'cloudproxy~%';
+
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'readonly'@'cloudproxy~%';
+GRANT SELECT ON your_app_db.* TO 'readonly'@'cloudproxy~%';
+
+FLUSH PRIVILEGES;
+```
+
+
+## SWE / SRE Workflows
+
+The rest of the workflow is implemented by SREs and SWEs using the instance.
+
+### Access the Cloud SQL instance from production
+
+*   Create a service account and assign to it the `roles/cloudsql.client`
+    permissions as described above.
+*   Use the service account in your VMs or GKE node pools, so that it can be
+    used by application as the default service account of the machine.
+*   For GKE and VM, setup CloudSQL proxy as described in the
+    [public documentation](https://cloud.google.com/sql/docs/mysql/sql-proxy).
+*   User and password of the MySQL user can be set as configurations of the
+    application, or GKE secrets.
+
+*   All applications should construct SQL queries following the principles and
+    libraries described in go/safesqltypes to meet Requirement 3.1.
+
+### Human Access to the Cloud SQL instance data.
+
+*   Download and install Cloud SQL proxy on their workstation as
+    described in the
+    [public documentation](https://cloud.google.com/sql/docs/mysql/sql-proxy).
+
+```
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+chmod +x cloud_sql_proxy
+```
+
+```
+mkdir $HOME/mysql_sockets
+./cloud_sql_proxy --dir=$HOME/mysql_sockets --instances=myproject:region:instance
+
+mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
+```
+
 
 [^]: (autogen_docs_start)
 
