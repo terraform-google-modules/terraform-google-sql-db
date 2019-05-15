@@ -5,6 +5,25 @@ authenticating its users. The use of Cloud IAM centralises identty
 management, access control, and permits to strengthen the credentials
 being used for authentication.
 
+The module uses the terraform-google-sql module for MySQL, but controls
+more strictly the type of network connections that are allowed: in all
+cases, network connections need to be mediated via the Cloud SQL Proxy and,
+hence, be authorized via Cloud IAM.
+
+The most secure setup doesn't assign a public IP to the instance 
+(assign_public_ip = "false"), and permits connections only from within the
+given VPC. In such a setup, sharing the instance between projects requires
+setting up Shared VPCs, and direct mysql access from engineering workstations
+is not possible: any debugging needs to be performed via bastion hosts or
+custom tooling running on VMs connected to the VPC.
+
+If assign_public_ip = "true", the instance will be assigned a public IP. However,
+the module ensures that no authorized networks can be configured on the instance,
+so all accesses are need to be mediated via the Cloud SQL proxy and
+authenticated via Cloud IAM. Such a setup still provide strong identity
+guarantees that go beyond the use of only username/password or long-lived
+certificates.
+
 ## Cloud IAM Policy Recommendation
 
 We have two levels of access to Cloud SQL: access to the data, and
@@ -48,15 +67,16 @@ You can add the following Cloud IAM snippet to the project policy:
 
 ## Define MySQL users and passwords on your instance
 
-MySQL usernames and passwords are a secondary access control mechanisms (after
-Cloud IAM) that can be used to further restrict access for reliability, safety
+Because Cloud IAM acts as a primary athentication and authorization mechanism, 
+we consider MySQL usernames and passwords are a secondary access controls that
+can be used to further restrict access for reliability or safety
 purposes. For example, removing the ability of modifying tables from production
 users that don't need such a capability.
 
 The module, by default, creates users that:
 
--   only allowed from host ~cloudsqlproxy to ensure that nobody can access the
-    data from outside cloudproxy.
+-   only allow connections from host ~cloudsqlproxy to ensure that nobody can
+    access data without connecting via the Cloud SQL Proxy.
 -   have randomly generated passwords, which can be stored in configuration
     files. Such passwords can be considered as secure as API Keys rather than
     strong credentials for access.
@@ -111,8 +131,8 @@ The rest of the workflow is implemented by SREs and SWEs using the instance.
 *   User and password of the MySQL user can be set as configurations of the
     application, or GKE secrets.
 
-*   All applications should construct SQL queries following the principles and
-    libraries described in go/safesqltypes to meet Requirement 3.1.
+*   All applications should construct SQL queries following principles and
+    libraries that protect against SQL Injection Attacks.
 
 ### Human Access to the Cloud SQL instance data.
 
@@ -125,13 +145,19 @@ wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_pro
 chmod +x cloud_sql_proxy
 ```
 
+Connections from engineers' workstations is directly possible only if the instance
+has been assiged a public ip (assign_public_ip = "true"). If only Private IPs are
+used, then access needs to be mediated by bastion hosts connected to the same VPC,
+or through custom UI or other tools.
+
+If public IP is avaible, engineers can use the following process to connect:
+
 ```
 mkdir $HOME/mysql_sockets
 ./cloud_sql_proxy --dir=$HOME/mysql_sockets --instances=myproject:region:instance
 
 mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 ```
-
 
 [^]: (autogen_docs_start)
 
