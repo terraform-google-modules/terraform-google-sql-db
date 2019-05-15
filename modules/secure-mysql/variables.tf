@@ -201,11 +201,6 @@ variable "read_replica_user_labels" {
   description = "The key/value labels for the read replica instances."
 }
 
-variable "read_replica_ip_configuration" {
-  description = "The ip configuration for the read replica instances."
-  default     = {}
-}
-
 // Failover replica
 
 variable "failover_replica" {
@@ -286,11 +281,6 @@ variable "failover_replica_maintenance_window_update_track" {
 variable "failover_replica_user_labels" {
   default     = {}
   description = "The key/value labels for the failover replica instance."
-}
-
-variable "failover_replica_ip_configuration" {
-  description = "The ip configuration for the failover replica instances."
-  default     = {}
 }
 
 variable "db_name" {

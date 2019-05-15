@@ -78,6 +78,7 @@ module "secure_mysql" {
   read_replica_maintenance_window_hour         = "${var.read_replica_maintenance_window_hour}"
   read_replica_maintenance_window_update_track = "${var.read_replica_maintenance_window_update_track}"
   read_replica_user_labels                     = "${var.read_replica_user_labels}"
+
   read_replica_ip_configuration = [
     {
       # If the main instance needs a public IP, we'll associate one at the replica too.
@@ -104,6 +105,7 @@ module "secure_mysql" {
   failover_replica_maintenance_window_hour         = "${var.failover_replica_maintenance_window_hour}"
   failover_replica_maintenance_window_update_track = "${var.failover_replica_maintenance_window_update_track}"
   failover_replica_user_labels                     = "${var.failover_replica_user_labels}"
+
   failover_replica_ip_configuration = [
     {
       ipv4Enabled         = "${var.assign_public_ip}"

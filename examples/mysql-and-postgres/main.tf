@@ -83,6 +83,17 @@ module "mysql-db" {
   ]
 }
 
+module "secure-mysql-db" {
+  source           = "../../modules/secure_mysql"
+  name             = "example-mysql-${random_id.name.hex}"
+  database_version = "${var.mysql_version}"
+  project_id       = "${data.google_client_config.current.project}"
+  zone             = "c"
+
+  assign_public_ip = "true"
+  vpc_network      = "${google_compute_network.default.self_link}"
+}
+
 module "postgresql-db" {
   source           = "../../modules/postgresql"
   name             = "example-postgresql-${random_id.name.hex}"

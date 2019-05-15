@@ -10,7 +10,7 @@ more strictly the type of network connections that are allowed: in all
 cases, network connections need to be mediated via the Cloud SQL Proxy and,
 hence, be authorized via Cloud IAM.
 
-The most secure setup doesn't assign a public IP to the instance 
+The most secure setup doesn't assign a public IP to the instance
 (assign_public_ip = "false"), and permits connections only from within the
 given VPC. In such a setup, sharing the instance between projects requires
 setting up Shared VPCs, and direct mysql access from engineering workstations
@@ -67,7 +67,7 @@ You can add the following Cloud IAM snippet to the project policy:
 
 ## Define MySQL users and passwords on your instance
 
-Because Cloud IAM acts as a primary athentication and authorization mechanism, 
+Because Cloud IAM acts as a primary athentication and authorization mechanism,
 we consider MySQL usernames and passwords are a secondary access controls that
 can be used to further restrict access for reliability or safety
 purposes. For example, removing the ability of modifying tables from production
