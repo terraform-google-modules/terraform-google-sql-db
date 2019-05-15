@@ -38,24 +38,32 @@ provider "google" {
   region = "${var.region}"
 }
 
+provider "google-beta" {
+  region = "${var.region}"
+}
+
 variable "network_name" {
   default = "mysql-psql-example"
 }
 
+data "google_client_config" "current" {}
+
+variable "project_id" {}
+
 resource "google_compute_network" "default" {
+  project                 = "${var.project_id}"
   name                    = "${var.network_name}"
   auto_create_subnetworks = "false"
 }
 
 resource "google_compute_subnetwork" "default" {
+  project                  = "${var.project_id}"
   name                     = "${var.network_name}"
   ip_cidr_range            = "10.127.0.0/20"
   network                  = "${google_compute_network.default.self_link}"
   region                   = "${var.region}"
   private_ip_google_access = true
 }
-
-data "google_client_config" "current" {}
 
 resource "random_id" "name" {
   byte_length = 2
@@ -65,10 +73,12 @@ module "mysql-db" {
   source           = "../../modules/mysql"
   name             = "example-mysql-${random_id.name.hex}"
   database_version = "${var.mysql_version}"
-  project_id       = "${data.google_client_config.current.project}"
+  project_id       = "${var.project_id}"
   zone             = "c"
 
   ip_configuration = [{
+    ipv4_enabled = "true"
+
     authorized_networks = [{
       name  = "${var.network_name}"
       value = "${google_compute_subnetwork.default.ip_cidr_range}"
@@ -87,10 +97,12 @@ module "postgresql-db" {
   source           = "../../modules/postgresql"
   name             = "example-postgresql-${random_id.name.hex}"
   database_version = "${var.postgresql_version}"
-  project_id       = "${data.google_client_config.current.project}"
+  project_id       = "${var.project_id}"
   zone             = "c"
 
   ip_configuration = [{
+    ipv4_enabled = "true"
+
     authorized_networks = [{
       name  = "${var.network_name}"
       value = "${google_compute_subnetwork.default.ip_cidr_range}"
@@ -98,8 +110,53 @@ module "postgresql-db" {
   }]
 }
 
+# We define a VPC peering subnet that will be peered with the
+# Cloud SQL instance network. The Cloud SQL instance will
+# have a private IP within the provided range.
+resource "google_compute_global_address" "google-managed-services-default" {
+  provider      = "google-beta"
+  project       = "${var.project_id}"
+  name          = "private-ip-address"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = "${google_compute_network.default.self_link}"
+}
+
+# Creates the peering with the producer network.
+resource "google_service_networking_connection" "private_vpc_connection" {
+  provider                = "google-beta"
+  network                 = "${google_compute_network.default.self_link}"
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = ["${google_compute_global_address.google-managed-services-default.name}"]
+}
+
+module "safer-mysql-db" {
+  source           = "../../modules/safer_mysql"
+  name             = "example-safer-mysql-${random_id.name.hex}"
+  database_version = "${var.mysql_version}"
+  project_id       = "${var.project_id}"
+  zone             = "c"
+
+  # By default, all users will be permitted to connect only via the
+  # Cloud SQL proxy.
+  additional_users = [{
+    name = "app"
+  },
+    {
+      name = "readonly"
+    },
+  ]
+
+  assign_public_ip = "true"
+  vpc_network      = "${google_compute_network.default.self_link}"
+
+  # Optional, but used to enforce ordering in the creation of resources.
+  vpc_peering = "${google_service_networking_connection.private_vpc_connection.self_link}"
+}
+
 output "mysql_conn" {
-  value = "${data.google_client_config.current.project}:${var.region}:${module.mysql-db.instance_name}"
+  value = "${module.mysql-db.instance_connection_name}"
 }
 
 output "mysql_user_pass" {
@@ -107,9 +164,17 @@ output "mysql_user_pass" {
 }
 
 output "psql_conn" {
-  value = "${data.google_client_config.current.project}:${var.region}:${module.postgresql-db.instance_name}"
+  value = "${module.postgresql-db.instance_connection_name}"
 }
 
 output "psql_user_pass" {
   value = "${module.postgresql-db.generated_user_password}"
+}
+
+output "safer_mysql_conn" {
+  value = "${module.safer-mysql-db.instance_connection_name}"
+}
+
+output "safer_mysql_user_pass" {
+  value = "${module.safer-mysql-db.generated_user_password}"
 }

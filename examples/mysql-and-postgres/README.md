@@ -28,8 +28,9 @@ chmod +x cloud_sql_proxy
 ```bash
 MYSQL_CONN_NAME=$(terraform output mysql_conn)
 PSQL_CONN_NAME=$(terraform output psql_conn)
+SAFER_MYSQL_CONN_NAME=$(terraform output safer_mysql_conn)
 
-./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306,${PSQL_CONN_NAME}=tcp:5432 &
+./cloud_sql_proxy -instances=${MYSQL_CONN_NAME}=tcp:3306,${PSQL_CONN_NAME}=tcp:5432,${MYSQL_CONN_NAME}=tcp:6306 &
 ```
 
 3. Get the generated user passwords:
@@ -37,6 +38,7 @@ PSQL_CONN_NAME=$(terraform output psql_conn)
 ```
 echo MYSQL_PASSWORD=$(terraform output mysql_user_pass)
 echo PSQL_PASSWORD=$(terraform output psql_user_pass)
+echo SAFER_MYSQL_PASSWORD=$(terraform output safer_mysql_user_pass)
 ```
 
 4. Test the MySQL connection:
@@ -54,6 +56,14 @@ psql -h 127.0.0.1 --user default
 ```
 
 > When prompted, enter the value of PSQL_PASSWORD
+
+4. Test the MySQL connection to the safer second instance:
+
+```
+mysql -udefault -p --host 127.0.0.1 --port 6306 default
+```
+
+> When prompted, enter the value of SAFER_MYSQL_PASSWORD
 
 ## Cleanup
 

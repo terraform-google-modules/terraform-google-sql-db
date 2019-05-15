@@ -62,7 +62,7 @@ The integration tests for this module leverage kitchen-terraform and kitchen-ins
 You must set up by manually before running the integration test:
 
 ```sh
-for instance in mysql-simple mysql-ha postgresql-simple postgresql-ha; do
+for instance in mysql-simple mysql-ha postgresql-simple postgresql-ha safer-mysql-simple; do
   cp "test/fixtures/$instance/terraform.tfvars.example" "test/fixtures/$instance/terraform.tfvars"
   $EDITOR "test/fixtures/$instance/terraform.tfvars"
 done
@@ -71,6 +71,9 @@ done
 And then, you should pass the service account credentials for running inspec by setting the following environment variables:
 
 - `GOOGLE_APPLICATION_CREDENTIALS`
+
+In addition to `roles/cloudsql.admin`, the service account used for testing needs
+`roles/compute.networkAdmin` to instantiate the VPC required for testing.
 
 The tests will do the following:
 
