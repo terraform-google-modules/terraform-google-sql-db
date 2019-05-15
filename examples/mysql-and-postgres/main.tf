@@ -68,12 +68,12 @@ module "mysql-db" {
   project_id       = "${data.google_client_config.current.project}"
   zone             = "c"
 
-  ip_configuration = [{
+  ip_configuration = {
     authorized_networks = [{
       name  = "${var.network_name}"
       value = "${google_compute_subnetwork.default.ip_cidr_range}"
     }]
-  }]
+  }
 
   database_flags = [
     {
@@ -101,12 +101,12 @@ module "postgresql-db" {
   project_id       = "${data.google_client_config.current.project}"
   zone             = "c"
 
-  ip_configuration = [{
+  ip_configuration = {
     authorized_networks = [{
       name  = "${var.network_name}"
       value = "${google_compute_subnetwork.default.ip_cidr_range}"
     }]
-  }]
+  }
 }
 
 output "mysql_conn" {

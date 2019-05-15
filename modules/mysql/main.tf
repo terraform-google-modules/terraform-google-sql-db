@@ -35,7 +35,8 @@ resource "google_sql_database_instance" "default" {
     activation_policy           = "${var.activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration            = "${local.ip_configurations["${local.ip_configuration_enabled ? "enabled" : "disabled"}"]}"
+#    ip_configuration            = "${local.ip_configurations["${local.ip_configuration_enabled ? "enabled" : "disabled"}"]}"
+    ip_configuration = "${var.ip_configuration}"
 
     disk_autoresize = "${var.disk_autoresize}"
 

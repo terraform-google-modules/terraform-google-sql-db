@@ -35,7 +35,7 @@ module "secure_mysql" {
   user_labels                     = "${var.user_labels}"
   backup_configuration            = "${var.backup_configuration}"
 
-  ip_configuration = [
+  ip_configuration =
     {
       ipv4Enabled = "${var.assign_public_ip}"
 
@@ -44,8 +44,7 @@ module "secure_mysql" {
       authorized_networks = []
 
       private_network = "${var.vpc_network}"
-    },
-  ]
+    }
 
   db_name      = "${var.db_name}"
   db_charset   = "${var.db_charset}"
@@ -79,15 +78,15 @@ module "secure_mysql" {
   read_replica_maintenance_window_update_track = "${var.read_replica_maintenance_window_update_track}"
   read_replica_user_labels                     = "${var.read_replica_user_labels}"
 
-  read_replica_ip_configuration = [
+  read_replica_ip_configuration =
     {
       # If the main instance needs a public IP, we'll associate one at the replica too.
       ipv4Enabled         = "${var.assign_public_ip}"
       authorized_networks = []
 
       private_network = "${var.vpc_network}"
-    },
-  ]
+    }
+
   // Failover replica
   failover_replica                                 = "${var.failover_replica}"
   failover_replica_configuration                   = "${var.failover_replica_configuration}"
@@ -106,14 +105,14 @@ module "secure_mysql" {
   failover_replica_maintenance_window_update_track = "${var.failover_replica_maintenance_window_update_track}"
   failover_replica_user_labels                     = "${var.failover_replica_user_labels}"
 
-  failover_replica_ip_configuration = [
+  failover_replica_ip_configuration =
     {
       ipv4Enabled         = "${var.assign_public_ip}"
       authorized_networks = []
 
       private_network = "${var.vpc_network}"
-    },
-  ]
+    }
+
   create_timeout = "${var.create_timeout}"
   update_timeout = "${var.update_timeout}"
   delete_timeout = "${var.delete_timeout}"
