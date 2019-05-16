@@ -16,70 +16,70 @@
 
 // Master
 output "instance_name" {
-  value       = "${module.secure_mysql.instance_name}"
+  value       = "${module.safer_mysql.instance_name}"
   description = "The instance name for the master instance"
 }
 
 output "instance_connection_name" {
-  value       = "${module.secure_mysql.instance_connection_name}"
+  value       = "${module.safer_mysql.instance_connection_name}"
   description = "The connection name of the master instance to be used in connection strings"
 }
 
 output "instance_self_link" {
-  value       = "${module.secure_mysql.instance_self_link}"
+  value       = "${module.safer_mysql.instance_self_link}"
   description = "The URI of the master instance"
 }
 
 output "instance_service_account_email_address" {
-  value       = "${module.secure_mysql.instance_service_account_email_address}"
+  value       = "${module.safer_mysql.instance_service_account_email_address}"
   description = "The service account email address assigned to the master instance"
 }
 
 // Replicas
 
 output "replicas_instance_connection_names" {
-  value       = "${module.secure_mysql.replicas_instance_connection_names}"
+  value       = "${module.safer_mysql.replicas_instance_connection_names}"
   description = "The connection names of the replica instances to be used in connection strings"
 }
 
 output "replicas_instance_self_links" {
-  value       = "${module.secure_mysql.replicas_instance_self_links}"
+  value       = "${module.safer_mysql.replicas_instance_self_links}"
   description = "The URIs of the replica instances"
 }
 
 output "replicas_instance_service_account_email_addresses" {
-  value       = "${module.secure_mysql.replicas_instance_service_account_email_addresses}"
+  value       = "${module.safer_mysql.replicas_instance_service_account_email_addresses}"
   description = "The service account email addresses assigned to the replica instances"
 }
 
 output "read_replica_instance_names" {
-  value       = "${module.secure_mysql.read_replica_instance_names}"
+  value       = "${module.safer_mysql.read_replica_instance_names}"
   description = "The instance names for the read replica instances"
 }
 
 // Failover Replicas
 output "failover-replica_instance_connection_name" {
-  value       = "${module.secure_mysql.failover-replica_instance_connection_name}"
+  value       = "${module.safer_mysql.failover-replica_instance_connection_name}"
   description = "The connection name of the failover-replica instance to be used in connection strings"
 }
 
 output "failover-replica_instance_self_link" {
-  value       = "${module.secure_mysql.failover-replica_instance_self_link}"
+  value       = "${module.safer_mysql.failover-replica_instance_self_link}"
   description = "The URI of the failover-replica instance"
 }
 
 output "failover-replica_instance_service_account_email_address" {
-  value       = "${module.secure_mysql.failover-replica_instance_service_account_email_address}"
+  value       = "${module.safer_mysql.failover-replica_instance_service_account_email_address}"
   description = "The service account email addresses assigned to the failover-replica instance"
 }
 
 output "failover-replica_instance_name" {
-  value       = "${module.secure_mysql.failover-replica_instance_name}"
+  value       = "${module.safer_mysql.failover-replica_instance_name}"
   description = "The instance name for the failover replica instance"
 }
 
 output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
-  value       = "${module.secure_mysql.generated_user_password}"
+  value       = "${module.safer_mysql.generated_user_password}"
   sensitive   = true
 }

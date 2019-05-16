@@ -1,4 +1,4 @@
-# terraform-google-sql for Secure MySQL
+# terraform-google-sql for a safer MySQL
 
 The module sets up a MySQL installation that relies on Cloud IAM for
 authenticating its users. The use of Cloud IAM centralises identty
@@ -27,7 +27,7 @@ certificates.
 ## Cloud IAM Policy Recommendation
 
 We have two levels of access to Cloud SQL: access to the data, and
-administrative access to the server's configurations. There two
+administrative access to the server's configurations. The two
 level of access correspond to the `roles/cloudsql.admin` and
 `roles/cloudsql.client`.
 
@@ -68,7 +68,7 @@ You can add the following Cloud IAM snippet to the project policy:
 ## Define MySQL users and passwords on your instance
 
 Because Cloud IAM acts as a primary athentication and authorization mechanism,
-we consider MySQL usernames and passwords are a secondary access controls that
+we can consider MySQL usernames and passwords are a secondary access controls that
 can be used to further restrict access for reliability or safety
 purposes. For example, removing the ability of modifying tables from production
 users that don't need such a capability.

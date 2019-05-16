@@ -35,7 +35,11 @@ variable "region" {
 
 // required
 variable "vpc_network" {
-  description = "Existing VPC network to which instances are connected."
+  description = "Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access."
+}
+
+variable "vpc_peering" {
+  description = "google_service_networking_connection object identifying the peering between the producer network and the project subnet. This is not used, but needed to ensure that elements are created in the proper order"
 }
 
 // Master

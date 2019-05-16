@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-locals {
-  ip_configuration_enabled = "${length(keys(var.ip_configuration)) > 0 ? true : false}"
-
-  ip_configurations = {
-    enabled  = "${list(var.ip_configuration)}"
-    disabled = "${list()}"
-  }
-}
-
 resource "google_sql_database_instance" "default" {
   project          = "${var.project_id}"
   name             = "${var.name}"
@@ -35,7 +26,7 @@ resource "google_sql_database_instance" "default" {
     availability_type           = "${var.availability_type}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration            = "${local.ip_configurations["${local.ip_configuration_enabled ? "enabled" : "disabled"}"]}"
+    ip_configuration = ["${var.ip_configuration}"]
 
     disk_autoresize = "${var.disk_autoresize}"
     disk_size       = "${var.disk_size}"
