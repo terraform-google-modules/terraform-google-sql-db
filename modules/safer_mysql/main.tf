@@ -44,8 +44,9 @@ module "safer_mysql" {
       authorized_networks = []
 
       private_network = "${var.vpc_network}"
-    }
+    },
   ]
+
   db_name      = "${var.db_name}"
   db_charset   = "${var.db_charset}"
   db_collation = "${var.db_collation}"
@@ -77,15 +78,14 @@ module "safer_mysql" {
   read_replica_maintenance_window_hour         = "${var.read_replica_maintenance_window_hour}"
   read_replica_maintenance_window_update_track = "${var.read_replica_maintenance_window_update_track}"
   read_replica_user_labels                     = "${var.read_replica_user_labels}"
-
   read_replica_ip_configuration = [
     {
       # If the main instance needs a public IP, we'll associate one at the replica too.
-      ipv4_enabled         = "${var.assign_public_ip}"
+      ipv4_enabled        = "${var.assign_public_ip}"
       authorized_networks = []
 
       private_network = "${var.vpc_network}"
-    }
+    },
   ]
   // Failover replica
   failover_replica                                 = "${var.failover_replica}"
@@ -104,14 +104,13 @@ module "safer_mysql" {
   failover_replica_maintenance_window_hour         = "${var.failover_replica_maintenance_window_hour}"
   failover_replica_maintenance_window_update_track = "${var.failover_replica_maintenance_window_update_track}"
   failover_replica_user_labels                     = "${var.failover_replica_user_labels}"
-
   failover_replica_ip_configuration = [
     {
-      ipv4_enabled         = "${var.assign_public_ip}"
+      ipv4_enabled        = "${var.assign_public_ip}"
       authorized_networks = []
 
       private_network = "${var.vpc_network}"
-    }
+    },
   ]
   create_timeout = "${var.create_timeout}"
   update_timeout = "${var.update_timeout}"

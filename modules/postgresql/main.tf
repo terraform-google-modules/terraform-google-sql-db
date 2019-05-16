@@ -26,7 +26,7 @@ resource "google_sql_database_instance" "default" {
     availability_type           = "${var.availability_type}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration = ["${var.ip_configuration}"]
+    ip_configuration            = ["${var.ip_configuration}"]
 
     disk_autoresize = "${var.disk_autoresize}"
     disk_size       = "${var.disk_size}"

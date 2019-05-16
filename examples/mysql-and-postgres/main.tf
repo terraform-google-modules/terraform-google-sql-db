@@ -48,8 +48,7 @@ variable "network_name" {
 
 data "google_client_config" "current" {}
 
-variable "project_id" {
-}
+variable "project_id" {}
 
 resource "google_compute_network" "default" {
   project                 = "${var.project_id}"
@@ -79,6 +78,7 @@ module "mysql-db" {
 
   ip_configuration = [{
     ipv4_enabled = "true"
+
     authorized_networks = [{
       name  = "${var.network_name}"
       value = "${google_compute_subnetwork.default.ip_cidr_range}"
@@ -107,9 +107,8 @@ module "postgresql-db" {
       name  = "${var.network_name}"
       value = "${google_compute_subnetwork.default.ip_cidr_range}"
     }]
-  }]  
+  }]
 }
-
 
 # We define a VPC peering subnet that will be peered with the
 # Cloud SQL instance network. The Cloud SQL instance will
@@ -141,14 +140,20 @@ module "safer-mysql-db" {
 
   # By default, all users will be permitted to connect only via the
   # Cloud SQL proxy.
-  additional_users = [ { name = "app"}, {name = "readonly"} ]
+  additional_users = [{
+    name = "app"
+  },
+    {
+      name = "readonly"
+    },
+  ]
+
   assign_public_ip = "true"
-  vpc_network  = "${google_compute_network.default.self_link}"
+  vpc_network      = "${google_compute_network.default.self_link}"
 
   # Optional, but used to enforce ordering in the creation of resources.
   vpc_peering = "${google_service_networking_connection.private_vpc_connection.self_link}"
 }
-
 
 output "mysql_conn" {
   value = "${module.mysql-db.instance_connection_name}"
@@ -173,4 +178,3 @@ output "safer_mysql_conn" {
 output "safer_mysql_user_pass" {
   value = "${module.safer-mysql-db.generated_user_password}"
 }
-

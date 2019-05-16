@@ -15,7 +15,7 @@
  */
 
 locals {
-  default_user_host        = "%"
+  default_user_host = "%"
 }
 
 resource "google_sql_database_instance" "default" {
@@ -29,7 +29,7 @@ resource "google_sql_database_instance" "default" {
     activation_policy           = "${var.activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration = ["${var.ip_configuration}"]
+    ip_configuration            = ["${var.ip_configuration}"]
 
     disk_autoresize = "${var.disk_autoresize}"
 

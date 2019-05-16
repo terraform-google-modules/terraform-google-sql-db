@@ -189,7 +189,6 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | failover\_replica\_disk\_autoresize | Configuration to increase storage size. | string | `"true"` | no |
 | failover\_replica\_disk\_size | The disk size for the failover replica instance. | string | `"10"` | no |
 | failover\_replica\_disk\_type | The disk type for the failover replica instance. | string | `"PD_SSD"` | no |
-| failover\_replica\_ip\_configuration | The ip configuration for the failover replica instances. | map | `<map>` | no |
 | failover\_replica\_maintenance\_window\_day | The day of week (1-7) for the failover replica instance maintenance. | string | `"1"` | no |
 | failover\_replica\_maintenance\_window\_hour | The hour of day (0-23) maintenance window for the failover replica instance maintenance. | string | `"23"` | no |
 | failover\_replica\_maintenance\_window\_update\_track | The update track of maintenance window for the failover replica instance maintenance. Can be either `canary` or `stable`. | string | `"canary"` | no |
@@ -211,7 +210,6 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | read\_replica\_disk\_autoresize | Configuration to increase storage size. | string | `"true"` | no |
 | read\_replica\_disk\_size | The disk size for the read replica instances. | string | `"10"` | no |
 | read\_replica\_disk\_type | The disk type for the read replica instances. | string | `"PD_SSD"` | no |
-| read\_replica\_ip\_configuration | The ip configuration for the read replica instances. | map | `<map>` | no |
 | read\_replica\_maintenance\_window\_day | The day of week (1-7) for the read replica instances maintenance. | string | `"1"` | no |
 | read\_replica\_maintenance\_window\_hour | The hour of day (0-23) maintenance window for the read replica instances maintenance. | string | `"23"` | no |
 | read\_replica\_maintenance\_window\_update\_track | The update track of maintenance window for the read replica instances maintenance. Can be either `canary` or `stable`. | string | `"canary"` | no |
@@ -227,7 +225,8 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | user\_labels | The key/value labels for the master instances. | map | `<map>` | no |
 | user\_name | The name of the default user | string | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `""` | no |
-| vpc\_network | Existing VPC network to which instances are connected. | string | n/a | yes |
+| vpc\_network | Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access. | string | n/a | yes |
+| vpc\_peering | google_service_networking_connection object identifying the peering between the producer network and the project subnet. This is not used, but needed to ensure that elements are created in the proper order | string | n/a | yes |
 | zone | The zone for the master instance, it should be something like: `a`, `c`. | string | n/a | yes |
 
 ## Outputs
