@@ -35,6 +35,7 @@ resource "google_sql_database_instance" "default" {
     pricing_plan                = "${var.pricing_plan}"
     replication_type            = "${var.replication_type}"
     database_flags              = ["${var.database_flags}"]
+    availability_type           = "${var.availability_type}"
   }
 
   replica_configuration = ["${var.replica_configuration}"]
