@@ -122,26 +122,25 @@ variable "backup_configuration" {
 
 variable "ip_configuration" {
   description = "The ip_configuration settings subblock"
-  type        = list(string)
   default     = [{}]
 }
 
 variable "location_preference" {
   description = "The location_preference settings subblock"
-  type        = list(string)
-  default     = []
+  type        = map(string)
+  default     = {}
 }
 
 variable "maintenance_window" {
   description = "The maintenance_window settings subblock"
-  type        = list(string)
-  default     = []
+  type        = map(string)
+  default     = {}
 }
 
 variable "replica_configuration" {
   description = "The optional replica_configuration block for the database instance"
-  type        = list(string)
-  default     = []
+  type        = map(string)
+  default     = {}
 }
 
 variable "availability_type" {
