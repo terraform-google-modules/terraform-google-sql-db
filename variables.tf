@@ -80,7 +80,6 @@ variable "activation_policy" {
 
 variable "authorized_gae_applications" {
   description = "A list of Google App Engine (GAE) project names that are allowed to access this instance."
-  type        = list(string)
   default     = []
 }
 
@@ -111,12 +110,11 @@ variable "replication_type" {
 
 variable "database_flags" {
   description = "List of Cloud SQL flags that are applied to the database server"
-  default     = {}
+  default     = []
 }
 
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
-  type        = map(string)
   default     = {}
 }
 
@@ -127,19 +125,16 @@ variable "ip_configuration" {
 
 variable "location_preference" {
   description = "The location_preference settings subblock"
-  type        = map(string)
   default     = {}
 }
 
 variable "maintenance_window" {
   description = "The maintenance_window settings subblock"
-  type        = map(string)
   default     = {}
 }
 
 variable "replica_configuration" {
   description = "The optional replica_configuration block for the database instance"
-  type        = map(string)
   default     = {}
 }
 

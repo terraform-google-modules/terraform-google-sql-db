@@ -90,18 +90,19 @@ resource "google_sql_database_instance" "master" {
     disk_type        = var.disk_type
     pricing_plan     = var.pricing_plan
     replication_type = var.replication_type
-    dynamic "database_flags" {
-      for_each = [var.database_flags]
-      content {
-        # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
-        # which keys might be set in maps assigned here, so it has
-        # produced a comprehensive set here. Consider simplifying
-        # this after confirming which keys can be set in practice.
-
-        name  = lookup(database_flags.value, "name", null)
-        value = lookup(database_flags.value, "value", null)
-      }
-    }
+        // This will require more checking if database_flags was set before we declare the dynamic block
+//    dynamic "database_flags" {
+//      for_each = [var.database_flags]
+//      content {
+//        # TF-UPGRADE-TODO: The automatic upgrade tool can't predict
+//        # which keys might be set in maps assigned here, so it has
+//        # produced a comprehensive set here. Consider simplifying
+//        # this after confirming which keys can be set in practice.
+//
+//        name  = lookup(database_flags.value, "name", null)
+//        value = lookup(database_flags.value, "value", null)
+//      }
+//    }
     availability_type = var.availability_type
   }
 
