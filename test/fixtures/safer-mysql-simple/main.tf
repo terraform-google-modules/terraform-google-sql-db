@@ -72,7 +72,7 @@ module "safer-mysql-db" {
   # Cloud SQL proxy.
   additional_users = [{
     name = "app"
-  },
+    },
     {
       name = "readonly"
     },
