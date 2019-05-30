@@ -111,7 +111,7 @@ variable "replication_type" {
 
 variable "database_flags" {
   description = "List of Cloud SQL flags that are applied to the database server"
-  default     = []
+  default     = {}
 }
 
 variable "backup_configuration" {
