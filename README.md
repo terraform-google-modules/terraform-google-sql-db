@@ -72,8 +72,7 @@ And then, you should pass the service account credentials for running inspec by 
 
 - `GOOGLE_APPLICATION_CREDENTIALS`
 
-In addition to `roles/cloudsql.admin`, the service account used for testing needs
-`roles/compute.networkAdmin` to instantiate the VPC required for testing.
+The project used for testing needs the Cloud Resource Manager API service enabled, and the service account should be assigned `roles/compute.networkAdmin` (in addition to `roles/cloudsql.admin`) to instantiate the VPC required in the tests.
 
 The tests will do the following:
 

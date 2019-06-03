@@ -120,7 +120,7 @@ EOF
 
 variable "assign_public_ip" {
   description = "Set tp true if the master instance should also have a public IP."
-  default     = "false"
+  default     = false
 }
 
 // Read Replicas
@@ -324,15 +324,15 @@ variable "additional_users" {
 
 variable create_timeout {
   description = "The optional timout that is applied to limit long database creates."
-  default     = "10m"
+  default     = "15m"
 }
 
 variable update_timeout {
   description = "The optional timout that is applied to limit long database updates."
-  default     = "10m"
+  default     = "15m"
 }
 
 variable delete_timeout {
   description = "The optional timout that is applied to limit long database deletes."
-  default     = "10m"
+  default     = "15m"
 }

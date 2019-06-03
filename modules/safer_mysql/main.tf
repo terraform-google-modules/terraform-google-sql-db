@@ -54,7 +54,7 @@ module "safer_mysql" {
   additional_databases = "${var.additional_databases}"
   user_name            = "${var.user_name}"
 
-  # All MySQL users can connect only via the Cloud SQL Proxy.
+  // All MySQL users can connect only via the Cloud SQL Proxy.
   user_host = "cloudsqlproxy~%"
 
   user_password    = "${var.user_password}"
@@ -80,7 +80,7 @@ module "safer_mysql" {
   read_replica_user_labels                     = "${var.read_replica_user_labels}"
   read_replica_ip_configuration = [
     {
-      # If the main instance needs a public IP, we'll associate one at the replica too.
+      // If the main instance needs a public IP, we'll associate one at the replica too.
       ipv4_enabled        = "${var.assign_public_ip}"
       authorized_networks = []
 

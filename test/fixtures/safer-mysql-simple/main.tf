@@ -25,7 +25,7 @@ provider "google-beta" {
 resource "google_compute_network" "default" {
   project                 = "${var.project}"
   name                    = "default-vpc"
-  auto_create_subnetworks = "false"
+  auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "default" {
