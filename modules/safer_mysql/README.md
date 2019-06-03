@@ -11,13 +11,13 @@ cases, network connections need to be mediated via the Cloud SQL Proxy and,
 hence, be authorized via Cloud IAM.
 
 The most secure setup doesn't assign a public IP to the instance
-(assign_public_ip = "false"), and permits connections only from within the
+(assign_public_ip = false), and permits connections only from within the
 given VPC. In such a setup, sharing the instance between projects requires
 setting up Shared VPCs, and direct mysql access from engineering workstations
 is not possible: any debugging needs to be performed via bastion hosts or
 custom tooling running on VMs connected to the VPC.
 
-If assign_public_ip = "true", the instance will be assigned a public IP. However,
+If assign_public_ip = true, the instance will be assigned a public IP. However,
 the module ensures that no authorized networks can be configured on the instance,
 so all accesses are need to be mediated via the Cloud SQL proxy and
 authenticated via Cloud IAM. Such a setup still provide strong identity

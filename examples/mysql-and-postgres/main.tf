@@ -53,7 +53,7 @@ variable "project_id" {}
 resource "google_compute_network" "default" {
   project                 = "${var.project_id}"
   name                    = "${var.network_name}"
-  auto_create_subnetworks = "false"
+  auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "default" {
@@ -77,7 +77,7 @@ module "mysql-db" {
   zone             = "c"
 
   ip_configuration = [{
-    ipv4_enabled = "true"
+    ipv4_enabled = true
 
     authorized_networks = [{
       name  = "${var.network_name}"
@@ -101,7 +101,7 @@ module "postgresql-db" {
   zone             = "c"
 
   ip_configuration = [{
-    ipv4_enabled = "true"
+    ipv4_enabled = true
 
     authorized_networks = [{
       name  = "${var.network_name}"
@@ -148,7 +148,7 @@ module "safer-mysql-db" {
     },
   ]
 
-  assign_public_ip = "true"
+  assign_public_ip = true
   vpc_network      = "${google_compute_network.default.self_link}"
 
   # Optional, but used to enforce ordering in the creation of resources.
