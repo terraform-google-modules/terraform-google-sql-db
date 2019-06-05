@@ -150,7 +150,7 @@ has been assiged a public ip (assign_public_ip = "true"). If only Private IPs ar
 used, then access needs to be mediated by bastion hosts connected to the same VPC,
 or through custom UI or other tools.
 
-If public IP is avaible, engineers can use the following process to connect:
+If public IP is available, engineers can use the following process to connect:
 
 ```
 mkdir $HOME/mysql_sockets
