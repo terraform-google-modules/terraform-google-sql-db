@@ -119,7 +119,7 @@ EOF
 }
 
 variable "assign_public_ip" {
-  description = "Set tp true if the master instance should also have a public IP."
+  description = "Set to true if the master instance should also have a public IP (less secure)."
   default     = false
 }
 
