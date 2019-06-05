@@ -1,7 +1,7 @@
 # terraform-google-sql for a safer MySQL
 
 The module sets up a MySQL installation that relies on Cloud IAM for
-authenticating its users. The use of Cloud IAM centralises identty
+authenticating its users. The use of Cloud IAM centralizes identity
 management, access control, and permits to strengthen the credentials
 being used for authentication.
 
