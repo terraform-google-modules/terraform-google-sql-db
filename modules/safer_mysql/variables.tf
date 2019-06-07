@@ -30,7 +30,6 @@ variable "database_version" {
 // required
 variable "region" {
   description = "The region of the Cloud SQL resources"
-  default     = "us-central1"
 }
 
 // required
@@ -94,7 +93,7 @@ variable "maintenance_window_hour" {
 
 variable "maintenance_window_update_track" {
   description = "The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`."
-  default     = "canary"
+  default     = "stable"
 }
 
 variable "database_flags" {
