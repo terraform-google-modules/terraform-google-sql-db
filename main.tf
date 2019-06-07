@@ -24,21 +24,21 @@ resource "google_sql_database_instance" "default" {
   settings {
     tier                        = "${var.tier}"
     activation_policy           = "${var.activation_policy}"
-    authorized_gae_applications = ["${var.authorized_gae_applications}"]
+    authorized_gae_applications = "${var.authorized_gae_applications}"
     disk_autoresize             = "${var.disk_autoresize}"
-    backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration            = ["${var.ip_configuration}"]
-    location_preference         = ["${var.location_preference}"]
-    maintenance_window          = ["${var.maintenance_window}"]
+    backup_configuration        = "${var.backup_configuration}"
+    ip_configuration            = "${var.ip_configuration}"
+    location_preference         = "${var.location_preference}"
+    maintenance_window          = "${var.maintenance_window}"
     disk_size                   = "${var.disk_size}"
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
     replication_type            = "${var.replication_type}"
-    database_flags              = ["${var.database_flags}"]
+    database_flags              = "${var.database_flags}"
     availability_type           = "${var.availability_type}"
   }
 
-  replica_configuration = ["${var.replica_configuration}"]
+  replica_configuration = "${var.replica_configuration}"
 }
 
 resource "google_sql_database" "default" {
