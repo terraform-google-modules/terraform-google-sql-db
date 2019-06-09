@@ -42,3 +42,8 @@ suites:
       name: terraform
       root_module_directory: test/fixtures/safer-mysql-simple
       command_timeout: 1800
+  - name: private-service-access
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/private-service-access
+      command_timeout: 1800

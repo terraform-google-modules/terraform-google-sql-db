@@ -168,7 +168,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | activation\_policy | The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
 | additional\_databases | A list of databases to be created in your cluster | list | `<list>` | no |
 | additional\_users | A list of users to be created in your cluster | list | `<list>` | no |
-| assign\_public\_ip | Set tp true if the master instance should also have a public IP. | string | `"false"` | no |
+| assign\_public\_ip | Set to true if the master instance should also have a public IP (less secure). | string | `"false"` | no |
 | authorized\_gae\_applications | The list of authorized App Engine project names | list | `<list>` | no |
 | backup\_configuration | The backup configuration block of the Cloud SQL resources This argument will be passed through the master instance directrly.<br><br>See [more details](https://www.terraform.io/docs/providers/google/r/sql_database_instance.html). | map | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"15m"` | no |
@@ -199,8 +199,9 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | failover\_replica\_zone | The zone for the failover replica instance, it should be something like: `a`, `c`. | string | `""` | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | string | `"1"` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | string | `"23"` | no |
-| maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | string | `"canary"` | no |
+| maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | string | `"stable"` | no |
 | name | The name of the Cloud SQL resources | string | n/a | yes |
+| peering\_completed | Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering. | string | `""` | no |
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
 | read\_replica\_activation\_policy | The activation policy for the read replica instances. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
@@ -219,14 +220,13 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | read\_replica\_tier | The tier for the read replica instances. | string | `""` | no |
 | read\_replica\_user\_labels | The key/value labels for the read replica instances. | map | `<map>` | no |
 | read\_replica\_zones | The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas. | string | `""` | no |
-| region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
+| region | The region of the Cloud SQL resources | string | n/a | yes |
 | tier | The tier for the master instance. | string | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | string | `"15m"` | no |
 | user\_labels | The key/value labels for the master instances. | map | `<map>` | no |
 | user\_name | The name of the default user | string | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `""` | no |
 | vpc\_network | Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access. | string | n/a | yes |
-| vpc\_peering | google_service_networking_connection object identifying the peering between the producer network and the project subnet. This is not used, but needed to ensure that elements are created in the proper order | string | n/a | yes |
 | zone | The zone for the master instance, it should be something like: `a`, `c`. | string | n/a | yes |
 
 ## Outputs

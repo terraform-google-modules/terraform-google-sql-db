@@ -37,8 +37,9 @@ variable "vpc_network" {
   description = "Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access."
 }
 
-variable "vpc_peering" {
-  description = "google_service_networking_connection object identifying the peering between the producer network and the project subnet. This is not used, but needed to ensure that elements are created in the proper order"
+variable "peering_completed" {
+  description = "Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering."
+  default     = ""
 }
 
 // Master

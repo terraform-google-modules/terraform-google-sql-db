@@ -110,25 +110,11 @@ module "postgresql-db" {
   }]
 }
 
-# We define a VPC peering subnet that will be peered with the
-# Cloud SQL instance network. The Cloud SQL instance will
-# have a private IP within the provided range.
-resource "google_compute_global_address" "google-managed-services-default" {
-  provider      = "google-beta"
-  project       = "${var.project_id}"
-  name          = "private-ip-address"
-  purpose       = "VPC_PEERING"
-  address_type  = "INTERNAL"
-  prefix_length = 16
-  network       = "${google_compute_network.default.self_link}"
-}
-
-# Creates the peering with the producer network.
-resource "google_service_networking_connection" "private_vpc_connection" {
-  provider                = "google-beta"
-  network                 = "${google_compute_network.default.self_link}"
-  service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = ["${google_compute_global_address.google-managed-services-default.name}"]
+// We define a connection with the VPC of the Cloud SQL instance.
+module "private-service-access" {
+  source      = "../../modules/private_service_access"
+  project_id  = "${var.project_id}"
+  vpc_network = "${google_compute_network.default.self_link}"
 }
 
 module "safer-mysql-db" {
@@ -136,6 +122,7 @@ module "safer-mysql-db" {
   name             = "example-safer-mysql-${random_id.name.hex}"
   database_version = "${var.mysql_version}"
   project_id       = "${var.project_id}"
+  region           = "${var.region}"
   zone             = "c"
 
   # By default, all users will be permitted to connect only via the
@@ -151,8 +138,8 @@ module "safer-mysql-db" {
   assign_public_ip = true
   vpc_network      = "${google_compute_network.default.self_link}"
 
-  # Optional, but used to enforce ordering in the creation of resources.
-  vpc_peering = "${google_service_networking_connection.private_vpc_connection.self_link}"
+  // Used to enforce ordering in the creation of resources.
+  peering_completed = "${module.private-service-access.peering_completed}"
 }
 
 output "mysql_conn" {

@@ -29,6 +29,14 @@ In order to operate with the Service Account you must activate the following API
 
 - Cloud SQL API
 
+In order to use Private Service Access, required for using Private IPs, you must activate
+the following APIs on the project where your VPC resides:
+
+- Cloud SQL Admin API
+- Compute Engine API
+- Service Networking API
+- Cloud Resource Manager API
+
 #### Service Account Credentials
 
 You can pass the service account credentials into this module by setting the following environment variables:

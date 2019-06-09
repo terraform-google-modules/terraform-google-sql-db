@@ -32,8 +32,15 @@ module "safer_mysql" {
   maintenance_window_hour         = "${var.maintenance_window_hour}"
   maintenance_window_update_track = "${var.maintenance_window_update_track}"
   database_flags                  = "${var.database_flags}"
-  user_labels                     = "${var.user_labels}"
-  backup_configuration            = "${var.backup_configuration}"
+
+  // Define a label to force a dependency to the creation of the network peering.
+  // Substitute this with a module dependency once the module is migrated to
+  // Terraform 0.12
+  user_labels = "${merge(
+    map("tf_dependency", var.peering_completed),
+    var.user_labels)}"
+
+  backup_configuration = "${var.backup_configuration}"
 
   ip_configuration = [
     {

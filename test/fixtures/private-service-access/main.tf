@@ -24,7 +24,7 @@ provider "google-beta" {
 
 resource "google_compute_network" "default" {
   project                 = "${var.project}"
-  name                    = "test-vpc-safer-${var.safer_mysql_simple_name}"
+  name                    = "test-vpc-private-access"
   auto_create_subnetworks = false
 }
 
@@ -32,31 +32,4 @@ module "private-service-access" {
   source      = "../../../modules/private_service_access"
   project_id  = "${var.project}"
   vpc_network = "${google_compute_network.default.name}"
-}
-
-module "safer-mysql-db" {
-  source     = "../../../modules/safer_mysql"
-  name       = "${var.safer_mysql_simple_name}"
-  project_id = "${var.project}"
-
-  database_version = "MYSQL_5_7"
-  region           = "us-central1"
-  zone             = "c"
-  tier             = "db-n1-standard-1"
-
-  // By default, all users will be permitted to connect only via the
-  // Cloud SQL proxy.
-  additional_users = [{
-    name = "app"
-  },
-    {
-      name = "readonly"
-    },
-  ]
-
-  assign_public_ip = "true"
-  vpc_network      = "${google_compute_network.default.self_link}"
-
-  // Optional: used to enforce ordering in the creation of resources.
-  peering_completed = "${module.private-service-access.peering_completed}"
 }
