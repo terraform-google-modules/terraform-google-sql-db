@@ -41,5 +41,5 @@ describe google_sql_database_instance(project: project_id, database: basename) d
 
   it { expect(settings).to include(expected_settings) }
   it { expect(location_preference).to include(kind: "sql#locationPreference", zone: "us-central1-c") }
-  it { expect(maintenance_window).to include(kind: "sql#maintenanceWindow", day: 1, hour: 23, update_track: "canary") }
+  it { expect(maintenance_window).to include(kind: "sql#maintenanceWindow", day: 1, hour: 23, update_track: "stable") }
 end
