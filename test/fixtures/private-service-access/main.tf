@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-variable "credentials_file_path" {
-  description = "Service account json auth path"
+provider "google" {
+  credentials = "${file(var.credentials_file_path)}"
 }
 
-variable "project" {
-  description = "The project to run tests against"
+provider "google-beta" {
+  credentials = "${file(var.credentials_file_path)}"
 }
 
-variable "pg_simple_name" {
-  description = "The name for Cloud SQL instance"
+resource "google_compute_network" "default" {
+  project                 = "${var.project}"
+  name                    = "test-vpc-private-access"
+  auto_create_subnetworks = false
+}
+
+module "private-service-access" {
+  source      = "../../../modules/private_service_access"
+  project_id  = "${var.project}"
+  vpc_network = "${google_compute_network.default.name}"
 }

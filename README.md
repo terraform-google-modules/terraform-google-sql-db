@@ -29,6 +29,14 @@ In order to operate with the Service Account you must activate the following API
 
 - Cloud SQL API
 
+In order to use Private Service Access, required for using Private IPs, you must activate
+the following APIs on the project where your VPC resides:
+
+- Cloud SQL Admin API
+- Compute Engine API
+- Service Networking API
+- Cloud Resource Manager API
+
 #### Service Account Credentials
 
 You can pass the service account credentials into this module by setting the following environment variables:
@@ -62,7 +70,7 @@ The integration tests for this module leverage kitchen-terraform and kitchen-ins
 You must set up by manually before running the integration test:
 
 ```sh
-for instance in mysql-simple mysql-ha postgresql-simple postgresql-ha; do
+for instance in mysql-simple mysql-ha postgresql-simple postgresql-ha safer-mysql-simple; do
   cp "test/fixtures/$instance/terraform.tfvars.example" "test/fixtures/$instance/terraform.tfvars"
   $EDITOR "test/fixtures/$instance/terraform.tfvars"
 done
@@ -71,6 +79,8 @@ done
 And then, you should pass the service account credentials for running inspec by setting the following environment variables:
 
 - `GOOGLE_APPLICATION_CREDENTIALS`
+
+The project used for testing needs the Cloud Resource Manager API service enabled, and the service account should be assigned `roles/compute.networkAdmin` (in addition to `roles/cloudsql.admin`) to instantiate the VPC required in the tests.
 
 The tests will do the following:
 

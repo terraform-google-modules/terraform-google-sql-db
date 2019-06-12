@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-variable "credentials_file_path" {
-  description = "Service account json auth path"
+output "project_id" {
+  value = "${var.project}"
 }
 
-variable "project" {
-  description = "The project to run tests against"
-}
-
-variable "pg_simple_name" {
-  description = "The name for Cloud SQL instance"
+output "reserved_range" {
+  value = "${module.private-service-access.google_compute_global_address_name}"
 }

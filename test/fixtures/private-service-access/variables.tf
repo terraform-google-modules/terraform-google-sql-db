@@ -21,7 +21,3 @@ variable "credentials_file_path" {
 variable "project" {
   description = "The project to run tests against"
 }
-
-variable "pg_simple_name" {
-  description = "The name for Cloud SQL instance"
-}
