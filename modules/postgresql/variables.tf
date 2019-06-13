@@ -115,7 +115,10 @@ variable "authorized_gae_applications" {
 
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
-  default     = {}
+
+  default = {
+    ipv4_enabled = "true"
+  }
 }
 
 variable "read_replica_size" {
