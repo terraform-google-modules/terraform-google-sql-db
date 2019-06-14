@@ -115,10 +115,6 @@ module "pg" {
 
   additional_users = [
     {
-      name     = "tftest1"
-      password = "raboof"
-    },
-    {
       name     = "tftest2"
       password = "abcdefg"
     },
