@@ -111,7 +111,10 @@ EOF
 
 variable "ip_configuration" {
   description = "The ip configuration for the master instance."
-  default     = {}
+
+  default = {
+    ipv4_enabled = "true"
+  }
 }
 
 // Read Replicas

@@ -18,8 +18,8 @@ locals {
   ip_configuration_enabled = "${length(keys(var.ip_configuration)) > 0 ? true : false}"
 
   ip_configurations = {
-    enabled  = "${list(var.ip_configuration)}"
-    disabled = "${list()}"
+    enabled  = "${var.ip_configuration}"
+    disabled = "${map()}"
   }
 }
 
