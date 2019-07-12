@@ -114,7 +114,7 @@ module "postgresql-db" {
 module "private-service-access" {
   source      = "../../modules/private_service_access"
   project_id  = "${var.project_id}"
-  vpc_network = "${google_compute_network.default.self_link}"
+  vpc_network = "${google_compute_network.default.name}"
 }
 
 module "safer-mysql-db" {
