@@ -130,6 +130,11 @@ variable "read_replica_configuration" {
   default     = {}
 }
 
+variable "read_replica_name_suffix" {
+  description = "The optional suffix to add to the read instance name"
+  default     = ""
+}
+
 variable "read_replica_size" {
   description = "The size of read replicas"
   default     = 0
@@ -210,6 +215,11 @@ variable "read_replica_user_labels" {
 variable "failover_replica" {
   description = "Specify true if the failover instance is required"
   default     = false
+}
+
+variable "failover_replica_name_suffix" {
+  description = "The optional suffix to add to the failover instance name"
+  default     = ""
 }
 
 variable "failover_replica_configuration" {

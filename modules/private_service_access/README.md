@@ -16,19 +16,19 @@ that are connected to the same VPC.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| address | First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you. | string | `""` | no |
-| ip\_version | IP Version for the allocation. Can be IPV4 or IPV6. | string | `""` | no |
+| address | First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you. | string | `` | no |
+| ip_version | IP Version for the allocation. Can be IPV4 or IPV6. | string | `` | no |
 | labels | The key/value labels for the IP range allocated to the peered network. | map | `<map>` | no |
-| prefix\_length | Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16. | string | `"16"` | no |
-| project\_id | The project ID of the VPC network to peer. This can be a shared VPC host projec. | string | n/a | yes |
-| vpc\_network | Name of the VPC network to peer. | string | n/a | yes |
+| prefix_length | Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16. | string | `16` | no |
+| project_id | The project ID of the VPC network to peer. This can be a shared VPC host projec. | string | - | yes |
+| vpc_network | Name of the VPC network to peer. | string | - | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | address | First IP of the reserved range. |
-| google\_compute\_global\_address\_name | URL of the reserved range. |
-| peering\_completed | Use for enforce ordering between resource creation |
+| google_compute_global_address_name | URL of the reserved range. |
+| peering_completed | Use for enforce ordering between resource creation |
 
 [^]: (autogen_docs_end)

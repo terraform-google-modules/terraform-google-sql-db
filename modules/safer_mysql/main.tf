@@ -70,6 +70,7 @@ module "safer_mysql" {
   // Read replica
 
   read_replica_configuration                   = "${var.read_replica_configuration}"
+  read_replica_name_suffix                     = "${var.read_replica_name_suffix}"
   read_replica_size                            = "${var.read_replica_size}"
   read_replica_tier                            = "${var.read_replica_tier}"
   read_replica_zones                           = "${var.read_replica_zones}"
@@ -96,6 +97,7 @@ module "safer_mysql" {
   ]
   // Failover replica
   failover_replica                                 = "${var.failover_replica}"
+  failover_replica_name_suffix                     = "${var.failover_replica_name_suffix}"
   failover_replica_configuration                   = "${var.failover_replica_configuration}"
   failover_replica_tier                            = "${var.failover_replica_tier}"
   failover_replica_zone                            = "${var.failover_replica_zone}"

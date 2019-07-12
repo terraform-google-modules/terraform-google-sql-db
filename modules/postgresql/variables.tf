@@ -126,6 +126,11 @@ variable "read_replica_size" {
   default     = 0
 }
 
+variable "read_replica_name_suffix" {
+  description = "The optional suffix to add to the read instance name"
+  default     = ""
+}
+
 variable "read_replica_tier" {
   description = "The tier for the read replica instances."
   default     = ""
