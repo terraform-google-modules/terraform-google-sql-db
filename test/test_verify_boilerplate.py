@@ -14,10 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Please note that this file was generated from
+# [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template).
+# Please make sure to contribute relevant changes upstream!
+
 ''' A simple test for the verify_boilerplate python script.
 This will create a set of test files, both valid and invalid,
 and confirm that the has_valid_header call returns the correct
 value.
+
 It also checks the number of files that are found by the
 get_files call.
 '''
@@ -39,6 +44,7 @@ class AllTestCase(unittest.TestCase):
         """
         A utility method that creates test files, and adds them to
         the cases that will be tested.
+
         Args:
             filename: (string) the file name (path) to be created.
             content: (list of strings) the contents of the file.
@@ -56,10 +62,12 @@ class AllTestCase(unittest.TestCase):
         """
         Creates 2 test files for .tf, .xml, .go, etc and one for
         Dockerfile, and Makefile.
+
         The reason for the difference is that Makefile and Dockerfile
         don't have an extension. These would be substantially more
         difficult to create negative test cases, unless the files
         were written, deleted, and re-written.
+
         Args:
             tmp_path: (string) the path in which to create the files
             extension: (string) the file extension

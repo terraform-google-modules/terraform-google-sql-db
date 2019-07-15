@@ -18,6 +18,10 @@
 # This is based on existing work
 # https://github.com/kubernetes/test-infra/blob/master/hack
 # /verify_boilerplate.py
+
+# Please note that this file was generated from
+# [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template).
+# Please make sure to contribute relevant changes upstream!
 from __future__ import print_function
 import argparse
 import glob
@@ -28,8 +32,10 @@ import sys
 
 def get_args():
     """Parses command line arguments.
+
     Configures and runs argparse.ArgumentParser to extract command line
     arguments.
+
     Returns:
         An argparse.Namespace containing the arguments parsed from the
         command line
@@ -54,8 +60,10 @@ def get_args():
 def get_refs(ARGS):
     """Converts the directory of boilerplate files into a map keyed by file
     extension.
+
     Reads each boilerplate file's contents into an array, then adds that array
     to a map keyed by the file extension.
+
     Returns:
         A map of boilerplate lines, keyed by file extension. For example,
         boilerplate.py.txt would result in the k,v pair {".py": py_lines} where
@@ -78,14 +86,17 @@ def get_refs(ARGS):
 # pylint: disable=too-many-locals
 def has_valid_header(filename, refs, regexs):
     """Test whether a file has the correct boilerplate header.
+
     Tests each file against the boilerplate stored in refs for that file type
     (based on extension), or by the entire filename (eg Dockerfile, Makefile).
     Some heuristics are applied to remove build tags and shebangs, but little
     variance in header formatting is tolerated.
+
     Args:
         filename: A string containing the name of the file to test
         refs: A map of boilerplate headers, keyed by file extension
         regexs: a map of compiled regex objects used in verifying boilerplate
+
     Returns:
         True if the file has the correct boilerplate header, otherwise returns
         False.
@@ -128,9 +139,12 @@ def has_valid_header(filename, refs, regexs):
 
 def get_file_extension(filename):
     """Extracts the extension part of a filename.
+
     Identifies the extension as everything after the last period in filename.
+
     Args:
         filename: string containing the filename
+
     Returns:
         A string containing the extension in lowercase
     """
@@ -147,12 +161,15 @@ SKIPPED_DIRS = [
 def normalize_files(files):
     """Extracts the files that require boilerplate checking from the files
     argument.
+
     A new list will be built. Each path from the original files argument will
     be added unless it is within one of SKIPPED_DIRS. All relative paths will
     be converted to absolute paths by prepending the root_dir path parsed from
     the command line, or its default value.
+
     Args:
         files: a list of file path strings
+
     Returns:
         A modified copy of the files list where any any path in a skipped
         directory is removed, and all paths have been made absolute.
@@ -170,15 +187,19 @@ def normalize_files(files):
 
 def get_files(extensions, ARGS):
     """Generates a list of paths whose boilerplate should be verified.
+
     If a list of file names has been provided on the command line, it will be
     treated as the initial set to search. Otherwise, all paths within rootdir
     will be discovered and used as the initial set.
+
     Once the initial set of files is identified, it is normalized via
     normalize_files() and further stripped of any file name whose extension is
     not in extensions.
+
     Args:
         extensions: a list of file extensions indicating which file types
                     should have their boilerplate verified
+
     Returns:
         A list of absolute file paths
     """
@@ -209,11 +230,13 @@ def get_files(extensions, ARGS):
 
 def get_regexs():
     """Builds a map of regular expressions used in boilerplate validation.
+
     There are two scenarios where these regexes are used. The first is in
     validating the date referenced is the boilerplate, by ensuring it is an
     acceptable year. The second is in identifying non-boilerplate elements,
     like shebangs and compiler hints that should be ignored when validating
     headers.
+
     Returns:
         A map of compiled regular expression objects, keyed by mnemonic.
     """
@@ -234,6 +257,7 @@ def get_regexs():
 
 def main(args):
     """Identifies and verifies files that should have the desired boilerplate.
+
     Retrieves the lists of files to be validated and tests each one in turn.
     If all files contain correct boilerplate, this function terminates
     normally. Otherwise it prints the name of each non-conforming file and

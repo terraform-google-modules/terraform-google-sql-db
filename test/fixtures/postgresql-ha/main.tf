@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_file_path)}"
+provider "google" {}
+
+
+resource "random_id" "instance_name_suffix" {
+  byte_length = 5
+}
+
+locals {
+  /*
+    Random instance name needed because:
+    "You cannot reuse an instance name for up to a week after you have deleted an instance."
+    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
+  */
+  instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
 }
 
 module "pg" {
   source           = "../../../modules/postgresql"
-  name             = "${var.pg_ha_name}"
+  name = "${local.instance_name}"
   project_id       = "${var.project}"
   database_version = "POSTGRES_9_6"
   region           = "us-central1"

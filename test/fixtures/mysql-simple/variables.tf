@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-variable "credentials_file_path" {
-  description = "Service account json auth path"
-}
-
 variable "project" {
   description = "The project to run tests against"
 }

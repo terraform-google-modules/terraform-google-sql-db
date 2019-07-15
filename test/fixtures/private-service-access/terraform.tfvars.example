@@ -19,5 +19,4 @@
 
 ## These values you *MUST* modify to match your environment
 
-credentials_file_path="../../../credentials.json"
 project="tf-proj"

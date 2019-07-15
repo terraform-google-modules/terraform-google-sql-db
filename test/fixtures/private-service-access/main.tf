@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_file_path)}"
-}
+provider "google" {}
 
-provider "google-beta" {
-  credentials = "${file(var.credentials_file_path)}"
-}
+provider "google-beta" {}
 
 resource "google_compute_network" "default" {
   project                 = "${var.project}"

@@ -17,6 +17,17 @@
 #   DO NOT REMOVE ANY OF THE VARIABLES                          #
 #################################################################
 
-## These values you *MUST* modify to match your environment
-project="tf-proj"
-safer_mysql_simple_name="tf-safer-mysql-simple"
+## These values are default for integration tests, you might change values for your environment if needed
+
+mysql_simple_name = "tf-mysql-simple"
+
+mysql_ha_name = "tf-mysql-ha"
+mysql_ha_name = "tf-mysql-ha"
+mysql_ha_external_ip_range = "192.10.10.10/32"
+
+pg_simple_name = "tf-pg-simple"
+
+pg_ha_name = "tf-pg-ha"
+pg_ha_external_ip_range = "192.10.10.10/32"
+
+safer_mysql_simple_name = "tf-safer-mysql-simple"
