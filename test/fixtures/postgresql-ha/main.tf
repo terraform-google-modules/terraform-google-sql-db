@@ -60,7 +60,7 @@ module "pg" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix                     = "test"
+  read_replica_name_suffix                     = "-test"
   read_replica_size                            = 3
   read_replica_tier                            = "db-custom-2-13312"
   read_replica_zones                           = "a,b,c"

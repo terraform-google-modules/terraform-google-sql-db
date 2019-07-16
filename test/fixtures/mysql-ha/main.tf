@@ -60,7 +60,7 @@ module "mysql" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix                     = "test"
+  read_replica_name_suffix                     = "-test"
   read_replica_size                            = 3
   read_replica_tier                            = "db-n1-standard-1"
   read_replica_zones                           = "a,b,c"
@@ -99,7 +99,7 @@ module "mysql" {
 
   // Failover replica configurations
   failover_replica                                 = true
-  failover_replica_name_suffix                     = "test"
+  failover_replica_name_suffix                     = "-test"
   failover_replica_tier                            = "db-n1-standard-1"
   failover_replica_zone                            = "a"
   failover_replica_activation_policy               = "ALWAYS"

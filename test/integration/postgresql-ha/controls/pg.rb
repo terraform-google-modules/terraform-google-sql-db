@@ -59,7 +59,7 @@ describe google_sql_database_instance(project: project_id, database: basename) d
 end
 
 %i[a b c].each_with_index do |zone, index|
-  name = "#{basename}-replica#{index}"
+  name = "#{basename}-replica-test#{index}"
   describe google_sql_database_instance(project: project_id, database: name) do
     let(:expected_settings) {
       {

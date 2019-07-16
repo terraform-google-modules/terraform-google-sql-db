@@ -57,7 +57,7 @@ describe google_sql_database_instance(project: project_id, database: basename) d
   it { expect(user_labels).to include(foo: "bar") }
 end
 
-describe google_sql_database_instance(project: project_id, database: "#{basename}-failover") do
+describe google_sql_database_instance(project: project_id, database: "#{basename}-failover-test") do
   let(:expected_settings) {
     {
       activation_policy: "ALWAYS",
@@ -93,7 +93,7 @@ describe google_sql_database_instance(project: project_id, database: "#{basename
 end
 
 %i[a b c].each_with_index do |zone, index|
-  name = "#{basename}-replica#{index}"
+  name = "#{basename}-replica-test#{index}"
   describe google_sql_database_instance(project: project_id, database: name) do
     let(:expected_settings) {
       {
