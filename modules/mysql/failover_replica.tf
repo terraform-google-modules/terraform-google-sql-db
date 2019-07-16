@@ -17,7 +17,7 @@
 resource "google_sql_database_instance" "failover-replica" {
   count                 = "${var.failover_replica ? 1 : 0}"
   project               = "${var.project_id}"
-  name                  = "${var.name}-failover"
+  name                  = "${var.name}-failover${var.failover_replica_name_suffix}"
   database_version      = "${var.database_version}"
   region                = "${var.region}"
   master_instance_name  = "${google_sql_database_instance.default.name}"
