@@ -201,7 +201,10 @@ variable "read_replica_user_labels" {
 
 variable "read_replica_ip_configuration" {
   description = "The ip configuration for the read replica instances."
-  default     = {}
+
+  default = {
+    ipv4_enabled = "true"
+  }
 }
 
 // Failover replica
@@ -288,7 +291,10 @@ variable "failover_replica_user_labels" {
 
 variable "failover_replica_ip_configuration" {
   description = "The ip configuration for the failover replica instances."
-  default     = {}
+
+  default = {
+    ipv4_enabled = "true"
+  }
 }
 
 variable "db_name" {

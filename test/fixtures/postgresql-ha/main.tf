@@ -90,7 +90,7 @@ module "pg" {
 
   read_replica_ip_configuration {
     ipv4_enabled = true
-    require_ssl  = true
+    require_ssl  = false
 
     authorized_networks = [{
       name  = "${var.project}-cidr"

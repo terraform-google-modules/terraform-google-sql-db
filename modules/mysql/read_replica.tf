@@ -27,6 +27,13 @@ locals {
   mod_by        = "${local.zones_enabled ? length(local.read_replica_zones) : 1}"
 
   zones = "${local.zone_mapping["${local.zones_enabled ? "enabled" : "disabled"}"]}"
+
+  read_replica_ip_configuration_enabled = "${length(keys(var.read_replica_ip_configuration)) > 0 ? true : false}"
+
+  read_replica_ip_configurations = {
+    enabled  = "${var.read_replica_ip_configuration}"
+    disabled = "${map()}"
+  }
 }
 
 resource "google_sql_database_instance" "replicas" {
@@ -41,7 +48,7 @@ resource "google_sql_database_instance" "replicas" {
   settings {
     tier                        = "${var.read_replica_tier}"
     activation_policy           = "${var.read_replica_activation_policy}"
-    ip_configuration            = ["${local.ip_configurations["${local.ip_configuration_enabled ? "enabled" : "disabled"}"]}"]
+    ip_configuration            = ["${local.read_replica_ip_configurations["${local.read_replica_ip_configuration_enabled ? "enabled" : "disabled"}"]}"]
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
 
     crash_safe_replication = "${var.read_replica_crash_safe_replication}"

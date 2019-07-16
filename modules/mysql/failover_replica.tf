@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
+locals {
+  failover_replica_ip_configuration_enabled = "${length(keys(var.failover_replica_ip_configuration)) > 0 ? true : false}"
+
+  failover_replica_ip_configurations = {
+    enabled  = "${var.failover_replica_ip_configuration}"
+    disabled = "${map()}"
+  }
+}
+
 resource "google_sql_database_instance" "failover-replica" {
   count                 = "${var.failover_replica ? 1 : 0}"
   project               = "${var.project_id}"
@@ -27,7 +36,7 @@ resource "google_sql_database_instance" "failover-replica" {
     tier                        = "${var.failover_replica_tier}"
     activation_policy           = "${var.failover_replica_activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
-    ip_configuration            = ["${var.failover_replica_ip_configuration}"]
+    ip_configuration            = ["${local.failover_replica_ip_configurations["${local.failover_replica_ip_configuration_enabled ? "enabled" : "disabled"}"]}"]
 
     crash_safe_replication = "${var.failover_replica_crash_safe_replication}"
     disk_autoresize        = "${var.failover_replica_disk_autoresize}"
