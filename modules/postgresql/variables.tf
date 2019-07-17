@@ -213,7 +213,10 @@ variable "read_replica_replication_type" {
 
 variable "read_replica_ip_configuration" {
   description = "The ip configuration for the read instances."
-  default     = {}
+
+  default = {
+    ipv4_enabled = "true"
+  }
 }
 
 variable "db_name" {

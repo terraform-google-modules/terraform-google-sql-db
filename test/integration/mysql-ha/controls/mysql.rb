@@ -85,7 +85,7 @@ describe google_sql_database_instance(project: project_id, database: "#{basename
   its(:gce_zone)         { should eq 'us-central1-a' }
 
   it { expect(settings).to include(expected_settings) }
-  it { expect(ip_configuration).to include(authorized_networks: [{kind: 'sql#aclEntry', name: "#{project_id}-cidr", value: authorized_network}], ipv4_enabled: true, require_ssl: true) }
+  it { expect(ip_configuration).to include(authorized_networks: [{kind: 'sql#aclEntry', name: "#{project_id}-cidr", value: authorized_network}], ipv4_enabled: true, require_ssl: false) }
   it { expect(database_flags).to include(name: "long_query_time", value: "1") }
   it { expect(location_preference).to include(kind: "sql#locationPreference", zone: "us-central1-a") }
   it { expect(maintenance_window).to include(kind: "sql#maintenanceWindow", day: 3, hour: 20, update_track: "canary") }
@@ -122,7 +122,7 @@ end
     its(:gce_zone)         { should eq "us-central1-#{zone}" }
 
     it { expect(settings).to include(expected_settings) }
-    it { expect(ip_configuration).to include(authorized_networks: [{kind: 'sql#aclEntry', name: "#{project_id}-cidr", value: authorized_network}], ipv4_enabled: true, require_ssl: true) }
+    it { expect(ip_configuration).to include(authorized_networks: [{kind: 'sql#aclEntry', name: "#{project_id}-cidr", value: authorized_network}], ipv4_enabled: true, require_ssl: false) }
     it { expect(database_flags).to include(name: "long_query_time", value: "1") }
     it { expect(location_preference).to include(kind: "sql#locationPreference", zone: "us-central1-#{zone}") }
     it { expect(maintenance_window).to include(kind: "sql#maintenanceWindow", day: 1, hour: 22, update_track: "stable") }
