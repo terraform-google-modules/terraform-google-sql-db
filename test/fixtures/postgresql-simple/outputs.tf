@@ -19,5 +19,5 @@ output "project_id" {
 }
 
 output "name" {
-  value = "${var.pg_simple_name}"
+  value = "${local.instance_name}"
 }

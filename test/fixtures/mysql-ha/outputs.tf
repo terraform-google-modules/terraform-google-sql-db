@@ -19,7 +19,7 @@ output "project_id" {
 }
 
 output "name" {
-  value = "${var.mysql_ha_name}"
+  value = "${local.instance_name}"
 }
 
 output "authorized_network" {

@@ -19,7 +19,6 @@
 
 ## These values you *MUST* modify to match your environment
 
-credentials_file_path="../../../credentials.json"
 project="tf-proj"
 mysql_ha_name="tf-mysql-ha"
 mysql_ha_external_ip_range="x.x.x.x/32"

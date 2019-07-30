@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_file_path)}"
+provider "google" {}
+
+provider "google-beta" {}
+
+resource "random_id" "instance_name_suffix" {
+  byte_length = 5
 }
 
-provider "google-beta" {
-  credentials = "${file(var.credentials_file_path)}"
+locals {
+  /*
+    Random instance name needed because:
+    "You cannot reuse an instance name for up to a week after you have deleted an instance."
+    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
+  */
+  instance_name = "${var.safer_mysql_simple_name}-${random_id.instance_name_suffix.hex}"
 }
+
 
 resource "google_compute_network" "default" {
   project                 = "${var.project}"
@@ -36,7 +46,7 @@ module "private-service-access" {
 
 module "safer-mysql-db" {
   source     = "../../../modules/safer_mysql"
-  name       = "${var.safer_mysql_simple_name}"
+  name = "${local.instance_name}"
   project_id = "${var.project}"
 
   database_version = "MYSQL_5_7"

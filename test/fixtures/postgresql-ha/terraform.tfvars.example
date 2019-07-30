@@ -19,7 +19,6 @@
 
 ## These values you *MUST* modify to match your environment
 
-credentials_file_path="../../../credentials.json"
 project="tf-proj"
 pg_ha_name="tf-pg-ha"
 pg_ha_external_ip_range="x.x.x.x/32"
