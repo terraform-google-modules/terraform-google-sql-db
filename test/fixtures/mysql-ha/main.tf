@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-provider "google" {}
+provider "google" {
+}
 
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
@@ -29,11 +30,10 @@ locals {
   instance_name = "${var.mysql_ha_name}-${random_id.instance_name_suffix.hex}"
 }
 
-
 module "mysql" {
   source           = "../../../modules/mysql"
-  name = "${local.instance_name}"
-  project_id       = "${var.project}"
+  name             = local.instance_name
+  project_id       = var.project
   database_version = "MYSQL_5_7"
   region           = "us-central1"
 
@@ -55,17 +55,19 @@ module "mysql" {
     foo = "bar"
   }
 
-  ip_configuration {
-    ipv4_enabled = true
-    require_ssl  = true
-
-    authorized_networks = [{
-      name  = "${var.project}-cidr"
-      value = "${var.mysql_ha_external_ip_range}"
-    }]
+  ip_configuration = {
+    ipv4_enabled    = true
+    require_ssl     = true
+    private_network = null
+    authorized_networks = [
+      {
+        name  = "${var.project}-cidr"
+        value = var.mysql_ha_external_ip_range
+      },
+    ]
   }
 
-  backup_configuration {
+  backup_configuration = {
     enabled            = true
     binary_log_enabled = true
     start_time         = "20:55"
@@ -89,24 +91,37 @@ module "mysql" {
     bar = "baz"
   }
 
-  read_replica_database_flags = [{
-    name  = "long_query_time"
-    value = "1"
-  }]
+  read_replica_database_flags = [
+    {
+      name  = "long_query_time"
+      value = "1"
+    },
+  ]
 
-  read_replica_configuration {
-    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
-    connect_retry_interval = 5
+  read_replica_configuration = {
+    dump_file_path            = "gs://${var.project}.appspot.com/tmp"
+    connect_retry_interval    = 5
+    ca_certificate            = null
+    client_certificate        = null
+    client_key                = null
+    failover_target           = null
+    master_heartbeat_period   = null
+    password                  = null
+    ssl_cipher                = null
+    username                  = null
+    verify_server_certificate = null
   }
 
-  read_replica_ip_configuration {
-    ipv4_enabled = true
-    require_ssl  = false
-
-    authorized_networks = [{
-      name  = "${var.project}-cidr"
-      value = "${var.mysql_ha_external_ip_range}"
-    }]
+  read_replica_ip_configuration = {
+    ipv4_enabled    = true
+    require_ssl     = false
+    private_network = null
+    authorized_networks = [
+      {
+        name  = "${var.project}-cidr"
+        value = var.mysql_ha_external_ip_range
+      },
+    ]
   }
 
   // Failover replica configurations
@@ -127,32 +142,47 @@ module "mysql" {
     baz = "boo"
   }
 
-  failover_replica_database_flags = [{
-    name  = "long_query_time"
-    value = "1"
-  }]
+  failover_replica_database_flags = [
+    {
+      name  = "long_query_time"
+      value = "1"
+    },
+  ]
 
-  failover_replica_configuration {
-    dump_file_path         = "gs://${var.project}.appspot.com/tmp"
-    connect_retry_interval = 5
+  failover_replica_configuration = {
+    dump_file_path            = "gs://${var.project}.appspot.com/tmp"
+    connect_retry_interval    = 5
+    ca_certificate            = null
+    client_certificate        = null
+    client_key                = null
+    failover_target           = null
+    master_heartbeat_period   = null
+    password                  = null
+    ssl_cipher                = null
+    username                  = null
+    verify_server_certificate = null
   }
 
-  failover_replica_ip_configuration {
-    ipv4_enabled = true
-    require_ssl  = false
-
-    authorized_networks = [{
-      name  = "${var.project}-cidr"
-      value = "${var.mysql_ha_external_ip_range}"
-    }]
+  failover_replica_ip_configuration = {
+    ipv4_enabled    = true
+    require_ssl     = false
+    private_network = null
+    authorized_networks = [
+      {
+        name  = "${var.project}-cidr"
+        value = var.mysql_ha_external_ip_range
+      },
+    ]
   }
 
-  db_name      = "${var.mysql_ha_name}"
+  db_name      = var.mysql_ha_name
   db_charset   = "utf8mb4"
   db_collation = "utf8mb4_general_ci"
 
   additional_databases = [
     {
+      project   = var.project
+      instance  = local.instance_name
       name      = "${var.mysql_ha_name}-additional"
       charset   = "utf8mb4"
       collation = "utf8mb4_general_ci"
@@ -164,12 +194,19 @@ module "mysql" {
 
   additional_users = [
     {
+      project  = var.project
       name     = "tftest2"
       password = "abcdefg"
+      host     = "localhost"
+      instance = local.instance_name
     },
     {
-      name = "tftest3"
-      host = "localhost"
+      project  = var.project
+      name     = "tftest3"
+      password = "abcdefg"
+      host     = "localhost"
+      instance = local.instance_name
     },
   ]
 }
+

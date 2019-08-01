@@ -18,3 +18,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 [#56]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/56
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
+
+- Added support for Terraform 0.12 [#53]
+
+[#53]: https://github.com/GoogleCloudPlatform/terraform-google-sql-db/pull/53

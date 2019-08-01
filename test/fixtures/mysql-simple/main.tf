@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-provider "google" {}
+provider "google" {
+}
 
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
@@ -31,11 +32,12 @@ locals {
 
 module "mysql" {
   source           = "../../../modules/mysql"
-  name = "${local.instance_name}"
-  project_id       = "${var.project}"
+  name             = local.instance_name
+  project_id       = var.project
   database_version = "MYSQL_5_7"
   region           = "us-central1"
 
   tier = "db-n1-standard-1"
   zone = "c"
 }
+

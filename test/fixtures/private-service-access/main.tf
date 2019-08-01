@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-provider "google" {}
+provider "google" {
+  version = "~> 2.7.0"
+}
 
-provider "google-beta" {}
+provider "google-beta" {
+  version = "~> 2.7.0"
+}
 
 resource "google_compute_network" "default" {
-  project                 = "${var.project}"
+  project                 = var.project
   name                    = "test-vpc-private-access"
   auto_create_subnetworks = false
 }
 
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
-  project_id  = "${var.project}"
-  vpc_network = "${google_compute_network.default.name}"
+  project_id  = var.project
+  vpc_network = google_compute_network.default.name
 }
+

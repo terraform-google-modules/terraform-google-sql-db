@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,28 +19,27 @@
 // have a private IP within the provided range.
 // https://cloud.google.com/vpc/docs/configure-private-services-access
 resource "google_compute_global_address" "google-managed-services-range" {
-  provider      = "google-beta"
-  project       = "${var.project_id}"
+  provider      = google-beta
+  project       = var.project_id
   name          = "google-managed-services-${var.vpc_network}"
   purpose       = "VPC_PEERING"
-  address       = "${var.address}"
-  prefix_length = "${var.prefix_length}"
-  ip_version    = "${var.ip_version}"
-  labels        = "${var.labels}"
+  address       = var.address
+  prefix_length = var.prefix_length
+  ip_version    = var.ip_version
+  labels        = var.labels
   address_type  = "INTERNAL"
-  network       = "${var.vpc_network}"
+  network       = var.vpc_network
 }
 
 # Creates the peering with the producer network.
 resource "google_service_networking_connection" "private_service_access" {
-  provider                = "google-beta"
-  network                 = "${google_compute_global_address.google-managed-services-range.network}"
+  provider                = google-beta
+  network                 = google_compute_global_address.google-managed-services-range.network
   service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = ["${google_compute_global_address.google-managed-services-range.name}"]
+  reserved_peering_ranges = [google_compute_global_address.google-managed-services-range.name]
 }
 
 resource "null_resource" "dependency_setter" {
-  depends_on = [
-    "google_service_networking_connection.private_service_access",
-  ]
+  depends_on = [google_service_networking_connection.private_service_access]
 }
+
