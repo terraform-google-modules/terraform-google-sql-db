@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,10 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-# Please note that this file was generated from
-# [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template).
-# Please make sure to contribute relevant changes upstream!
 
 ''' A simple test for the verify_boilerplate python script.
 This will create a set of test files, both valid and invalid,
@@ -83,8 +79,8 @@ class AllTestCase(unittest.TestCase):
             # Invalid test cases for non-*file files (.tf|.py|.sh|.yaml|.xml..)
             invalid_header = []
             for line in header_template:
-                if "2018" in line:
-                    invalid_header.append(line.replace('2018', 'YEAR'))
+                if "2019" in line:
+                    invalid_header.append(line.replace('2019', 'YEAR'))
                 else:
                     invalid_header.append(line)
             invalid_header.append(content)

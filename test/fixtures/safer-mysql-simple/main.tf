@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-provider "google" {}
+provider "google" {
+}
 
-provider "google-beta" {}
+provider "google-beta" {
+}
 
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
@@ -31,23 +33,22 @@ locals {
   instance_name = "${var.safer_mysql_simple_name}-${random_id.instance_name_suffix.hex}"
 }
 
-
 resource "google_compute_network" "default" {
-  project                 = "${var.project}"
+  project                 = var.project
   name                    = "test-vpc-safer-${var.safer_mysql_simple_name}"
   auto_create_subnetworks = false
 }
 
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
-  project_id  = "${var.project}"
-  vpc_network = "${google_compute_network.default.name}"
+  project_id  = var.project
+  vpc_network = google_compute_network.default.name
 }
 
 module "safer-mysql-db" {
   source     = "../../../modules/safer_mysql"
-  name = "${local.instance_name}"
-  project_id = "${var.project}"
+  name       = local.instance_name
+  project_id = var.project
 
   database_version = "MYSQL_5_7"
   region           = "us-central1"
@@ -56,17 +57,27 @@ module "safer-mysql-db" {
 
   // By default, all users will be permitted to connect only via the
   // Cloud SQL proxy.
-  additional_users = [{
-    name = "app"
-  },
+  additional_users = [
     {
-      name = "readonly"
+      project  = var.project
+      name     = "app"
+      password = "PaSsWoRd"
+      host     = "localhost"
+      instance = local.instance_name
+    },
+    {
+      project  = var.project
+      name     = "readonly"
+      password = "PaSsWoRd"
+      host     = "localhost"
+      instance = local.instance_name
     },
   ]
 
   assign_public_ip = "true"
-  vpc_network      = "${google_compute_network.default.self_link}"
+  vpc_network      = google_compute_network.default.self_link
 
   // Optional: used to enforce ordering in the creation of resources.
-  peering_completed = "${module.private-service-access.peering_completed}"
+  peering_completed = module.private-service-access.peering_completed
 }
+

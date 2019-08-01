@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-provider "google" {}
+provider "google" {
+}
 
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
@@ -29,14 +30,14 @@ locals {
   instance_name = "${var.pg_simple_name}-${random_id.instance_name_suffix.hex}"
 }
 
-
 module "pg" {
   source           = "../../../modules/postgresql"
-  name = "${local.instance_name}"
-  project_id       = "${var.project}"
+  name             = local.instance_name
+  project_id       = var.project
   database_version = "POSTGRES_9_6"
   region           = "us-central1"
 
   tier = "db-f1-micro"
   zone = "c"
 }
+
