@@ -25,6 +25,11 @@ output "instance_address" {
   description = "The IPv4 addesses assigned for the master instance"
 }
 
+output private_address {
+  value       = "${google_sql_database_instance.default.private_ip_address}"
+  description = "The private IP address assigned for the master instance"
+}
+
 output "instance_first_ip_address" {
   value       = "${google_sql_database_instance.default.first_ip_address}"
   description = "The first IPv4 address of the addresses assigned."

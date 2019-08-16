@@ -42,6 +42,11 @@ variable "zone" {
   description = "The zone for the master instance, it should be something like: `a`, `c`."
 }
 
+variable "peering_completed" {
+  description = "Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering."
+  default     = ""
+}
+
 variable "activation_policy" {
   description = "The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   default     = "ALWAYS"
