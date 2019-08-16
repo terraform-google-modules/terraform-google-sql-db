@@ -62,9 +62,9 @@
 | Name | Description |
 |------|-------------|
 | generated\_user\_password | The auto generated default user password if not input password was provided |
+| instance\_address | The IPv4 addesses assigned for the master instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
-| instance\_ip\_address | The IPv4 addesses assigned for the master instance |
 | instance\_name | The instance name for the master instance |
 | instance\_self\_link | The URI of the master instance |
 | instance\_server\_ca\_cert | The CA certificate information used to connect to the SQL instance via SSL |
