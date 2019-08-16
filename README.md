@@ -8,6 +8,10 @@ This module consists of the following submodules:
 
 See more details in each module's README.
 
+## Root module
+
+The root module has been deprecated. Please switch to using one of the submodules.
+
 ## Requirements
 
 ### Installation Dependencies
