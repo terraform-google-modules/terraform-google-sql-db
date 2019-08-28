@@ -21,6 +21,10 @@ resource "google_sql_database_instance" "master" {
   database_version     = "${var.database_version}"
   master_instance_name = "${var.master_instance_name}"
 
+  lifecycle {
+    ignore_changes        = ["settings.0.disk_size"]
+  }
+
   settings {
     tier                        = "${var.tier}"
     activation_policy           = "${var.activation_policy}"
