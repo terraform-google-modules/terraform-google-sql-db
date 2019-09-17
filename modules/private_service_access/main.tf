@@ -29,6 +29,7 @@ resource "google_compute_global_address" "google-managed-services-range" {
   labels        = var.labels
   address_type  = "INTERNAL"
   network       = var.vpc_network
+  description   = var.description
 }
 
 # Creates the peering with the producer network.

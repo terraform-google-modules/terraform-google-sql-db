@@ -48,3 +48,9 @@ variable "labels" {
   default     = {}
 }
 
+variable "description" {
+  description = "Description of the IP range allocated to the peered network."
+  type        = string
+  default     = ""
+}
+
