@@ -122,7 +122,7 @@ resource "random_id" "user-password" {
     name = google_sql_database_instance.default.name
   }
 
-  byte_length = 8
+  byte_length = var.generated_user_password_byte_length
   depends_on  = [google_sql_database_instance.default]
 }
 
