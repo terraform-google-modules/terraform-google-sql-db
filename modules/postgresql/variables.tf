@@ -328,6 +328,12 @@ variable "user_password" {
   default     = ""
 }
 
+variable "generated_user_password_byte_length" {
+  description = "If a user_password is not set, the generated password will be this many bytes long."
+  type        = number
+  default     = 8
+}
+
 variable "additional_users" {
   description = "A list of users to be created in your cluster"
   type = list(object({
