@@ -130,9 +130,9 @@ variable "backup_configuration" {
     start_time         = string
   })
   default = {
-    binary_log_enabled = false
-    enabled            = false
-    start_time         = ""
+    binary_log_enabled = null
+    enabled            = null
+    start_time         = null
   }
 }
 
@@ -258,7 +258,10 @@ variable "read_replica_configuration" {
     connect_retry_interval = number
     dump_file_path         = string
   })
-  default = null
+  default = {
+    connect_retry_interval = null
+    dump_file_path         = null
+  }
 }
 
 variable "read_replica_user_labels" {

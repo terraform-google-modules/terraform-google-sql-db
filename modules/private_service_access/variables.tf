@@ -47,4 +47,3 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
-

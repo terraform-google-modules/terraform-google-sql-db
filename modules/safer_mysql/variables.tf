@@ -137,9 +137,9 @@ variable "backup_configuration" {
     start_time         = string
   })
   default = {
-    binary_log_enabled = false
-    enabled            = false
-    start_time         = ""
+    binary_log_enabled = null
+    enabled            = null
+    start_time         = null
   }
 }
 
@@ -482,4 +482,3 @@ variable "delete_timeout" {
   type        = string
   default     = "15m"
 }
-
