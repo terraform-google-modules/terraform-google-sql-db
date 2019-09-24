@@ -117,10 +117,9 @@ module "safer_mysql" {
     ipv4_enabled        = var.assign_public_ip
     authorized_networks = []
     private_network     = var.vpc_network
-    require_ssl         = false
+    require_ssl         = true
   }
   create_timeout = var.create_timeout
   update_timeout = var.update_timeout
   delete_timeout = var.delete_timeout
 }
-
