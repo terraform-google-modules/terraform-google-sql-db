@@ -25,21 +25,21 @@ In order to execute this module you must have a Service Account with the followi
 
 #### Roles
 
-- `roles/cloudsql.admin`
+- Cloud SQL Admin: `roles/cloudsql.admin`
 
 ### Enable APIs
 
 In order to operate with the Service Account you must activate the following APIs on the project where the Service Account was created:
 
-- Cloud SQL API
+- Cloud SQL Admin API: `sqladmin.googleapis.com`
 
 In order to use Private Service Access, required for using Private IPs, you must activate
 the following APIs on the project where your VPC resides:
 
-- Cloud SQL Admin API
-- Compute Engine API
-- Service Networking API
-- Cloud Resource Manager API
+- Cloud SQL Admin API: `sqladmin.googleapis.com`
+- Compute Engine API: `compute.googleapis.com`
+- Service Networking API: `servicenetworking.googleapis.com`
+- Cloud Resource Manager API: `cloudresourcemanager.googleapis.com`
 
 #### Service Account Credentials
 
