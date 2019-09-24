@@ -57,63 +57,63 @@ output "instance_service_account_email_address" {
 
 // Replicas
 output "replicas_instance_first_ip_addresses" {
-  value       = [google_sql_database_instance.replicas.*.ip_address]
+  value       = google_sql_database_instance.replicas[*].ip_address
   description = "The first IPv4 addresses of the addresses assigned for the replica instances"
 }
 
 output "replicas_instance_connection_names" {
-  value       = [google_sql_database_instance.replicas.*.connection_name]
+  value       = google_sql_database_instance.replicas[*].connection_name
   description = "The connection names of the replica instances to be used in connection strings"
 }
 
 output "replicas_instance_self_links" {
-  value       = [google_sql_database_instance.replicas.*.self_link]
+  value       = google_sql_database_instance.replicas[*].self_link
   description = "The URIs of the replica instances"
 }
 
 output "replicas_instance_server_ca_certs" {
-  value       = [google_sql_database_instance.replicas.*.server_ca_cert]
+  value       = google_sql_database_instance.replicas[*].server_ca_cert
   description = "The CA certificates information used to connect to the replica instances via SSL"
 }
 
 output "replicas_instance_service_account_email_addresses" {
-  value       = [google_sql_database_instance.replicas.*.service_account_email_address]
+  value       = google_sql_database_instance.replicas[*].service_account_email_address
   description = "The service account email addresses assigned to the replica instances"
 }
 
 output "read_replica_instance_names" {
-  value       = google_sql_database_instance.replicas.*.name
+  value       = google_sql_database_instance.replicas[*].name
   description = "The instance names for the read replica instances"
 }
 
 // Failover Replicas
 output "failover-replica_instance_first_ip_address" {
-  value       = google_sql_database_instance.failover-replica.*.ip_address
+  value       = google_sql_database_instance.failover-replica[*].ip_address
   description = "The first IPv4 address of the addesses assigned for the failover-replica instance"
 }
 
 output "failover-replica_instance_connection_name" {
-  value       = google_sql_database_instance.failover-replica.*.connection_name
+  value       = google_sql_database_instance.failover-replica[*].connection_name
   description = "The connection name of the failover-replica instance to be used in connection strings"
 }
 
 output "failover-replica_instance_self_link" {
-  value       = google_sql_database_instance.failover-replica.*.self_link
+  value       = google_sql_database_instance.failover-replica[*].self_link
   description = "The URI of the failover-replica instance"
 }
 
 output "failover-replica_instance_server_ca_cert" {
-  value       = google_sql_database_instance.failover-replica.*.server_ca_cert
+  value       = google_sql_database_instance.failover-replica[*].server_ca_cert
   description = "The CA certificate information used to connect to the failover-replica instance via SSL"
 }
 
 output "failover-replica_instance_service_account_email_address" {
-  value       = google_sql_database_instance.failover-replica.*.service_account_email_address
+  value       = google_sql_database_instance.failover-replica[*].service_account_email_address
   description = "The service account email addresses assigned to the failover-replica instance"
 }
 
 output "failover-replica_instance_name" {
-  value       = google_sql_database_instance.failover-replica.*.name
+  value       = google_sql_database_instance.failover-replica[*].name
   description = "The instance name for the failover replica instance"
 }
 
