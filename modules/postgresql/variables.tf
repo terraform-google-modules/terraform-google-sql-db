@@ -39,6 +39,7 @@ variable "region" {
 
 variable "tier" {
   description = "The tier for the master instance."
+  type        = string
   default     = "db-f1-micro"
 }
 
@@ -160,6 +161,7 @@ variable "ip_configuration" {
 
 variable "read_replica_size" {
   description = "The size of read replicas"
+  type        = number
   default     = 0
 }
 

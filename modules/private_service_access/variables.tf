@@ -33,7 +33,7 @@ variable "address" {
 variable "prefix_length" {
   description = "Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16."
   type        = number
-  default     = "16"
+  default     = 16
 }
 
 variable "ip_version" {
