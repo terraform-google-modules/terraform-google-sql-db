@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,10 +18,6 @@
 # This is based on existing work
 # https://github.com/kubernetes/test-infra/blob/master/hack
 # /verify_boilerplate.py
-
-# Please note that this file was generated from
-# [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template).
-# Please make sure to contribute relevant changes upstream!
 from __future__ import print_function
 import argparse
 import glob
@@ -246,7 +242,7 @@ def get_regexs():
     regexs["year"] = re.compile('YEAR')
     # dates can be 2014, 2015, 2016 or 2017, company holder names can be
     # anything
-    regexs["date"] = re.compile('(2014|2015|2016|2017|2018)')
+    regexs["date"] = re.compile('(2014|2015|2016|2017|2018|2019)')
     # strip // +build \n\n build constraints
     regexs["go_build_constraints"] = re.compile(r"^(// \+build.*\n)+\n",
                                                 re.MULTILINE)

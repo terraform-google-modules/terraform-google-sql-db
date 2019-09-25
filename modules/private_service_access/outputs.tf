@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,17 @@
  */
 
 output "address" {
-  value       = "${google_compute_global_address.google-managed-services-range.address}"
+  value       = google_compute_global_address.google-managed-services-range.address
   description = "First IP of the reserved range."
 }
 
 output "google_compute_global_address_name" {
-  value       = "${google_compute_global_address.google-managed-services-range.name}"
+  value       = google_compute_global_address.google-managed-services-range.name
   description = "URL of the reserved range."
 }
 
 output "peering_completed" {
-  value       = "${null_resource.dependency_setter.id}"
+  value       = null_resource.dependency_setter.id
   description = "Use for enforce ordering between resource creation"
 }
+

@@ -14,6 +14,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Added support for Terraform 0.12 [#53]
 - the root module has been deprecated [#56]
 
 ### Fixed
@@ -42,4 +43,5 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 [#61]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/61
 [#56]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/56
+[#53]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/53
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
