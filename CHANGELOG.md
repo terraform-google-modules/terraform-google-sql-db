@@ -16,6 +16,10 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 - the root module has been deprecated [#56]
 
+### Fixed
+
+- The network reference in the `private_service_access` module uses the   self link. [#61]
+
 ## [1.2.0] - 2019-07-30
 
 ## [1.1.2] - 2019-06-14
@@ -36,5 +40,6 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [1.0.1]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-sql-db/releases/tag/1.0.0
 
+[#61]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/61
 [#56]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/56
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
