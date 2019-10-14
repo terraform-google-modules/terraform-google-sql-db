@@ -23,14 +23,13 @@ provider "google-beta" {
 }
 
 resource "google_compute_network" "default" {
-  project                 = var.project
+  project                 = var.project_id
   name                    = "test-vpc-private-access"
   auto_create_subnetworks = false
 }
 
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
-  project_id  = var.project
+  project_id  = var.project_id
   vpc_network = google_compute_network.default.name
 }
-

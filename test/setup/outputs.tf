@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.12"
+output "project_id" {
+  value = module.project.project_id
+}
+
+output "sa_key" {
+  value     = google_service_account_key.int_test.private_key
+  sensitive = true
 }

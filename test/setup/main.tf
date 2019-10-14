@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value       = var.project_id
-  description = "The project to run tests against"
-}
+module "project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 3.0"
 
-output "name" {
-  value       = local.instance_name
-  description = "The name for Cloud SQL instance"
-}
+  name              = "ci-sql-db"
+  random_project_id = "true"
+  org_id            = var.org_id
+  folder_id         = var.folder_id
+  billing_account   = var.billing_account
 
+  activate_apis = [
+    "cloudresourcemanager.googleapis.com",
+    "compute.googleapis.com",
+    "servicenetworking.googleapis.com",
+    "sqladmin.googleapis.com",
+  ]
+}

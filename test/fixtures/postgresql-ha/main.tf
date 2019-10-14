@@ -33,7 +33,7 @@ locals {
 module "pg" {
   source           = "../../../modules/postgresql"
   name             = local.instance_name
-  project_id       = var.project
+  project_id       = var.project_id
   database_version = "POSTGRES_9_6"
   region           = "us-central1"
 
@@ -62,7 +62,7 @@ module "pg" {
     private_network = null
     authorized_networks = [
       {
-        name  = "${var.project}-cidr"
+        name  = "${var.project_id}-cidr"
         value = var.pg_ha_external_ip_range
       },
     ]
@@ -100,7 +100,7 @@ module "pg" {
   ]
 
   read_replica_configuration = {
-    dump_file_path            = "gs://${var.project}.appspot.com/tmp"
+    dump_file_path            = "gs://${var.project_id}.appspot.com/tmp"
     connect_retry_interval    = 5
     ca_certificate            = null
     client_certificate        = null
@@ -119,7 +119,7 @@ module "pg" {
     private_network = null
     authorized_networks = [
       {
-        name  = "${var.project}-cidr"
+        name  = "${var.project_id}-cidr"
         value = var.pg_ha_external_ip_range
       },
     ]
@@ -135,7 +135,7 @@ module "pg" {
       charset   = "UTF8"
       collation = "en_US.UTF8"
       instance  = local.instance_name
-      project   = var.project
+      project   = var.project_id
     },
   ]
 
@@ -144,14 +144,14 @@ module "pg" {
 
   additional_users = [
     {
-      project  = var.project
+      project  = var.project_id
       name     = "tftest2"
       password = "abcdefg"
       host     = "localhost"
       instance = local.instance_name
     },
     {
-      project  = var.project
+      project  = var.project_id
       name     = "tftest3"
       password = "abcdefg"
       host     = "localhost"

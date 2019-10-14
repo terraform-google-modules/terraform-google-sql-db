@@ -18,5 +18,5 @@
 #################################################################
 
 ## These values you *MUST* modify to match your environment
-project="tf-proj"
+project_id="tf-proj"
 safer_mysql_simple_name="tf-safer-mysql-simple"

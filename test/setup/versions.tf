@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value       = var.project_id
-  description = "The project to run tests against"
+terraform {
+  required_version = ">= 0.12"
 }
 
-output "name" {
-  value       = local.instance_name
-  description = "The name for Cloud SQL instance"
+provider "google" {
+  version = "~> 2.13.0"
 }
 
+provider "google-beta" {
+  version = "~> 2.13.0"
+}

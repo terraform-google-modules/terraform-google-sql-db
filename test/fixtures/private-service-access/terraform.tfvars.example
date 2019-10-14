@@ -19,4 +19,4 @@
 
 ## These values you *MUST* modify to match your environment
 
-project="tf-proj"
+project_id="tf-proj"

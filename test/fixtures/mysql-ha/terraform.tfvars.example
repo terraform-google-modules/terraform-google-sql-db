@@ -19,6 +19,6 @@
 
 ## These values you *MUST* modify to match your environment
 
-project="tf-proj"
+project_id="tf-proj"
 mysql_ha_name="tf-mysql-ha"
 mysql_ha_external_ip_range="x.x.x.x/32"
