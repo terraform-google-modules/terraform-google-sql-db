@@ -19,3 +19,7 @@ variable "project_id" {
   description = "The project to run tests against"
 }
 
+variable "private_service_access_network_name" {
+  type        = string
+  description = "Network name"
+}

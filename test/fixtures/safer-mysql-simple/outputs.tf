@@ -21,4 +21,3 @@ output "project_id" {
 output "name" {
   value = local.instance_name
 }
-

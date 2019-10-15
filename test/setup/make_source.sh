@@ -19,6 +19,15 @@ echo "#!/usr/bin/env bash" > ../source.sh
 project_id=$(terraform output project_id)
 echo "export TF_VAR_project_id='$project_id'" >> ../source.sh
 
+private_service_access_network_name=$(terraform output private_service_access_network_name)
+echo "export TF_VAR_private_service_access_network_name='$private_service_access_network_name'" >> ../source.sh
+
+safer_mysql_simple_network_name=$(terraform output safer_mysql_simple_network_name)
+echo "export TF_VAR_safer_mysql_simple_network_name='$safer_mysql_simple_network_name'" >> ../source.sh
+
+safer_mysql_simple_network_self_link=$(terraform output safer_mysql_simple_network_self_link)
+echo "export TF_VAR_safer_mysql_simple_network_self_link='$safer_mysql_simple_network_self_link'" >> ../source.sh
+
 sa_json=$(terraform output sa_key)
 # shellcheck disable=SC2086
 echo "export SERVICE_ACCOUNT_JSON='$(echo $sa_json | base64 --decode)'" >> ../source.sh

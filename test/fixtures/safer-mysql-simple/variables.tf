@@ -22,5 +22,15 @@ variable "project_id" {
 variable "safer_mysql_simple_name" {
   type        = string
   description = "The name for Cloud SQL instance"
+  default     = "tf-safer-mysql-simple"
 }
 
+variable "safer_mysql_simple_network_name" {
+  type        = string
+  description = "Network name"
+}
+
+variable "safer_mysql_simple_network_self_link" {
+  type        = string
+  description = "Network self-link"
+}

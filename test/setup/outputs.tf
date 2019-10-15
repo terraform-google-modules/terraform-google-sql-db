@@ -22,3 +22,15 @@ output "sa_key" {
   value     = google_service_account_key.int_test.private_key
   sensitive = true
 }
+
+output "private_service_access_network_name" {
+  value = module.network-private-service-access.network_name
+}
+
+output "safer_mysql_simple_network_name" {
+  value = module.network-safer-mysql-simple.network_name
+}
+
+output "safer_mysql_simple_network_self_link" {
+  value = module.network-safer-mysql-simple.network_self_link
+}

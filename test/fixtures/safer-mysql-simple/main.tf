@@ -33,16 +33,10 @@ locals {
   instance_name = "${var.safer_mysql_simple_name}-${random_id.instance_name_suffix.hex}"
 }
 
-resource "google_compute_network" "default" {
-  project                 = var.project_id
-  name                    = "test-vpc-safer-${var.safer_mysql_simple_name}"
-  auto_create_subnetworks = false
-}
-
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
   project_id  = var.project_id
-  vpc_network = google_compute_network.default.name
+  vpc_network = var.safer_mysql_simple_network_name
 }
 
 module "safer-mysql-db" {
@@ -75,9 +69,8 @@ module "safer-mysql-db" {
   ]
 
   assign_public_ip = "true"
-  vpc_network      = google_compute_network.default.self_link
+  vpc_network      = var.safer_mysql_simple_network_self_link
 
   // Optional: used to enforce ordering in the creation of resources.
   peering_completed = module.private-service-access.peering_completed
 }
-

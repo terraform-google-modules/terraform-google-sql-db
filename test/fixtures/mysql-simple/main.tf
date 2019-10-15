@@ -40,4 +40,3 @@ module "mysql" {
   tier = "db-n1-standard-1"
   zone = "c"
 }
-

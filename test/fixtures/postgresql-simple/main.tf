@@ -40,4 +40,3 @@ module "pg" {
   tier = "db-f1-micro"
   zone = "c"
 }
-

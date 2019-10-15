@@ -22,5 +22,5 @@ variable "project_id" {
 variable "mysql_simple_name" {
   type        = string
   description = "The name for Cloud SQL instance"
+  default     = "tf-mysql-simple"
 }
-

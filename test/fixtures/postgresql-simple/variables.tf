@@ -22,5 +22,5 @@ variable "project_id" {
 variable "pg_simple_name" {
   type        = string
   description = "The name for Cloud SQL instance"
+  default     = "tf-pg-simple"
 }
-

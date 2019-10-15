@@ -21,4 +21,3 @@ output "project_id" {
 output "reserved_range" {
   value = module.private-service-access.google_compute_global_address_name
 }
-

@@ -25,4 +25,3 @@ output "name" {
 output "authorized_network" {
   value = var.mysql_ha_external_ip_range
 }
-

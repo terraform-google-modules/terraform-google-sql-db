@@ -15,21 +15,15 @@
  */
 
 provider "google" {
-  version = "~> 2.7.0"
+  version = "~> 2.17.0"
 }
 
 provider "google-beta" {
-  version = "~> 2.7.0"
-}
-
-resource "google_compute_network" "default" {
-  project                 = var.project_id
-  name                    = "test-vpc-private-access"
-  auto_create_subnetworks = false
+  version = "~> 2.17.0"
 }
 
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
   project_id  = var.project_id
-  vpc_network = google_compute_network.default.name
+  vpc_network = var.private_service_access_network_name
 }
