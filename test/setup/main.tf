@@ -31,23 +31,3 @@ module "project" {
     "sqladmin.googleapis.com",
   ]
 }
-
-module "network-private-service-access" {
-  source  = "terraform-google-modules/network/google"
-  version = "~> 1.2"
-
-  project_id   = module.project.project_id
-  network_name = "sql-db-private-service-access"
-
-  subnets = []
-}
-
-module "network-safer-mysql-simple" {
-  source  = "terraform-google-modules/network/google"
-  version = "~> 1.2"
-
-  project_id   = module.project.project_id
-  network_name = "sql-db-safer-mysql-simple"
-
-  subnets = []
-}
