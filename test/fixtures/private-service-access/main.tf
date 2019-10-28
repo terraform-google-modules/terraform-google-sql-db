@@ -22,8 +22,18 @@ provider "google-beta" {
   version = "~> 2.17.0"
 }
 
+module "network-private-service-access" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 1.2"
+
+  project_id   = var.project_id
+  network_name = "sql-db-private-service-access"
+
+  subnets = []
+}
+
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
   project_id  = var.project_id
-  vpc_network = var.private_service_access_network_name
+  vpc_network = module.network-private-service-access.network_name
 }

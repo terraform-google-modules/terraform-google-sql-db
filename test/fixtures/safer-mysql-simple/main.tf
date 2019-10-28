@@ -33,10 +33,20 @@ locals {
   instance_name = "${var.safer_mysql_simple_name}-${random_id.instance_name_suffix.hex}"
 }
 
+module "network-safer-mysql-simple" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 1.2"
+
+  project_id   = var.project_id
+  network_name = "sql-db-safer-mysql-simple"
+
+  subnets = []
+}
+
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
   project_id  = var.project_id
-  vpc_network = var.safer_mysql_simple_network_name
+  vpc_network = module.network-safer-mysql-simple.network_name
 }
 
 module "safer-mysql-db" {
@@ -69,7 +79,7 @@ module "safer-mysql-db" {
   ]
 
   assign_public_ip = "true"
-  vpc_network      = var.safer_mysql_simple_network_self_link
+  vpc_network      = module.network-safer-mysql-simple.network_self_link
 
   // Optional: used to enforce ordering in the creation of resources.
   peering_completed = module.private-service-access.peering_completed
