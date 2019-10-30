@@ -114,27 +114,27 @@ steps:
   args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-ha-local']
   timeout: 1800s
 
-- id: create-safer-mysql-simple-local
+- id: create-mysql-simple-safer-local
   waitFor:
   - prepare
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create safer-mysql-simple-local']
-- id: converge-safer-mysql-simple-local
+  args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create mysql-simple-safer-local']
+- id: converge-mysql-simple-safer-local
   waitFor:
-  - create-safer-mysql-simple-local
+  - create-mysql-simple-safer-local
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge safer-mysql-simple']
   timeout: 3600s
-- id: verify-safer-mysql-simple-local
+- id: verify-mysql-simple-safer-local
   waitFor:
-  - converge-safer-mysql-simple-local
+  - converge-mysql-simple-safer-local
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify safer-mysql-simple-local']
-- id: destroy-safer-mysql-simple-local
+  args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify mysql-simple-safer-local']
+- id: destroy-mysql-simple-safer-local
   waitFor:
-  - verify-safer-mysql-simple-local
+  - verify-mysql-simple-safer-local
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy safer-mysql-simple-local']
+  args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mysql-simple-safer-local']
   timeout: 1800s
 
 - id: create-private-service-access-local

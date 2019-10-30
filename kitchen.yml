@@ -51,7 +51,7 @@ suites:
       name: terraform
       root_module_directory: test/fixtures/postgresql-ha
       command_timeout: 1800
-  - name: safer-mysql-simple
+  - name: mysql-simple-safer
     driver:
       name: terraform
       root_module_directory: test/fixtures/safer-mysql-simple
