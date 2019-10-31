@@ -33,7 +33,7 @@ locals {
 module "mysql" {
   source           = "../../../modules/mysql"
   name             = local.instance_name
-  project_id       = var.project
+  project_id       = var.project_id
   database_version = "MYSQL_5_7"
   region           = "us-central1"
 
@@ -61,7 +61,7 @@ module "mysql" {
     private_network = null
     authorized_networks = [
       {
-        name  = "${var.project}-cidr"
+        name  = "${var.project_id}-cidr"
         value = var.mysql_ha_external_ip_range
       },
     ]
@@ -99,7 +99,7 @@ module "mysql" {
   ]
 
   read_replica_configuration = {
-    dump_file_path            = "gs://${var.project}.appspot.com/tmp"
+    dump_file_path            = "gs://${var.project_id}.appspot.com/tmp"
     connect_retry_interval    = 5
     ca_certificate            = null
     client_certificate        = null
@@ -118,7 +118,7 @@ module "mysql" {
     private_network = null
     authorized_networks = [
       {
-        name  = "${var.project}-cidr"
+        name  = "${var.project_id}-cidr"
         value = var.mysql_ha_external_ip_range
       },
     ]
@@ -150,7 +150,7 @@ module "mysql" {
   ]
 
   failover_replica_configuration = {
-    dump_file_path            = "gs://${var.project}.appspot.com/tmp"
+    dump_file_path            = "gs://${var.project_id}.appspot.com/tmp"
     connect_retry_interval    = 5
     ca_certificate            = null
     client_certificate        = null
@@ -169,7 +169,7 @@ module "mysql" {
     private_network = null
     authorized_networks = [
       {
-        name  = "${var.project}-cidr"
+        name  = "${var.project_id}-cidr"
         value = var.mysql_ha_external_ip_range
       },
     ]
@@ -181,7 +181,7 @@ module "mysql" {
 
   additional_databases = [
     {
-      project   = var.project
+      project   = var.project_id
       instance  = local.instance_name
       name      = "${var.mysql_ha_name}-additional"
       charset   = "utf8mb4"
@@ -194,14 +194,14 @@ module "mysql" {
 
   additional_users = [
     {
-      project  = var.project
+      project  = var.project_id
       name     = "tftest2"
       password = "abcdefg"
       host     = "localhost"
       instance = local.instance_name
     },
     {
-      project  = var.project
+      project  = var.project_id
       name     = "tftest3"
       password = "abcdefg"
       host     = "localhost"
@@ -209,4 +209,3 @@ module "mysql" {
     },
   ]
 }
-

@@ -15,7 +15,7 @@
  */
 
 output "project_id" {
-  value       = var.project
+  value       = var.project_id
   description = "The project to run tests against"
 }
 
@@ -23,4 +23,3 @@ output "name" {
   value       = local.instance_name
   description = "The name for Cloud SQL instance"
 }
-

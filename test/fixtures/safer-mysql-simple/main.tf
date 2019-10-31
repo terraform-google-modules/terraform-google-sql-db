@@ -33,22 +33,26 @@ locals {
   instance_name = "${var.safer_mysql_simple_name}-${random_id.instance_name_suffix.hex}"
 }
 
-resource "google_compute_network" "default" {
-  project                 = var.project
-  name                    = "test-vpc-safer-${var.safer_mysql_simple_name}"
-  auto_create_subnetworks = false
+module "network-safer-mysql-simple" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 1.4"
+
+  project_id   = var.project_id
+  network_name = "sql-db-safer-mysql-simple"
+
+  subnets = []
 }
 
 module "private-service-access" {
   source      = "../../../modules/private_service_access"
-  project_id  = var.project
-  vpc_network = google_compute_network.default.name
+  project_id  = var.project_id
+  vpc_network = module.network-safer-mysql-simple.network_name
 }
 
 module "safer-mysql-db" {
   source     = "../../../modules/safer_mysql"
   name       = local.instance_name
-  project_id = var.project
+  project_id = var.project_id
 
   database_version = "MYSQL_5_7"
   region           = "us-central1"
@@ -59,14 +63,14 @@ module "safer-mysql-db" {
   // Cloud SQL proxy.
   additional_users = [
     {
-      project  = var.project
+      project  = var.project_id
       name     = "app"
       password = "PaSsWoRd"
       host     = "localhost"
       instance = local.instance_name
     },
     {
-      project  = var.project
+      project  = var.project_id
       name     = "readonly"
       password = "PaSsWoRd"
       host     = "localhost"
@@ -75,9 +79,8 @@ module "safer-mysql-db" {
   ]
 
   assign_public_ip = "true"
-  vpc_network      = google_compute_network.default.self_link
+  vpc_network      = module.network-safer-mysql-simple.network_self_link
 
   // Optional: used to enforce ordering in the creation of resources.
   peering_completed = module.private-service-access.peering_completed
 }
-

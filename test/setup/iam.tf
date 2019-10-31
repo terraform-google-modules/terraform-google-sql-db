@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 2.17.0"
+locals {
+  int_required_roles = [
+    "roles/cloudsql.admin",
+    "roles/compute.networkAdmin"
+  ]
 }
 
-provider "google-beta" {
-  version = "~> 2.17.0"
+resource "google_service_account" "int_test" {
+  project      = module.project.project_id
+  account_id   = "ci-account"
+  display_name = "ci-account"
 }
 
-module "network-private-service-access" {
-  source  = "terraform-google-modules/network/google"
-  version = "~> 1.4"
+resource "google_project_iam_member" "int_test" {
+  count = length(local.int_required_roles)
 
-  project_id   = var.project_id
-  network_name = "sql-db-private-service-access"
-
-  subnets = []
+  project = module.project.project_id
+  role    = local.int_required_roles[count.index]
+  member  = "serviceAccount:${google_service_account.int_test.email}"
 }
 
-module "private-service-access" {
-  source      = "../../../modules/private_service_access"
-  project_id  = var.project_id
-  vpc_network = module.network-private-service-access.network_name
+resource "google_service_account_key" "int_test" {
+  service_account_id = google_service_account.int_test.id
 }

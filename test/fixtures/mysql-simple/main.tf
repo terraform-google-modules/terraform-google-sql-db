@@ -33,11 +33,10 @@ locals {
 module "mysql" {
   source           = "../../../modules/mysql"
   name             = local.instance_name
-  project_id       = var.project
+  project_id       = var.project_id
   database_version = "MYSQL_5_7"
   region           = "us-central1"
 
   tier = "db-n1-standard-1"
   zone = "c"
 }
-

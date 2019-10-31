@@ -33,11 +33,10 @@ locals {
 module "pg" {
   source           = "../../../modules/postgresql"
   name             = local.instance_name
-  project_id       = var.project
+  project_id       = var.project_id
   database_version = "POSTGRES_9_6"
   region           = "us-central1"
 
   tier = "db-f1-micro"
   zone = "c"
 }
-
