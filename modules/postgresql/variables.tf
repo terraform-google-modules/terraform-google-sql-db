@@ -124,7 +124,7 @@ variable "backup_configuration" {
   })
   default = {
     enabled    = false
-    start_time = null
+    start_time = false
   }
 }
 
