@@ -26,8 +26,9 @@ variable "name" {
 
 // required
 variable "database_version" {
-  description = "The database version to use"
+  description = "The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB"
   type        = string
+  default     = "SQLSERVER_2017_STANDARD"
 }
 
 // required
@@ -40,12 +41,19 @@ variable "region" {
 variable "tier" {
   description = "The tier for the master instance."
   type        = string
-  default     = "db-f1-micro"
+  default     = "db-custom-2-3840"
 }
 
 variable "zone" {
   type        = string
-  description = "The zone for the master instance, it should be something like: `a`, `c`."
+  description = "The zone for the master instance."
+  default     = "us-central1-a"
+}
+
+variable "peering_completed" {
+  description = "Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering."
+  type        = string
+  default     = ""
 }
 
 variable "activation_policy" {
@@ -55,7 +63,7 @@ variable "activation_policy" {
 }
 
 variable "availability_type" {
-  description = "The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`."
+  description = "The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`."
   type        = string
   default     = "ZONAL"
 }
@@ -102,7 +110,7 @@ variable "maintenance_window_update_track" {
 }
 
 variable "database_flags" {
-  description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
+  description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags)"
   type = list(object({
     name  = string
     value = string
@@ -116,21 +124,6 @@ variable "user_labels" {
   default     = {}
 }
 
-variable "backup_configuration" {
-  description = "The backup_configuration settings subblock for the database setings"
-  type = object({
-    binary_log_enabled = bool
-    enabled            = bool
-    start_time         = string
-  })
-  default = {
-    binary_log_enabled = false
-    enabled            = null
-    start_time         = null
-  }
-}
-
-
 variable "authorized_gae_applications" {
   description = "The authorized gae applications for the Cloud SQL instances"
   type        = list(string)
@@ -139,139 +132,6 @@ variable "authorized_gae_applications" {
 
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
-  type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-  })
-  default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-  }
-}
-
-variable "read_replica_size" {
-  description = "The size of read replicas"
-  type        = number
-  default     = 0
-}
-
-variable "read_replica_name_suffix" {
-  description = "The optional suffix to add to the read instance name"
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_tier" {
-  description = "The tier for the read replica instances."
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_zones" {
-  description = "The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas."
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_activation_policy" {
-  description = "The activation policy for the read replica instances.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
-  type        = string
-  default     = "ALWAYS"
-}
-
-variable "read_replica_availability_type" {
-  description = "The availability type for the read replica instances.This is only used to set up high availability for the PostgreSQL instances. Can be either `ZONAL` or `REGIONAL`."
-  type        = string
-  default     = "ZONAL"
-}
-
-variable "read_replica_crash_safe_replication" {
-  description = "The crash safe replication is to indicates when crash-safe replication flags are enabled."
-  type        = bool
-  default     = true
-}
-
-variable "read_replica_disk_autoresize" {
-  description = "Configuration to increase storage size."
-  type        = bool
-  default     = true
-}
-
-variable "read_replica_disk_size" {
-  description = "The disk size for the read replica instances."
-  type        = number
-  default     = 10
-}
-
-variable "read_replica_disk_type" {
-  description = "The disk type for the read replica instances."
-  type        = string
-  default     = "PD_SSD"
-}
-
-variable "read_replica_pricing_plan" {
-  description = "The pricing plan for the read replica instances."
-  type        = string
-  default     = "PER_USE"
-}
-
-variable "read_replica_maintenance_window_day" {
-  description = "The day of week (1-7) for the read replica instances maintenance."
-  type        = number
-  default     = 1
-}
-
-variable "read_replica_maintenance_window_hour" {
-  description = "The hour of day (0-23) maintenance window for the read replica instances maintenance."
-  type        = number
-  default     = 23
-}
-
-variable "read_replica_maintenance_window_update_track" {
-  description = "The update track of maintenance window for the read replica instances maintenance.Can be either `canary` or `stable`."
-  type        = string
-  default     = "canary"
-}
-
-variable "read_replica_database_flags" {
-  description = "The database flags for the read replica instances. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
-}
-
-variable "read_replica_configuration" {
-  description = "The replica configuration for use in all read replica instances."
-  type = object({
-    connect_retry_interval = number
-    dump_file_path         = string
-  })
-  default = {
-    connect_retry_interval = null
-    dump_file_path         = null
-  }
-}
-
-variable "read_replica_user_labels" {
-  description = "The key/value labels for the read replica instances."
-  type        = map(string)
-  default     = {}
-}
-
-variable "read_replica_replication_type" {
-  description = "The replication type for read replica instances. Can be one of ASYNCHRONOUS or SYNCHRONOUS."
-  type        = string
-  default     = "SYNCHRONOUS"
-}
-
-variable "read_replica_ip_configuration" {
-  description = "The ip configuration for the read instances."
   type = object({
     authorized_networks = list(map(string))
     ipv4_enabled        = bool
@@ -340,26 +200,26 @@ variable "additional_users" {
   default = []
 }
 
+variable "root_password" {
+  description = "MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  type        = string
+  default     = ""
+}
+
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
-  default     = "10m"
+  default     = "15m"
 }
 
 variable "update_timeout" {
   description = "The optional timout that is applied to limit long database updates."
   type        = string
-  default     = "10m"
+  default     = "15m"
 }
 
 variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
-  default     = "10m"
-}
-
-variable "module_depends_on" {
-  description = "List of modules or resources this module depends on."
-  type        = list(any)
-  default     = []
+  default     = "30m"
 }
