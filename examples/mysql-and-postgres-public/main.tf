@@ -15,12 +15,10 @@
  */
 
 provider "google" {
-  region  = var.region
   version = "~> 2.13"
 }
 
 provider "google-beta" {
-  region  = var.region
   version = "~> 2.13"
 }
 
@@ -34,6 +32,7 @@ module "mysql-db" {
   database_version = var.mysql_version
   project_id       = var.project_id
   zone             = "c"
+  region           = var.region
 
   ip_configuration = {
     ipv4_enabled        = true
@@ -57,6 +56,7 @@ module "postgresql-db" {
   database_version = var.postgresql_version
   project_id       = var.project_id
   zone             = "c"
+  region           = var.region
 
   ip_configuration = {
     ipv4_enabled        = true

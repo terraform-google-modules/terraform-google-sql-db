@@ -24,10 +24,10 @@ terraform destroy
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | authorized\_networks | List of mapped public networks authorized to access to the instances. Default - short range of GCP health-checkers IPs | list(map(string)) | `<list>` | no |
-| mysql\_version |  | string | `"MYSQL_5_6"` | no |
-| postgresql\_version |  | string | `"POSTGRES_9_6"` | no |
-| project\_id |  | string | n/a | yes |
-| region |  | string | `"us-central1"` | no |
+| mysql\_version | The MySQL version to use. | string | `"MYSQL_5_6"` | no |
+| postgresql\_version | The PostgreSQL version to use. | string | `"POSTGRES_9_6"` | no |
+| project\_id | The ID of the project in which resources will be provisioned. | string | `"null"` | no |
+| region | The region to host the instance. | string | `"us-central1"` | no |
 
 ## Outputs
 

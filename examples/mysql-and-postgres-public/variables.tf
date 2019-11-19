@@ -15,22 +15,27 @@
  */
 
 variable "region" {
-  default = "us-central1"
-  type    = string
+  default     = "us-central1"
+  description = "The region to host the instance."
+  type        = string
 }
 
 variable "mysql_version" {
-  default = "MYSQL_5_6"
-  type    = string
+  default     = "MYSQL_5_6"
+  description = "The MySQL version to use."
+  type        = string
 }
 
 variable "postgresql_version" {
-  default = "POSTGRES_9_6"
-  type    = string
+  default     = "POSTGRES_9_6"
+  description = "The PostgreSQL version to use."
+  type        = string
 }
 
 variable "project_id" {
-  type = string
+  default     = null
+  description = "The ID of the project in which resources will be provisioned."
+  type        = string
 }
 
 variable "authorized_networks" {
