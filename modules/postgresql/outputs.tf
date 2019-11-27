@@ -20,14 +20,19 @@ output "instance_name" {
   description = "The instance name for the master instance"
 }
 
+output "public_ip_address" {
+  description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
+  value       = google_sql_database_instance.default.public_ip_address
+}
+
+output "private_ip_address" {
+  description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
+  value       = google_sql_database_instance.default.private_ip_address
+}
+
 output "instance_address" {
   value       = google_sql_database_instance.default.ip_address
   description = "The IPv4 addesses assigned for the master instance"
-}
-
-output "private_address" {
-  value       = google_sql_database_instance.default.private_ip_address
-  description = "The private IP address assigned for the master instance"
 }
 
 output "instance_first_ip_address" {
@@ -90,4 +95,19 @@ output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
   value       = random_id.user-password.hex
   sensitive   = true
+}
+
+output "database_version" {
+  value       = var.database_version
+  description = "The Postgres version to use."
+}
+
+output "region" {
+  value       = var.region
+  description = "The region of the Cloud SQL resources"
+}
+
+output "tier" {
+  value       = var.tier
+  description = "The tier for the master instance."
 }

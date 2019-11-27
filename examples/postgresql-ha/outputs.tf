@@ -15,13 +15,13 @@
  */
 
 output "project_id" {
-  value = module.example.project_id
+  value = var.project_id
 }
 
 output "name" {
-  value = module.example.name
+  value = local.instance_name
 }
 
 output "authorized_network" {
-  value = module.example.authorized_network
+  value = var.pg_ha_external_ip_range
 }

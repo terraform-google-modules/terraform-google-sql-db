@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.example.project_id
+variable "project_id" {
+  default     = null
+  description = "The ID of the project in which resources will be provisioned."
+  type        = string
 }
 
-output "name" {
-  value = module.example.name
-}
-
-output "authorized_network" {
-  value = module.example.authorized_network
+variable "network_name" {
+  default = "mysql-privat"
+  type    = string
 }

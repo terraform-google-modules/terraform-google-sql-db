@@ -31,15 +31,20 @@ verifier:
       shell: true
 
 suites:
-  - name: mysql-simple
+  - name: mysql-public
     driver:
       name: terraform
-      root_module_directory: test/fixtures/mysql-simple
+      root_module_directory: test/fixtures/mysql-public
       command_timeout: 1800
-  - name: postgresql-simple
+  - name: postgres-public
     driver:
       name: terraform
-      root_module_directory: test/fixtures/postgresql-simple
+      root_module_directory: test/fixtures/postgres-public
+      command_timeout: 1800
+  - name: mysql-private
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/mysql-private
       command_timeout: 1800
   - name: mysql-ha
     driver:
@@ -50,14 +55,4 @@ suites:
     driver:
       name: terraform
       root_module_directory: test/fixtures/postgresql-ha
-      command_timeout: 1800
-  - name: mysql-simple-safer
-    driver:
-      name: terraform
-      root_module_directory: test/fixtures/safer-mysql-simple
-      command_timeout: 1800
-  - name: private-service-access
-    driver:
-      name: terraform
-      root_module_directory: test/fixtures/private-service-access
       command_timeout: 1800

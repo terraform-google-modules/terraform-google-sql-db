@@ -15,11 +15,17 @@
  */
 
 provider "google" {
+  version = "~> 2.13"
 }
 
-resource "random_id" "instance_name_suffix" {
-  byte_length = 5
+provider "google-beta" {
+  version = "~> 2.13"
 }
+
+resource "random_id" "name" {
+  byte_length = 2
+}
+
 
 locals {
   /*
@@ -27,15 +33,22 @@ locals {
     "You cannot reuse an instance name for up to a week after you have deleted an instance."
     See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
   */
-  instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
+  instance_name = "${var.db_name}-${random_id.name.hex}"
 }
 
-module "example" {
-  source                  = "../../../examples/postgresql-ha"
-  project_id              = var.project_id
-  pg_ha_name              = var.pg_ha_name
-  pg_ha_external_ip_range = var.pg_ha_external_ip_range
+module "postgresql-db" {
+  source           = "../../modules/postgresql"
+  name             = local.instance_name
+  database_version = "POSTGRES_9_6"
+  project_id       = var.project_id
+  zone             = "c"
+  region           = "us-central1"
+  tier             = "db-f1-micro"
+
+  ip_configuration = {
+    ipv4_enabled        = true
+    private_network     = null
+    require_ssl         = true
+    authorized_networks = var.authorized_networks
+  }
 }
-
-
-

@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.example.project_id
+variable "project_id" {
+  type        = string
+  description = "The project to run tests against"
 }
 
-output "name" {
-  value = module.example.name
+variable "network_name" {
+  default = "mysql-privat"
+  type    = string
 }
 
-output "authorized_network" {
-  value = module.example.authorized_network
+variable "db_name" {
+  description = "The name of the SQL Database instance"
+  default     = "example-mysql-private"
 }
+

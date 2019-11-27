@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.example.project_id
-}
-
-output "name" {
-  value = module.example.name
-}
-
-output "authorized_network" {
-  value = module.example.authorized_network
+terraform {
+  required_version = "~> 0.12.6"
 }

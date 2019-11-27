@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.example.project_id
+variable "project_id" {
+  default     = null
+  description = "The ID of the project in which resources will be provisioned."
+  type        = string
 }
 
-output "name" {
-  value = module.example.name
+variable "authorized_networks" {
+  default = [{
+    name  = "sample-gcp-health-checkers-range"
+    value = "130.211.0.0/28"
+  }]
+  type        = list(map(string))
+  description = "List of mapped public networks authorized to access to the instances. Default - short range of GCP health-checkers IPs"
 }
 
-output "authorized_network" {
-  value = module.example.authorized_network
+variable "db_name" {
+  description = "The name of the SQL Database instance"
+  default     = "example-postgres-public"
 }

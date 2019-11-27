@@ -15,27 +15,16 @@
  */
 
 provider "google" {
+  version = "~> 2.13"
 }
 
-resource "random_id" "instance_name_suffix" {
-  byte_length = 5
-}
-
-locals {
-  /*
-    Random instance name needed because:
-    "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
-  */
-  instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
+provider "google-beta" {
+  version = "~> 2.13"
 }
 
 module "example" {
-  source                  = "../../../examples/postgresql-ha"
-  project_id              = var.project_id
-  pg_ha_name              = var.pg_ha_name
-  pg_ha_external_ip_range = var.pg_ha_external_ip_range
+  source       = "../../../examples/mysql-private"
+  project_id   = var.project_id
+  network_name = var.network_name
 }
-
-
 
