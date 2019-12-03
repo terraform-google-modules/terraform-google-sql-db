@@ -21,13 +21,27 @@ locals {
     enabled  = var.ip_configuration
     disabled = {}
   }
+}
 
-  peering_completed_enabled = var.peering_completed != "" ? true : false
+resource "random_string" "suffix" {
+  length  = 4
+  special = false
+  upper   = false
+}
 
-  user_labels_including_tf_dependency = {
-    enabled  = merge(map("tf_dependency", var.peering_completed), var.user_labels)
-    disabled = var.user_labels
-  }
+module "network-private-service-access" {
+  source                  = "terraform-google-modules/network/google"
+  version                 = "~> 1.5.0"
+  project_id              = var.project_id
+  network_name            = "vpc-network-${random_string.suffix.result}"
+  auto_create_subnetworks = true
+  subnets                 = []
+}
+
+module "private-service-access" {
+  source      = "../../modules/private_service_access"
+  project_id  = var.project_id
+  vpc_network = module.network-private-service-access.network_name
 }
 
 resource "google_sql_database_instance" "default" {
@@ -80,9 +94,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     // Define a label to force a dependency to the creation of the network peering.
-    // Substitute this with a module dependency once the module is migrated to
-    // Terraform 0.12
-    user_labels = local.user_labels_including_tf_dependency["${local.peering_completed_enabled ? "enabled" : "disabled"}"]
+    user_labels = merge(map("tf_dependency", module.private-service-access.peering_completed), var.user_labels)
 
     location_preference {
       zone = "${var.region}-${var.zone}"
