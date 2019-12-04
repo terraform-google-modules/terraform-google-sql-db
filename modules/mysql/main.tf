@@ -96,6 +96,8 @@ resource "google_sql_database_instance" "default" {
     update = var.update_timeout
     delete = var.delete_timeout
   }
+
+  depends_on = [null_resource.module_depends_on]
 }
 
 resource "google_sql_database" "default" {
@@ -104,7 +106,7 @@ resource "google_sql_database" "default" {
   instance   = google_sql_database_instance.default.name
   charset    = var.db_charset
   collation  = var.db_collation
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_database" "additional_databases" {
@@ -114,7 +116,7 @@ resource "google_sql_database" "additional_databases" {
   charset    = lookup(var.additional_databases[count.index], "charset", null)
   collation  = lookup(var.additional_databases[count.index], "collation", null)
   instance   = google_sql_database_instance.default.name
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "random_id" "user-password" {
@@ -123,7 +125,7 @@ resource "random_id" "user-password" {
   }
 
   byte_length = 8
-  depends_on  = [google_sql_database_instance.default]
+  depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_user" "default" {
@@ -132,7 +134,7 @@ resource "google_sql_user" "default" {
   instance   = google_sql_database_instance.default.name
   host       = var.user_host
   password   = var.user_password == "" ? random_id.user-password.hex : var.user_password
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_user" "additional_users" {
@@ -146,6 +148,11 @@ resource "google_sql_user" "additional_users" {
   )
   host       = lookup(var.additional_users[count.index], "host", var.user_host)
   instance   = google_sql_database_instance.default.name
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
+resource "null_resource" "module_depends_on" {
+  triggers = {
+    value = length(var.module_depends_on)
+  }
+}

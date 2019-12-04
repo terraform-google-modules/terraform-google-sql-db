@@ -42,12 +42,6 @@ variable "vpc_network" {
   type        = string
 }
 
-variable "peering_completed" {
-  description = "Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering."
-  type        = string
-  default     = ""
-}
-
 // Master
 variable "tier" {
   description = "The tier for the master instance."
@@ -481,4 +475,10 @@ variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
   default     = "15m"
+}
+
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list(any)
+  default     = []
 }
