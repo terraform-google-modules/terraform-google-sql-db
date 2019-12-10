@@ -33,15 +33,7 @@ module "safer_mysql" {
   maintenance_window_update_track = var.maintenance_window_update_track
   database_flags                  = var.database_flags
 
-  // Define a label to force a dependency to the creation of the network peering.
-  // Substitute this with a module dependency once the module is migrated to
-  // Terraform 0.12
-  user_labels = merge(
-    {
-      "tf_dependency" = var.peering_completed
-    },
-    var.user_labels,
-  )
+  user_labels = var.user_labels
 
   backup_configuration = var.backup_configuration
 
@@ -119,7 +111,8 @@ module "safer_mysql" {
     private_network     = var.vpc_network
     require_ssl         = true
   }
-  create_timeout = var.create_timeout
-  update_timeout = var.update_timeout
-  delete_timeout = var.delete_timeout
+  create_timeout    = var.create_timeout
+  update_timeout    = var.update_timeout
+  delete_timeout    = var.delete_timeout
+  module_depends_on = var.module_depends_on
 }

@@ -48,12 +48,6 @@ variable "zone" {
   description = "The zone for the master instance, it should be something like: `a`, `c`."
 }
 
-variable "peering_completed" {
-  description = "Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering."
-  type        = string
-  default     = ""
-}
-
 variable "activation_policy" {
   description = "The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   type        = string
@@ -362,4 +356,10 @@ variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
   default     = "10m"
+}
+
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list(any)
+  default     = []
 }

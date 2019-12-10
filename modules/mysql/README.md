@@ -42,6 +42,7 @@
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | number | `"1"` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | number | `"23"` | no |
 | maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | string | `"canary"` | no |
+| module\_depends\_on | List of modules or resources this module depends on. | list(any) | `<list>` | no |
 | name | The name of the Cloud SQL resources | string | n/a | yes |
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |

@@ -130,7 +130,7 @@ module "safer-mysql-db" {
   vpc_network      = google_compute_network.default.self_link
 
   // Used to enforce ordering in the creation of resources.
-  peering_completed = module.private-service-access.peering_completed
+  module_depends_on = [module.private-service-access.peering_completed]
 }
 
 

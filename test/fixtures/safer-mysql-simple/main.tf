@@ -82,5 +82,5 @@ module "safer-mysql-db" {
   vpc_network      = module.network-safer-mysql-simple.network_self_link
 
   // Optional: used to enforce ordering in the creation of resources.
-  peering_completed = module.private-service-access.peering_completed
+  module_depends_on = [module.private-service-access.peering_completed]
 }

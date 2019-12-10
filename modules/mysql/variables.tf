@@ -522,3 +522,8 @@ variable "delete_timeout" {
   default     = "10m"
 }
 
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list(any)
+  default     = []
+}

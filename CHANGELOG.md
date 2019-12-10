@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+
+- Removed variable `peering_completed`. [#78]
+
+### Added
+
+- Added variable `module_depends_on`. [#78]
+
 ## [2.0.0] - 2019-09-26
 
 2.0.0 is a backward incompatible release. Review the
@@ -52,3 +60,4 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [#56]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/56
 [#53]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/53
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
+[#78]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/78
