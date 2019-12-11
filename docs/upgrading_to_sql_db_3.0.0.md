@@ -1,6 +1,6 @@
 # Upgrading to SQL DB 3.0.0
-                                                     
-The 3.0.0 release of SQL DB is a backward incompatible release. The `peering_completed` string variable along with hardcoded "tf_dependency" label in `user_labels` variable used to ensure that resources are created in a proper order when using private IPs and service network peering were dropped from `postgresql` and `safer_mysql` submodules. Instead the `module_depends_on` variable was added to the `postgresql`, `safer_mysql` and `mysql` submodules, which is a list of modules/resources a submodule depends on. 
+
+The 3.0.0 release of SQL DB is a backward incompatible release. The `peering_completed` string variable along with hardcoded "tf_dependency" label in `user_labels` variable used to ensure that resources are created in a proper order when using private IPs and service network peering were dropped from `postgresql` and `safer_mysql` submodules. Instead the `module_depends_on` variable was added to the `postgresql`, `safer_mysql` and `mysql` submodules, which is a list of modules/resources a submodule depends on.
 
 ## Migration Instructions
 
@@ -23,9 +23,9 @@ module "safer-mysql-db" {
   project_id       = var.project_id
   region           = var.region
   zone             = "c"
-  
+
   ...
-  
+
   assign_public_ip = true
   vpc_network      = google_compute_network.default.self_link
 
@@ -35,7 +35,7 @@ module "safer-mysql-db" {
 
 ```
 
-With the 3.0.0 release, the `module_depends_on` variable is presented which contains a list of modules/resources that should be created before the target sql module. 
+With the 3.0.0 release, the `module_depends_on` variable is presented which contains a list of modules/resources that should be created before the target sql module.
 
 ```diff
 // We define a connection with the VPC of the Cloud SQL instance.
