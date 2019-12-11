@@ -15,7 +15,6 @@
  */
 
 variable "project_id" {
-  default     = null
   description = "The ID of the project in which resources will be provisioned."
   type        = string
 }

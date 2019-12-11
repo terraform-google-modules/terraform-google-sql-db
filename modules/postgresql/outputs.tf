@@ -96,18 +96,3 @@ output "generated_user_password" {
   value       = random_id.user-password.hex
   sensitive   = true
 }
-
-output "database_version" {
-  value       = var.database_version
-  description = "The Postgres version to use."
-}
-
-output "region" {
-  value       = var.region
-  description = "The region of the Cloud SQL resources"
-}
-
-output "tier" {
-  value       = var.tier
-  description = "The tier for the master instance."
-}

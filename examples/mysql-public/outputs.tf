@@ -44,17 +44,3 @@ output "private_ip_address" {
   value       = module.mysql-db.private_ip_address
 }
 
-output "mysql_version" {
-  value       = module.mysql-db.mysql_version
-  description = "The MySQL version to use."
-}
-
-output "region" {
-  value       = module.mysql-db.region
-  description = "The region of the Cloud SQL resources"
-}
-
-output "tier" {
-  value       = module.mysql-db.tier
-  description = "The tier for the master instance."
-}

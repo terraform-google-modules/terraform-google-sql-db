@@ -14,11 +14,12 @@
 
 project_id = attribute('project_id')
 basename   = attribute('name')
-mysql_version = attribute('mysql_version')
-region = attribute('region')
-tier = attribute('tier')
 public_ip_address = attribute('public_ip_address')
 private_ip_address = attribute('private_ip_address')
+mysql_version = "MYSQL_5_6"
+region = "us-central1"
+tier = "db-n1-standard-1"
+
 
 describe google_sql_database_instance(project: project_id, database: basename) do
   let(:expected_settings) {

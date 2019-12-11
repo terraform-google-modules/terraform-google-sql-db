@@ -60,7 +60,6 @@
 
 | Name | Description |
 |------|-------------|
-| database\_version | The Postgres version to use. |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | instance\_address | The IPv4 addesses assigned for the master instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
@@ -72,12 +71,10 @@
 | private\_ip\_address | The first private (PRIVATE) IPv4 address assigned for the master instance |
 | public\_ip\_address | The first public (PRIMARY) IPv4 address assigned for the master instance |
 | read\_replica\_instance\_names | The instance names for the read replica instances |
-| region | The region of the Cloud SQL resources |
 | replicas\_instance\_connection\_names | The connection names of the replica instances to be used in connection strings |
 | replicas\_instance\_ip\_addresses | The IPv4 addresses assigned for the replica instances |
 | replicas\_instance\_self\_links | The URIs of the replica instances |
 | replicas\_instance\_server\_ca\_certs | The CA certificates information used to connect to the replica instances via SSL |
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |
-| tier | The tier for the master instance. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

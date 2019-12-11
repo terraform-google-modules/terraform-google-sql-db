@@ -137,18 +137,3 @@ output "instance_address" {
   value       = google_sql_database_instance.default.ip_address
   description = "The IPv4 addesses assigned for the master instance"
 }
-
-output "mysql_version" {
-  value       = var.database_version
-  description = "The MySQL version to use."
-}
-
-output "region" {
-  value       = var.region
-  description = "The region of the Cloud SQL resources"
-}
-
-output "tier" {
-  value       = var.tier
-  description = "The tier for the master instance."
-}

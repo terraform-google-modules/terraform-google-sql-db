@@ -38,18 +38,3 @@ output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
   value       = module.postgresql-db.public_ip_address
 }
-
-output "database_version" {
-  value       = module.postgresql-db.database_version
-  description = "The Postgres version to use."
-}
-
-output "region" {
-  value       = module.postgresql-db.region
-  description = "The region of the Cloud SQL resources"
-}
-
-output "tier" {
-  value       = module.postgresql-db.tier
-  description = "The tier for the master instance."
-}

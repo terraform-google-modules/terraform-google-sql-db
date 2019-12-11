@@ -39,17 +39,3 @@ output "public_ip_address" {
   value       = module.example.public_ip_address
 }
 
-output "database_version" {
-  value       = module.example.database_version
-  description = "The Postgres version to use."
-}
-
-output "region" {
-  value       = module.example.region
-  description = "The region of the Cloud SQL resources"
-}
-
-output "tier" {
-  value       = module.example.tier
-  description = "The tier for the master instance."
-}

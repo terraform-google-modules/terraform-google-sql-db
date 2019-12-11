@@ -15,9 +15,11 @@
  */
 
 provider "google" {
+  version = "~> 2.13"
 }
 
 provider "google-beta" {
+  version = "~> 2.13"
 }
 
 resource "random_id" "suffix" {

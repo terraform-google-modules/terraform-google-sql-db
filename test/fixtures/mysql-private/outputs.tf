@@ -34,19 +34,6 @@ output "mysql_user_pass" {
   description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
 }
 
-output "mysql_version" {
-  description = "The MySQL version to use."
-  value       = module.example.mysql_version
-}
-
-output "region" {
-  value = module.example.region
-}
-
-output "tier" {
-  value = module.example.tier
-}
-
 output "reserved_range_name" {
   description = "The Global Address resource name"
   value       = module.example.reserved_range_name

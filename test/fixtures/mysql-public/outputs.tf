@@ -43,18 +43,3 @@ output "private_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned."
   value       = module.example.private_ip_address
 }
-
-output "mysql_version" {
-  value       = module.example.mysql_version
-  description = "The MySQL version to use."
-}
-
-output "region" {
-  value       = module.example.region
-  description = "The region of the Cloud SQL resources"
-}
-
-output "tier" {
-  value       = module.example.tier
-  description = "The tier for the master instance."
-}

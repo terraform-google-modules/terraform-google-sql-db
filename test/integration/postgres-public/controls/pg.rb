@@ -14,9 +14,9 @@
 
 project_id = attribute('project_id')
 basename   = attribute('name')
-db_version = attribute('database_version')
-region = attribute('region')
-tier = attribute('tier')
+db_version = "POSTGRES_9_6"
+region = "us-central1"
+tier = "db-f1-micro"
 public_ip_address = attribute('public_ip_address')
 
 describe google_sql_database_instance(project: project_id, database: basename) do

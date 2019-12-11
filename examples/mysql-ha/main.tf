@@ -15,6 +15,7 @@
  */
 
 provider "google" {
+  version = "~> 2.13"
 }
 
 resource "random_id" "instance_name_suffix" {
