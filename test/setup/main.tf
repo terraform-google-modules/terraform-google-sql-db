@@ -15,11 +15,19 @@
  */
 
 provider "google" {
-  version = "2.9"
+  version = "~> 2.12.0"
 }
 
 provider "google-beta" {
-  version = "2.9"
+  version = "~> 2.12.0"
+}
+
+provider "null" {
+  version = "~> 2.1"
+}
+
+provider "random" {
+  version = "~> 2.2"
 }
 
 module "project" {
