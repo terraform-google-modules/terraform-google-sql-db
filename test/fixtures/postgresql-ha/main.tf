@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 2.13"
-}
-
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
 }

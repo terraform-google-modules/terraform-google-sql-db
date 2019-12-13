@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 2.13"
-}
-
-provider "google-beta" {
-  version = "~> 2.13"
-}
-
 module "example" {
   source = "../../../examples/postgres-public"
 
