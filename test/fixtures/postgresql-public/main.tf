@@ -15,7 +15,7 @@
  */
 
 module "example" {
-  source = "../../../examples/postgres-public"
+  source = "../../../examples/postgresql-public"
 
   project_id          = var.project_id
   authorized_networks = var.authorized_networks

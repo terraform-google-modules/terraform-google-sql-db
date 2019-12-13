@@ -36,10 +36,10 @@ suites:
       name: terraform
       root_module_directory: test/fixtures/mysql-public
       command_timeout: 1800
-  - name: postgres-public
+  - name: postgresql-public
     driver:
       name: terraform
-      root_module_directory: test/fixtures/postgres-public
+      root_module_directory: test/fixtures/postgresql-public
       command_timeout: 1800
   - name: mysql-private
     driver:
