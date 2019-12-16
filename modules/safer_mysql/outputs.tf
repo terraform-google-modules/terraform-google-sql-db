@@ -84,3 +84,17 @@ output "generated_user_password" {
   sensitive   = true
 }
 
+output "public_ip_address" {
+  description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
+  value       = module.safer_mysql.public_ip_address
+}
+
+output "private_ip_address" {
+  description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
+  value       = module.safer_mysql.private_ip_address
+}
+
+output "instance_address" {
+  value       = module.safer_mysql.instance_address
+  description = "The IPv4 addesses assigned for the master instance"
+}

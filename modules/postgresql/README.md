@@ -68,7 +68,8 @@
 | instance\_self\_link | The URI of the master instance |
 | instance\_server\_ca\_cert | The CA certificate information used to connect to the SQL instance via SSL |
 | instance\_service\_account\_email\_address | The service account email address assigned to the master instance |
-| private\_address | The private IP address assigned for the master instance |
+| private\_ip\_address | The first private (PRIVATE) IPv4 address assigned for the master instance |
+| public\_ip\_address | The first public (PRIMARY) IPv4 address assigned for the master instance |
 | read\_replica\_instance\_names | The instance names for the read replica instances |
 | replicas\_instance\_connection\_names | The connection names of the replica instances to be used in connection strings |
 | replicas\_instance\_ip\_addresses | The IPv4 addresses assigned for the replica instances |
