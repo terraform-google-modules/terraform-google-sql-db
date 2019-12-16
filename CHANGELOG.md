@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.0.0] - 2019-12-16
+
 ### Removed
 
 - Removed variable `peering_completed`. [#78]
@@ -14,6 +16,10 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Added variable `module_depends_on`. [#78]
+
+### Changed
+
+- Renamed output `instance_address` to `instance_ip_address` in postgresql module. [#83]
 
 ## [2.0.0] - 2019-09-26
 
@@ -61,3 +67,4 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [#53]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/53
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
 [#78]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/78
+[#83]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/83

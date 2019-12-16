@@ -20,7 +20,7 @@ output "instance_name" {
   description = "The instance name for the master instance"
 }
 
-output "instance_address" {
+output "instance_ip_address" {
   value       = google_sql_database_instance.default.ip_address
   description = "The IPv4 addesses assigned for the master instance"
 }
