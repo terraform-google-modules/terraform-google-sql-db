@@ -16,6 +16,13 @@ and need a Terraform 0.11.x-compatible version of this module, the last
 released version intended for Terraform 0.11.x is
 [v1.2.0](https://registry.terraform.io/modules/GoogleCloudPlatform/sql-db/google/1.2.0).
 
+## Upgrading
+
+The current version is 3.X. The following guides are available to assist with upgrades:
+
+- [1.X -> 2.0](./docs/upgrading_to_sql_db_2.0.0.md)
+- [2.X -> 3.0](./docs/upgrading_to_sql_db_3.0.0.md)
+
 ## Root module
 
 The root module has been deprecated. Please switch to using one of the submodules.
