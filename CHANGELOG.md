@@ -53,7 +53,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.0] - 2019-02-14
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/1.1.2...v1.2.0
 [1.1.2]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/1.1.1...1.1.2
