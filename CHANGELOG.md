@@ -65,10 +65,10 @@ submodule, and the `safer_mysql` submodule. [#76]
 [1.0.1]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-sql-db/releases/tag/1.0.0
 
+[#83]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/83
+[#78]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/78
 [#76]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/76
 [#61]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/61
 [#56]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/56
 [#53]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/53
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
-[#78]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/78
-[#83]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/83
