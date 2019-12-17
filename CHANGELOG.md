@@ -15,8 +15,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- The `public_ip_address`, `private_ip_address`, and `instance_address` outputs to the `mysql` submodule, the `postgresql` 
-  submodule, and the `safer_mysql` submodule. [#76]
+- The `public_ip_address`, `private_ip_address`, and `instance_address` outputs to the `mysql` submodule, the `postgresql`
+submodule, and the `safer_mysql` submodule. [#76]
 - Added variable `module_depends_on`. [#78]
 
 ### Changed
