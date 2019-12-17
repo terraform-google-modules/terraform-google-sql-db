@@ -239,8 +239,8 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | failover-replica\_instance\_self\_link | The URI of the failover-replica instance |
 | failover-replica\_instance\_service\_account\_email\_address | The service account email addresses assigned to the failover-replica instance |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
-| instance\_address | The IPv4 addesses assigned for the master instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
+| instance\_ip\_address | The IPv4 address assigned for the master instance |
 | instance\_name | The instance name for the master instance |
 | instance\_self\_link | The URI of the master instance |
 | instance\_service\_account\_email\_address | The service account email address assigned to the master instance |

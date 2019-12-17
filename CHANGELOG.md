@@ -21,7 +21,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Renamed output `instance_address` to `instance_ip_address` in postgresql module. [#83]
+- Renamed output `instance_address` to `instance_ip_address` in `mysql`, `postgresql` and `safer_mysql` submodules. [#83]
 
 ## [2.0.0] - 2019-09-26
 
