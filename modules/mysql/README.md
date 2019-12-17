@@ -78,13 +78,12 @@
 | Name | Description |
 |------|-------------|
 | failover-replica\_instance\_connection\_name | The connection name of the failover-replica instance to be used in connection strings |
-| failover-replica\_instance\_first\_ip\_address | The first IPv4 address of the addesses assigned for the failover-replica instance |
+| failover-replica\_instance\_first\_ip\_address | The first IPv4 address of the addresses assigned for the failover-replica instance |
 | failover-replica\_instance\_name | The instance name for the failover replica instance |
 | failover-replica\_instance\_self\_link | The URI of the failover-replica instance |
 | failover-replica\_instance\_server\_ca\_cert | The CA certificate information used to connect to the failover-replica instance via SSL |
 | failover-replica\_instance\_service\_account\_email\_address | The service account email addresses assigned to the failover-replica instance |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
-| instance\_address | The IPv4 addesses assigned for the master instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned for the master instance. |
 | instance\_ip\_address | The IPv4 address assigned for the master instance |

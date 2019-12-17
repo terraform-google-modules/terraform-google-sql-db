@@ -30,9 +30,9 @@ output "private_ip_address" {
   value       = google_sql_database_instance.default.private_ip_address
 }
 
-output "instance_address" {
+output "instance_ip_address" {
   value       = google_sql_database_instance.default.ip_address
-  description = "The IPv4 addesses assigned for the master instance"
+  description = "The IPv4 address assigned for the master instance"
 }
 
 output "instance_first_ip_address" {

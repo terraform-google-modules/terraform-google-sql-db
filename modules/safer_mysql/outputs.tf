@@ -94,7 +94,7 @@ output "private_ip_address" {
   value       = module.safer_mysql.private_ip_address
 }
 
-output "instance_address" {
-  value       = module.safer_mysql.instance_address
-  description = "The IPv4 addesses assigned for the master instance"
+output "instance_ip_address" {
+  value       = module.safer_mysql.instance_ip_address
+  description = "The IPv4 address assigned for the master instance"
 }

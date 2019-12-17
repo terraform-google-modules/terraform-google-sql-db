@@ -89,7 +89,7 @@ output "read_replica_instance_names" {
 // Failover Replicas
 output "failover-replica_instance_first_ip_address" {
   value       = google_sql_database_instance.failover-replica[*].ip_address
-  description = "The first IPv4 address of the addesses assigned for the failover-replica instance"
+  description = "The first IPv4 address of the addresses assigned for the failover-replica instance"
 }
 
 output "failover-replica_instance_connection_name" {
@@ -131,9 +131,4 @@ output "public_ip_address" {
 output "private_ip_address" {
   description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
   value       = google_sql_database_instance.default.private_ip_address
-}
-
-output "instance_address" {
-  value       = google_sql_database_instance.default.ip_address
-  description = "The IPv4 addesses assigned for the master instance"
 }

@@ -7,12 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Added
-
-- The `public_ip_address`, `private_ip_address`, and `instance_address` outputs to the `mysql` submodule, the `postgresql` 
-  submodule, and the `safer_mysql` submodule. [#76]
-
-## [3.0.0] - 2019-12-13
+## [3.0.0] - 2019-12-16
 
 ### Removed
 
@@ -20,7 +15,13 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- The `public_ip_address`, `private_ip_address`, and `instance_address` outputs to the `mysql` submodule, the `postgresql`
+submodule, and the `safer_mysql` submodule. [#76]
 - Added variable `module_depends_on`. [#78]
+
+### Changed
+
+- Renamed output `instance_address` to `instance_ip_address` in `mysql`, `postgresql` and `safer_mysql` submodules. [#83]
 
 ## [2.0.0] - 2019-09-26
 
@@ -64,9 +65,10 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [1.0.1]: https://github.com/terraform-google-modules/terraform-google-sql-db/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-sql-db/releases/tag/1.0.0
 
+[#83]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/83
+[#78]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/78
 [#76]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/76
 [#61]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/61
 [#56]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/56
 [#53]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/53
 [#43]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/43
-[#78]: https://github.com/terraform-google-modules/terraform-google-sql-db/pull/78
