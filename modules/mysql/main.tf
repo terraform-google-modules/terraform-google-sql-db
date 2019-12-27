@@ -17,6 +17,8 @@
 locals {
   default_user_host        = "%"
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
+  settings                 = var.tier != null ? [var.tier] : []
+  databases_count          = var.tier != null ? 1 : 0
 
   ip_configurations = {
     enabled  = var.ip_configuration
@@ -25,63 +27,67 @@ locals {
 }
 
 resource "google_sql_database_instance" "default" {
+  provider         = "google-beta"
   project          = var.project_id
   name             = var.name
-  database_version = var.database_version
+  database_version = var.source_ip_address == null ? null : var.database_version
   region           = var.region
 
-  settings {
-    tier                        = var.tier
-    activation_policy           = var.activation_policy
-    authorized_gae_applications = var.authorized_gae_applications
-    dynamic "backup_configuration" {
-      for_each = [var.backup_configuration]
-      content {
-        binary_log_enabled = lookup(backup_configuration.value, "binary_log_enabled", null)
-        enabled            = lookup(backup_configuration.value, "enabled", null)
-        start_time         = lookup(backup_configuration.value, "start_time", null)
+  dynamic "settings" {
+    for_each = local.settings
+    content {
+      tier                        = settings.value
+      activation_policy           = var.activation_policy
+      authorized_gae_applications = var.authorized_gae_applications
+      dynamic "backup_configuration" {
+        for_each = [var.backup_configuration]
+        content {
+          binary_log_enabled = lookup(backup_configuration.value, "binary_log_enabled", null)
+          enabled            = lookup(backup_configuration.value, "enabled", null)
+          start_time         = lookup(backup_configuration.value, "start_time", null)
+        }
       }
-    }
-    dynamic "ip_configuration" {
-      for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
-      content {
-        ipv4_enabled    = lookup(ip_configuration.value, "ipv4_enabled", null)
-        private_network = lookup(ip_configuration.value, "private_network", null)
-        require_ssl     = lookup(ip_configuration.value, "require_ssl", null)
+      dynamic "ip_configuration" {
+        for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
+        content {
+          ipv4_enabled    = lookup(ip_configuration.value, "ipv4_enabled", null)
+          private_network = lookup(ip_configuration.value, "private_network", null)
+          require_ssl     = lookup(ip_configuration.value, "require_ssl", null)
 
-        dynamic "authorized_networks" {
-          for_each = lookup(ip_configuration.value, "authorized_networks", [])
-          content {
-            expiration_time = lookup(authorized_networks.value, "expiration_time", null)
-            name            = lookup(authorized_networks.value, "name", null)
-            value           = lookup(authorized_networks.value, "value", null)
+          dynamic "authorized_networks" {
+            for_each = lookup(ip_configuration.value, "authorized_networks", [])
+            content {
+              expiration_time = lookup(authorized_networks.value, "expiration_time", null)
+              name            = lookup(authorized_networks.value, "name", null)
+              value           = lookup(authorized_networks.value, "value", null)
+            }
           }
         }
       }
-    }
 
-    disk_autoresize = var.disk_autoresize
+      disk_autoresize = var.disk_autoresize
 
-    disk_size    = var.disk_size
-    disk_type    = var.disk_type
-    pricing_plan = var.pricing_plan
-    user_labels  = var.user_labels
-    dynamic "database_flags" {
-      for_each = var.database_flags
-      content {
-        name  = lookup(database_flags.value, "name", null)
-        value = lookup(database_flags.value, "value", null)
+      disk_size    = var.disk_size
+      disk_type    = var.disk_type
+      pricing_plan = var.pricing_plan
+      user_labels  = var.user_labels
+      dynamic "database_flags" {
+        for_each = var.database_flags
+        content {
+          name  = lookup(database_flags.value, "name", null)
+          value = lookup(database_flags.value, "value", null)
+        }
       }
-    }
 
-    location_preference {
-      zone = "${var.region}-${var.zone}"
-    }
+      location_preference {
+        zone = "${var.region}-${var.zone}"
+      }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
+      maintenance_window {
+        day          = var.maintenance_window_day
+        hour         = var.maintenance_window_hour
+        update_track = var.maintenance_window_update_track
+      }
     }
   }
 
@@ -97,10 +103,14 @@ resource "google_sql_database_instance" "default" {
     delete = var.delete_timeout
   }
 
+  source_ip_address = var.source_ip_address
+  source_port       = var.source_port
+
   depends_on = [null_resource.module_depends_on]
 }
 
 resource "google_sql_database" "default" {
+  count      = local.databases_count
   name       = var.db_name
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
@@ -120,6 +130,7 @@ resource "google_sql_database" "additional_databases" {
 }
 
 resource "random_id" "user-password" {
+  count = local.databases_count
   keepers = {
     name = google_sql_database_instance.default.name
   }
@@ -129,11 +140,12 @@ resource "random_id" "user-password" {
 }
 
 resource "google_sql_user" "default" {
+  count      = local.databases_count
   name       = var.user_name
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
   host       = var.user_host
-  password   = var.user_password == "" ? random_id.user-password.hex : var.user_password
+  password   = var.user_password == "" ? random_id.user-password[0].hex : var.user_password
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -144,7 +156,7 @@ resource "google_sql_user" "additional_users" {
   password = lookup(
     var.additional_users[count.index],
     "password",
-    random_id.user-password.hex,
+    random_id.user-password[0].hex,
   )
   host       = lookup(var.additional_users[count.index], "host", var.user_host)
   instance   = google_sql_database_instance.default.name

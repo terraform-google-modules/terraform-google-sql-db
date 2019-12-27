@@ -12,7 +12,7 @@
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
 | database\_flags | List of Cloud SQL flags that are applied to the database server | object | `<list>` | no |
-| database\_version | The database version to use | string | n/a | yes |
+| database\_version | The database version to use | string | `"null"` | no |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'utf8_general_ci' | string | `""` | no |
 | db\_name | The name of the default database to create | string | `"default"` | no |
@@ -65,7 +65,9 @@
 | read\_replica\_user\_labels | The key/value labels for the read replica instances. | map(string) | `<map>` | no |
 | read\_replica\_zones | The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas. | string | `""` | no |
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
-| tier | The tier for the master instance. | string | `"db-n1-standard-1"` | no |
+| source\_ip\_address | Public IP address used to connect to and replicate from the external data source. | string | `"null"` | no |
+| source\_port | Port number used to connect to and replicate from the external data source. | string | `"null"` | no |
+| tier | The tier for the master instance. | string | `"null"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | string | `"10m"` | no |
 | user\_host | The host for the default user | string | `"%"` | no |
 | user\_labels | The key/value labels for the master instances. | map(string) | `<map>` | no |

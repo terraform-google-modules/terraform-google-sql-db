@@ -14,14 +14,25 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
+variable "region" {
+  default = "us-central1"
+  type    = string
 }
 
-provider "google" {
-  version = "~> 2.12.0"
+variable "zone" {
+  default = "us-central1-b"
+  type    = string
 }
 
-provider "google-beta" {
-  version = "~> 2.12.0"
+variable "source_ip_address" {
+  type = string
+}
+
+variable "source_port" {
+  default = "3306"
+  type    = string
+}
+
+variable "project_id" {
+  type = string
 }

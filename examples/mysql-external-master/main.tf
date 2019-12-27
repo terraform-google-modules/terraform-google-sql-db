@@ -14,14 +14,30 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
-}
-
+# Fix provider version
 provider "google" {
-  version = "~> 2.12.0"
+  version = "2.14"
+  region  = var.region
 }
 
+# Fix provider version
 provider "google-beta" {
-  version = "~> 2.12.0"
+  version = "2.20"
+  region  = var.region
+}
+
+resource "random_id" "name" {
+  byte_length = 2
+}
+
+module "mysql-external" {
+  source             = "../../modules/mysql"
+  name               = "example-external-mysql-${random_id.name.hex}"
+  project_id         = var.project_id
+  source_ip_address  = var.source_ip_address
+  source_port        = var.source_port
+  zone               = var.zone
+  read_replica_size  = 1
+  read_replica_tier  = "db-n1-standard-1"
+  read_replica_zones = "c"
 }

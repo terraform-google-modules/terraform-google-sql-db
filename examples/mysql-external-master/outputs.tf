@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
-}
+#output "mysql_conn" {
+#  value       = module.mysql-db.instance_connection_name
+#  description = "The connection name of the master instance to be used in connection strings"
+#}
 
-provider "google" {
-  version = "~> 2.12.0"
-}
+#output "mysql_user_pass" {
+#  value       = module.mysql-db.generated_user_password
+#  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+#}
 
-provider "google-beta" {
-  version = "~> 2.12.0"
-}

@@ -31,8 +31,9 @@ The root module has been deprecated. Please switch to using one of the submodule
 
 ### Installation Dependencies
 
-- [terraform](https://www.terraform.io/downloads.html) 0.12.x
+- [terraform](https://www.terraform.io/downloads.html) ~> 0.12.6
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v2.5.x
+- [terraform-provider-google-beta](https://github.com/terraform-providers/terraform-provider-google-beta) plugin ~> v2.xxx
 
 ### Configure a Service Account
 

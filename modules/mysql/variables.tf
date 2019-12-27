@@ -24,10 +24,10 @@ variable "name" {
   description = "The name of the Cloud SQL resources"
 }
 
-// required
 variable "database_version" {
   description = "The database version to use"
   type        = string
+  default     = null
 }
 
 // required
@@ -41,7 +41,7 @@ variable "region" {
 variable "tier" {
   description = "The tier for the master instance."
   type        = string
-  default     = "db-n1-standard-1"
+  default     = null
 }
 
 variable "zone" {
@@ -128,7 +128,7 @@ variable "backup_configuration" {
   })
   default = {
     binary_log_enabled = null
-    enabled            = null
+    enabled            = false
     start_time         = null
   }
 }
@@ -526,4 +526,16 @@ variable "module_depends_on" {
   description = "List of modules or resources this module depends on."
   type        = list(any)
   default     = []
+}
+
+variable "source_ip_address" {
+  description = "Public IP address used to connect to and replicate from the external data source."
+  type        = string
+  default     = null
+}
+
+variable "source_port" {
+  description = "Port number used to connect to and replicate from the external data source."
+  type        = string
+  default     = null
 }
