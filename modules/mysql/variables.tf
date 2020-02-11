@@ -128,7 +128,7 @@ variable "backup_configuration" {
   })
   default = {
     binary_log_enabled = null
-    enabled            = null
+    enabled            = false
     start_time         = null
   }
 }
