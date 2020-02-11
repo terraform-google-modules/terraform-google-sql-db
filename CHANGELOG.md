@@ -12,8 +12,6 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 * Update google and google-beta provider versions to ~>3.5 ([#87](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/87)) ([706b173](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/706b173e9a4f586e50f306fa055aad4e337e7b69))
 
-## [Unreleased]
-
 ## [3.0.0] - 2019-12-17
 
 ### Removed
