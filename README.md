@@ -67,6 +67,28 @@ You can pass the service account credentials into this module by setting the fol
 
 See more [details](https://www.terraform.io/docs/providers/google/provider_reference.html#configuration-reference).
 
+## Provision Instructions
+
+This module has no root configuration. A module with no root configuration cannot be used directly.
+
+Copy and paste into your Terraform configuration, insert the variables, and run terraform init :
+
+```
+module "sql-db" {
+  source  = "GoogleCloudPlatform/sql-db/google//mysql"
+  version = "3.1.0"
+}
+```
+
+or :
+
+```
+module "sql-db" {
+  source  = "GoogleCloudPlatform/sql-db/google//postgres"
+  version = "3.1.0"
+}
+```
+
 ## Contributing
 
 Refer to the [contribution guidelines](./CONTRIBUTING.md) for
