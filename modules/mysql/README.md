@@ -9,6 +9,7 @@
 | additional\_databases | A list of databases to be created in your cluster | object | `<list>` | no |
 | additional\_users | A list of users to be created in your cluster | object | `<list>` | no |
 | authorized\_gae\_applications | The list of authorized App Engine project names | list(string) | `<list>` | no |
+| availability\_type | The availability type for the master instance. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
 | database\_flags | List of Cloud SQL flags that are applied to the database server | object | `<list>` | no |
