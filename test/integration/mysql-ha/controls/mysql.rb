@@ -17,7 +17,7 @@ basename   = attribute('name')
 authorized_network = attribute('authorized_network')
 
 describe google_sql_database_instances(project: project_id).where(instance_name: /#{basename}/) do
-  its(:count) { should eq 5 }
+  its(:count) { should eq 4 }
 end
 
 describe google_sql_database_instance(project: project_id, database: basename) do
