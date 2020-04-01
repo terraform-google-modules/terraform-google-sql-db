@@ -144,7 +144,6 @@ resource "google_sql_user" "additional_users" {
   project    = var.project_id
   name       = each.value.name
   password   = lookup(each.value, "password", random_id.user-password.hex)
-  host       = lookup(each.value, "host", var.user_host)
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
