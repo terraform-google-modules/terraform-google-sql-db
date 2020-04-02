@@ -190,8 +190,6 @@ module "mysql" {
 
   additional_databases = [
     {
-      project   = var.project_id
-      instance  = local.instance_name
       name      = "${var.mysql_ha_name}-additional"
       charset   = "utf8mb4"
       collation = "utf8mb4_general_ci"
@@ -203,18 +201,14 @@ module "mysql" {
 
   additional_users = [
     {
-      project  = var.project_id
       name     = "tftest2"
       password = "abcdefg"
       host     = "localhost"
-      instance = local.instance_name
     },
     {
-      project  = var.project_id
       name     = "tftest3"
       password = "abcdefg"
       host     = "localhost"
-      instance = local.instance_name
     },
   ]
 }

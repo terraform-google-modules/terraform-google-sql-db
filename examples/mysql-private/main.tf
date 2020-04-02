@@ -74,18 +74,14 @@ module "safer-mysql-db" {
   // Cloud SQL proxy.
   additional_users = [
     {
-      project  = var.project_id
       name     = "app"
       password = "PaSsWoRd"
       host     = "localhost"
-      instance = local.instance_name
     },
     {
-      project  = var.project_id
       name     = "readonly"
       password = "PaSsWoRd"
       host     = "localhost"
-      instance = local.instance_name
     },
   ]
 
