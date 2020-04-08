@@ -24,6 +24,7 @@ locals {
 }
 
 resource "google_sql_database_instance" "default" {
+  provider            = google-beta
   project             = var.project_id
   name                = var.name
   database_version    = var.database_version
