@@ -528,6 +528,18 @@ variable "delete_timeout" {
   default     = "10m"
 }
 
+variable "encryption_key_name" {
+  description = "The full path to the encryption key used for the CMEK disk encryption"
+  type        = string
+  default     = null
+}
+
+variable "availability_type" {
+  description = "The availability type for the master instance. Can be either `ZONAL` or `REGIONAL`."
+  type        = string
+  default     = "ZONAL"
+}
+
 variable "module_depends_on" {
   description = "List of modules or resources this module depends on."
   type        = list(any)

@@ -29,16 +29,18 @@ locals {
 }
 
 resource "google_sql_database_instance" "default" {
-  project          = var.project_id
-  name             = var.name
-  database_version = var.database_version
-  region           = var.region
+  project             = var.project_id
+  name                = var.name
+  database_version    = var.database_version
+  region              = var.region
+  encryption_key_name = var.encryption_key_name
 
   settings {
     tier                        = var.tier
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     authorized_gae_applications = var.authorized_gae_applications
+    availability_type           = var.availability_type
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
