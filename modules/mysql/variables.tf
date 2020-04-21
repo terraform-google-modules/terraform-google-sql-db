@@ -56,9 +56,9 @@ variable "activation_policy" {
 }
 
 variable "availability_type" {
-  description = "The availability type for the master instance. Can be either `ZONAL` or `REGIONAL`."
+  description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
   type        = string
-  default     = "ZONAL"
+  default     = "REGIONAL"
 }
 
 variable "authorized_gae_applications" {
