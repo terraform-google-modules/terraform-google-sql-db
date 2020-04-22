@@ -55,6 +55,12 @@ variable "activation_policy" {
   default     = "ALWAYS"
 }
 
+variable "availability_type" {
+  description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
+  type        = string
+  default     = "REGIONAL"
+}
+
 variable "authorized_gae_applications" {
   description = "The list of authorized App Engine project names"
   type        = list(string)

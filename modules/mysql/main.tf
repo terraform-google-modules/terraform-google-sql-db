@@ -22,6 +22,10 @@ locals {
     enabled  = var.ip_configuration
     disabled = {}
   }
+
+  // HA method using REGIONAL availability_type requires binary logs to be enabled
+  binary_log_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
+  backups_enabled    = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "enabled", null)
 }
 
 resource "google_sql_database_instance" "default" {
@@ -33,12 +37,13 @@ resource "google_sql_database_instance" "default" {
   settings {
     tier                        = var.tier
     activation_policy           = var.activation_policy
+    availability_type           = var.availability_type
     authorized_gae_applications = var.authorized_gae_applications
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
-        binary_log_enabled = lookup(backup_configuration.value, "binary_log_enabled", null)
-        enabled            = lookup(backup_configuration.value, "enabled", null)
+        binary_log_enabled = local.binary_log_enabled
+        enabled            = local.backups_enabled
         start_time         = lookup(backup_configuration.value, "start_time", null)
       }
     }
