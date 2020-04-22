@@ -169,6 +169,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | additional\_users | A list of users to be created in your cluster | object | `<list>` | no |
 | assign\_public\_ip | Set to true if the master instance should also have a public IP (less secure). | string | `"false"` | no |
 | authorized\_gae\_applications | The list of authorized App Engine project names | list(string) | `<list>` | no |
+| availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | string | `"REGIONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"15m"` | no |
 | database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | object | `<list>` | no |
