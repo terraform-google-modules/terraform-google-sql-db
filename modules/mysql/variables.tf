@@ -534,12 +534,6 @@ variable "encryption_key_name" {
   default     = null
 }
 
-variable "availability_type" {
-  description = "The availability type for the master instance. Can be either `ZONAL` or `REGIONAL`."
-  type        = string
-  default     = "ZONAL"
-}
-
 variable "module_depends_on" {
   description = "List of modules or resources this module depends on."
   type        = list(any)
