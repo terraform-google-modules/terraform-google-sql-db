@@ -29,10 +29,12 @@ locals {
 }
 
 resource "google_sql_database_instance" "default" {
-  project          = var.project_id
-  name             = var.name
-  database_version = var.database_version
-  region           = var.region
+  provider            = google-beta
+  project             = var.project_id
+  name                = var.name
+  database_version    = var.database_version
+  region              = var.region
+  encryption_key_name = var.encryption_key_name
 
   settings {
     tier                        = var.tier

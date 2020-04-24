@@ -21,6 +21,7 @@
 | disk\_autoresize | Configuration to increase storage size | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance | number | `"10"` | no |
 | disk\_type | The disk type for the master instance. | string | `"PD_SSD"` | no |
+| encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | string | `"null"` | no |
 | failover\_replica | Specify true if the failover instance is required | bool | `"false"` | no |
 | failover\_replica\_activation\_policy | The activation policy for the failover replica instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
 | failover\_replica\_configuration | The replica configuration for the failover replica instance. In order to create a failover instance, need to specify this argument. | object | `<map>` | no |

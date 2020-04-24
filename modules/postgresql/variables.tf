@@ -358,8 +358,15 @@ variable "delete_timeout" {
   default     = "10m"
 }
 
+variable "encryption_key_name" {
+  description = "The full path to the encryption key used for the CMEK disk encryption"
+  type        = string
+  default     = null
+}
+
 variable "module_depends_on" {
   description = "List of modules or resources this module depends on."
   type        = list(any)
   default     = []
 }
+
