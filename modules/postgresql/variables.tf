@@ -119,17 +119,14 @@ variable "user_labels" {
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
-    binary_log_enabled = bool
-    enabled            = bool
-    start_time         = string
+    enabled    = bool
+    start_time = string
   })
   default = {
-    binary_log_enabled = null
-    enabled            = false
-    start_time         = null
+    enabled    = false
+    start_time = null
   }
 }
-
 
 variable "authorized_gae_applications" {
   description = "The authorized gae applications for the Cloud SQL instances"

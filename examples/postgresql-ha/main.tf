@@ -78,9 +78,8 @@ module "pg" {
   }
 
   backup_configuration = {
-    enabled            = true
-    binary_log_enabled = false
-    start_time         = "20:55"
+    enabled    = true
+    start_time = "20:55"
   }
 
   // Read replica configurations
