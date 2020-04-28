@@ -75,7 +75,7 @@ Copy and paste into your Terraform configuration, insert the variables, and run 
 
 ```
 module "sql-db" {
-  source  = "GoogleCloudPlatform/sql-db/google//mysql"
+  source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
   version = "3.1.0"
 }
 ```
@@ -84,7 +84,7 @@ or :
 
 ```
 module "sql-db" {
-  source  = "GoogleCloudPlatform/sql-db/google//postgres"
+  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
   version = "3.1.0"
 }
 ```
