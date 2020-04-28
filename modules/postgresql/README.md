@@ -12,7 +12,7 @@
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
-| database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | object | `<list>` | no |
+| database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | object | `<list>` | no |
 | database\_version | The database version to use | string | n/a | yes |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `""` | no |
@@ -34,7 +34,7 @@
 | read\_replica\_availability\_type | The availability type for the read replica instances.This is only used to set up high availability for the PostgreSQL instances. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | read\_replica\_configuration | The replica configuration for use in all read replica instances. | object | `<map>` | no |
 | read\_replica\_crash\_safe\_replication | The crash safe replication is to indicates when crash-safe replication flags are enabled. | bool | `"true"` | no |
-| read\_replica\_database\_flags | The database flags for the read replica instances. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | object | `<list>` | no |
+| read\_replica\_database\_flags | The database flags for the read replica instances. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | object | `<list>` | no |
 | read\_replica\_disk\_autoresize | Configuration to increase storage size. | bool | `"true"` | no |
 | read\_replica\_disk\_size | The disk size for the read replica instances. | number | `"10"` | no |
 | read\_replica\_disk\_type | The disk type for the read replica instances. | string | `"PD_SSD"` | no |
