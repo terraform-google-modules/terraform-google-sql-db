@@ -471,11 +471,9 @@ variable "db_collation" {
 variable "additional_databases" {
   description = "A list of databases to be created in your cluster"
   type = list(object({
-    project   = string
     name      = string
     charset   = string
     collation = string
-    instance  = string
   }))
   default = []
 }
