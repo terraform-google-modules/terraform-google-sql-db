@@ -142,8 +142,6 @@ module "pg" {
       name      = "${var.pg_ha_name}-additional"
       charset   = "UTF8"
       collation = "en_US.UTF8"
-      instance  = local.instance_name
-      project   = var.project_id
     },
   ]
 
@@ -152,18 +150,14 @@ module "pg" {
 
   additional_users = [
     {
-      project  = var.project_id
       name     = "tftest2"
       password = "abcdefg"
       host     = "localhost"
-      instance = local.instance_name
     },
     {
-      project  = var.project_id
       name     = "tftest3"
       password = "abcdefg"
       host     = "localhost"
-      instance = local.instance_name
     },
   ]
 }

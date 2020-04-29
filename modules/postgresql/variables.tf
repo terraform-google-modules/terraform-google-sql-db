@@ -304,11 +304,9 @@ variable "db_collation" {
 variable "additional_databases" {
   description = "A list of databases to be created in your cluster"
   type = list(object({
-    project   = string
     name      = string
     charset   = string
     collation = string
-    instance  = string
   }))
   default = []
 }
@@ -328,11 +326,8 @@ variable "user_password" {
 variable "additional_users" {
   description = "A list of users to be created in your cluster"
   type = list(object({
-    project  = string
     name     = string
     password = string
-    host     = string
-    instance = string
   }))
   default = []
 }
