@@ -23,6 +23,7 @@ module "safer_mysql" {
   zone                            = var.zone
   tier                            = var.tier
   activation_policy               = var.activation_policy
+  availability_type               = var.availability_type
   authorized_gae_applications     = var.authorized_gae_applications
   disk_autoresize                 = var.disk_autoresize
   disk_size                       = var.disk_size

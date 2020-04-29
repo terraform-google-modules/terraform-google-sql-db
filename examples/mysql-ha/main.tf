@@ -49,6 +49,7 @@ module "mysql" {
   // Master configurations
   tier                            = "db-n1-standard-1"
   zone                            = "c"
+  availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
@@ -122,57 +123,6 @@ module "mysql" {
   }
 
   read_replica_ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = false
-    private_network = null
-    authorized_networks = [
-      {
-        name  = "${var.project_id}-cidr"
-        value = var.mysql_ha_external_ip_range
-      },
-    ]
-  }
-
-  // Failover replica configurations
-  failover_replica                                 = true
-  failover_replica_name_suffix                     = "-test"
-  failover_replica_tier                            = "db-n1-standard-1"
-  failover_replica_zone                            = "a"
-  failover_replica_activation_policy               = "ALWAYS"
-  failover_replica_crash_safe_replication          = true
-  failover_replica_disk_autoresize                 = true
-  failover_replica_disk_type                       = "PD_SSD"
-  failover_replica_replication_type                = "SYNCHRONOUS"
-  failover_replica_maintenance_window_day          = 3
-  failover_replica_maintenance_window_hour         = 20
-  failover_replica_maintenance_window_update_track = "canary"
-
-  failover_replica_user_labels = {
-    baz = "boo"
-  }
-
-  failover_replica_database_flags = [
-    {
-      name  = "long_query_time"
-      value = "1"
-    },
-  ]
-
-  failover_replica_configuration = {
-    dump_file_path            = "gs://${var.project_id}.appspot.com/tmp"
-    connect_retry_interval    = 5
-    ca_certificate            = null
-    client_certificate        = null
-    client_key                = null
-    failover_target           = null
-    master_heartbeat_period   = null
-    password                  = null
-    ssl_cipher                = null
-    username                  = null
-    verify_server_certificate = null
-  }
-
-  failover_replica_ip_configuration = {
     ipv4_enabled    = true
     require_ssl     = false
     private_network = null

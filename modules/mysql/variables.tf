@@ -55,6 +55,12 @@ variable "activation_policy" {
   default     = "ALWAYS"
 }
 
+variable "availability_type" {
+  description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
+  type        = string
+  default     = "REGIONAL"
+}
+
 variable "authorized_gae_applications" {
   description = "The list of authorized App Engine project names"
   type        = list(string)
@@ -516,6 +522,12 @@ variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
   default     = "10m"
+}
+
+variable "encryption_key_name" {
+  description = "The full path to the encryption key used for the CMEK disk encryption"
+  type        = string
+  default     = null
 }
 
 variable "module_depends_on" {

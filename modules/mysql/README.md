@@ -9,6 +9,7 @@
 | additional\_databases | A list of databases to be created in your cluster | object | `<list>` | no |
 | additional\_users | A list of users to be created in your cluster | object | `<list>` | no |
 | authorized\_gae\_applications | The list of authorized App Engine project names | list(string) | `<list>` | no |
+| availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | string | `"REGIONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
 | database\_flags | List of Cloud SQL flags that are applied to the database server | object | `<list>` | no |
@@ -20,6 +21,7 @@
 | disk\_autoresize | Configuration to increase storage size | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance | number | `"10"` | no |
 | disk\_type | The disk type for the master instance. | string | `"PD_SSD"` | no |
+| encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | string | `"null"` | no |
 | failover\_replica | Specify true if the failover instance is required | bool | `"false"` | no |
 | failover\_replica\_activation\_policy | The activation policy for the failover replica instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
 | failover\_replica\_configuration | The replica configuration for the failover replica instance. In order to create a failover instance, need to specify this argument. | object | `<map>` | no |
