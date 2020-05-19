@@ -22,7 +22,7 @@ variable "project_id" {
 variable "name" {
   type        = string
   description = "The name for Cloud SQL instance"
-  default     = "tf-mssql-simple"
+  default     = "tf-mssql-public"
 }
 
 variable "region" {

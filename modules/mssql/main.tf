@@ -30,7 +30,6 @@ locals {
   }
 }
 
-
 resource "random_password" "root-password" {
   length  = 8
   special = true

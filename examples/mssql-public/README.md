@@ -7,7 +7,7 @@ This example shows how create MS SQL Server database using the Terraform module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| name | The name for Cloud SQL instance | string | `"tf-mssql-simple"` | no |
+| name | The name for Cloud SQL instance | string | `"tf-mssql-public"` | no |
 | project\_id | The project to run tests against | string | n/a | yes |
 | region |  | string | `"us-central1"` | no |
 

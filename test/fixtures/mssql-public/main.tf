@@ -28,7 +28,7 @@ locals {
 }
 
 module "mssql" {
-  source     = "../../../examples/mssql-simple"
+  source     = "../../../examples/mssql-public"
   name       = local.instance_name
   project_id = var.project_id
 }
