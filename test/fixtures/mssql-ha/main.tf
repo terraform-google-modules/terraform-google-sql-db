@@ -30,7 +30,7 @@ locals {
   /*
     Random instance name needed because:
     "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
+    See https://cloud.google.com/sql/docs/sqlserver/delete-instance for details.
   */
   instance_name = "${var.ha_name}-${random_id.instance_name_suffix.hex}"
 }
