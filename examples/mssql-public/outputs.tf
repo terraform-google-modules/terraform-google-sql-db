@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-resource "random_id" "instance_name_suffix" {
-  byte_length = 5
+output "project_id" {
+  value = var.project_id
 }
 
-locals {
-  /*
-    Random instance name needed because:
-    "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/postgres/delete-instance for details.
-  */
-  instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
+output "instance_name" {
+  value = local.instance_name
 }
 
-module "example" {
-  source                  = "../../../examples/postgresql-ha"
-  project_id              = var.project_id
-  pg_ha_name              = var.pg_ha_name
-  pg_ha_external_ip_range = var.pg_ha_external_ip_range
+output "mssql_connection" {
+  value       = module.mssql.instance_connection_name
+  description = "The connection name of the master instance to be used in connection strings"
 }
 
-
-
+output "public_ip_address" {
+  value       = module.mssql.instance_first_ip_address
+  description = "Public ip address"
+}

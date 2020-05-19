@@ -46,6 +46,11 @@ suites:
       name: terraform
       root_module_directory: test/fixtures/mysql-private
       command_timeout: 1800
+  - name: mssql-public
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/mssql-public
+      command_timeout: 1800
   - name: mysql-ha
     driver:
       name: terraform
@@ -55,4 +60,9 @@ suites:
     driver:
       name: terraform
       root_module_directory: test/fixtures/postgresql-ha
+      command_timeout: 1800
+  - name: mssql-ha
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/mssql-ha
       command_timeout: 1800

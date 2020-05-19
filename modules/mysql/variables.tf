@@ -133,7 +133,7 @@ variable "backup_configuration" {
     start_time         = string
   })
   default = {
-    binary_log_enabled = null
+    binary_log_enabled = false
     enabled            = false
     start_time         = null
   }

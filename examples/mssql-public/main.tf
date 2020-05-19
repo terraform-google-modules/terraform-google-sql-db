@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+provider "google-beta" {
+  version = "~> 3.1.0"
+  region  = var.region
+}
+
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
 }
@@ -22,17 +27,15 @@ locals {
   /*
     Random instance name needed because:
     "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/postgres/delete-instance for details.
+    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
   */
-  instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
+  instance_name = "${var.name}-${random_id.instance_name_suffix.hex}"
 }
 
-module "example" {
-  source                  = "../../../examples/postgresql-ha"
-  project_id              = var.project_id
-  pg_ha_name              = var.pg_ha_name
-  pg_ha_external_ip_range = var.pg_ha_external_ip_range
+module "mssql" {
+  source        = "../../modules/mssql"
+  name          = local.instance_name
+  project_id    = var.project_id
+  user_name     = "simpleuser"
+  user_password = "foobar"
 }
-
-
-

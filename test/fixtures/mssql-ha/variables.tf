@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-resource "random_id" "instance_name_suffix" {
-  byte_length = 5
+variable "project_id" {
+  type        = string
+  description = "The project to run tests against"
 }
 
-locals {
-  /*
-    Random instance name needed because:
-    "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/postgres/delete-instance for details.
-  */
-  instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
+variable "ha_name" {
+  type        = string
+  description = "The name for Cloud SQL instance"
+  default     = "tf-mssql-ha"
 }
 
-module "example" {
-  source                  = "../../../examples/postgresql-ha"
-  project_id              = var.project_id
-  pg_ha_name              = var.pg_ha_name
-  pg_ha_external_ip_range = var.pg_ha_external_ip_range
+variable "ha_external_ip_range" {
+  type        = string
+  description = "The ip range to allow connecting from/to Cloud SQL"
+  default     = "192.10.10.10/32"
 }
 
-
-
+variable "region" {
+  default = "us-central1"
+  type    = string
+}
