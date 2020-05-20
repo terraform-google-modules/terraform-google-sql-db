@@ -50,12 +50,6 @@ variable "zone" {
   default     = "us-central1-a"
 }
 
-variable "peering_completed" {
-  description = "Optional. This is used to ensure that resources are created in the proper order when using private IPs and service network peering."
-  type        = string
-  default     = ""
-}
-
 variable "activation_policy" {
   description = "The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   type        = string
@@ -167,11 +161,9 @@ variable "db_collation" {
 variable "additional_databases" {
   description = "A list of databases to be created in your cluster"
   type = list(object({
-    project   = string
     name      = string
     charset   = string
     collation = string
-    instance  = string
   }))
   default = []
 }
@@ -191,11 +183,8 @@ variable "user_password" {
 variable "additional_users" {
   description = "A list of users to be created in your cluster"
   type = list(object({
-    project  = string
     name     = string
     password = string
-    host     = string
-    instance = string
   }))
   default = []
 }
@@ -222,4 +211,10 @@ variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
   default     = "30m"
+}
+
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list(any)
+  default     = []
 }

@@ -15,19 +15,15 @@
  */
 
 locals {
-  ip_configuration_enabled  = length(keys(var.ip_configuration)) > 0 ? true : false
-  peering_completed_enabled = var.peering_completed != "" ? true : false
-  peering_completed         = local.peering_completed_enabled ? "enabled" : "disabled"
+  ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
   ip_configurations = {
     enabled  = var.ip_configuration
     disabled = {}
   }
 
-  user_labels_including_tf_dependency = {
-    enabled  = merge(map("tf_dependency", var.peering_completed), var.user_labels)
-    disabled = var.user_labels
-  }
+  databases = { for db in var.additional_databases : db.name => db }
+  users     = { for u in var.additional_users : u.name => u }
 }
 
 resource "random_password" "root-password" {
@@ -78,10 +74,7 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
-    // Define a label to force a dependency to the creation of the network peering.
-    // Substitute this with a module dependency once the module is migrated to
-    // Terraform 0.12
-    user_labels = local.user_labels_including_tf_dependency[local.peering_completed]
+    user_labels = var.user_labels
 
     location_preference {
       zone = var.zone
@@ -105,6 +98,8 @@ resource "google_sql_database_instance" "default" {
     update = var.update_timeout
     delete = var.delete_timeout
   }
+
+  depends_on = [null_resource.module_depends_on]
 }
 
 resource "google_sql_database" "default" {
@@ -113,22 +108,23 @@ resource "google_sql_database" "default" {
   instance   = google_sql_database_instance.default.name
   charset    = var.db_charset
   collation  = var.db_collation
-  depends_on = [google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
 }
 
 resource "google_sql_database" "additional_databases" {
-  count      = length(var.additional_databases)
+  for_each   = local.databases
   project    = var.project_id
-  name       = var.additional_databases[count.index]["name"]
-  charset    = lookup(var.additional_databases[count.index], "charset", "")
-  collation  = lookup(var.additional_databases[count.index], "collation", "")
+  name       = each.value.name
+  charset    = lookup(each.value, "charset", null)
+  collation  = lookup(each.value, "collation", null)
   instance   = google_sql_database_instance.default.name
-  depends_on = [google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
 }
 
 resource "random_password" "user-password" {
-  length  = 8
-  special = true
+  length     = 8
+  special    = true
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_user" "default" {
@@ -136,18 +132,20 @@ resource "google_sql_user" "default" {
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
   password   = coalesce(var.user_password, random_password.user-password.result)
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_user" "additional_users" {
-  count   = length(var.additional_users)
-  project = var.project_id
-  name    = var.additional_users[count.index]["name"]
-  password = lookup(
-    var.additional_users[count.index],
-    "password",
-    random_password.user-password.result,
-  )
+  for_each   = local.users
+  project    = var.project_id
+  name       = each.value.name
+  password   = lookup(each.value, "password", random_password.user-password.result)
   instance   = google_sql_database_instance.default.name
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+}
+
+resource "null_resource" "module_depends_on" {
+  triggers = {
+    value = length(var.module_depends_on)
+  }
 }
