@@ -24,6 +24,9 @@ locals {
     disabled = {}
   }
 
+  databases = { for db in var.additional_databases : db.name => db }
+  users     = { for u in var.additional_users : u.name => u }
+
   user_labels_including_tf_dependency = {
     enabled  = merge(map("tf_dependency", var.peering_completed), var.user_labels)
     disabled = var.user_labels
@@ -117,11 +120,11 @@ resource "google_sql_database" "default" {
 }
 
 resource "google_sql_database" "additional_databases" {
-  count      = length(var.additional_databases)
+  for_each   = local.databases
   project    = var.project_id
-  name       = var.additional_databases[count.index]["name"]
-  charset    = lookup(var.additional_databases[count.index], "charset", "")
-  collation  = lookup(var.additional_databases[count.index], "collation", "")
+  name       = each.value.name
+  charset    = lookup(each.value, "charset", null)
+  collation  = lookup(each.value, "collation", null)
   instance   = google_sql_database_instance.default.name
   depends_on = [google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
 }
@@ -140,14 +143,10 @@ resource "google_sql_user" "default" {
 }
 
 resource "google_sql_user" "additional_users" {
-  count   = length(var.additional_users)
-  project = var.project_id
-  name    = var.additional_users[count.index]["name"]
-  password = lookup(
-    var.additional_users[count.index],
-    "password",
-    random_password.user-password.result,
-  )
+  for_each = local.users
+  project  = var.project_id
+  name     = each.value.name
+  password = lookup(each.value, "password", random_password.user-password.result)
   instance   = google_sql_database_instance.default.name
   depends_on = [google_sql_database_instance.default]
 }
