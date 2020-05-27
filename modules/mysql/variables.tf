@@ -26,7 +26,7 @@ variable "name" {
 
 variable "random_instance_name" {
   type        = bool
-  description = "To use a random prefix at the end of the Cloud SQL resource"
+  description = "Sets rando prefix at the end of the Cloud SQL resource name"
   default     = false
 }
 

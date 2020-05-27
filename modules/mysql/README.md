@@ -48,7 +48,7 @@
 | name | The name of the Cloud SQL resources | string | n/a | yes |
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
-| random\_instance\_name | To use a random prefix at the end of the Cloud SQL resource | bool | `"false"` | no |
+| random\_instance\_name | Sets rando prefix at the end of the Cloud SQL resource name | bool | `"false"` | no |
 | read\_replica\_activation\_policy | The activation policy for the read replica instances. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
 | read\_replica\_configuration | The replica configuration for use in all read replica instances. | object | `<map>` | no |
 | read\_replica\_crash\_safe\_replication | The crash safe replication is to indicates when crash-safe replication flags are enabled. | bool | `"true"` | no |
