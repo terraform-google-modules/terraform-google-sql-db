@@ -38,7 +38,7 @@ resource "random_id" "prefix" {
 resource "google_sql_database_instance" "default" {
   provider            = google-beta
   project             = var.project_id
-  name                = "${var.name}-${random_id.prefix.hex}"
+  name                = var.random_instance_name ? "${var.name}-${random_id.prefix.hex}" : var.name
   database_version    = var.database_version
   region              = var.region
   encryption_key_name = var.encryption_key_name
