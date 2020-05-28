@@ -24,6 +24,12 @@ variable "name" {
   type        = string
 }
 
+variable "random_instance_name" {
+  type        = bool
+  description = "Sets random suffix at the end of the Cloud SQL resource name"
+  default     = false
+}
+
 // required
 variable "database_version" {
   description = "The database version to use"
