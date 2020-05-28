@@ -44,13 +44,14 @@ locals {
 }
 
 module "mysql-db" {
-  source           = "../../modules/mysql"
-  name             = local.instance_name
-  database_version = "MYSQL_5_6"
-  project_id       = var.project_id
-  zone             = "c"
-  region           = "us-central1"
-  tier             = "db-n1-standard-1"
+  source               = "../../modules/mysql"
+  name                 = var.db_name
+  random_instance_name = true
+  database_version     = "MYSQL_5_6"
+  project_id           = var.project_id
+  zone                 = "c"
+  region               = "us-central1"
+  tier                 = "db-n1-standard-1"
 
   ip_configuration = {
     ipv4_enabled        = true

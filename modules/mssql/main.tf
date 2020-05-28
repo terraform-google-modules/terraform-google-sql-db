@@ -26,6 +26,12 @@ locals {
   users     = { for u in var.additional_users : u.name => u }
 }
 
+resource "random_id" "suffix" {
+  count = var.random_instance_name ? 1 : 0
+
+  byte_length = 4
+}
+
 resource "random_password" "root-password" {
   length  = 8
   special = true
@@ -34,7 +40,7 @@ resource "random_password" "root-password" {
 resource "google_sql_database_instance" "default" {
   provider         = google-beta
   project          = var.project_id
-  name             = var.name
+  name             = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
   database_version = var.database_version
   region           = var.region
   root_password    = coalesce(var.root_password, random_password.root-password.result)

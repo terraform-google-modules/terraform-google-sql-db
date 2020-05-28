@@ -32,6 +32,7 @@ The following dependency must be available for SQL Server module:
 | name | The name of the Cloud SQL resources | string | n/a | yes |
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
+| random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | bool | `"false"` | no |
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
 | root\_password | MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable. | string | `""` | no |
 | tier | The tier for the master instance. | string | `"db-custom-2-3840"` | no |
