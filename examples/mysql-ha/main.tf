@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version = "~> 3.5"
+  version = "~> 3.22"
 }
 
 provider "null" {
@@ -37,7 +37,28 @@ locals {
     See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
   */
   instance_name = "${var.mysql_ha_name}-${random_id.instance_name_suffix.hex}"
+
+  database_flags = [
+    {
+      name  = "long_query_time"
+      value = 1
+    },
+  ]
+
+  read_replica_ip_configuration = {
+    ipv4_enabled    = true
+    require_ssl     = false
+    private_network = null
+    authorized_networks = [
+      {
+        name  = "${var.project_id}-cidr"
+        value = var.mysql_ha_external_ip_range
+      },
+    ]
+  }
+
 }
+
 
 module "mysql" {
   source           = "../../modules/mysql"
@@ -54,12 +75,7 @@ module "mysql" {
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
 
-  database_flags = [
-    {
-      name  = "long_query_time"
-      value = 1
-    },
-  ]
+  database_flags = local.database_flags
 
   user_labels = {
     foo = "bar"
@@ -84,55 +100,39 @@ module "mysql" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix                     = "-test"
-  read_replica_size                            = 3
-  read_replica_tier                            = "db-n1-standard-1"
-  read_replica_zones                           = "a,b,c"
-  read_replica_activation_policy               = "ALWAYS"
-  read_replica_crash_safe_replication          = true
-  read_replica_disk_autoresize                 = true
-  read_replica_disk_type                       = "PD_HDD"
-  read_replica_replication_type                = "SYNCHRONOUS"
-  read_replica_maintenance_window_day          = 1
-  read_replica_maintenance_window_hour         = 22
-  read_replica_maintenance_window_update_track = "stable"
-
-  read_replica_user_labels = {
-    bar = "baz"
-  }
-
-  read_replica_database_flags = [
+  read_replica_name_suffix = "-test"
+  read_replicas = [
     {
-      name  = "long_query_time"
-      value = "1"
+      name             = "0"
+      zone             = "a"
+      region           = null
+      tier             = "db-n1-standard-1"
+      ip_configuration = local.read_replica_ip_configuration
+      database_flags   = local.database_flags
+      disk_type        = "PD_HDD"
+      user_labels      = {}
+    },
+    {
+      name             = "1"
+      zone             = "b"
+      region           = null
+      tier             = "db-n1-standard-1"
+      ip_configuration = local.read_replica_ip_configuration
+      database_flags   = local.database_flags
+      disk_type        = "PD_HDD"
+      user_labels      = {}
+    },
+    {
+      name             = "2"
+      zone             = "c"
+      region           = null
+      tier             = "db-n1-standard-1"
+      ip_configuration = local.read_replica_ip_configuration
+      database_flags   = local.database_flags
+      disk_type        = "PD_HDD"
+      user_labels      = {}
     },
   ]
-
-  read_replica_configuration = {
-    dump_file_path            = "gs://${var.project_id}.appspot.com/tmp"
-    connect_retry_interval    = 5
-    ca_certificate            = null
-    client_certificate        = null
-    client_key                = null
-    failover_target           = null
-    master_heartbeat_period   = null
-    password                  = null
-    ssl_cipher                = null
-    username                  = null
-    verify_server_certificate = null
-  }
-
-  read_replica_ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = false
-    private_network = null
-    authorized_networks = [
-      {
-        name  = "${var.project_id}-cidr"
-        value = var.mysql_ha_external_ip_range
-      },
-    ]
-  }
 
   db_name      = var.mysql_ha_name
   db_charset   = "utf8mb4"
