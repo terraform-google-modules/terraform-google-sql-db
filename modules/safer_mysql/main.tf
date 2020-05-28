@@ -18,7 +18,7 @@ module "safer_mysql" {
   source                          = "../mysql"
   project_id                      = var.project_id
   name                            = var.name
-  random_instance_name            = true
+  random_instance_name            = var.random_instance_name
   database_version                = var.database_version
   region                          = var.region
   zone                            = var.zone
