@@ -19,23 +19,11 @@ provider "google-beta" {
   region  = var.region
 }
 
-resource "random_id" "instance_name_suffix" {
-  byte_length = 5
-}
-
-locals {
-  /*
-    Random instance name needed because:
-    "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
-  */
-  instance_name = "${var.name}-${random_id.instance_name_suffix.hex}"
-}
-
 module "mssql" {
-  source        = "../../modules/mssql"
-  name          = local.instance_name
-  project_id    = var.project_id
-  user_name     = "simpleuser"
-  user_password = "foobar"
+  source               = "../../modules/mssql"
+  name                 = var.name
+  random_instance_name = true
+  project_id           = var.project_id
+  user_name            = "simpleuser"
+  user_password        = "foobar"
 }
