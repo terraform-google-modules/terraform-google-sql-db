@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+resource "random_id" "suffix" {
+  count = var.random_instance_name ? 1 : 0
+
+  byte_length = 4
+}
 
 module "safer_mysql" {
   source                          = "../mysql"
   project_id                      = var.project_id
-  name                            = var.name
+  name                            = var.random_instance_name ? "${var.name}-${random_id.suffix.hex}" : var.name
   database_version                = var.database_version
   region                          = var.region
   zone                            = var.zone
