@@ -128,12 +128,6 @@ variable "backup_configuration" {
   }
 }
 
-variable "authorized_gae_applications" {
-  description = "The authorized gae applications for the Cloud SQL instances"
-  type        = list(string)
-  default     = []
-}
-
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
@@ -150,137 +144,34 @@ variable "ip_configuration" {
   }
 }
 
-variable "read_replica_size" {
-  description = "The size of read replicas"
-  type        = number
-  default     = 0
+// Read Replicas
+variable "read_replicas" {
+  description = "List of read replicas to create"
+  type = list(object({
+    name        = string
+    tier        = string
+    region      = string
+    zone        = string
+    disk_type   = string
+    user_labels = map(string)
+    database_flags = list(object({
+      name  = string
+      value = string
+    }))
+    ip_configuration = object({
+      authorized_networks = list(map(string))
+      ipv4_enabled        = bool
+      private_network     = string
+      require_ssl         = bool
+    })
+  }))
+  default = []
 }
 
 variable "read_replica_name_suffix" {
   description = "The optional suffix to add to the read instance name"
   type        = string
   default     = ""
-}
-
-variable "read_replica_tier" {
-  description = "The tier for the read replica instances."
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_zones" {
-  description = "The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas."
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_activation_policy" {
-  description = "The activation policy for the read replica instances.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
-  type        = string
-  default     = "ALWAYS"
-}
-
-variable "read_replica_availability_type" {
-  description = "The availability type for the read replica instances.This is only used to set up high availability for the PostgreSQL instances. Can be either `ZONAL` or `REGIONAL`."
-  type        = string
-  default     = "ZONAL"
-}
-
-variable "read_replica_crash_safe_replication" {
-  description = "The crash safe replication is to indicates when crash-safe replication flags are enabled."
-  type        = bool
-  default     = true
-}
-
-variable "read_replica_disk_autoresize" {
-  description = "Configuration to increase storage size."
-  type        = bool
-  default     = true
-}
-
-variable "read_replica_disk_size" {
-  description = "The disk size for the read replica instances."
-  type        = number
-  default     = 10
-}
-
-variable "read_replica_disk_type" {
-  description = "The disk type for the read replica instances."
-  type        = string
-  default     = "PD_SSD"
-}
-
-variable "read_replica_pricing_plan" {
-  description = "The pricing plan for the read replica instances."
-  type        = string
-  default     = "PER_USE"
-}
-
-variable "read_replica_maintenance_window_day" {
-  description = "The day of week (1-7) for the read replica instances maintenance."
-  type        = number
-  default     = 1
-}
-
-variable "read_replica_maintenance_window_hour" {
-  description = "The hour of day (0-23) maintenance window for the read replica instances maintenance."
-  type        = number
-  default     = 23
-}
-
-variable "read_replica_maintenance_window_update_track" {
-  description = "The update track of maintenance window for the read replica instances maintenance.Can be either `canary` or `stable`."
-  type        = string
-  default     = "canary"
-}
-
-variable "read_replica_database_flags" {
-  description = "The database flags for the read replica instances. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
-}
-
-variable "read_replica_configuration" {
-  description = "The replica configuration for use in all read replica instances."
-  type = object({
-    connect_retry_interval = number
-    dump_file_path         = string
-  })
-  default = {
-    connect_retry_interval = null
-    dump_file_path         = null
-  }
-}
-
-variable "read_replica_user_labels" {
-  description = "The key/value labels for the read replica instances."
-  type        = map(string)
-  default     = {}
-}
-
-variable "read_replica_replication_type" {
-  description = "The replication type for read replica instances. Can be one of ASYNCHRONOUS or SYNCHRONOUS."
-  type        = string
-  default     = "SYNCHRONOUS"
-}
-
-variable "read_replica_ip_configuration" {
-  description = "The ip configuration for the read instances."
-  type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-  })
-  default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-  }
 }
 
 variable "db_name" {

@@ -72,12 +72,6 @@ resource "google_sql_database_instance" "replicas" {
       zone = lookup(each.value, "zone", var.zone)
     }
 
-    # maintenance_window {
-    #   day          = null
-    #   hour         = null
-    #   update_track = null
-    # }
-
   }
 
   depends_on = [google_sql_database_instance.default]

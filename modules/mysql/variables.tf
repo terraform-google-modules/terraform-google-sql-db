@@ -157,6 +157,7 @@ variable "ip_configuration" {
 
 // Read Replicas
 variable "read_replicas" {
+  description = "List of read replicas to create"
   type = list(object({
     name        = string
     tier        = string
@@ -175,8 +176,7 @@ variable "read_replicas" {
       require_ssl         = bool
     })
   }))
-  description = "Read replicas config"
-  default     = []
+  default = []
 }
 
 variable "read_replica_name_suffix" {

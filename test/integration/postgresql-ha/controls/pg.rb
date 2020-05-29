@@ -29,7 +29,6 @@ describe google_sql_database_instance(project: project_id, database: basename) d
       data_disk_type: "PD_SSD",
       kind: "sql#settings",
       pricing_plan: "PER_USE",
-      replication_type: "SYNCHRONOUS",
       storage_auto_resize: true,
       storage_auto_resize_limit: 0,
       tier: "db-custom-2-13312",
@@ -68,7 +67,6 @@ end
         data_disk_type: "PD_HDD",
         kind: "sql#settings",
         pricing_plan: "PER_USE",
-        replication_type: "SYNCHRONOUS",
         storage_auto_resize: true,
         storage_auto_resize_limit: 0,
         tier: "db-custom-2-13312",
@@ -78,7 +76,6 @@ end
     let(:ip_configuration)        { settings[:ip_configuration] }
     let(:database_flags)          { settings[:database_flags] }
     let(:location_preference)     { settings[:location_preference] }
-    let(:maintenance_window)      { settings[:maintenance_window] }
     let(:user_labels)             { settings[:user_labels] }
 
     its(:backend_type)     { should eq 'SECOND_GEN' }
@@ -91,7 +88,6 @@ end
     it { expect(ip_configuration).to include(authorized_networks: [{kind: 'sql#aclEntry', name: "#{project_id}-cidr", value: authorized_network}], ipv4_enabled: true, require_ssl: false) }
     it { expect(database_flags).to include(name: "autovacuum", value: "off") }
     it { expect(location_preference).to include(kind: "sql#locationPreference", zone: "us-central1-#{zone}") }
-    it { expect(maintenance_window).to include(kind: "sql#maintenanceWindow", day: 1, hour: 22, update_track: "stable") }
     it { expect(user_labels).to include(bar: "baz") }
   end
 end

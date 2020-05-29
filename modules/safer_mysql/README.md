@@ -189,7 +189,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | string | `""` | no |
-| read\_replicas | Read replicas config | object | `<list>` | no |
+| read\_replicas | List of read replicas to create | object | `<list>` | no |
 | region | The region of the Cloud SQL resources | string | n/a | yes |
 | tier | The tier for the master instance. | string | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | string | `"15m"` | no |
