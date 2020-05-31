@@ -104,7 +104,7 @@ module "mysql" {
   read_replicas = [
     {
       name             = "0"
-      zone             = "a"
+      zone             = "us-central1-a"
       region           = null
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
@@ -114,7 +114,7 @@ module "mysql" {
     },
     {
       name             = "1"
-      zone             = "b"
+      zone             = "us-central1-b"
       region           = null
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
@@ -124,7 +124,7 @@ module "mysql" {
     },
     {
       name             = "2"
-      zone             = "c"
+      zone             = "us-central1-c"
       region           = null
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
