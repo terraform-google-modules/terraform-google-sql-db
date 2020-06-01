@@ -104,7 +104,6 @@ module "pg" {
     {
       name             = "0"
       zone             = "us-central1-a"
-      region           = null
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
@@ -114,7 +113,6 @@ module "pg" {
     {
       name             = "1"
       zone             = "us-central1-b"
-      region           = null
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
@@ -124,7 +122,6 @@ module "pg" {
     {
       name             = "2"
       zone             = "us-central1-c"
-      region           = null
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags

@@ -105,7 +105,6 @@ module "mysql" {
     {
       name             = "0"
       zone             = "us-central1-a"
-      region           = null
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
@@ -115,7 +114,6 @@ module "mysql" {
     {
       name             = "1"
       zone             = "us-central1-b"
-      region           = null
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
@@ -125,7 +123,6 @@ module "mysql" {
     {
       name             = "2"
       zone             = "us-central1-c"
-      region           = null
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
