@@ -38,14 +38,6 @@ locals {
   */
   instance_name = "${var.pg_ha_name}-${random_id.instance_name_suffix.hex}"
 
-  database_flags = [
-    {
-      name  = "autovacuum"
-      value = "off"
-    },
-  ]
-
-  read_replica_user_labels = { bar = "baz" }
   read_replica_ip_configuration = {
     ipv4_enabled    = true
     require_ssl     = false
@@ -106,27 +98,27 @@ module "pg" {
       zone             = "us-central1-a"
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
-      database_flags   = local.database_flags
+      database_flags   = [{ name = "autovacuum", value = "off" }]
       disk_type        = "PD_HDD"
-      user_labels      = local.read_replica_user_labels
+      user_labels      = { bar = "baz" }
     },
     {
       name             = "1"
       zone             = "us-central1-b"
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
-      database_flags   = local.database_flags
+      database_flags   = [{ name = "autovacuum", value = "off" }]
       disk_type        = "PD_HDD"
-      user_labels      = local.read_replica_user_labels
+      user_labels      = { bar = "baz" }
     },
     {
       name             = "2"
       zone             = "us-central1-c"
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
-      database_flags   = local.database_flags
+      database_flags   = [{ name = "autovacuum", value = "off" }]
       disk_type        = "PD_HDD"
-      user_labels      = local.read_replica_user_labels
+      user_labels      = { bar = "baz" }
     },
   ]
 

@@ -38,13 +38,6 @@ locals {
   */
   instance_name = "${var.mysql_ha_name}-${random_id.instance_name_suffix.hex}"
 
-  database_flags = [
-    {
-      name  = "long_query_time"
-      value = 1
-    },
-  ]
-
   read_replica_ip_configuration = {
     ipv4_enabled    = true
     require_ssl     = false
@@ -107,7 +100,7 @@ module "mysql" {
       zone             = "us-central1-a"
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
-      database_flags   = local.database_flags
+      database_flags   = [{ name = "long_query_time", value = 1 }]
       disk_type        = "PD_HDD"
       user_labels      = { bar = "baz" }
     },
@@ -116,7 +109,7 @@ module "mysql" {
       zone             = "us-central1-b"
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
-      database_flags   = local.database_flags
+      database_flags   = [{ name = "long_query_time", value = 1 }]
       disk_type        = "PD_HDD"
       user_labels      = { bar = "baz" }
     },
@@ -125,7 +118,7 @@ module "mysql" {
       zone             = "us-central1-c"
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
-      database_flags   = local.database_flags
+      database_flags   = [{ name = "long_query_time", value = 1 }]
       disk_type        = "PD_HDD"
       user_labels      = { bar = "baz" }
     },
