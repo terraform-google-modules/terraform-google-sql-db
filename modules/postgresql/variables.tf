@@ -150,7 +150,6 @@ variable "read_replicas" {
   type = list(object({
     name        = string
     tier        = string
-    region      = string
     zone        = string
     disk_type   = string
     user_labels = map(string)
