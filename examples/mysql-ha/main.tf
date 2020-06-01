@@ -109,7 +109,7 @@ module "mysql" {
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
       disk_type        = "PD_HDD"
-      user_labels      = {}
+      user_labels      = { bar = "baz" }
     },
     {
       name             = "1"
@@ -118,7 +118,7 @@ module "mysql" {
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
       disk_type        = "PD_HDD"
-      user_labels      = {}
+      user_labels      = { bar = "baz" }
     },
     {
       name             = "2"
@@ -127,7 +127,7 @@ module "mysql" {
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = local.database_flags
       disk_type        = "PD_HDD"
-      user_labels      = {}
+      user_labels      = { bar = "baz" }
     },
   ]
 
