@@ -68,7 +68,7 @@ module "mysql" {
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
 
-  database_flags = local.database_flags
+  database_flags = [{ name = "long_query_time", value = 1 }]
 
   user_labels = {
     foo = "bar"
