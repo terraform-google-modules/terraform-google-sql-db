@@ -165,11 +165,13 @@ variable "ip_configuration" {
 variable "read_replicas" {
   description = "List of read replicas to create"
   type = list(object({
-    name        = string
-    tier        = string
-    zone        = string
-    disk_type   = string
-    user_labels = map(string)
+    name            = string
+    tier            = string
+    zone            = string
+    disk_type       = string
+    disk_autoresize = bool
+    disk_size       = string
+    user_labels     = map(string)
     database_flags = list(object({
       name  = string
       value = string

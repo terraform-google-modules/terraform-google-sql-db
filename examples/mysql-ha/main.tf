@@ -101,6 +101,8 @@ module "mysql" {
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = [{ name = "long_query_time", value = 1 }]
+      disk_autoresize  = null
+      disk_size        = null
       disk_type        = "PD_HDD"
       user_labels      = { bar = "baz" }
     },
@@ -110,6 +112,8 @@ module "mysql" {
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = [{ name = "long_query_time", value = 1 }]
+      disk_autoresize  = null
+      disk_size        = null
       disk_type        = "PD_HDD"
       user_labels      = { bar = "baz" }
     },
@@ -119,6 +123,8 @@ module "mysql" {
       tier             = "db-n1-standard-1"
       ip_configuration = local.read_replica_ip_configuration
       database_flags   = [{ name = "long_query_time", value = 1 }]
+      disk_autoresize  = null
+      disk_size        = null
       disk_type        = "PD_HDD"
       user_labels      = { bar = "baz" }
     },
