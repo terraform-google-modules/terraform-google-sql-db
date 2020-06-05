@@ -39,7 +39,7 @@ locals {
   /*
     Random instance name needed because:
     "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
+    See https://cloud.google.com/sql/docs/postgres/delete-instance for details.
   */
   instance_name = "${var.db_name}-${random_id.name.hex}"
 }
