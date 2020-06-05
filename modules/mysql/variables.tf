@@ -162,298 +162,34 @@ variable "ip_configuration" {
 }
 
 // Read Replicas
-
-variable "read_replica_configuration" {
-  description = "The replica configuration for use in all read replica instances."
-  type = object({
-    connect_retry_interval    = number
-    dump_file_path            = string
-    ca_certificate            = string
-    client_certificate        = string
-    client_key                = string
-    failover_target           = bool
-    master_heartbeat_period   = number
-    password                  = string
-    ssl_cipher                = string
-    username                  = string
-    verify_server_certificate = bool
-  })
-  default = {
-    connect_retry_interval    = null
-    dump_file_path            = null
-    ca_certificate            = null
-    client_certificate        = null
-    client_key                = null
-    failover_target           = null
-    master_heartbeat_period   = null
-    password                  = null
-    ssl_cipher                = null
-    username                  = null
-    verify_server_certificate = null
-  }
+variable "read_replicas" {
+  description = "List of read replicas to create"
+  type = list(object({
+    name            = string
+    tier            = string
+    zone            = string
+    disk_type       = string
+    disk_autoresize = bool
+    disk_size       = string
+    user_labels     = map(string)
+    database_flags = list(object({
+      name  = string
+      value = string
+    }))
+    ip_configuration = object({
+      authorized_networks = list(map(string))
+      ipv4_enabled        = bool
+      private_network     = string
+      require_ssl         = bool
+    })
+  }))
+  default = []
 }
 
 variable "read_replica_name_suffix" {
   description = "The optional suffix to add to the read instance name"
   type        = string
   default     = ""
-}
-
-variable "read_replica_size" {
-  description = "The size of read replicas"
-  type        = number
-  default     = 0
-}
-
-variable "read_replica_tier" {
-  description = "The tier for the read replica instances."
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_zones" {
-  description = "The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas."
-  type        = string
-  default     = ""
-}
-
-variable "read_replica_activation_policy" {
-  description = "The activation policy for the read replica instances. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
-  type        = string
-  default     = "ALWAYS"
-}
-
-variable "read_replica_crash_safe_replication" {
-  description = "The crash safe replication is to indicates when crash-safe replication flags are enabled."
-  type        = bool
-  default     = true
-}
-
-variable "read_replica_disk_autoresize" {
-  description = "Configuration to increase storage size."
-  type        = bool
-  default     = true
-}
-
-variable "read_replica_disk_size" {
-  description = "The disk size for the read replica instances."
-  type        = number
-  default     = 10
-}
-
-variable "read_replica_disk_type" {
-  description = "The disk type for the read replica instances."
-  type        = string
-  default     = "PD_SSD"
-}
-
-variable "read_replica_pricing_plan" {
-  description = "The pricing plan for the read replica instances."
-  type        = string
-  default     = "PER_USE"
-}
-
-variable "read_replica_replication_type" {
-  description = "The replication type for read replica instances. Can be one of ASYNCHRONOUS or SYNCHRONOUS."
-  type        = string
-  default     = "SYNCHRONOUS"
-}
-
-variable "read_replica_database_flags" {
-  description = "The database flags for the read replica instances. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
-}
-
-variable "read_replica_maintenance_window_day" {
-  description = "The day of week (1-7) for the read replica instances maintenance."
-  type        = number
-  default     = 1
-}
-
-variable "read_replica_maintenance_window_hour" {
-  description = "The hour of day (0-23) maintenance window for the read replica instances maintenance."
-  type        = number
-  default     = 23
-}
-
-variable "read_replica_maintenance_window_update_track" {
-  description = "The update track of maintenance window for the read replica instances maintenance. Can be either `canary` or `stable`."
-  type        = string
-  default     = "canary"
-}
-
-variable "read_replica_user_labels" {
-  type        = map(string)
-  default     = {}
-  description = "The key/value labels for the read replica instances."
-}
-
-variable "read_replica_ip_configuration" {
-  description = "The ip configuration for the read replica instances."
-  type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-  })
-  default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-  }
-}
-
-// Failover replica
-
-variable "failover_replica" {
-  description = "Specify true if the failover instance is required"
-  type        = bool
-  default     = false
-}
-
-variable "failover_replica_name_suffix" {
-  description = "The optional suffix to add to the failover instance name"
-  type        = string
-  default     = ""
-}
-
-variable "failover_replica_configuration" {
-  description = "The replica configuration for the failover replica instance. In order to create a failover instance, need to specify this argument."
-  type = object({
-    connect_retry_interval    = number
-    dump_file_path            = string
-    ca_certificate            = string
-    client_certificate        = string
-    client_key                = string
-    failover_target           = bool
-    master_heartbeat_period   = number
-    password                  = string
-    ssl_cipher                = string
-    username                  = string
-    verify_server_certificate = bool
-  })
-  default = {
-    connect_retry_interval    = null
-    dump_file_path            = null
-    ca_certificate            = null
-    client_certificate        = null
-    client_key                = null
-    failover_target           = null
-    master_heartbeat_period   = null
-    password                  = null
-    ssl_cipher                = null
-    username                  = null
-    verify_server_certificate = null
-  }
-}
-
-
-variable "failover_replica_tier" {
-  description = "The tier for the failover replica instance."
-  type        = string
-  default     = ""
-}
-
-variable "failover_replica_zone" {
-  description = "The zone for the failover replica instance, it should be something like: `a`, `c`."
-  type        = string
-  default     = ""
-}
-
-variable "failover_replica_activation_policy" {
-  description = "The activation policy for the failover replica instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
-  type        = string
-  default     = "ALWAYS"
-}
-
-variable "failover_replica_crash_safe_replication" {
-  description = "The crash safe replication is to indicates when crash-safe replication flags are enabled."
-  type        = bool
-  default     = true
-}
-
-variable "failover_replica_disk_autoresize" {
-  description = "Configuration to increase storage size."
-  type        = bool
-  default     = true
-}
-
-variable "failover_replica_disk_size" {
-  description = "The disk size for the failover replica instance."
-  type        = number
-  default     = 10
-}
-
-variable "failover_replica_disk_type" {
-  description = "The disk type for the failover replica instance."
-  type        = string
-  default     = "PD_SSD"
-}
-
-variable "failover_replica_pricing_plan" {
-  description = "The pricing plan for the failover replica instance."
-  type        = string
-  default     = "PER_USE"
-}
-
-variable "failover_replica_replication_type" {
-  description = "The replication type for the failover replica instance. Can be one of ASYNCHRONOUS or SYNCHRONOUS."
-  type        = string
-  default     = "SYNCHRONOUS"
-}
-
-variable "failover_replica_database_flags" {
-  description = "The database flags for the failover replica instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
-}
-
-variable "failover_replica_maintenance_window_day" {
-  description = "The day of week (1-7) for the failover replica instance maintenance."
-  type        = number
-  default     = 1
-}
-
-variable "failover_replica_maintenance_window_hour" {
-  description = "The hour of day (0-23) maintenance window for the failover replica instance maintenance."
-  type        = number
-  default     = 23
-}
-
-variable "failover_replica_maintenance_window_update_track" {
-  description = "The update track of maintenance window for the failover replica instance maintenance. Can be either `canary` or `stable`."
-  type        = string
-  default     = "canary"
-}
-
-variable "failover_replica_user_labels" {
-  type        = map(string)
-  default     = {}
-  description = "The key/value labels for the failover replica instance."
-}
-
-variable "failover_replica_ip_configuration" {
-  description = "The ip configuration for the failover replica instances."
-  type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-  })
-  default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-  }
 }
 
 variable "db_name" {

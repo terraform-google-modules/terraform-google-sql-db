@@ -57,27 +57,6 @@ output "read_replica_instance_names" {
   description = "The instance names for the read replica instances"
 }
 
-// Failover Replicas
-output "failover-replica_instance_connection_name" {
-  value       = module.safer_mysql.failover-replica_instance_connection_name
-  description = "The connection name of the failover-replica instance to be used in connection strings"
-}
-
-output "failover-replica_instance_self_link" {
-  value       = module.safer_mysql.failover-replica_instance_self_link
-  description = "The URI of the failover-replica instance"
-}
-
-output "failover-replica_instance_service_account_email_address" {
-  value       = module.safer_mysql.failover-replica_instance_service_account_email_address
-  description = "The service account email addresses assigned to the failover-replica instance"
-}
-
-output "failover-replica_instance_name" {
-  value       = module.safer_mysql.failover-replica_instance_name
-  description = "The instance name for the failover replica instance"
-}
-
 output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
   value       = module.safer_mysql.generated_user_password
