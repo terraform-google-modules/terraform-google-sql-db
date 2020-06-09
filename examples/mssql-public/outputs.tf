@@ -19,7 +19,8 @@ output "project_id" {
 }
 
 output "instance_name" {
-  value = local.instance_name
+  description = "The name for Cloud SQL instance"
+  value       = module.mssql.instance_name
 }
 
 output "mssql_connection" {
