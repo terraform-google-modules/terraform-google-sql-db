@@ -30,19 +30,6 @@ resource "random_id" "name" {
   byte_length = 2
 }
 
-resource "random_id" "instance_name_suffix" {
-  byte_length = 5
-}
-
-locals {
-  /*
-    Random instance name needed because:
-    "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
-  */
-  instance_name = "${var.db_name}-${random_id.instance_name_suffix.hex}"
-}
-
 module "mysql-db" {
   source               = "../../modules/mysql"
   name                 = var.db_name
