@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version = "~> 3.5"
+  version = "~> 3.22"
 }
 
 provider "null" {
@@ -26,6 +26,19 @@ provider "random" {
   version = "~> 2.2"
 }
 
+locals {
+  read_replica_ip_configuration = {
+    ipv4_enabled    = true
+    require_ssl     = false
+    private_network = null
+    authorized_networks = [
+      {
+        name  = "${var.project_id}-cidr"
+        value = var.pg_ha_external_ip_range
+      },
+    ]
+  }
+}
 
 module "pg" {
   source               = "../../modules/postgresql"
@@ -43,12 +56,7 @@ module "pg" {
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
 
-  database_flags = [
-    {
-      name  = "autovacuum"
-      value = "off"
-    },
-  ]
+  database_flags = [{ name = "autovacuum", value = "off" }]
 
   user_labels = {
     foo = "bar"
@@ -72,55 +80,43 @@ module "pg" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix                     = "-test"
-  read_replica_size                            = 3
-  read_replica_tier                            = "db-custom-2-13312"
-  read_replica_zones                           = "a,b,c"
-  read_replica_activation_policy               = "ALWAYS"
-  read_replica_crash_safe_replication          = true
-  read_replica_disk_autoresize                 = true
-  read_replica_disk_type                       = "PD_HDD"
-  read_replica_replication_type                = "SYNCHRONOUS"
-  read_replica_maintenance_window_day          = 1
-  read_replica_maintenance_window_hour         = 22
-  read_replica_maintenance_window_update_track = "stable"
+  read_replica_name_suffix = "-test"
 
-  read_replica_user_labels = {
-    bar = "baz"
-  }
-
-  read_replica_database_flags = [
+  read_replicas = [
     {
-      name  = "autovacuum"
-      value = "off"
+      name             = "0"
+      zone             = "us-central1-a"
+      tier             = "db-custom-2-13312"
+      ip_configuration = local.read_replica_ip_configuration
+      database_flags   = [{ name = "autovacuum", value = "off" }]
+      disk_autoresize  = null
+      disk_size        = null
+      disk_type        = "PD_HDD"
+      user_labels      = { bar = "baz" }
+    },
+    {
+      name             = "1"
+      zone             = "us-central1-b"
+      tier             = "db-custom-2-13312"
+      ip_configuration = local.read_replica_ip_configuration
+      database_flags   = [{ name = "autovacuum", value = "off" }]
+      disk_autoresize  = null
+      disk_size        = null
+      disk_type        = "PD_HDD"
+      user_labels      = { bar = "baz" }
+    },
+    {
+      name             = "2"
+      zone             = "us-central1-c"
+      tier             = "db-custom-2-13312"
+      ip_configuration = local.read_replica_ip_configuration
+      database_flags   = [{ name = "autovacuum", value = "off" }]
+      disk_autoresize  = null
+      disk_size        = null
+      disk_type        = "PD_HDD"
+      user_labels      = { bar = "baz" }
     },
   ]
-
-  read_replica_configuration = {
-    dump_file_path            = "gs://${var.project_id}.appspot.com/tmp"
-    connect_retry_interval    = 5
-    ca_certificate            = null
-    client_certificate        = null
-    client_key                = null
-    failover_target           = null
-    master_heartbeat_period   = null
-    password                  = null
-    ssl_cipher                = null
-    username                  = null
-    verify_server_certificate = null
-  }
-
-  read_replica_ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = false
-    private_network = null
-    authorized_networks = [
-      {
-        name  = "${var.project_id}-cidr"
-        value = var.pg_ha_external_ip_range
-      },
-    ]
-  }
 
   db_name      = var.pg_ha_name
   db_charset   = "UTF8"

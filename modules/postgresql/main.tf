@@ -15,6 +15,8 @@
  */
 
 locals {
+  master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
+
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
   ip_configurations = {
@@ -35,16 +37,16 @@ resource "random_id" "suffix" {
 resource "google_sql_database_instance" "default" {
   provider            = google-beta
   project             = var.project_id
-  name                = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
+  name                = local.master_instance_name
   database_version    = var.database_version
   region              = var.region
   encryption_key_name = var.encryption_key_name
 
   settings {
-    tier                        = var.tier
-    activation_policy           = var.activation_policy
-    availability_type           = var.availability_type
-    authorized_gae_applications = var.authorized_gae_applications
+    tier              = var.tier
+    activation_policy = var.activation_policy
+    availability_type = var.availability_type
+
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {

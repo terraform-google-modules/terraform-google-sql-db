@@ -8,7 +8,6 @@
 | activation\_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
 | additional\_databases | A list of databases to be created in your cluster | object | `<list>` | no |
 | additional\_users | A list of users to be created in your cluster | object | `<list>` | no |
-| authorized\_gae\_applications | The authorized gae applications for the Cloud SQL instances | list(string) | `<list>` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
@@ -31,25 +30,8 @@
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | bool | `"false"` | no |
-| read\_replica\_activation\_policy | The activation policy for the read replica instances.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | string | `"ALWAYS"` | no |
-| read\_replica\_availability\_type | The availability type for the read replica instances.This is only used to set up high availability for the PostgreSQL instances. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
-| read\_replica\_configuration | The replica configuration for use in all read replica instances. | object | `<map>` | no |
-| read\_replica\_crash\_safe\_replication | The crash safe replication is to indicates when crash-safe replication flags are enabled. | bool | `"true"` | no |
-| read\_replica\_database\_flags | The database flags for the read replica instances. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | object | `<list>` | no |
-| read\_replica\_disk\_autoresize | Configuration to increase storage size. | bool | `"true"` | no |
-| read\_replica\_disk\_size | The disk size for the read replica instances. | number | `"10"` | no |
-| read\_replica\_disk\_type | The disk type for the read replica instances. | string | `"PD_SSD"` | no |
-| read\_replica\_ip\_configuration | The ip configuration for the read instances. | object | `<map>` | no |
-| read\_replica\_maintenance\_window\_day | The day of week (1-7) for the read replica instances maintenance. | number | `"1"` | no |
-| read\_replica\_maintenance\_window\_hour | The hour of day (0-23) maintenance window for the read replica instances maintenance. | number | `"23"` | no |
-| read\_replica\_maintenance\_window\_update\_track | The update track of maintenance window for the read replica instances maintenance.Can be either `canary` or `stable`. | string | `"canary"` | no |
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | string | `""` | no |
-| read\_replica\_pricing\_plan | The pricing plan for the read replica instances. | string | `"PER_USE"` | no |
-| read\_replica\_replication\_type | The replication type for read replica instances. Can be one of ASYNCHRONOUS or SYNCHRONOUS. | string | `"SYNCHRONOUS"` | no |
-| read\_replica\_size | The size of read replicas | number | `"0"` | no |
-| read\_replica\_tier | The tier for the read replica instances. | string | `""` | no |
-| read\_replica\_user\_labels | The key/value labels for the read replica instances. | map(string) | `<map>` | no |
-| read\_replica\_zones | The zones for the read replica instancess, it should be something like: `a,b,c`. Given zones are used rotationally for creating read replicas. | string | `""` | no |
+| read\_replicas | List of read replicas to create | object | `<list>` | no |
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
 | tier | The tier for the master instance. | string | `"db-f1-micro"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | string | `"10m"` | no |
@@ -74,7 +56,7 @@
 | public\_ip\_address | The first public (PRIMARY) IPv4 address assigned for the master instance |
 | read\_replica\_instance\_names | The instance names for the read replica instances |
 | replicas\_instance\_connection\_names | The connection names of the replica instances to be used in connection strings |
-| replicas\_instance\_ip\_addresses | The IPv4 addresses assigned for the replica instances |
+| replicas\_instance\_first\_ip\_addresses | The first IPv4 addresses of the addresses assigned for the replica instances |
 | replicas\_instance\_self\_links | The URIs of the replica instances |
 | replicas\_instance\_server\_ca\_certs | The CA certificates information used to connect to the replica instances via SSL |
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |
