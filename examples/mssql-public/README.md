@@ -15,7 +15,7 @@ This example shows how create MS SQL Server database using the Terraform module.
 
 | Name | Description |
 |------|-------------|
-| instance\_name |  |
+| instance\_name | The name for Cloud SQL instance |
 | mssql\_connection | The connection name of the master instance to be used in connection strings |
 | project\_id |  |
 | public\_ip\_address | Public ip address |

@@ -32,7 +32,7 @@ terraform destroy
 | Name | Description |
 |------|-------------|
 | authorized\_network |  |
-| name |  |
+| name | The name for Cloud SQL instance |
 | project\_id |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
