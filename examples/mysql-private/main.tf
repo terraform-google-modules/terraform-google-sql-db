@@ -40,8 +40,7 @@ locals {
     "You cannot reuse an instance name for up to a week after you have deleted an instance."
     See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
   */
-  instance_name = "${var.db_name}-${random_id.suffix.hex}"
-  network_name  = "${var.network_name}-safer-${random_id.suffix.hex}"
+  network_name = "${var.network_name}-safer-${random_id.suffix.hex}"
 }
 
 module "network-safer-mysql-simple" {
@@ -61,9 +60,10 @@ module "private-service-access" {
 }
 
 module "safer-mysql-db" {
-  source     = "../../modules/safer_mysql"
-  name       = local.instance_name
-  project_id = var.project_id
+  source               = "../../modules/safer_mysql"
+  name                 = var.db_name
+  random_instance_name = true
+  project_id           = var.project_id
 
   database_version = "MYSQL_5_6"
   region           = "us-central1"

@@ -20,7 +20,7 @@ output "project_id" {
 }
 
 output "name" {
-  value       = local.instance_name
+  value       = module.mysql-db.instance_name
   description = "The name for Cloud SQL instance"
 }
 
