@@ -2,7 +2,7 @@
 
 The v4.0.0 release of SQL DB is a backward incompatible release. The MySQL/PostgreSQL read replica state has been migrated to using `for_each` and the replica configuration is now a list of individual replica configuration rather then all replicas sharing the same settings.
 
-In addition the deprecated `failover_*` variables used to manage the now deprecated MySQL failover instance for HA have been completely removed in favour of the new HA solution that was introduced in v3.2.0
+In addition the deprecated `failover_*` variables used to manage the legacy MySQL failover instance for HA have been completely removed in favour of the new HA solution that was introduced in v3.2.0
 
 ## Migration Instructions
 #### MySQL Failover Instance
@@ -12,17 +12,36 @@ This migration causes downtime, please read the CloudSQL docs first: [Updating a
 1. Delete the failover instance via this module
 2. Set `availability_type = "REGIONAL"` - This will cause downtime as the master instance is restarted
 
+
+#### Additional Users and Databases
+`additional_databases` and `additional_users` has moved to using `for_each` which requires a state migration. In addition `project` and `instance` object fields have been removed since they are inferred automatically.
+
+```diff
+   additional_databases = [
+     {
+-      project   = var.project_id
+-      instance  = null
+       name      = "db1"
+       charset   = "utf8mb4"
+       collation = "utf8mb4_general_ci"
+
+   additional_users = [
+     {
+-      project  = var.project_id
+-      instance = null
+       name     = "user1"
+       password = "abcdefg"
+       host     = "localhost"
+     }
+   ]
+
+```
+
 #### Read Replicas
-The new `read_replicas` variable is used to manage all replica configuration. In order to migrate existing replicas you will need to perform a state migration that moves state from a `int` index to a `string` index.
+The new `read_replicas` variable is used to manage all replica configuration. In order to migrate existing replicas you will need to perform a state migration.
 
 - You must have `read_replica_size` objects inside `read_replicas`
 - You must use the full `zone` id which includes the region e.g. `europe-west1-c` instead of `c`
-
-```bash
-# Move `read_replica_size ` number of state resources to new location
-terraform state mv 'module.test.google_sql_database_instance.replicas[0]' 'module.test.google_sql_database_instance.replicas["0"]'
-terraform state mv 'module.test.google_sql_database_instance.replicas[1]' 'module.test.google_sql_database_instance.replicas["1"]'
-```
 
 ```diff
  module "test" {
@@ -111,3 +130,49 @@ terraform state mv 'module.test.google_sql_database_instance.replicas[1]' 'modul
 -
  }
 ```
+
+### State Migration Script
+
+1.  Download the script:
+
+    ```sh
+    curl -O https://raw.githubusercontent.com/terraform-google-modules/terraform-google-sql-db/master/helpers/migrate.py
+    chmod +x migrate.py
+    ```
+
+2.  Back up your Terraform state:
+
+    ```sh
+    terraform state pull >> state.bak
+    ```
+
+2.  Run the script to output the migration commands:
+
+    ```sh
+    $ ./migrate4.py --dryrun
+    ---- Migrating the following modules:
+    -- module.test
+    ---- Commands to run:
+    terraform state mv 'module.test.google_sql_database_instance.replicas[0]' 'module.test.google_sql_database_instance.replicas["test-migration-replica-test0"]'
+    terraform state mv 'module.test.google_sql_user.additional_users[0]' 'module.test.google_sql_user.additional_users["user1"]'
+    terraform state mv 'module.test.google_sql_database.additional_databases[0]' 'module.test.google_sql_database.additional_databases["db1"]'
+
+    ```
+
+3.  Execute the migration script:
+
+    ```sh
+    $ ./migrate4.py
+    ---- Migrating the following modules:
+    -- module.test
+    ---- Commands to run:
+    Move "module.test.google_sql_database_instance.replicas[0]" to "module.test.google_sql_database_instance.replicas[\"test-migration-replica-test0\"]"
+    Successfully moved 1 object(s).
+    Move "module.test.google_sql_user.additional_users[0]" to "module.test.google_sql_user.additional_users[\"user1\"]"
+    Successfully moved 1 object(s).
+    Move "module.test.google_sql_database.additional_databases[0]" to "module.test.google_sql_database.additional_databases[\"db1\"]"
+    Successfully moved 1 object(s).
+
+    ```
+
+4.  Run `terraform plan` to confirm no changes are expected.
