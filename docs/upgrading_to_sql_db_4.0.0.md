@@ -136,8 +136,8 @@ The new `read_replicas` variable is used to manage all replica configuration. In
 1.  Download the script:
 
     ```sh
-    curl -O https://raw.githubusercontent.com/terraform-google-modules/terraform-google-sql-db/master/helpers/migrate.py
-    chmod +x migrate.py
+    curl -O https://raw.githubusercontent.com/terraform-google-modules/terraform-google-sql-db/master/helpers/migrate4.py
+    chmod +x migrate4.py
     ```
 
 2.  Back up your Terraform state:
