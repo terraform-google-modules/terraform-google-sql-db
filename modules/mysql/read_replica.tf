@@ -16,7 +16,7 @@
 
 locals {
   replicas = {
-    for x in var.read_replicas : x.name => x
+    for x in var.read_replicas : "${local.master_instance_name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
 }
 
