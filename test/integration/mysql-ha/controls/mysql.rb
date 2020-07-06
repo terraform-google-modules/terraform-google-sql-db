@@ -50,7 +50,7 @@ describe google_sql_database_instance(project: project_id, database: basename) d
   its(:gce_zone)         { should eq 'us-central1-c' }
 
   it { expect(settings).to include(expected_settings) }
-  it { expect(backup_configuration).to include(binary_log_enabled: true, enabled: true, kind: "sql#backupConfiguration", start_time: "20:55") }
+  it { expect(backup_configuration).to include(binary_log_enabled: true, enabled: true, kind: "sql#backupConfiguration", start_time: "20:55", location: "us") }
   it { expect(ip_configuration).to include(authorized_networks: [{kind: 'sql#aclEntry', name: "#{project_id}-cidr", value: authorized_network}], ipv4_enabled: true, require_ssl: true) }
   it { expect(database_flags).to include(name: "long_query_time", value: "1") }
   it { expect(location_preference).to include(kind: "sql#locationPreference", zone: "us-central1-c") }
