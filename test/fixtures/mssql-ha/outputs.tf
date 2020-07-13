@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
-  required_providers {
-    google = "~> 3.22"
-    null   = "~> 2.1"
-    random = "~> 2.2"
-  }
+output "project_id" {
+  value = var.project_id
+}
+
+output "name" {
+  value = local.instance_name
+}
+
+output "authorized_network" {
+  value = var.ha_external_ip_range
 }

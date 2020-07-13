@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
-  required_providers {
-    google = "~> 3.22"
-    null   = "~> 2.1"
-    random = "~> 2.2"
-  }
+variable "project_id" {
+  type        = string
+  description = "The project to run tests against"
+}
+
+variable "name" {
+  type        = string
+  description = "The name for Cloud SQL instance"
+  default     = "tf-mssql-public"
+}
+
+variable "region" {
+  default = "us-central1"
+  type    = string
 }

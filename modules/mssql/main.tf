@@ -15,9 +15,6 @@
  */
 
 locals {
-  master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
-
-  default_user_host        = "%"
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
   ip_configurations = {
@@ -27,10 +24,6 @@ locals {
 
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
-
-  // HA method using REGIONAL availability_type requires binary logs to be enabled
-  binary_log_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
-  backups_enabled    = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "enabled", null)
 }
 
 resource "random_id" "suffix" {
@@ -39,28 +32,24 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
+resource "random_password" "root-password" {
+  length  = 8
+  special = true
+}
+
 resource "google_sql_database_instance" "default" {
-  provider            = google-beta
-  project             = var.project_id
-  name                = local.master_instance_name
-  database_version    = var.database_version
-  region              = var.region
-  encryption_key_name = var.encryption_key_name
+  provider         = google-beta
+  project          = var.project_id
+  name             = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
+  database_version = var.database_version
+  region           = var.region
+  root_password    = coalesce(var.root_password, random_password.root-password.result)
 
   settings {
     tier                        = var.tier
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     authorized_gae_applications = var.authorized_gae_applications
-    dynamic "backup_configuration" {
-      for_each = [var.backup_configuration]
-      content {
-        binary_log_enabled = local.binary_log_enabled
-        enabled            = local.backups_enabled
-        start_time         = lookup(backup_configuration.value, "start_time", null)
-        location           = lookup(backup_configuration.value, "location", null)
-      }
-    }
     dynamic "ip_configuration" {
       for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
       content {
@@ -80,11 +69,9 @@ resource "google_sql_database_instance" "default" {
     }
 
     disk_autoresize = var.disk_autoresize
-
-    disk_size    = var.disk_size
-    disk_type    = var.disk_type
-    pricing_plan = var.pricing_plan
-    user_labels  = var.user_labels
+    disk_size       = var.disk_size
+    disk_type       = var.disk_type
+    pricing_plan    = var.pricing_plan
     dynamic "database_flags" {
       for_each = var.database_flags
       content {
@@ -93,8 +80,10 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
+    user_labels = var.user_labels
+
     location_preference {
-      zone = "${var.region}-${var.zone}"
+      zone = var.zone
     }
 
     maintenance_window {
@@ -125,7 +114,7 @@ resource "google_sql_database" "default" {
   instance   = google_sql_database_instance.default.name
   charset    = var.db_charset
   collation  = var.db_collation
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
 }
 
 resource "google_sql_database" "additional_databases" {
@@ -135,24 +124,20 @@ resource "google_sql_database" "additional_databases" {
   charset    = lookup(each.value, "charset", null)
   collation  = lookup(each.value, "collation", null)
   instance   = google_sql_database_instance.default.name
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default, google_sql_user.default, google_sql_user.additional_users]
 }
 
-resource "random_id" "user-password" {
-  keepers = {
-    name = google_sql_database_instance.default.name
-  }
-
-  byte_length = 8
-  depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+resource "random_password" "user-password" {
+  length     = 8
+  special    = true
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_user" "default" {
   name       = var.user_name
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
-  host       = var.user_host
-  password   = var.user_password == "" ? random_id.user-password.hex : var.user_password
+  password   = coalesce(var.user_password, random_password.user-password.result)
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -160,8 +145,7 @@ resource "google_sql_user" "additional_users" {
   for_each   = local.users
   project    = var.project_id
   name       = each.value.name
-  password   = lookup(each.value, "password", random_id.user-password.hex)
-  host       = lookup(each.value, "host", var.user_host)
+  password   = lookup(each.value, "password", random_password.user-password.result)
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }

@@ -3,6 +3,7 @@
 terraform-google-sql makes it easy to create Google CloudSQL instance and implement high availability settings.
 This module consists of the following submodules:
 
+- [mssql](./modules/mssql)
 - [mysql](./modules/mysql)
 - [postgresql](./modules/postgresql)
 
@@ -33,6 +34,10 @@ The root module has been deprecated. Please switch to using one of the submodule
 
 - [terraform](https://www.terraform.io/downloads.html) 0.12.x
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v2.5.x
+
+The following dependency must be available for SQL Server module:
+
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v3.10
 
 ### Configure a Service Account
 
@@ -75,7 +80,7 @@ Copy and paste into your Terraform configuration, insert the variables, and run 
 
 ```
 module "sql-db" {
-  source  = "GoogleCloudPlatform/sql-db/google//mysql"
+  source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
   version = "3.1.0"
 }
 ```
@@ -84,7 +89,7 @@ or :
 
 ```
 module "sql-db" {
-  source  = "GoogleCloudPlatform/sql-db/google//postgres"
+  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
   version = "3.1.0"
 }
 ```

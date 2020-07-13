@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
-  required_providers {
-    google = "~> 3.22"
-    null   = "~> 2.1"
-    random = "~> 2.2"
-  }
+resource "random_id" "instance_name_suffix" {
+  byte_length = 5
+}
+
+locals {
+  /*
+    Random instance name needed because:
+    "You cannot reuse an instance name for up to a week after you have deleted an instance."
+    See https://cloud.google.com/sql/docs/sqlserver/delete-instance for details.
+  */
+  instance_name = "${var.name}-${random_id.instance_name_suffix.hex}"
+}
+
+module "mssql" {
+  source     = "../../../examples/mssql-public"
+  name       = local.instance_name
+  project_id = var.project_id
 }

@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version = "~> 3.5"
+  version = "~> 3.22"
 }
 
 provider "google-beta" {
@@ -30,28 +30,15 @@ provider "random" {
   version = "~> 2.2"
 }
 
-resource "random_id" "name" {
-  byte_length = 2
-}
-
-
-locals {
-  /*
-    Random instance name needed because:
-    "You cannot reuse an instance name for up to a week after you have deleted an instance."
-    See https://cloud.google.com/sql/docs/mysql/delete-instance for details.
-  */
-  instance_name = "${var.db_name}-${random_id.name.hex}"
-}
-
 module "postgresql-db" {
-  source           = "../../modules/postgresql"
-  name             = local.instance_name
-  database_version = "POSTGRES_9_6"
-  project_id       = var.project_id
-  zone             = "c"
-  region           = "us-central1"
-  tier             = "db-f1-micro"
+  source               = "../../modules/postgresql"
+  name                 = var.db_name
+  random_instance_name = true
+  database_version     = "POSTGRES_9_6"
+  project_id           = var.project_id
+  zone                 = "c"
+  region               = "us-central1"
+  tier                 = "db-f1-micro"
 
   ip_configuration = {
     ipv4_enabled        = true

@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = "~> 0.12.6"
-  required_providers {
-    google = "~> 3.22"
-    null   = "~> 2.1"
-    random = "~> 2.2"
-  }
+provider "google-beta" {
+  version = "~> 3.1.0"
+  region  = var.region
+}
+
+module "mssql" {
+  source               = "../../modules/mssql"
+  name                 = var.name
+  random_instance_name = true
+  project_id           = var.project_id
+  user_name            = "simpleuser"
+  user_password        = "foobar"
 }

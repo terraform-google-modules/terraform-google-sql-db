@@ -15,13 +15,13 @@
  */
 
 variable "project_id" {
-  description = "The project ID to manage the Cloud SQL resources"
   type        = string
+  description = "The project ID to manage the Cloud SQL resources"
 }
 
 variable "name" {
-  description = "The name of the Cloud SQL resources"
   type        = string
+  description = "The name of the Cloud SQL resources"
 }
 
 variable "random_instance_name" {
@@ -32,61 +32,50 @@ variable "random_instance_name" {
 
 // required
 variable "database_version" {
-  description = "The database version to use"
+  description = "The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB"
   type        = string
+  default     = "SQLSERVER_2017_STANDARD"
 }
 
 // required
 variable "region" {
+  type        = string
   description = "The region of the Cloud SQL resources"
-  type        = string
+  default     = "us-central1"
 }
 
-// required
-variable "vpc_network" {
-  description = "Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access."
-  type        = string
-}
-
-// Master
 variable "tier" {
   description = "The tier for the master instance."
   type        = string
-  default     = "db-n1-standard-1"
+  default     = "db-custom-2-3840"
 }
 
 variable "zone" {
-  description = "The zone for the master instance, it should be something like: `a`, `c`."
   type        = string
+  description = "The zone for the master instance."
+  default     = "us-central1-a"
 }
 
 variable "activation_policy" {
-  description = "The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
+  description = "The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   type        = string
   default     = "ALWAYS"
 }
 
 variable "availability_type" {
-  description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
+  description = "The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`."
   type        = string
-  default     = "REGIONAL"
-}
-
-variable "authorized_gae_applications" {
-  description = "The list of authorized App Engine project names"
-  type        = list(string)
-  default     = []
+  default     = "ZONAL"
 }
 
 variable "disk_autoresize" {
-  description = "Configuration to increase storage size"
+  description = "Configuration to increase storage size."
   type        = bool
   default     = true
 }
 
 variable "disk_size" {
-  description = "The disk size for the master instance"
-  type        = number
+  description = "The disk size for the master instance."
   default     = 10
 }
 
@@ -115,13 +104,13 @@ variable "maintenance_window_hour" {
 }
 
 variable "maintenance_window_update_track" {
-  description = "The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`."
+  description = "The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`."
   type        = string
-  default     = "stable"
+  default     = "canary"
 }
 
 variable "database_flags" {
-  description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
+  description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags)"
   type = list(object({
     name  = string
     value = string
@@ -135,57 +124,26 @@ variable "user_labels" {
   default     = {}
 }
 
-variable "backup_configuration" {
-  description = "The backup_configuration settings subblock for the database setings"
+variable "authorized_gae_applications" {
+  description = "The authorized gae applications for the Cloud SQL instances"
+  type        = list(string)
+  default     = []
+}
+
+variable "ip_configuration" {
+  description = "The ip configuration for the master instances."
   type = object({
-    binary_log_enabled = bool
-    enabled            = bool
-    start_time         = string
-    location           = string
+    authorized_networks = list(map(string))
+    ipv4_enabled        = bool
+    private_network     = string
+    require_ssl         = bool
   })
   default = {
-    binary_log_enabled = false
-    enabled            = false
-    start_time         = null
-    location           = null
+    authorized_networks = []
+    ipv4_enabled        = true
+    private_network     = null
+    require_ssl         = null
   }
-}
-
-variable "assign_public_ip" {
-  description = "Set to true if the master instance should also have a public IP (less secure)."
-  type        = string
-  default     = false
-}
-
-// Read Replicas
-variable "read_replica_name_suffix" {
-  description = "The optional suffix to add to the read instance name"
-  type        = string
-  default     = ""
-}
-
-variable "read_replicas" {
-  description = "List of read replicas to create"
-  type = list(object({
-    name            = string
-    tier            = string
-    zone            = string
-    disk_type       = string
-    disk_autoresize = bool
-    disk_size       = string
-    user_labels     = map(string)
-    database_flags = list(object({
-      name  = string
-      value = string
-    }))
-    ip_configuration = object({
-      authorized_networks = list(map(string))
-      ipv4_enabled        = bool
-      private_network     = string
-      require_ssl         = bool
-    })
-  }))
-  default = []
 }
 
 variable "db_name" {
@@ -201,7 +159,7 @@ variable "db_charset" {
 }
 
 variable "db_collation" {
-  description = "The collation for the default database. Example: 'utf8_general_ci'"
+  description = "The collation for the default database. Example: 'en_US.UTF8'"
   type        = string
   default     = ""
 }
@@ -233,9 +191,14 @@ variable "additional_users" {
   type = list(object({
     name     = string
     password = string
-    host     = string
   }))
   default = []
+}
+
+variable "root_password" {
+  description = "MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  type        = string
+  default     = ""
 }
 
 variable "create_timeout" {
@@ -253,7 +216,7 @@ variable "update_timeout" {
 variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
-  default     = "15m"
+  default     = "30m"
 }
 
 variable "module_depends_on" {

@@ -18,6 +18,7 @@ module "safer_mysql" {
   source                          = "../mysql"
   project_id                      = var.project_id
   name                            = var.name
+  random_instance_name            = var.random_instance_name
   database_version                = var.database_version
   region                          = var.region
   zone                            = var.zone
@@ -61,57 +62,9 @@ module "safer_mysql" {
   additional_users = var.additional_users
 
   // Read replica
+  read_replica_name_suffix = var.read_replica_name_suffix
+  read_replicas            = var.read_replicas
 
-  read_replica_configuration                   = var.read_replica_configuration
-  read_replica_name_suffix                     = var.read_replica_name_suffix
-  read_replica_size                            = var.read_replica_size
-  read_replica_tier                            = var.read_replica_tier
-  read_replica_zones                           = var.read_replica_zones
-  read_replica_activation_policy               = var.read_replica_activation_policy
-  read_replica_crash_safe_replication          = var.read_replica_crash_safe_replication
-  read_replica_disk_autoresize                 = var.read_replica_disk_autoresize
-  read_replica_disk_size                       = var.read_replica_disk_size
-  read_replica_disk_type                       = var.read_replica_disk_type
-  read_replica_pricing_plan                    = var.read_replica_pricing_plan
-  read_replica_replication_type                = var.read_replica_replication_type
-  read_replica_database_flags                  = var.read_replica_database_flags
-  read_replica_maintenance_window_day          = var.read_replica_maintenance_window_day
-  read_replica_maintenance_window_hour         = var.read_replica_maintenance_window_hour
-  read_replica_maintenance_window_update_track = var.read_replica_maintenance_window_update_track
-  read_replica_user_labels                     = var.read_replica_user_labels
-  read_replica_ip_configuration = {
-    // If the main instance needs a public IP, we'll associate one at the replica too.
-    ipv4_enabled        = var.assign_public_ip
-    authorized_networks = []
-    private_network     = var.vpc_network
-    require_ssl         = true
-  }
-
-
-  // Failover replica
-  failover_replica                                 = var.failover_replica
-  failover_replica_name_suffix                     = var.failover_replica_name_suffix
-  failover_replica_configuration                   = var.failover_replica_configuration
-  failover_replica_tier                            = var.failover_replica_tier
-  failover_replica_zone                            = var.failover_replica_zone
-  failover_replica_activation_policy               = var.failover_replica_activation_policy
-  failover_replica_crash_safe_replication          = var.failover_replica_crash_safe_replication
-  failover_replica_disk_autoresize                 = var.failover_replica_disk_autoresize
-  failover_replica_disk_size                       = var.failover_replica_disk_size
-  failover_replica_disk_type                       = var.failover_replica_disk_type
-  failover_replica_pricing_plan                    = var.failover_replica_pricing_plan
-  failover_replica_replication_type                = var.failover_replica_replication_type
-  failover_replica_database_flags                  = var.failover_replica_database_flags
-  failover_replica_maintenance_window_day          = var.failover_replica_maintenance_window_day
-  failover_replica_maintenance_window_hour         = var.failover_replica_maintenance_window_hour
-  failover_replica_maintenance_window_update_track = var.failover_replica_maintenance_window_update_track
-  failover_replica_user_labels                     = var.failover_replica_user_labels
-  failover_replica_ip_configuration = {
-    ipv4_enabled        = var.assign_public_ip
-    authorized_networks = []
-    private_network     = var.vpc_network
-    require_ssl         = true
-  }
   create_timeout    = var.create_timeout
   update_timeout    = var.update_timeout
   delete_timeout    = var.delete_timeout
