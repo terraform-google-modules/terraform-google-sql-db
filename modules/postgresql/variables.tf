@@ -121,7 +121,7 @@ variable "backup_configuration" {
   type = object({
     enabled    = bool
     start_time = string
-    location   = null
+    location   = string
   })
   default = {
     enabled    = false
