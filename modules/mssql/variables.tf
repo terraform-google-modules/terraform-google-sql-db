@@ -224,3 +224,9 @@ variable "module_depends_on" {
   type        = list(any)
   default     = []
 }
+
+variable "encryption_key_name" {
+  description = "The full path to the encryption key used for the CMEK disk encryption"
+  type        = string
+  default     = null
+}
