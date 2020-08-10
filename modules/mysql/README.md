@@ -12,7 +12,7 @@
 | availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | string | `"REGIONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
-| database\_flags | List of Cloud SQL flags that are applied to the database server | object | `<list>` | no |
+| database\_flags | List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | object | `<list>` | no |
 | database\_version | The database version to use | string | n/a | yes |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'utf8_general_ci' | string | `""` | no |
