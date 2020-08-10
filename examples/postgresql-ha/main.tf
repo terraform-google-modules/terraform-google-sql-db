@@ -77,6 +77,7 @@ module "pg" {
   backup_configuration = {
     enabled    = true
     start_time = "20:55"
+    location   = null
   }
 
   // Read replica configurations

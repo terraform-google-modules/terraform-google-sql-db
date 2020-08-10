@@ -80,6 +80,7 @@ module "mysql" {
     enabled            = true
     binary_log_enabled = true
     start_time         = "20:55"
+    location           = null
   }
 
   // Read replica configurations
