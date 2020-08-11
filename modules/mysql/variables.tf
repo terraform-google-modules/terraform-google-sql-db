@@ -116,7 +116,7 @@ variable "maintenance_window_update_track" {
 }
 
 variable "database_flags" {
-  description = "List of Cloud SQL flags that are applied to the database server"
+  description = "List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
   type = list(object({
     name  = string
     value = string
@@ -137,11 +137,13 @@ variable "backup_configuration" {
     binary_log_enabled = bool
     enabled            = bool
     start_time         = string
+    location           = string
   })
   default = {
     binary_log_enabled = false
     enabled            = false
     start_time         = null
+    location           = null
   }
 }
 

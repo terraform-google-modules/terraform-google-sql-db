@@ -108,7 +108,7 @@ variable "maintenance_window_update_track" {
 }
 
 variable "database_flags" {
-  description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
+  description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)"
   type = list(object({
     name  = string
     value = string
@@ -127,10 +127,12 @@ variable "backup_configuration" {
   type = object({
     enabled    = bool
     start_time = string
+    location   = string
   })
   default = {
     enabled    = false
     start_time = null
+    location   = null
   }
 }
 

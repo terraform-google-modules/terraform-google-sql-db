@@ -58,6 +58,7 @@ resource "google_sql_database_instance" "default" {
         binary_log_enabled = local.binary_log_enabled
         enabled            = local.backups_enabled
         start_time         = lookup(backup_configuration.value, "start_time", null)
+        location           = lookup(backup_configuration.value, "location", null)
       }
     }
     dynamic "ip_configuration" {

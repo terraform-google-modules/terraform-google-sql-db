@@ -11,7 +11,7 @@
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
-| database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | object | `<list>` | no |
+| database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | object | `<list>` | no |
 | database\_version | The database version to use | string | n/a | yes |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `""` | no |
