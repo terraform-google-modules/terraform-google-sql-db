@@ -74,7 +74,11 @@ resource "google_sql_database_instance" "replicas" {
 
   }
 
-  depends_on = [google_sql_database_instance.default]
+  depends_on = [
+    google_sql_database_instance.default,
+    random_id.suffix
+  ]
+
   lifecycle {
     ignore_changes = [
       settings[0].disk_size,
