@@ -42,6 +42,9 @@ The new `read_replicas` variable is used to manage all replica configuration. In
 
 - You must have `read_replica_size` objects inside `read_replicas`
 - You must use the full `zone` id which includes the region e.g. `europe-west1-c` instead of `c`
+- You must not have used `random_instance_name`
+
+**Important:** If you have enabled `random_instance_name` then you will need to manually migrate state because the migration script and module does not include the random string as part of the replica state key.
 
 ```diff
  module "test" {
