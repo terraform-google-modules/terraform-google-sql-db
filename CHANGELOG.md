@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v3.2.0...v4.0.0) (2020-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Replica configuration has been reworked. Please see the upgrade guide for details.
+* Users and databases have been moved and require a state migration. See the upgrade guide for details.
+
+### Features
+
+* Add encryption_key_name variable for MS SQL module ([#132](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/132)) ([2bd0f41](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/2bd0f41ba4ecd321f32f17dda36f7fa04dad1a41))
+* Add location support to backup_configuration block ([#126](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/126)) ([aa907bd](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/aa907bd75281991445962fab2d70d04e21492a19))
+* add SQL Server support with new submodule ([#112](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/112)) ([4a775fb](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/4a775fbfbc628df9573cdbc7443a2a47ed3a16e3))
+* Added random_id option for instance name ([#116](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/116)) ([7c8c799](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/7c8c799552f0567d71df287770936d53b2bd8138))
+* Rework replicas to use `for_each` and new configuration style ([5e1ae20](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/5e1ae20e5b7efdbb35f733897f5a4378389337d3))
+
+
+### Bug Fixes
+
+* Fix issue with replica state key and random IDs ([#141](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/141)) ([71b51fd](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/71b51fd0d4687f7c2cecf85724649a2d9785e053))
+* Update versions to allow for Terraform 0.13 ([#135](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/135)) ([86c533a](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/86c533a65a2cb3d3602bb5ef1f1e1b81b4b8fa15))
+* **docs:** Update links for database flags on postgresql and mysql ([#134](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/134)) ([e6a31ca](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/e6a31cad5cbb15fa3716edeebe5b1e3421e09d60))
+* Relax Provider version ([#133](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/133)) ([ec2a109](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/ec2a1092a71c41abd68d974bcd03afc0ede07fd0))
+* Updated users and databases creation to use for_each ([#100](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/100)) ([d433995](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/d4339956caa9d16ea07b3d99925b926765322894))
+
 ## [3.2.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v3.1.0...v3.2.0) (2020-04-24)
 
 
