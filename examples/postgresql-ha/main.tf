@@ -75,9 +75,10 @@ module "pg" {
   }
 
   backup_configuration = {
-    enabled    = true
-    start_time = "20:55"
-    location   = null
+    enabled                        = true
+    start_time                     = "20:55"
+    location                       = null
+    point_in_time_recovery_enabled = false
   }
 
   // Read replica configurations

@@ -125,14 +125,16 @@ variable "user_labels" {
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
-    enabled    = bool
-    start_time = string
-    location   = string
+    enabled                        = bool
+    start_time                     = string
+    location                       = string
+    point_in_time_recovery_enabled = bool
   })
   default = {
-    enabled    = false
-    start_time = null
-    location   = null
+    enabled                        = false
+    start_time                     = null
+    location                       = null
+    point_in_time_recovery_enabled = false
   }
 }
 
