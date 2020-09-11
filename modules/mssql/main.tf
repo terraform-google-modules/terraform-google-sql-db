@@ -52,7 +52,7 @@ resource "google_sql_database_instance" "default" {
     availability_type           = var.availability_type
     authorized_gae_applications = var.authorized_gae_applications
     dynamic "backup_configuration" {
-      for_each = [var.backup_configuration]
+      for_each = var.backup_configuration.enabled ? [var.backup_configuration] : []
       content {
         binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
         enabled                        = lookup(backup_configuration.value, "enabled", null)
