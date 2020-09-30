@@ -67,7 +67,7 @@ You can add the following Cloud IAM snippet to the project policy:
 
 ## Define MySQL users and passwords on your instance
 
-Because Cloud IAM acts as a primary athentication and authorization mechanism,
+Because Cloud IAM acts as a primary authentication and authorization mechanism,
 we can consider MySQL usernames and passwords are a secondary access controls that
 can be used to further restrict access for reliability or safety
 purposes. For example, removing the ability of modifying tables from production
