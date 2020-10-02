@@ -78,6 +78,7 @@ This module has no root configuration. A module with no root configuration canno
 
 Copy and paste into your Terraform configuration, insert the variables, and run terraform init :
 
+For MySQL :
 ```
 module "sql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
@@ -85,7 +86,7 @@ module "sql-db" {
 }
 ```
 
-or :
+or for PostgreSQL :
 
 ```
 module "sql-db" {
@@ -93,6 +94,16 @@ module "sql-db" {
   version = "4.0.0"
 }
 ```
+
+or for MSSQL Server :
+
+```
+module "sql-db" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/mssql"
+  version = "4.0.0"
+}
+```
+
 
 ## Contributing
 
