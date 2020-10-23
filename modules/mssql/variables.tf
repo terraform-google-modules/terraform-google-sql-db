@@ -246,3 +246,9 @@ variable "encryption_key_name" {
   type        = string
   default     = null
 }
+
+variable "deletion_protection" {
+  description = "Enable or disable deletion_protection parameter to allow Terraform the destroy actions"
+  type        = bool
+  default     = true
+}
