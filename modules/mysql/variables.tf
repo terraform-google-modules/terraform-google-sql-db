@@ -279,3 +279,9 @@ variable "module_depends_on" {
   type        = list(any)
   default     = []
 }
+
+variable "deletion_protection" {
+  description = "Used to block Terraform from deleting a SQL Instance."
+  type        = bool
+  default     = true
+}

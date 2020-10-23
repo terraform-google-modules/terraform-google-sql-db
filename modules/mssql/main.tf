@@ -45,6 +45,7 @@ resource "google_sql_database_instance" "default" {
   region              = var.region
   encryption_key_name = var.encryption_key_name
   root_password       = coalesce(var.root_password, random_password.root-password.result)
+  deletion_protection = var.deletion_protection
 
   settings {
     tier                        = var.tier

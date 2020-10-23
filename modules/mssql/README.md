@@ -22,6 +22,7 @@ The following dependency must be available for SQL Server module:
 | db\_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `""` | no |
 | db\_name | The name of the default database to create | string | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | string | `"30m"` | no |
+| deletion\_protection | Used to block Terraform from deleting a SQL Instance. | bool | `"true"` | no |
 | disk\_autoresize | Configuration to increase storage size. | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance. | string | `"10"` | no |
 | disk\_type | The disk type for the master instance. | string | `"PD_SSD"` | no |
