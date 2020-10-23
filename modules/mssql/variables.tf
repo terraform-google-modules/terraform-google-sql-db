@@ -246,3 +246,9 @@ variable "encryption_key_name" {
   type        = string
   default     = null
 }
+
+variable "deletion_protection" {
+  description = "Used to block Terraform from deleting a SQL Instance."
+  type        = bool
+  default     = true
+}
