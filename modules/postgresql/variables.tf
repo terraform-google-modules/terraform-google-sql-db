@@ -262,3 +262,8 @@ variable "module_depends_on" {
   default     = []
 }
 
+variable "deletion_protection" {
+  description = "Enable or disable deletion_protection parameter to allow Terraform the destroy actions"
+  type        = bool
+  default     = true
+}
