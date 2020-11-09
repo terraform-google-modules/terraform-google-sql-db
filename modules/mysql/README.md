@@ -21,7 +21,6 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | db\_name | The name of the default database to create | string | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | string | `"10m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | bool | `"true"` | no |
-| read\_replica\_deletion\_protection | Used to block Terraform from deleting a replica SQL Instances. | bool | `"true"` | no |
 | disk\_autoresize | Configuration to increase storage size | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance | number | `"10"` | no |
 | disk\_type | The disk type for the master instance. | string | `"PD_SSD"` | no |
@@ -35,6 +34,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | pricing\_plan | The pricing plan for the master instance. | string | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | string | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | bool | `"false"` | no |
+| read\_replica\_deletion\_protection | Used to block Terraform from deleting replica SQL Instances. | bool | `"true"` | no |
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | string | `""` | no |
 | read\_replicas | List of read replicas to create | object | `<list>` | no |
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
