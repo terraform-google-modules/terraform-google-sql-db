@@ -51,7 +51,7 @@ variable "tier" {
 
 variable "zone" {
   type        = string
-  description = "The zone for the master instance, it should be something like: `a`, `c`."
+  description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
 }
 
 variable "activation_policy" {

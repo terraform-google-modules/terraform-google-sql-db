@@ -95,7 +95,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     location_preference {
-      zone = "${var.region}-${var.zone}"
+      zone = var.zone
     }
 
     maintenance_window {
