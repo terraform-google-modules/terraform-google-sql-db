@@ -26,4 +26,6 @@ module "mssql" {
   project_id           = var.project_id
   user_name            = "simpleuser"
   user_password        = "foobar"
+
+  deletion_protection = false
 }

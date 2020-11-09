@@ -50,6 +50,8 @@ module "mysql" {
   database_version     = "MYSQL_5_7"
   region               = "us-central1"
 
+  deletion_protection = false
+
   // Master configurations
   tier                            = "db-n1-standard-1"
   zone                            = "c"
