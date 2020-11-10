@@ -67,7 +67,7 @@ module "safer-mysql-db" {
 
   database_version = "MYSQL_5_6"
   region           = "us-central1"
-  zone             = "c"
+  zone             = "us-central1-c"
   tier             = "db-n1-standard-1"
 
   // By default, all users will be permitted to connect only via the

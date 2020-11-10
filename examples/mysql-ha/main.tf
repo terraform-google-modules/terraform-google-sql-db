@@ -54,7 +54,7 @@ module "mysql" {
 
   // Master configurations
   tier                            = "db-n1-standard-1"
-  zone                            = "c"
+  zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12

@@ -36,7 +36,7 @@ module "mysql-db" {
   random_instance_name = true
   database_version     = "MYSQL_5_6"
   project_id           = var.project_id
-  zone                 = "c"
+  zone                 = "us-central1-c"
   region               = "us-central1"
   tier                 = "db-n1-standard-1"
 
