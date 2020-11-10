@@ -65,6 +65,9 @@ module "safer-mysql-db" {
   random_instance_name = true
   project_id           = var.project_id
 
+  deletion_protection              = false
+  read_replica_deletion_protection = false
+
   database_version = "MYSQL_5_6"
   region           = "us-central1"
   zone             = "us-central1-c"

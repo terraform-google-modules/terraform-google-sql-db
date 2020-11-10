@@ -40,6 +40,8 @@ module "postgresql-db" {
   region               = "us-central1"
   tier                 = "db-f1-micro"
 
+  deletion_protection = false
+
   ip_configuration = {
     ipv4_enabled        = true
     private_network     = null
