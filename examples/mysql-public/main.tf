@@ -40,6 +40,8 @@ module "mysql-db" {
   region               = "us-central1"
   tier                 = "db-n1-standard-1"
 
+  deletion_protection = false
+
   ip_configuration = {
     ipv4_enabled        = true
     private_network     = null
