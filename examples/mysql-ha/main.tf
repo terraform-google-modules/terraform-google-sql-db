@@ -87,6 +87,7 @@ module "mysql" {
 
   // Read replica configurations
   read_replica_name_suffix = "-test"
+  read_replica_deletion_protection = false
   read_replicas = [
     {
       name             = "0"
