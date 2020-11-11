@@ -50,9 +50,11 @@ module "mysql" {
   database_version     = "MYSQL_5_7"
   region               = "us-central1"
 
+  deletion_protection = false
+
   // Master configurations
   tier                            = "db-n1-standard-1"
-  zone                            = "c"
+  zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12

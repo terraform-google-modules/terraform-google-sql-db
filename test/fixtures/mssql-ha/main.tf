@@ -41,6 +41,8 @@ module "mssql" {
   project_id = var.project_id
   db_name    = var.ha_name
 
+  deletion_protection = false
+
   // Master configurations
   tier                            = "db-custom-2-13312"
   availability_type               = "REGIONAL"

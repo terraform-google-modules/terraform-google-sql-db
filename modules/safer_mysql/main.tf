@@ -35,6 +35,8 @@ module "safer_mysql" {
   maintenance_window_update_track = var.maintenance_window_update_track
   database_flags                  = var.database_flags
 
+  deletion_protection = var.deletion_protection
+
   user_labels = var.user_labels
 
   backup_configuration = var.backup_configuration
@@ -62,8 +64,9 @@ module "safer_mysql" {
   additional_users = var.additional_users
 
   // Read replica
-  read_replica_name_suffix = var.read_replica_name_suffix
-  read_replicas            = var.read_replicas
+  read_replica_name_suffix         = var.read_replica_name_suffix
+  read_replica_deletion_protection = var.read_replica_deletion_protection
+  read_replicas                    = var.read_replicas
 
   create_timeout    = var.create_timeout
   update_timeout    = var.update_timeout
