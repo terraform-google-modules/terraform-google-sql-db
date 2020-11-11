@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.2.0...v4.3.0) (2020-11-11)
+
+
+### Features
+
+* Add variable for managing read replica deletion protection ([#155](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/155)) ([9e22cfd](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/9e22cfd35f97608d6b5a76dd30c80299d5b782e3))
+* Update all uses of zone to use the expected variable format. ([#156](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/156)) ([5210126](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/52101264c2aa53bc15372b72459c5475a8aaf795))
+
 ## [4.2.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.1.0...v4.2.0) (2020-10-23)
 
 
