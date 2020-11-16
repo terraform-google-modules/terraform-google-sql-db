@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-locals {
-  replicas = {
-    for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
-  }
-}
-
 resource "google_sql_database_instance" "replicas" {
-  for_each             = local.replicas
+  for_each             = var.read_replicas
   project              = var.project_id
   name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}"
   database_version     = var.database_version
