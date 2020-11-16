@@ -47,3 +47,9 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "name_suffix" {
+  description = "An optional suffix added to resource names."
+  type        = string
+  default     = ""
+}

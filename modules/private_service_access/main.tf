@@ -20,6 +20,10 @@ data "google_compute_network" "main" {
 
 }
 
+locals {
+  name_suffix = length(var.name_suffix) == 0 ? "" : "-${var.name_suffix}"
+}
+
 // We define a VPC peering subnet that will be peered with the
 // Cloud SQL instance network. The Cloud SQL instance will
 // have a private IP within the provided range.
@@ -27,7 +31,7 @@ data "google_compute_network" "main" {
 resource "google_compute_global_address" "google-managed-services-range" {
   provider      = google-beta
   project       = var.project_id
-  name          = "google-managed-services-${var.vpc_network}"
+  name          = "google-managed-services-${var.vpc_network}${local.name_suffix}"
   purpose       = "VPC_PEERING"
   address       = var.address
   prefix_length = var.prefix_length
