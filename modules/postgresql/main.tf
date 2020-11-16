@@ -91,7 +91,7 @@ resource "google_sql_database_instance" "default" {
     user_labels = var.user_labels
 
     location_preference {
-      zone = "${var.region}-${var.zone}"
+      zone = var.zone
     }
 
     maintenance_window {
