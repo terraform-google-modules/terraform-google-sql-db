@@ -18,12 +18,19 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  replica_suffix = var.random_instance_name ? "-${random_id.replica-suffix[0].hex}" : ""
 }
+
+resource random_id replica-suffix {
+  count       = var.random_instance_name ? 1 : 0
+  byte_length = 4
+}
+
 
 resource "google_sql_database_instance" "replicas" {
   for_each             = local.replicas
   project              = var.project_id
-  name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}"
+  name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}${local.replica_suffix}"
   database_version     = var.database_version
   region               = join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))
   master_instance_name = google_sql_database_instance.default.name
