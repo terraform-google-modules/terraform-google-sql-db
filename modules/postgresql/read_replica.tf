@@ -18,7 +18,7 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
-  replica_suffix = var.random_instance_name ? "-${random_id.replica-suffix[0].hex}"" : ""
+  replica_suffix = var.random_instance_name ? "-${random_id.replica-suffix[0].hex}" : ""
 }
 
 resource random_id replica-suffix {
