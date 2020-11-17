@@ -29,7 +29,7 @@ resource random_id replica-suffix {
 resource "google_sql_database_instance" "replicas" {
   for_each             = local.replicas
   project              = var.project_id
-  name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}${replica_suffix}"
+  name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}${local.replica_suffix}"
   database_version     = var.database_version
   region               = join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))
   master_instance_name = google_sql_database_instance.default.name
