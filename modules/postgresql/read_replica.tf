@@ -18,6 +18,11 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  replica_suffix = var.random_instance_name ? random_id.replica-suffix.hex : ""
+}
+
+resource random_id replica-suffix {
+  byte_length = 8
 }
 
 resource "google_sql_database_instance" "replicas" {
