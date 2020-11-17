@@ -40,6 +40,11 @@ locals {
   }
 }
 
+resource random_id "random-test" {
+  prefix = "-"
+  byte_length = 8
+}
+
 module "pg" {
   source               = "../../modules/postgresql"
   name                 = var.pg_ha_name
@@ -87,7 +92,7 @@ module "pg" {
   read_replica_name_suffix = "-test"
   read_replicas = [
     {
-      name             = "0"
+      name             = "0-${random_id.random-test.hex}"
       zone             = "us-central1-a"
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
@@ -98,7 +103,7 @@ module "pg" {
       user_labels      = { bar = "baz" }
     },
     {
-      name             = "1"
+      name             = "1-${random_id.random-test.hex}"
       zone             = "us-central1-b"
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
@@ -109,7 +114,7 @@ module "pg" {
       user_labels      = { bar = "baz" }
     },
     {
-      name             = "2"
+      name             = "2-${random_id.random-test.hex}"
       zone             = "us-central1-c"
       tier             = "db-custom-2-13312"
       ip_configuration = local.read_replica_ip_configuration
