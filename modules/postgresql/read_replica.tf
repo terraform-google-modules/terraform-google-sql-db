@@ -22,7 +22,7 @@ locals {
 }
 
 resource random_id replica-suffix {
-  count       = var.random_instance_name ? 1 : 0
+  count       = var.replica_random_instance_name ? 1 : 0
   byte_length = 4
 }
 

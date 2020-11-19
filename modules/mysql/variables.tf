@@ -194,6 +194,12 @@ variable "read_replica_name_suffix" {
   default     = ""
 }
 
+variable "replica_random_instance_name" {
+  description = "Sets random suffix at the end of the Cloud SQL replicas name"
+  type        = bool
+  default     = false
+}
+
 variable "db_name" {
   description = "The name of the default database to create"
   type        = string
