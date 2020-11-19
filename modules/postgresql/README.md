@@ -37,6 +37,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | string | `""` | no |
 | read\_replicas | List of read replicas to create | object | `<list>` | no |
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
+| replica\_random\_instance\_name | Sets random suffix at the end of the Cloud SQL replicas name | bool | `"false"` | no |
 | tier | The tier for the master instance. | string | `"db-f1-micro"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | string | `"10m"` | no |
 | user\_labels | The key/value labels for the master instances. | map(string) | `<map>` | no |
