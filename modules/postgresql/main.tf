@@ -117,6 +117,7 @@ resource "google_sql_database_instance" "default" {
 }
 
 resource "google_sql_database" "default" {
+  count      = var.enable_default_db ? 1 : 0
   name       = var.db_name
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
@@ -145,6 +146,7 @@ resource "random_id" "user-password" {
 }
 
 resource "google_sql_user" "default" {
+  count      = var.enable_default_user ? 1 : 0
   name       = var.user_name
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
