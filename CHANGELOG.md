@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.4.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.3.0...v4.4.0) (2020-12-03)
+
+
+### Features
+
+* Add variable for managing the creation of the default database and user ([#163](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/163)) ([eb300d3](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/eb300d32ed1fe149e2f8d1ac8521de2fb967cd67))
+
 ## [4.3.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.2.0...v4.3.0) (2020-11-11)
 
 
