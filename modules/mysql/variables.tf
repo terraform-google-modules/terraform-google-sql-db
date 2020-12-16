@@ -291,3 +291,15 @@ variable "read_replica_deletion_protection" {
   type        = bool
   default     = false
 }
+
+variable "enable_default_db" {
+  description = "Enable or disable the creation of the default database"
+  type        = bool
+  default     = true
+}
+
+variable "enable_default_user" {
+  description = "Enable or disable the creation of the default user"
+  type        = bool
+  default     = true
+}
