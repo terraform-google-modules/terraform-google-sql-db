@@ -12,13 +12,13 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | additional\_users | A list of users to be created in your cluster | object | `<list>` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | backup\_configuration | The backup_configuration settings subblock for the database setings | object | `<map>` | no |
-| create\_timeout | The optional timout that is applied to limit long database creates. | string | `"10m"` | no |
+| create\_timeout | The optional timeout that is applied to limit long database creates. | string | `"10m"` | no |
 | database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | object | `<list>` | no |
 | database\_version | The database version to use | string | n/a | yes |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `""` | no |
 | db\_name | The name of the default database to create | string | `"default"` | no |
-| delete\_timeout | The optional timout that is applied to limit long database deletes. | string | `"10m"` | no |
+| delete\_timeout | The optional timeout that is applied to limit long database deletes. | string | `"10m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | bool | `"true"` | no |
 | disk\_autoresize | Configuration to increase storage size. | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance. | string | `"10"` | no |
@@ -40,7 +40,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | read\_replicas | List of read replicas to create | object | `<list>` | no |
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
 | tier | The tier for the master instance. | string | `"db-f1-micro"` | no |
-| update\_timeout | The optional timout that is applied to limit long database updates. | string | `"10m"` | no |
+| update\_timeout | The optional timeout that is applied to limit long database updates. | string | `"10m"` | no |
 | user\_labels | The key/value labels for the master instances. | map(string) | `<map>` | no |
 | user\_name | The name of the default user | string | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `""` | no |
