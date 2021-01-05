@@ -15,13 +15,13 @@ The following dependency must be available for SQL Server module:
 | authorized\_gae\_applications | The authorized gae applications for the Cloud SQL instances | list(string) | `<list>` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`. | string | `"ZONAL"` | no |
 | backup\_configuration | The database backup configuration. | object | `<map>` | no |
-| create\_timeout | The optional timout that is applied to limit long database creates. | string | `"15m"` | no |
+| create\_timeout | The optional timeout that is applied to limit long database creates. | string | `"15m"` | no |
 | database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags) | object | `<list>` | no |
 | database\_version | The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB | string | `"SQLSERVER_2017_STANDARD"` | no |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `""` | no |
 | db\_name | The name of the default database to create | string | `"default"` | no |
-| delete\_timeout | The optional timout that is applied to limit long database deletes. | string | `"30m"` | no |
+| delete\_timeout | The optional timeout that is applied to limit long database deletes. | string | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | bool | `"true"` | no |
 | disk\_autoresize | Configuration to increase storage size. | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance. | string | `"10"` | no |
@@ -39,7 +39,7 @@ The following dependency must be available for SQL Server module:
 | region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
 | root\_password | MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable. | string | `""` | no |
 | tier | The tier for the master instance. | string | `"db-custom-2-3840"` | no |
-| update\_timeout | The optional timout that is applied to limit long database updates. | string | `"15m"` | no |
+| update\_timeout | The optional timeout that is applied to limit long database updates. | string | `"15m"` | no |
 | user\_labels | The key/value labels for the master instances. | map(string) | `<map>` | no |
 | user\_name | The name of the default user | string | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. | string | `""` | no |

@@ -23,6 +23,8 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | disk\_autoresize | Configuration to increase storage size. | bool | `"true"` | no |
 | disk\_size | The disk size for the master instance. | string | `"10"` | no |
 | disk\_type | The disk type for the master instance. | string | `"PD_SSD"` | no |
+| enable\_default\_db | Enable or disable the creation of the default database | bool | `"true"` | no |
+| enable\_default\_user | Enable or disable the creation of the default user | bool | `"true"` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | string | `"null"` | no |
 | ip\_configuration | The ip configuration for the master instances. | object | `<map>` | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | number | `"1"` | no |
