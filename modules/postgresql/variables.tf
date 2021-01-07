@@ -30,7 +30,6 @@ variable "random_instance_name" {
   default     = false
 }
 
-// required
 variable "database_version" {
   description = "The database version to use"
   type        = string

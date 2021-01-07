@@ -17,7 +17,7 @@ The following dependency must be available for SQL Server module:
 | backup\_configuration | The database backup configuration. | object | `<map>` | no |
 | create\_timeout | The optional timeout that is applied to limit long database creates. | string | `"15m"` | no |
 | database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags) | object | `<list>` | no |
-| database\_version | The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB | string | `"SQLSERVER_2017_STANDARD"` | no |
+| database\_version | The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB | string | n/a | yes |
 | db\_charset | The charset for the default database | string | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en_US.UTF8' | string | `""` | no |
 | db\_name | The name of the default database to create | string | `"default"` | no |

@@ -30,11 +30,9 @@ variable "random_instance_name" {
   default     = false
 }
 
-// required
 variable "database_version" {
   description = "The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB"
   type        = string
-  default     = "SQLSERVER_2017_STANDARD"
 }
 
 variable "region" {
