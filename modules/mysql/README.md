@@ -39,7 +39,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | read\_replica\_deletion\_protection | Used to block Terraform from deleting replica SQL Instances. | bool | `"false"` | no |
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | string | `""` | no |
 | read\_replicas | List of read replicas to create | object | `<list>` | no |
-| region | The region of the Cloud SQL resources | string | `"us-central1"` | no |
+| region | The region of the Cloud SQL resources | string | n/a | yes |
 | tier | The tier for the master instance. | string | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | string | `"10m"` | no |
 | user\_host | The host for the default user | string | `"%"` | no |

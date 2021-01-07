@@ -36,11 +36,9 @@ variable "database_version" {
   type        = string
 }
 
-// required
 variable "region" {
   type        = string
   description = "The region of the Cloud SQL resources"
-  default     = "us-central1"
 }
 
 variable "tier" {

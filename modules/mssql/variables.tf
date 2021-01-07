@@ -37,11 +37,9 @@ variable "database_version" {
   default     = "SQLSERVER_2017_STANDARD"
 }
 
-// required
 variable "region" {
   type        = string
   description = "The region of the Cloud SQL resources"
-  default     = "us-central1"
 }
 
 variable "tier" {
@@ -53,7 +51,6 @@ variable "tier" {
 variable "zone" {
   type        = string
   description = "The zone for the master instance."
-  default     = "us-central1-a"
 }
 
 variable "activation_policy" {
