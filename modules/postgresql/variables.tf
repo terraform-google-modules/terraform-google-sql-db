@@ -155,7 +155,7 @@ variable "ip_configuration" {
 }
 
 // Read Replicas
-variable "read_replica" {
+variable "read_replica_enable" {
   description = "Flag to determine if read replica is required"
 }
 
