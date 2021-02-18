@@ -21,6 +21,7 @@ locals {
 }
 
 resource "google_sql_database_instance" "replicas" {
+  count = var.read_replica == true ? 1 : 0
   for_each             = local.replicas
   project              = var.project_id
   name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}"
