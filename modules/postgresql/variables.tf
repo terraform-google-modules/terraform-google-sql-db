@@ -155,6 +155,10 @@ variable "ip_configuration" {
 }
 
 // Read Replicas
+variable "read_replica" {
+  description = "Flag to determine if read replica is required"
+}
+
 variable "read_replicas" {
   description = "List of read replicas to create"
   type = list(object({
