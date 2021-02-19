@@ -66,3 +66,9 @@ output "root_password" {
   value       = coalesce(var.root_password, random_password.root-password.result)
   sensitive   = true
 }
+
+// Resources
+output "master" {
+  value       = google_sql_database_instance.default
+  description = "The `google_sql_database_instance` resource representing the master instance"
+}
