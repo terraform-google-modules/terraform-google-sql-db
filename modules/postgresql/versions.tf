@@ -19,5 +19,6 @@ terraform {
   required_providers {
     google = "~> 3.5"
     null   = "~> 2.1"
+    random = ">= 2.2"
   }
 }
