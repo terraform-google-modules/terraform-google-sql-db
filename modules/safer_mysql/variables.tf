@@ -273,7 +273,7 @@ variable "read_replica_deletion_protection" {
   type        = bool
   default     = false
 }
-   
+
 variable "encryption_key_name" {
   description = "The full path to the encryption key used for the CMEK disk encryption"
   type        = string
