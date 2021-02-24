@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.5.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.4.0...v4.5.0) (2021-01-27)
+
+
+### Features
+
+* add encryption_key_name to safer_mysql module ([#185](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/185)) ([487397c](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/487397c160ad698af7e3e01ccd175d4d72fcc2a0))
+* Add variables for managing the creation of the default database and user (mysql) ([#170](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/170)) ([5765a5f](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/5765a5f8acfb6154e32c6c75f1ee3718b20d2f76))
+
+
+### Bug Fixes
+
+* Fix typo in database timeout description ([#166](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/166)) ([55f135f](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/55f135f78c100e89a1957f15625412b7a0bba0db))
+
 ## [4.4.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.3.0...v4.4.0) (2020-12-03)
 
 
