@@ -24,10 +24,15 @@ locals {
     disabled = {}
   }
 
-  insights_config_enabled = lookup(var.insights_config, "query_insights_enabled", false)
-
   insights_config = {
-    enabled  = [var.insights_config]
+    enabled = [
+      merge(
+        {
+          query_insights_enabled = true
+        },
+        var.insights_config,
+      )
+    ]
     disabled = []
   }
 
@@ -83,7 +88,7 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "insights_config" {
-      for_each = local.insights_config[local.insights_config_enabled ? "enabled" : "disabled"]
+      for_each = local.insights_config[var.insights_config != null ? "enabled" : "disabled"]
       content {
         query_insights_enabled  = lookup(insights_config.value, "query_insights_enabled", false)
         query_string_length     = lookup(insights_config.value, "query_string_length", 1024)

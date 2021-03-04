@@ -141,17 +141,11 @@ variable "backup_configuration" {
 variable "insights_config" {
   description = "The insights_config settings subblock for the database setings"
   type = object({
-    query_insights_enabled  = bool
     query_string_length     = number
     record_application_tags = bool
     record_client_address   = bool
   })
-  default = {
-    query_insights_enabled  = false
-    query_string_length     = 1024
-    record_application_tags = false
-    record_client_address   = false
-  }
+  default = null
 }
 
 variable "ip_configuration" {
