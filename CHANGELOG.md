@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.6.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.5.0...v4.6.0) (2021-03-08)
+
+
+### Features
+
+* Add support for configuring Query Insights on Postgres instances ([#198](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/198)) ([2619b42](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/2619b42df54a4bfe78726eee3a86e927b996e17d))
+
 ## [4.5.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.4.0...v4.5.0) (2021-01-27)
 
 
