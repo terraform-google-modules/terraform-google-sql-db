@@ -14,13 +14,13 @@ that are connected to the same VPC.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| address | First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you. | string | `""` | no |
-| ip\_version | IP Version for the allocation. Can be IPV4 or IPV6. | string | `""` | no |
-| labels | The key/value labels for the IP range allocated to the peered network. | map(string) | `<map>` | no |
-| prefix\_length | Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16. | number | `"16"` | no |
-| project\_id | The project ID of the VPC network to peer. This can be a shared VPC host projec. | string | n/a | yes |
-| vpc\_network | Name of the VPC network to peer. | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| address | First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you. | `string` | `""` | no |
+| ip\_version | IP Version for the allocation. Can be IPV4 or IPV6. | `string` | `""` | no |
+| labels | The key/value labels for the IP range allocated to the peered network. | `map(string)` | `{}` | no |
+| prefix\_length | Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16. | `number` | `16` | no |
+| project\_id | The project ID of the VPC network to peer. This can be a shared VPC host projec. | `string` | n/a | yes |
+| vpc\_network | Name of the VPC network to peer. | `string` | n/a | yes |
 
 ## Outputs
 

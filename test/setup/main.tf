@@ -15,11 +15,11 @@
  */
 
 provider "google" {
-  version = "~> 2.12.0"
+  version = "~> 3.53"
 }
 
 provider "google-beta" {
-  version = "~> 2.12.0"
+  version = "~> 3.53"
 }
 
 provider "null" {
@@ -32,7 +32,7 @@ provider "random" {
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 3.0"
+  version = "~> 10.0"
 
   name              = "ci-sql-db"
   random_project_id = "true"
