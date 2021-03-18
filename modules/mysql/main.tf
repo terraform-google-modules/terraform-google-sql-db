@@ -15,6 +15,8 @@
  */
 
 locals {
+  backup_retention_settings = lookup(var.backup_configuration, "backup_retention_settings", null)
+
   master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
 
   default_user_host        = "%"
@@ -56,10 +58,19 @@ resource "google_sql_database_instance" "default" {
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
-        binary_log_enabled = local.binary_log_enabled
-        enabled            = local.backups_enabled
-        start_time         = lookup(backup_configuration.value, "start_time", null)
-        location           = lookup(backup_configuration.value, "location", null)
+        binary_log_enabled             = local.binary_log_enabled
+        enabled                        = local.backups_enabled
+        start_time                     = lookup(backup_configuration.value, "start_time", null)
+        location                       = lookup(backup_configuration.value, "location", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+
+        dynamic "backup_retention_settings" {
+          for_each = local.backup_retention_settings != null ? [local.backup_retention_settings] : []
+          content {
+            retained_backups = lookup(backup_retention_settings.value, "retained_backups", null)
+            retention_unit   = lookup(backup_retention_settings.value, "retention_unit", null)
+          }
+        }
       }
     }
     dynamic "ip_configuration" {

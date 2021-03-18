@@ -15,6 +15,8 @@
  */
 
 locals {
+  backup_retention_settings = lookup(var.backup_configuration, "backup_retention_settings", null)
+
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
   ip_configurations = {
@@ -59,6 +61,15 @@ resource "google_sql_database_instance" "default" {
         enabled                        = lookup(backup_configuration.value, "enabled", null)
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+
+        dynamic "backup_retention_settings" {
+          for_each = local.backup_retention_settings != null ? [local.backup_retention_settings] : []
+          content {
+            retained_backups = lookup(backup_retention_settings.value, "retained_backups", null)
+            retention_unit   = lookup(backup_retention_settings.value, "retention_unit", null)
+          }
+        }
       }
     }
     dynamic "ip_configuration" {
