@@ -10,12 +10,10 @@ This module consists of the following submodules:
 See more details in each module's README.
 
 ## Compatibility
-
-This module is meant for use with Terraform 0.12. If you haven't
-[upgraded](https://www.terraform.io/upgrade-guides/0-12.html)
-and need a Terraform 0.11.x-compatible version of this module, the last
-released version intended for Terraform 0.11.x is
-[v1.2.0](https://registry.terraform.io/modules/GoogleCloudPlatform/sql-db/google/1.2.0).
+This module is meant for use with Terraform 0.13. If you haven't
+[upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
+0.12.x-compatible version of this module, the last released version
+intended for Terraform 0.12.x is [v4.5.0](https://registry.terraform.io/modules/terraform-google-modules/-sql-db/google/v4.5.0).
 
 ## Upgrading
 
@@ -32,7 +30,7 @@ The root module has been deprecated. Please switch to using one of the submodule
 
 ### Installation Dependencies
 
-- [terraform](https://www.terraform.io/downloads.html) 0.12.x
+- [Terraform](https://www.terraform.io/downloads.html) >= 0.13.0
 - [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v2.5.x
 
 The following dependency must be available for SQL Server module:

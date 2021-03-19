@@ -22,17 +22,17 @@ terraform destroy
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| pg\_ha\_external\_ip\_range | The ip range to allow connecting from/to Cloud SQL | string | `"192.10.10.10/32"` | no |
-| pg\_ha\_name | The name for Cloud SQL instance | string | `"tf-pg-ha"` | no |
-| project\_id | The project to run tests against | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| pg\_ha\_external\_ip\_range | The ip range to allow connecting from/to Cloud SQL | `string` | `"192.10.10.10/32"` | no |
+| pg\_ha\_name | The name for Cloud SQL instance | `string` | `"tf-pg-ha"` | no |
+| project\_id | The project to run tests against | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| authorized\_network |  |
+| authorized\_network | n/a |
 | name | The name for Cloud SQL instance |
-| project\_id |  |
+| project\_id | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
