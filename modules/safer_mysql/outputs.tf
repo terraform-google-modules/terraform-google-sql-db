@@ -78,9 +78,9 @@ output "instance_ip_address" {
 }
 
 // Resources
-output "master" {
-  value       = module.safer_mysql.master
-  description = "The `google_sql_database_instance` resource representing the master instance"
+output "primary" {
+  value       = module.safer_mysql.primary
+  description = "The `google_sql_database_instance` resource representing the primary instance"
 }
 
 output "replicas" {

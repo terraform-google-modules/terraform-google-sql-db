@@ -68,7 +68,7 @@ output "root_password" {
 }
 
 // Resources
-output "master" {
+output "primary" {
   value       = google_sql_database_instance.default
-  description = "The `google_sql_database_instance` resource representing the master instance"
+  description = "The `google_sql_database_instance` resource representing the primary instance"
 }
