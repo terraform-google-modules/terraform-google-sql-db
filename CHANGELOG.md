@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.5.0...v5.0.0) (2021-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Terraform 0.13 constraint and module attribution (#202)
+
+### Features
+
+* Add support for configuring Query Insights on Postgres instances ([#198](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/198)) ([2619b42](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/2619b42df54a4bfe78726eee3a86e927b996e17d))
+* add Terraform 0.13 constraint and module attribution ([#202](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/202)) ([ec0911c](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/ec0911c686e6d534fe89c73f0cfb4d3f31519c42))
+
+
+### Bug Fixes
+
+* remove empty string from replicas output lists ([#194](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/194)) ([e14fc7a](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/e14fc7a3fe41782d81a50f8674766e1752ec4f4e))
+
 ## [4.5.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.4.0...v4.5.0) (2021-01-27)
 
 
