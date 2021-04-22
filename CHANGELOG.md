@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+### [5.0.1](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.0.0...v5.0.1) (2021-04-22)
+
+
+### Bug Fixes
+
+* Add outputs for the actual `google_sql_database_instance` resources ([#193](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/193)) ([70205b0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/70205b0023df9ff68783fc1b7a5c4adf2dda90ef))
+
 ## [5.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.5.0...v5.0.0) (2021-03-25)
 
 
