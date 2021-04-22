@@ -30,6 +30,7 @@ resource "random_id" "name" {
   byte_length = 2
 }
 
+# [START cloud_sql_mysql_instance_create_public]
 module "mysql-db" {
   source               = "../../modules/mysql"
   name                 = var.db_name
@@ -57,4 +58,4 @@ module "mysql-db" {
     },
   ]
 }
-
+# [END cloud_sql_mysql_instance_create_public]

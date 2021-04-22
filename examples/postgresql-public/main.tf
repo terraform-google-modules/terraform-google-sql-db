@@ -30,6 +30,7 @@ provider "random" {
   version = "~> 2.2"
 }
 
+# [START cloud_sql_postgres_instance_create_public]
 module "postgresql-db" {
   source               = "../../modules/postgresql"
   name                 = var.db_name
@@ -49,3 +50,4 @@ module "postgresql-db" {
     authorized_networks = var.authorized_networks
   }
 }
+# [END cloud_sql_postgres_instance_create_public]

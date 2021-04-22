@@ -19,6 +19,7 @@ provider "google-beta" {
   region  = var.region
 }
 
+# [START cloud_sql_sqlserver_instance_create_public]
 module "mssql" {
   source               = "../../modules/mssql"
   name                 = var.name
@@ -29,3 +30,4 @@ module "mssql" {
 
   deletion_protection = false
 }
+# [END cloud_sql_sqlserver_instance_create_public]
