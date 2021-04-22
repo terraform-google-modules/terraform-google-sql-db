@@ -21,7 +21,8 @@ provider "google-beta" {
 
 # [START cloud_sql_sqlserver_instance_create_public]
 module "mssql" {
-  source               = "../../modules/mssql"
+  source               = "GoogleCloudPlatform/sql-db/google/modules/mssql"
+  version              = "~> 5.0"
   name                 = var.name
   random_instance_name = true
   project_id           = var.project_id
