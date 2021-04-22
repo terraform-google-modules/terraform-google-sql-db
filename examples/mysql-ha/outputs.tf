@@ -26,3 +26,11 @@ output "name" {
 output "authorized_network" {
   value = var.mysql_ha_external_ip_range
 }
+
+output "replicas" {
+  value = module.mysql.replicas
+}
+
+output "instances" {
+  value = module.mysql.instances
+}

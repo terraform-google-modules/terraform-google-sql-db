@@ -26,3 +26,11 @@ output "name" {
 output "authorized_network" {
   value = var.pg_ha_external_ip_range
 }
+
+output "replicas" {
+  value = module.pg.replicas
+}
+
+output "instances" {
+  value = module.pg.instances
+}
