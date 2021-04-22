@@ -101,3 +101,19 @@ output "private_ip_address" {
   description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
   value       = google_sql_database_instance.default.private_ip_address
 }
+
+// Resources
+output "primary" {
+  value       = google_sql_database_instance.default
+  description = "The `google_sql_database_instance` resource representing the primary instance"
+}
+
+output "replicas" {
+  value       = values(google_sql_database_instance.replicas)
+  description = "A list of `google_sql_database_instance` resources representing the replicas"
+}
+
+output "instances" {
+  value       = concat([google_sql_database_instance.default], values(google_sql_database_instance.replicas))
+  description = "A list of all `google_sql_database_instance` resources we've created"
+}
