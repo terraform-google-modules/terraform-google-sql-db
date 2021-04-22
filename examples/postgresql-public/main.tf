@@ -32,7 +32,8 @@ provider "random" {
 
 # [START cloud_sql_postgres_instance_create_public]
 module "postgresql-db" {
-  source               = "../../modules/postgresql"
+  source               = "GoogleCloudPlatform/sql-db/google/modules/postgresql"
+  version              = "~> 5.0"
   name                 = var.db_name
   random_instance_name = true
   database_version     = "POSTGRES_9_6"

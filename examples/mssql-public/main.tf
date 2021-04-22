@@ -28,6 +28,7 @@ module "mssql" {
   project_id           = var.project_id
   user_name            = "simpleuser"
   user_password        = "foobar"
+  database_version     = "SQLSERVER_2017_STANDARD"
 
   deletion_protection = false
 }

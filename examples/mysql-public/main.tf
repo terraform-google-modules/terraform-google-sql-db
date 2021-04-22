@@ -32,7 +32,8 @@ resource "random_id" "name" {
 
 # [START cloud_sql_mysql_instance_create_public]
 module "mysql-db" {
-  source               = "../../modules/mysql"
+  source               = "GoogleCloudPlatform/sql-db/google/modules/mysql"
+  version              = "~> 5.0"
   name                 = var.db_name
   random_instance_name = true
   database_version     = "MYSQL_5_6"
