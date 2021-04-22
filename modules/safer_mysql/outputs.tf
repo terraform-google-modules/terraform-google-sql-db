@@ -36,7 +36,6 @@ output "instance_service_account_email_address" {
 }
 
 // Replicas
-
 output "replicas_instance_connection_names" {
   value       = module.safer_mysql.replicas_instance_connection_names
   description = "The connection names of the replica instances to be used in connection strings"
@@ -76,4 +75,20 @@ output "private_ip_address" {
 output "instance_ip_address" {
   value       = module.safer_mysql.instance_ip_address
   description = "The IPv4 address assigned for the master instance"
+}
+
+// Resources
+output "primary" {
+  value       = module.safer_mysql.primary
+  description = "The `google_sql_database_instance` resource representing the primary instance"
+}
+
+output "replicas" {
+  value       = module.safer_mysql.replicas
+  description = "A list of `google_sql_database_instance` resources representing the replicas"
+}
+
+output "instances" {
+  value       = module.safer_mysql.instances
+  description = "A list of all `google_sql_database_instance` resources we've created"
 }

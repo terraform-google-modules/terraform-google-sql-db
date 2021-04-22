@@ -28,3 +28,9 @@ attributes:
   - name: authorized_network
     type: string
     required: true
+  - name: replicas
+    type: array
+    required: true
+  - name: instances
+    type: array
+    required: true

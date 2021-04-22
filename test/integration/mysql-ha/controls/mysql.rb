@@ -15,9 +15,13 @@
 project_id = attribute('project_id')
 basename   = attribute('name')
 authorized_network = attribute('authorized_network')
+replicas = attribute('replicas')
+instances = attribute('instances')
 
 describe google_sql_database_instances(project: project_id).where(instance_name: /#{basename}/) do
   its(:count) { should eq 4 }
+  its(:count) { should eq 1 + replicas.length }
+  its(:count) { should eq instances.length }
 end
 
 describe google_sql_database_instance(project: project_id, database: basename) do
@@ -61,6 +65,8 @@ end
 %i[a b c].each_with_index do |zone, index|
   name = "#{basename}-replica-test#{index}"
   describe google_sql_database_instance(project: project_id, database: name) do
+    its(:name) { should eq replicas[index]['name'] }
+
     let(:expected_settings) {
       {
         activation_policy: "ALWAYS",

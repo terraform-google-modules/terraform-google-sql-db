@@ -213,9 +213,12 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | instance\_name | The instance name for the master instance |
 | instance\_self\_link | The URI of the master instance |
 | instance\_service\_account\_email\_address | The service account email address assigned to the master instance |
+| instances | A list of all `google_sql_database_instance` resources we've created |
+| primary | The `google_sql_database_instance` resource representing the primary instance |
 | private\_ip\_address | The first private (PRIVATE) IPv4 address assigned for the master instance |
 | public\_ip\_address | The first public (PRIMARY) IPv4 address assigned for the master instance |
 | read\_replica\_instance\_names | The instance names for the read replica instances |
+| replicas | A list of `google_sql_database_instance` resources representing the replicas |
 | replicas\_instance\_connection\_names | The connection names of the replica instances to be used in connection strings |
 | replicas\_instance\_self\_links | The URIs of the replica instances |
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |

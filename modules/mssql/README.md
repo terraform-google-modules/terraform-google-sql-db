@@ -57,6 +57,7 @@ The following dependency must be available for SQL Server module:
 | instance\_self\_link | The URI of the master instance |
 | instance\_server\_ca\_cert | The CA certificate information used to connect to the SQL instance via SSL |
 | instance\_service\_account\_email\_address | The service account email address assigned to the master instance |
+| primary | The `google_sql_database_instance` resource representing the primary instance |
 | private\_address | The private IP address assigned for the master instance |
 | root\_password | MSSERVER password for the root user. If not set, a random one will be generated and available in the root\_password output variable. |
 
