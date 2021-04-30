@@ -26,6 +26,7 @@ locals {
 
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
+  iam_users = { for iu in var.iam_users : iu.email => iu }
 }
 
 resource "random_id" "suffix" {
@@ -171,6 +172,33 @@ resource "google_sql_user" "additional_users" {
   password   = lookup(each.value, "password", random_id.user-password.hex)
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+}
+
+resource "google_sql_user" "iam_account" {
+  for_each = local.iam_users
+  project  = var.project_id
+  name = each.value.is_account_sa ? (
+    trimsuffix(each.value.email, ".gserviceaccount.com")
+    ) : (
+    each.value.email
+  )
+  instance = google_sql_database_instance.default.name
+  type     = each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : "CLOUD_IAM_USER"
+  depends_on = [
+    null_resource.module_depends_on,    
+    google_project_iam_member.iam_binding,
+  ]
+}
+
+resource "google_project_iam_member" "iam_binding" {
+  for_each = local.iam_users
+  project  = var.project_id
+  role     = "roles/cloudsql.instanceUser"
+  member = each.value.is_account_sa ? (
+    "serviceAccount:${each.value.email}"
+    ) : (
+    "user:${each.value.email}"
+  )
 }
 
 resource "null_resource" "module_depends_on" {

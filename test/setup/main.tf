@@ -45,5 +45,11 @@ module "project" {
     "compute.googleapis.com",
     "servicenetworking.googleapis.com",
     "sqladmin.googleapis.com",
+    "iam.googleapis.com",
   ]
+}
+
+resource "google_service_account" "cloudsql_pg_sa" {
+  project    = module.project.project_id
+  account_id = "cloudsql-pg-sa-01"
 }

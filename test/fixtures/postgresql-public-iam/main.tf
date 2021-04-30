@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.project.project_id
-}
+module "example" {
+  source = "../../../examples/postgresql-public-iam"
 
-output "sa_key" {
-  value     = google_service_account_key.int_test.private_key
-  sensitive = true
-}
-
-output "cloudsql_pg_sa" {
-  value       = google_service_account.cloudsql_pg_sa.email
-  description = "IAM service account user created for Cloud SQL."
+  project_id          = var.project_id
+  authorized_networks = var.authorized_networks
+  db_name             = var.db_name
+  cloudsql_pg_sa      = var.cloudsql_pg_sa
 }
