@@ -45,5 +45,6 @@ module "project" {
     "compute.googleapis.com",
     "servicenetworking.googleapis.com",
     "sqladmin.googleapis.com",
+    "iam.googleapis.com",
   ]
 }
