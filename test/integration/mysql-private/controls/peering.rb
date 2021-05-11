@@ -15,7 +15,21 @@
 project_id = attribute('project_id')
 range      = attribute('reserved_range_name')
 
-describe google_compute_global_address(project: project_id, name: range) do
-    it { should exist }
-    # Verify that address_type eq INTERNAL, once inspec supports it.
+describe command("gcloud --project='#{project_id}' compute addresses list --global --filter='#{range}' --format=json") do
+  its(:exit_status) { should eq 0 }
+  its(:stderr) { should eq '' }
+
+  let!(:data) do
+    if subject.exit_status == 0
+      JSON.parse(subject.stdout)
+    else
+      {}
+    end
   end
+
+  describe "mysql_private_database" do
+    it "has peering setup" do
+      expect(data.size).to eq(1)
+    end
+  end
+end

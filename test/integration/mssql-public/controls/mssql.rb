@@ -12,33 +12,79 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require 'json'
+
 project_id = attribute('project_id')
 basename   = attribute('name')
+region = "us-central1"
 
-describe google_sql_database_instance(project: project_id, database: basename) do
-  let(:expected_settings) {
-    {
-      activation_policy: "ALWAYS",
-      data_disk_size_gb: 10,
-      data_disk_type: "PD_SSD",
-      kind: "sql#settings",
-      pricing_plan: "PER_USE",
-      replication_type: "SYNCHRONOUS",
-      storage_auto_resize: true,
-      storage_auto_resize_limit: 0,
-      tier: "db-custom-2-3840",
-    }
-  }
-  let(:settings)                { subject.settings.item }
-  let(:location_preference)     { settings[:location_preference] }
-  let(:maintenance_window)      { settings[:maintenance_window] }
+activation_policy = "ALWAYS"
+data_disk_size_gb = 10
+data_disk_type = "PD_SSD"
+kind = "sql#settings"
+pricing_plan = "PER_USE"
+replication_type = "SYNCHRONOUS"
+storage_auto_resize = true
+storage_auto_resize_limit = 0
+tier = "db-custom-2-3840"
 
-  its(:backend_type)     { should eq 'SECOND_GEN' }
-  its(:database_version) { should eq 'SQLSERVER_2017_STANDARD' }
-  its(:state)            { should eq 'RUNNABLE' }
-  its(:region)           { should eq 'us-central1' }
-  its(:gce_zone)         { should eq 'us-central1-a' }
-  it { expect(settings).to include(expected_settings) }
-  it { expect(location_preference).to include(kind: "sql#locationPreference", zone: "us-central1-a") }
-  it { expect(maintenance_window).to include(kind: "sql#maintenanceWindow", day: 1, hour: 23, update_track: "canary") }
+describe command("gcloud --project='#{project_id}' sql instances describe #{basename} --format=json") do
+  its(:exit_status) { should eq 0 }
+  its(:stderr) { should eq '' }
+
+  let!(:data) do
+    if subject.exit_status == 0
+      JSON.parse(subject.stdout)
+    else
+      {}
+    end
+  end
+
+  describe "mssql_public_database" do
+    it "global settings are valid" do
+      expect(data['settings']['activationPolicy']).to eq "#{activation_policy}"
+      expect(data['settings']['dataDiskSizeGb']).to eq "#{data_disk_size_gb}"
+      expect(data['settings']['dataDiskType']).to eq "#{data_disk_type}"
+      expect(data['settings']['kind']).to eq "#{kind}"
+      expect(data['settings']['pricingPlan']).to eq "#{pricing_plan}"
+      expect(data['settings']['replicationType']).to eq "#{replication_type}"
+      expect(data['settings']['storageAutoResize']).to eq storage_auto_resize
+      expect(data['settings']['storageAutoResizeLimit']).to eq "#{storage_auto_resize_limit}"
+      expect(data['settings']['tier']).to eq "#{tier}"
+    end
+
+    it "backend type is valid" do
+      expect(data['backendType']).to eq 'SECOND_GEN'
+    end
+
+    it "database versions is valid" do
+      expect(data['databaseVersion']).to eq 'SQLSERVER_2017_STANDARD'
+    end
+
+    it "state is valid" do
+      expect(data['state']).to eq 'RUNNABLE'
+    end
+
+    it "region is valid" do
+      expect(data['region']).to eq region
+    end
+
+    it "gce zone is valid" do
+      expect(data['gceZone']).to eq "#{region}-a"
+    end
+
+    it "location preference is valid" do
+      expect(data['settings']['locationPreference']).to include(
+        "kind" => "sql#locationPreference",
+        "zone" => "#{region}-a")
+    end
+
+    it "maintenance window is valid" do
+      expect(data['settings']['maintenanceWindow']).to include(
+      "kind" => "sql#maintenanceWindow",
+      "day" => 1,
+      "hour" => 23,
+      "updateTrack" => "canary")
+    end
+  end
 end
