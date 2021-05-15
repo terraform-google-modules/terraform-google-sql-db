@@ -244,13 +244,10 @@ variable "additional_users" {
   default = []
 }
 
-variable "iam_users" {
+variable "iam_user_emails" {
   description = "A list of IAM users to be created in your cluster"
-  type = list(object({
-    email         = string
-    is_account_sa = bool
-  }))
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "create_timeout" {

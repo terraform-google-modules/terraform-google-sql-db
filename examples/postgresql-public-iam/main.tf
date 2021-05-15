@@ -69,15 +69,9 @@ module "postgresql-db" {
     },
   ]
 
-  # Supports creation of both IAM Users and IAM Service Accounts
-  iam_users = [
-    {
-      email         = var.cloudsql_pg_sa
-      is_account_sa = true
-    },
-    {
-      email         = "dbadmin@goosecorp.org"
-      is_account_sa = false
-    },
+  # Supports creation of both IAM Users and IAM Service Accounts with provided emails
+  iam_user_emails = [
+    var.cloudsql_pg_sa,
+    "dbadmin@goosecorp.org",
   ]
 }
