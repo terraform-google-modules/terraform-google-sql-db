@@ -185,7 +185,7 @@ resource "google_sql_user" "iam_account" {
   instance = google_sql_database_instance.default.name
   type     = each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : "CLOUD_IAM_USER"
   depends_on = [
-    null_resource.module_depends_on,    
+    null_resource.module_depends_on,
     google_project_iam_member.iam_binding,
   ]
 }

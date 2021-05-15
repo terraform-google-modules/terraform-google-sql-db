@@ -35,5 +35,5 @@ variable "db_name" {
 
 variable "cloudsql_pg_sa" {
   type        = string
-  description = "IAM service account user created for Cloud SQL."  
+  description = "IAM service account user created for Cloud SQL."
 }

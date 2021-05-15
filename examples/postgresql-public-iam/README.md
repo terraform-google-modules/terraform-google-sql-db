@@ -24,6 +24,7 @@ terraform destroy
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | authorized\_networks | List of mapped public networks authorized to access to the instances. Default - short range of GCP health-checkers IPs | `list(map(string))` | <pre>[<br>  {<br>    "name": "sample-gcp-health-checkers-range",<br>    "value": "130.211.0.0/28"<br>  }<br>]</pre> | no |
+| cloudsql\_pg\_sa | IAM service account user created for Cloud SQL. | `string` | n/a | yes |
 | db\_name | The name of the SQL Database instance | `string` | `"example-postgres-public"` | no |
 | project\_id | The ID of the project in which resources will be provisioned. | `string` | n/a | yes |
 
