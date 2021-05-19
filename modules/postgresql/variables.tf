@@ -244,6 +244,12 @@ variable "additional_users" {
   default = []
 }
 
+variable "iam_user_emails" {
+  description = "A list of IAM users to be created in your cluster"
+  type        = list(string)
+  default     = []
+}
+
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
