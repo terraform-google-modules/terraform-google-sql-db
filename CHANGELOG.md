@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.0.1...v5.1.0) (2021-05-19)
+
+
+### Features
+
+* extended the postgresql module to accept IAM users and services accounts ([#218](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/218)) ([4c0472e](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/4c0472eb94b8f410ef9092490ef626babf5bb8a7))
+
+
+### Bug Fixes
+
+* deprecates the usage of gcp-inspec and replaces integration tests with gcloud ([#216](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/216)) ([b81ff73](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/b81ff732d1240949b42471e6c02886d0f74b5525))
+
 ### [5.0.1](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.0.0...v5.0.1) (2021-04-22)
 
 
