@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+### [5.1.1](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.1.0...v5.1.1) (2021-05-27)
+
+
+### Bug Fixes
+
+* Properly handle null from being passed as password for additional_users ([#223](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/223)) ([5facf6a](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/5facf6aa5f4011eec6ed0a092f0c4d5a860eb6a1))
+
 ## [5.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.0.1...v5.1.0) (2021-05-19)
 
 
