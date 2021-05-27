@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.project.project_id
+variable "project_id" {
+  description = "The ID of the project in which resources will be provisioned."
+  type        = string
 }
 
-output "sa_key" {
-  value     = google_service_account_key.int_test.private_key
-  sensitive = true
+variable "authorized_networks" {
+  default = [{
+    name  = "sample-gcp-health-checkers-range"
+    value = "130.211.0.0/28"
+  }]
+  type        = list(map(string))
+  description = "List of mapped public networks authorized to access to the instances. Default - short range of GCP health-checkers IPs"
 }
 
-output "cloudsql_pg_sa" {
-  value       = google_service_account.cloudsql_pg_sa.email
+variable "db_name" {
+  description = "The name of the SQL Database instance"
+  default     = "example-postgres-public"
+}
+
+variable "cloudsql_pg_sa" {
+  type        = string
   description = "IAM service account user created for Cloud SQL."
 }

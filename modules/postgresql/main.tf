@@ -26,6 +26,10 @@ locals {
 
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
+  iam_users = [for iu in var.iam_user_emails : {
+    email         = iu,
+    is_account_sa = trimsuffix(iu, "gserviceaccount.com") == iu ? false : true
+  }]
 }
 
 resource "random_id" "suffix" {
@@ -73,6 +77,16 @@ resource "google_sql_database_instance" "default" {
             value           = lookup(authorized_networks.value, "value", null)
           }
         }
+      }
+    }
+    dynamic "insights_config" {
+      for_each = var.insights_config != null ? [var.insights_config] : []
+
+      content {
+        query_insights_enabled  = true
+        query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
+        record_application_tags = lookup(insights_config.value, "record_application_tags", false)
+        record_client_address   = lookup(insights_config.value, "record_client_address", false)
       }
     }
 
@@ -158,9 +172,43 @@ resource "google_sql_user" "additional_users" {
   for_each   = local.users
   project    = var.project_id
   name       = each.value.name
-  password   = lookup(each.value, "password", random_id.user-password.hex)
+  password   = coalesce(each.value["password"], random_id.user-password.hex)
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+}
+
+resource "google_project_iam_member" "iam_binding" {
+  for_each = {
+    for iu in local.iam_users :
+    "${iu.email} ${iu.is_account_sa}" => iu
+  }
+  project = var.project_id
+  role    = "roles/cloudsql.instanceUser"
+  member = each.value.is_account_sa ? (
+    "serviceAccount:${each.value.email}"
+    ) : (
+    "user:${each.value.email}"
+  )
+}
+
+resource "google_sql_user" "iam_account" {
+  for_each = {
+    for iu in local.iam_users :
+    "${iu.email} ${iu.is_account_sa}" => iu
+  }
+  project = var.project_id
+  name = each.value.is_account_sa ? (
+    trimsuffix(each.value.email, ".gserviceaccount.com")
+    ) : (
+    each.value.email
+  )
+  instance = google_sql_database_instance.default.name
+  type     = each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : "CLOUD_IAM_USER"
+
+  depends_on = [
+    null_resource.module_depends_on,
+    google_project_iam_member.iam_binding,
+  ]
 }
 
 resource "null_resource" "module_depends_on" {

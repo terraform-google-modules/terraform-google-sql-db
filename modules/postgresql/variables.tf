@@ -138,6 +138,16 @@ variable "backup_configuration" {
   }
 }
 
+variable "insights_config" {
+  description = "The insights_config settings for the database."
+  type = object({
+    query_string_length     = number
+    record_application_tags = bool
+    record_client_address   = bool
+  })
+  default = null
+}
+
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
@@ -234,22 +244,28 @@ variable "additional_users" {
   default = []
 }
 
+variable "iam_user_emails" {
+  description = "A list of IAM users to be created in your cluster"
+  type        = list(string)
+  default     = []
+}
+
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
-  default     = "10m"
+  default     = "15m"
 }
 
 variable "update_timeout" {
   description = "The optional timout that is applied to limit long database updates."
   type        = string
-  default     = "10m"
+  default     = "15m"
 }
 
 variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
-  default     = "10m"
+  default     = "15m"
 }
 
 variable "encryption_key_name" {

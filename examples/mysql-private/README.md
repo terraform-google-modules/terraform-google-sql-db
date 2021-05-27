@@ -83,17 +83,17 @@ terraform destroy
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| db\_name | The name of the SQL Database instance | string | `"example-mysql-private"` | no |
-| network\_name |  | string | `"mysql-privat"` | no |
-| project\_id | The project to run tests against | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| db\_name | The name of the SQL Database instance | `string` | `"example-mysql-private"` | no |
+| network\_name | n/a | `string` | `"mysql-privat"` | no |
+| project\_id | The project to run tests against | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | mysql\_conn | The connection name of the master instance to be used in connection strings |
-| mysql\_user\_pass | The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable. |
+| mysql\_user\_pass | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. |
 | name | The name for Cloud SQL instance |
 | private\_ip\_address | The first private (PRIVATE) IPv4 address assigned for the master instance |
 | project\_id | The project to run tests against |

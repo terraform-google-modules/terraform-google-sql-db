@@ -27,8 +27,7 @@ verifier:
   name: terraform
   systems:
     - name: system
-      backend: gcp
-      shell: true
+      backend: local
 
 suites:
   - name: mysql-public
@@ -40,6 +39,11 @@ suites:
     driver:
       name: terraform
       root_module_directory: test/fixtures/postgresql-public
+      command_timeout: 1800
+  - name: postgresql-public-iam
+    driver:
+      name: terraform
+      root_module_directory: test/fixtures/postgresql-public-iam
       command_timeout: 1800
   - name: mysql-private
     driver:

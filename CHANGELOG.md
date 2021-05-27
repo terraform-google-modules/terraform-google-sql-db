@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.0.1...v5.1.0) (2021-05-19)
+
+
+### Features
+
+* extended the postgresql module to accept IAM users and services accounts ([#218](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/218)) ([4c0472e](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/4c0472eb94b8f410ef9092490ef626babf5bb8a7))
+
+
+### Bug Fixes
+
+* deprecates the usage of gcp-inspec and replaces integration tests with gcloud ([#216](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/216)) ([b81ff73](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/b81ff732d1240949b42471e6c02886d0f74b5525))
+
+### [5.0.1](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.0.0...v5.0.1) (2021-04-22)
+
+
+### Bug Fixes
+
+* Add outputs for the actual `google_sql_database_instance` resources ([#193](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/193)) ([70205b0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/70205b0023df9ff68783fc1b7a5c4adf2dda90ef))
+
+## [5.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.5.0...v5.0.0) (2021-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Terraform 0.13 constraint and module attribution (#202)
+
+### Features
+
+* Add support for configuring Query Insights on Postgres instances ([#198](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/198)) ([2619b42](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/2619b42df54a4bfe78726eee3a86e927b996e17d))
+* add Terraform 0.13 constraint and module attribution ([#202](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/202)) ([ec0911c](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/ec0911c686e6d534fe89c73f0cfb4d3f31519c42))
+
+
+### Bug Fixes
+
+* remove empty string from replicas output lists ([#194](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/194)) ([e14fc7a](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/e14fc7a3fe41782d81a50f8674766e1752ec4f4e))
+
 ## [4.5.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v4.4.0...v4.5.0) (2021-01-27)
 
 

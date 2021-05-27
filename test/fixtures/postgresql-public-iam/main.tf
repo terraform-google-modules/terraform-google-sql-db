@@ -14,23 +14,11 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = var.project_id
-}
+module "example" {
+  source = "../../../examples/postgresql-public-iam"
 
-output "name" {
-  description = "The name for Cloud SQL instance"
-  value       = module.mysql.instance_name
-}
-
-output "authorized_network" {
-  value = var.mysql_ha_external_ip_range
-}
-
-output "replicas" {
-  value = module.mysql.replicas
-}
-
-output "instances" {
-  value = module.mysql.instances
+  project_id          = var.project_id
+  authorized_networks = var.authorized_networks
+  db_name             = var.db_name
+  cloudsql_pg_sa      = var.cloudsql_pg_sa
 }

@@ -57,32 +57,32 @@ output "instance_service_account_email_address" {
 
 // Replicas
 output "replicas_instance_first_ip_addresses" {
-  value       = concat([for r in google_sql_database_instance.replicas : r.ip_address], [""])
+  value       = [for r in google_sql_database_instance.replicas : r.ip_address]
   description = "The first IPv4 addresses of the addresses assigned for the replica instances"
 }
 
 output "replicas_instance_connection_names" {
-  value       = concat([for r in google_sql_database_instance.replicas : r.connection_name], [""])
+  value       = [for r in google_sql_database_instance.replicas : r.connection_name]
   description = "The connection names of the replica instances to be used in connection strings"
 }
 
 output "replicas_instance_self_links" {
-  value       = concat([for r in google_sql_database_instance.replicas : r.self_link], [""])
+  value       = [for r in google_sql_database_instance.replicas : r.self_link]
   description = "The URIs of the replica instances"
 }
 
 output "replicas_instance_server_ca_certs" {
-  value       = concat([for r in google_sql_database_instance.replicas : r.server_ca_cert], [""])
+  value       = [for r in google_sql_database_instance.replicas : r.server_ca_cert]
   description = "The CA certificates information used to connect to the replica instances via SSL"
 }
 
 output "replicas_instance_service_account_email_addresses" {
-  value       = concat([for r in google_sql_database_instance.replicas : r.service_account_email_address], [""])
+  value       = [for r in google_sql_database_instance.replicas : r.service_account_email_address]
   description = "The service account email addresses assigned to the replica instances"
 }
 
 output "read_replica_instance_names" {
-  value       = concat([for r in google_sql_database_instance.replicas : r.name], [""])
+  value       = [for r in google_sql_database_instance.replicas : r.name]
   description = "The instance names for the read replica instances"
 }
 
@@ -100,4 +100,20 @@ output "public_ip_address" {
 output "private_ip_address" {
   description = "The first private (PRIVATE) IPv4 address assigned for the master instance"
   value       = google_sql_database_instance.default.private_ip_address
+}
+
+// Resources
+output "primary" {
+  value       = google_sql_database_instance.default
+  description = "The `google_sql_database_instance` resource representing the primary instance"
+}
+
+output "replicas" {
+  value       = values(google_sql_database_instance.replicas)
+  description = "A list of `google_sql_database_instance` resources representing the replicas"
+}
+
+output "instances" {
+  value       = concat([google_sql_database_instance.default], values(google_sql_database_instance.replicas))
+  description = "A list of all `google_sql_database_instance` resources we've created"
 }

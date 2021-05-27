@@ -6,10 +6,10 @@ This example shows how create MS SQL Server database using the Terraform module.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| name | The name for Cloud SQL instance | string | `"tf-mssql-public"` | no |
-| project\_id | The project to run tests against | string | n/a | yes |
-| region |  | string | `"us-central1"` | no |
+|------|-------------|------|---------|:--------:|
+| name | The name for Cloud SQL instance | `string` | `"tf-mssql-public"` | no |
+| project\_id | The project to run tests against | `string` | n/a | yes |
+| region | n/a | `string` | `"us-central1"` | no |
 
 ## Outputs
 
@@ -17,7 +17,7 @@ This example shows how create MS SQL Server database using the Terraform module.
 |------|-------------|
 | instance\_name | The name for Cloud SQL instance |
 | mssql\_connection | The connection name of the master instance to be used in connection strings |
-| project\_id |  |
+| project\_id | n/a |
 | public\_ip\_address | Public ip address |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -15,22 +15,26 @@
  */
 
 output "project_id" {
-  value = var.project_id
+  value       = module.example.project_id
+  description = "The project to run tests against"
 }
 
 output "name" {
+  value       = module.example.name
   description = "The name for Cloud SQL instance"
-  value       = module.mysql.instance_name
 }
 
-output "authorized_network" {
-  value = var.mysql_ha_external_ip_range
+output "psql_conn" {
+  value       = module.example.psql_conn
+  description = "The connection name of the master instance to be used in connection strings"
 }
 
-output "replicas" {
-  value = module.mysql.replicas
+output "psql_user_pass" {
+  value       = module.example.psql_user_pass
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
 }
 
-output "instances" {
-  value = module.mysql.instances
+output "public_ip_address" {
+  description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
+  value       = module.example.public_ip_address
 }
