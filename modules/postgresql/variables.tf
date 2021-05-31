@@ -129,12 +129,19 @@ variable "backup_configuration" {
     start_time                     = string
     location                       = string
     point_in_time_recovery_enabled = bool
+    transaction_log_retention_days = string
+    backup_retention_settings = object({
+      retained_backups = string
+      retention_unit   = string
+    })
   })
   default = {
     enabled                        = false
     start_time                     = null
     location                       = null
     point_in_time_recovery_enabled = false
+    transaction_log_retention_days = null
+    backup_retention_settings      = null
   }
 }
 

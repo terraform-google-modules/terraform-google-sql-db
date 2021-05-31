@@ -59,6 +59,8 @@ resource "google_sql_database_instance" "default" {
         enabled                        = lookup(backup_configuration.value, "enabled", null)
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        backup_retention_settings      = lookup(backup_configuration.value, "backup_retention_settings", null)
       }
     }
     dynamic "ip_configuration" {

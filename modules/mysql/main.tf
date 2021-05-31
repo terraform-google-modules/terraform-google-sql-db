@@ -56,10 +56,12 @@ resource "google_sql_database_instance" "default" {
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
-        binary_log_enabled = local.binary_log_enabled
-        enabled            = local.backups_enabled
-        start_time         = lookup(backup_configuration.value, "start_time", null)
-        location           = lookup(backup_configuration.value, "location", null)
+        binary_log_enabled             = local.binary_log_enabled
+        enabled                        = local.backups_enabled
+        start_time                     = lookup(backup_configuration.value, "start_time", null)
+        location                       = lookup(backup_configuration.value, "location", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        backup_retention_settings      = lookup(backup_configuration.value, "backup_retention_settings", null)
       }
     }
     dynamic "ip_configuration" {
