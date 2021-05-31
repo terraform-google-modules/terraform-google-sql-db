@@ -137,7 +137,8 @@ describe command("gcloud --project='#{project_id}' sql instances describe #{base
       expect(data['settings']['backupConfiguration']).to include(
         "enabled" => true,
         "kind" => "sql#backupConfiguration",
-        "startTime" => "20:55")
+        "startTime" => "20:55",
+        "transactionLogRetentionDays" => "10")
     end
   end
 end
