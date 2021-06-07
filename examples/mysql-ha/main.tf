@@ -79,10 +79,15 @@ module "mysql" {
   }
 
   backup_configuration = {
-    enabled            = true
-    binary_log_enabled = true
-    start_time         = "20:55"
-    location           = null
+    enabled                        = true
+    binary_log_enabled             = true
+    start_time                     = "20:55"
+    location                       = null
+    transaction_log_retention_days = null
+    backup_retention_settings = {
+      retained_backups = "365"
+      retention_unit   = "COUNT"
+    }
   }
 
   // Read replica configurations
