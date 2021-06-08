@@ -136,6 +136,10 @@ describe command("gcloud --project='#{project_id}' sql instances describe #{base
 
     it "backup configuration is enabled" do
       expect(data['settings']['backupConfiguration']).to include(
+        "backupRetentionSettings" => {
+          "retainedBackups" => 365,
+          "retentionUnit" => "COUNT"
+        },
         "binaryLogEnabled" => true,
         "enabled" => true,
         "kind" => "sql#backupConfiguration",
