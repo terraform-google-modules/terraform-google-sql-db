@@ -82,10 +82,8 @@ module "pg" {
     location                       = null
     point_in_time_recovery_enabled = false
     transaction_log_retention_days = null
-    backup_retention_settings = {
-      retained_backups = "365"
-      retention_unit   = "COUNT"
-    }
+    retained_backups               = 365
+    retention_unit                 = "COUNT"
   }
 
   // Read replica configurations

@@ -15,8 +15,6 @@
  */
 
 locals {
-  backup_retention_settings = lookup(var.backup_configuration, "backup_retention_settings", null)
-
   master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
 
   default_user_host        = "%"
@@ -33,6 +31,9 @@ locals {
   // HA method using REGIONAL availability_type requires binary logs to be enabled
   binary_log_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
   backups_enabled    = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "enabled", null)
+
+  retained_backups = lookup(var.backup_configuration, "retained_backups", null)
+  retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
 }
 
 resource "random_id" "suffix" {
@@ -65,10 +66,10 @@ resource "google_sql_database_instance" "default" {
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
 
         dynamic "backup_retention_settings" {
-          for_each = local.backup_retention_settings != null ? [local.backup_retention_settings] : []
+          for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
           content {
-            retained_backups = lookup(backup_retention_settings.value, "retained_backups", null)
-            retention_unit   = lookup(backup_retention_settings.value, "retention_unit", null)
+            retained_backups = local.retained_backups
+            retention_unit   = local.retention_unit
           }
         }
       }
