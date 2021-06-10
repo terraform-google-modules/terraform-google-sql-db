@@ -31,6 +31,9 @@ locals {
   // HA method using REGIONAL availability_type requires binary logs to be enabled
   binary_log_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
   backups_enabled    = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "enabled", null)
+
+  retained_backups = lookup(var.backup_configuration, "retained_backups", null)
+  retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
 }
 
 resource "random_id" "suffix" {
@@ -56,10 +59,19 @@ resource "google_sql_database_instance" "default" {
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
-        binary_log_enabled = local.binary_log_enabled
-        enabled            = local.backups_enabled
-        start_time         = lookup(backup_configuration.value, "start_time", null)
-        location           = lookup(backup_configuration.value, "location", null)
+        binary_log_enabled             = local.binary_log_enabled
+        enabled                        = local.backups_enabled
+        start_time                     = lookup(backup_configuration.value, "start_time", null)
+        location                       = lookup(backup_configuration.value, "location", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+
+        dynamic "backup_retention_settings" {
+          for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
+          content {
+            retained_backups = local.retained_backups
+            retention_unit   = local.retention_unit
+          }
+        }
       }
     }
     dynamic "ip_configuration" {

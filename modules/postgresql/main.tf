@@ -30,6 +30,9 @@ locals {
     email         = iu,
     is_account_sa = trimsuffix(iu, "gserviceaccount.com") == iu ? false : true
   }]
+
+  retained_backups = lookup(var.backup_configuration, "retained_backups", null)
+  retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
 }
 
 resource "random_id" "suffix" {
@@ -60,6 +63,15 @@ resource "google_sql_database_instance" "default" {
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         location                       = lookup(backup_configuration.value, "location", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", false)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+
+        dynamic "backup_retention_settings" {
+          for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
+          content {
+            retained_backups = local.retained_backups
+            retention_unit   = local.retention_unit
+          }
+        }
       }
     }
     dynamic "ip_configuration" {

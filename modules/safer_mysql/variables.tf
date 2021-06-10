@@ -138,16 +138,22 @@ variable "user_labels" {
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
-    binary_log_enabled = bool
-    enabled            = bool
-    start_time         = string
-    location           = string
+    binary_log_enabled             = bool
+    enabled                        = bool
+    start_time                     = string
+    location                       = string
+    transaction_log_retention_days = string
+    retained_backups               = number
+    retention_unit                 = string
   })
   default = {
-    binary_log_enabled = false
-    enabled            = false
-    start_time         = null
-    location           = null
+    binary_log_enabled             = false
+    enabled                        = false
+    start_time                     = null
+    location                       = null
+    transaction_log_retention_days = null
+    retained_backups               = null
+    retention_unit                 = null
   }
 }
 
