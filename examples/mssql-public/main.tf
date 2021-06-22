@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-provider "google-beta" {
-  version = ">= 3.1.0, <4.0.0"
-  region  = var.region
-}
-
 module "mssql" {
   source               = "../../modules/mssql"
   name                 = var.name

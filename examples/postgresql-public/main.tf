@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.22"
-}
-
-provider "google-beta" {
-  version = "~> 3.5"
-}
-
-provider "null" {
-  version = "~> 2.1"
-}
-
-provider "random" {
-  version = "~> 2.2"
-}
 
 module "postgresql-db" {
   source               = "../../modules/postgresql"
