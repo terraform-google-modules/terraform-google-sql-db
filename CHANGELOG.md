@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.1.1...v6.0.0) (2021-07-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* `null` and `random` providers upgraded to `v3.x.x`.
+* When setting the backup_configuration variable, transaction_log_retention_days, retained_backups, and retention_unit must be set. Use `null` to preserve default behavior.
+
+### Features
+
+* Added option to enable insights for replica instances ([#230](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/230)) ([6b928f6](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/6b928f6ac1a621c0e277bfebbabb32b5ce0d60c9))
+* Added support for setting transaction_log_retention_days, retained_backups, and retention_unit to backup_configuration. ([#203](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/203)) ([2237a3d](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/2237a3d5c9e6944077ffa9c0bfa40ba07d4a3157))
+
+
+### Miscellaneous Chores
+
+* Update null and random providers ([#228](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/228)) ([21d3771](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/21d3771b93e3b5c1bb8e949be58641732313166d))
+
 ### [5.1.1](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.1.0...v5.1.1) (2021-05-27)
 
 
