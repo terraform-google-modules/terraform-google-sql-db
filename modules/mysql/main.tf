@@ -161,6 +161,16 @@ resource "random_id" "user-password" {
   depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
+resource "random_id" "additional_passwords" {
+  for_each = local.users
+  keepers = {
+    name = google_sql_database_instance.default.name
+  }
+
+  byte_length = 8
+  depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+}
+
 resource "google_sql_user" "default" {
   count      = var.enable_default_user ? 1 : 0
   name       = var.user_name

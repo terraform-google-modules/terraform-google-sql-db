@@ -97,6 +97,17 @@ output "generated_user_password" {
   sensitive   = true
 }
 
+output "additional_users" {
+  description = "Map of additional users and passwords"
+  value = [for r in google_sql_user.additional_users :
+    {
+      name     = r.name
+      password = r.password
+    }
+  ]
+  sensitive = true
+}
+
 // Resources
 output "primary" {
   value       = google_sql_database_instance.default
