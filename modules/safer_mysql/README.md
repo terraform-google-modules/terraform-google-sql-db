@@ -166,7 +166,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 |------|-------------|------|---------|:--------:|
 | activation\_policy | The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
-| additional\_users | A list of users to be created in your cluster | <pre>list(object({<br>    name     = string<br>    password = string<br>    host     = string<br>  }))</pre> | `[]` | no |
+| additional\_users | A list of users to be created in your cluster | <pre>list(object({<br>    name     = string<br>    password = string<br>    host     = string<br>    type     = string<br>  }))</pre> | `[]` | no |
 | assign\_public\_ip | Set to true if the master instance should also have a public IP (less secure). | `string` | `false` | no |
 | authorized\_gae\_applications | The list of authorized App Engine project names | `list(string)` | `[]` | no |
 | availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | `string` | `"REGIONAL"` | no |
