@@ -62,7 +62,7 @@ output "generated_user_password" {
 }
 
 output "additional_users" {
-  description = "Map of additional users and passwords"
+  description = "List of maps of additional users and passwords"
   value = [for r in google_sql_user.additional_users :
     {
       name     = r.name
