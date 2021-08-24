@@ -32,6 +32,7 @@ output "mysql_conn" {
 output "mysql_user_pass" {
   value       = module.example.mysql_user_pass
   description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  sensitive   = true
 }
 
 output "reserved_range_name" {

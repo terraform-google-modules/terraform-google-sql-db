@@ -98,8 +98,8 @@ describe command("gcloud --project='#{project_id}' sql instances describe #{base
   end
 
   describe "Postgres SQL pubic instance" do
-    it "has just one assigned IP address" do
-      expect(data["ipAddresses"].count).to eq(1)
+    it "has both a public and an outgoing IP address assigned" do
+      expect(data["ipAddresses"].count).to eq(2)
     end
 
     it "has expected external IP address" do

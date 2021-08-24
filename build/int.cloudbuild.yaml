@@ -21,15 +21,15 @@ steps:
       - 'TF_VAR_org_id=$_ORG_ID'
       - 'TF_VAR_folder_id=$_FOLDER_ID'
       - 'TF_VAR_billing_account=$_BILLING_ACCOUNT'
-
-  - id: create-postgresql-public-local
+  - id: create-all
     waitFor:
       - prepare
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create postgresql-public-local']
+    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create']
+
   - id: converge-postgresql-public-local
     waitFor:
-      - create-postgresql-public-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge postgresql-public-local']
     timeout: 3600s
@@ -45,14 +45,9 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-public-local']
     timeout: 1800s
 
-  - id: create-mssql-public-local
-    waitFor:
-      - prepare
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create mssql-public-local']
   - id: converge-mssql-public-local
     waitFor:
-      - create-mssql-public-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mssql-public-local']
     timeout: 3600s
@@ -68,14 +63,9 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mssql-public-local']
     timeout: 1800s
 
-  - id: create-mysql-public-local
-    waitFor:
-      - prepare
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create mysql-public-local']
   - id: converge-mysql-public-local
     waitFor:
-      - create-mysql-public-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mysql-public-local']
     timeout: 3600s
@@ -91,14 +81,9 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mysql-public-local']
     timeout: 1800s
 
-  - id: create-mysql-ha-local
-    waitFor:
-      - prepare
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create mysql-ha-local']
   - id: converge-mysql-ha-local
     waitFor:
-      - create-mysql-ha-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mysql-ha-local']
     timeout: 3600s
@@ -114,14 +99,9 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mysql-ha-local']
     timeout: 1800s
 
-  - id: create-postgresql-ha-local
-    waitFor:
-      - prepare
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create postgresql-ha-local']
   - id: converge-postgresql-ha-local
     waitFor:
-      - create-postgresql-ha-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge postgresql-ha-local']
     timeout: 3600s
@@ -137,14 +117,9 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-ha-local']
     timeout: 1800s
 
-  - id: create-mssql-ha-local
-    waitFor:
-      - prepare
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create mssql-ha-local']
   - id: converge-mssql-ha-local
     waitFor:
-      - create-mssql-ha-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mssql-ha-local']
     timeout: 3600s
@@ -160,14 +135,9 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mssql-ha-local']
     timeout: 1800s
 
-  - id: create-mysql-private-local
-    waitFor:
-      - prepare
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create mysql-private-local']
   - id: converge-mysql-private-local
     waitFor:
-      - create-mysql-private-local
+      - create-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mysql-private-local']
     timeout: 3600s
@@ -188,4 +158,4 @@ tags:
   - 'integration'
 substitutions:
   _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
-  _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '0.13'
+  _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '1.0'
