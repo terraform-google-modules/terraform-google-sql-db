@@ -124,12 +124,6 @@ variable "user_labels" {
   default     = {}
 }
 
-variable "authorized_gae_applications" {
-  description = "The authorized gae applications for the Cloud SQL instances"
-  type        = list(string)
-  default     = []
-}
-
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
