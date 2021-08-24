@@ -13,9 +13,9 @@ See more details in each module's README.
 This module is meant for use with Terraform 0.13+ and tested using Terraform 1.0+.
 If you find incompatibilities using Terraform `>=0.13`, please open an issue.
 
-If you haven't [upgraded][terraform-0.13-upgrade] and need a Terraform
+If you haven't [upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
 0.12.x-compatible version of this module, the last released version
-intended for Terraform 0.12.x is [12.3.0].
+intended for Terraform 0.12.x is [v5.0.0](https://registry.terraform.io/modules/GoogleCloudPlatform/sql-db/google/5.0.0).
 
 ## Upgrading
 
