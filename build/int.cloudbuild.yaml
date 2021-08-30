@@ -85,23 +85,23 @@ steps:
     waitFor:
       - destroy-mysql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -run TestMySqlPublicModule ./... -p 1']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -v -run TestMySqlPublicModule ./... -p 1']
   - id: go-apply-mysql-public
     waitFor:
       - go-init-mysql-public
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -run TestMySqlPublicModule ./... -p 1']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -v -run TestMySqlPublicModule ./... -p 1']
     timeout: 3600s
   - id: go-verify-mysql-public
     waitFor:
       - go-apply-mysql-public
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -run TestMySqlPublicModule ./... -p 1']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -v -run TestMySqlPublicModule ./... -p 1']
   - id: go-destroy-mysql-public
     waitFor:
       - go-verify-mysql-public
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=destroy go test -run TestMySqlPublicModule ./... -p 1']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=destroy go test -v -run TestMySqlPublicModule ./... -p 1']
     timeout: 1800s
 
   - id: converge-mysql-ha-local
