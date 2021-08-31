@@ -19,14 +19,14 @@ import (
 	"fmt"
 	"testing"
 
-	// import the new Blueprints test framework modules for testing and assertions
+	// import the blueprints test framework modules for testing and assertions
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/gcloud"
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestMySqlPublicModule(t *testing.T) { // name the function as Test*
-
+// name the function as Test*
+func TestMySqlPublicModule(t *testing.T) {
 	// define constants for all required assertions in the test case
 	const databaseVersion = `MYSQL_5_6`
 	const gceZone = `us-central1-c`
@@ -37,10 +37,13 @@ func TestMySqlPublicModule(t *testing.T) { // name the function as Test*
 	const dbFlagName = `log_bin_trust_function_creators`
 	const dbFlagValue = `on`
 
-	mySqlT := tft.NewTFBlueprintTest(t)                   // initialize Terraform test from the Blueprints test framework
-	mySqlT.DefineVerify(func(assert *assert.Assertions) { // define and write a custom verifier for this test case
-		// call the default verify for confirming no additional changes
+	// initialize Terraform test from the Blueprints test framework
+	mySqlT := tft.NewTFBlueprintTest(t)
+
+	// define and write a custom verifier for this test case call the default verify for confirming no additional changes
+	mySqlT.DefineVerify(func(assert *assert.Assertions) {
 		mySqlT.DefaultVerify(assert)
+
 		// invoke the gcloud module in the Blueprints test framework to run a gcloud command that will output resource properties in a JSON format
 		// the tft struct can be used to pull output variables of the TF module being invoked by this test and use the op object (a gjson struct)
 		// to parse through the JSON results and assert the values of the resource against the constants defined above
@@ -59,8 +62,8 @@ func TestMySqlPublicModule(t *testing.T) { // name the function as Test*
 		assert.Empty(op.Get("settings.userLabels"), "no labels are set")
 
 		// assert values that are supposed to be equal to the expected values
-		assert.Equal(databaseVersion, op.Get("databaseVersion").String(), "database versions is valid is set to "+databaseVersion)
-		assert.Equal(region, op.Get("region").String(), "Equals ===> GCE region is valid")
+		assert.Equal(databaseVersion, op.Get("databaseVersion").String(), "database version is valid and set to "+databaseVersion)
+		assert.Equal(region, op.Get("region").String(), "GCE region is valid")
 		assert.Equal(tier, op.Get("settings.tier").String(), "database tier is valid")
 		assert.Equal(true, op.Get("settings.ipConfiguration.requireSsl").Bool(), "SSL is required")
 
@@ -75,5 +78,6 @@ func TestMySqlPublicModule(t *testing.T) { // name the function as Test*
 		assert.Equal(dbFlagName, dbFlagMap["name"].String(), "found one valid DB Flag")
 		assert.Equal(dbFlagValue, dbFlagMap["value"].String(), "found one valid DB Flag value")
 	})
-	mySqlT.Test() // call the test function to execute the integration test
+	// call the test function to execute the integration test
+	mySqlT.Test()
 }

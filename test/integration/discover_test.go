@@ -15,13 +15,15 @@
 package test
 
 import (
-	"testing" // should be imported to enable testing for GO modules
+	// should be imported to enable testing for GO modules
+	"testing"
 
-	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft" // should be
-	// imported to enable the Blueprints helper modules for the test framework
+	// should be imported to enable the Blueprints helper modules for the test framework
+	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft"
 )
 
-func TestAll(t *testing.T) { // entry function for the test; can be named as Test*
-	tft.AutoDiscoverAndTest(t) // the helper callback to autodiscover and test the
-	// TF examples and/or fixtures setup in the Blueprint
+// entry function for the test; can be named as Test*
+func TestAll(t *testing.T) {
+	// the helper callback to autodiscover and test blueprint examples
+	tft.AutoDiscoverAndTest(t)
 }
