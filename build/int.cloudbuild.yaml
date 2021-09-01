@@ -83,7 +83,7 @@ steps:
     waitFor:
       - go-verify-mysql-public
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=destroy go test -v -run TestMySqlPublicModule ./... -p 1']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=teardown go test -v -run TestMySqlPublicModule ./... -p 1']
     timeout: 1800s
 
   - id: converge-mysql-ha-local
