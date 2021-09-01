@@ -42,6 +42,7 @@ func TestMySqlPublicModule(t *testing.T) {
 
 	// define and write a custom verifier for this test case call the default verify for confirming no additional changes
 	mySqlT.DefineVerify(func(assert *assert.Assertions) {
+		// perform default verification ensuring Terraform reports no additional changes on an applied blueprint
 		mySqlT.DefaultVerify(assert)
 
 		// invoke the gcloud module in the Blueprints test framework to run a gcloud command that will output resource properties in a JSON format
@@ -69,14 +70,16 @@ func TestMySqlPublicModule(t *testing.T) {
 
 		// the gjson struct (op) also allow for easy parsing through arrays and maps
 		authNetworks := op.Get("settings.ipConfiguration.authorizedNetworks").Array()
+		assert.Equal(1, len(authNetworks), "found only one valid authorized network")
 		authNetworkMap := authNetworks[0].Map()
-		assert.Equal(authNetName, authNetworkMap["name"].String(), "found one valid authorized network")
-		assert.Equal(authNetCidr, authNetworkMap["value"].String(), "found one valid authorized network with the right CIDR range")
+		assert.Equal(authNetworkMap["name"].String(), authNetName, "found one valid authorized network with the right name")
+		assert.Equal(authNetworkMap["value"].String(), authNetCidr, "found one valid authorized network with the right CIDR range")
 
 		dbFlags := op.Get("settings.databaseFlags").Array()
+		assert.Equal(1, len(dbFlags), "found only one valid DB Flag")
 		dbFlagMap := dbFlags[0].Map()
-		assert.Equal(dbFlagName, dbFlagMap["name"].String(), "found one valid DB Flag")
-		assert.Equal(dbFlagValue, dbFlagMap["value"].String(), "found one valid DB Flag value")
+		assert.Equal(dbFlagMap["name"].String(), dbFlagName, "found one valid DB Flag with the right name")
+		assert.Equal(dbFlagMap["value"].String(), dbFlagValue, "found one valid DB Flag with the right value")
 	})
 	// call the test function to execute the integration test
 	mySqlT.Test()
