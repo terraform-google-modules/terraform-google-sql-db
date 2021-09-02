@@ -63,22 +63,27 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mssql-public-local']
     timeout: 1800s
 
-  - id: converge-mysql-public-local
+  - id: go-init-mysql-public
     waitFor:
-      - create-all
+      - prepare
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mysql-public-local']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -v -run TestMySqlPublicModule ./... -p 1']
+  - id: go-apply-mysql-public
+    waitFor:
+      - go-init-mysql-public
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -v -run TestMySqlPublicModule ./... -p 1']
     timeout: 3600s
-  - id: verify-mysql-public-local
+  - id: go-verify-mysql-public
     waitFor:
-      - converge-mysql-public-local
+      - go-apply-mysql-public
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify mysql-public-local']
-  - id: destroy-mysql-public-local
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -v -run TestMySqlPublicModule ./... -p 1']
+  - id: go-destroy-mysql-public
     waitFor:
-      - verify-mysql-public-local
+      - go-verify-mysql-public
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mysql-public-local']
+    args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=teardown go test -v -run TestMySqlPublicModule ./... -p 1']
     timeout: 1800s
 
   - id: converge-mysql-ha-local
