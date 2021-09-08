@@ -10,7 +10,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### ⚠ BREAKING CHANGES
 
-* delete deprecated attribute authorized_gae_applications (#240)
+* [Deprecated](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#authorized_gae_applications) attribute authorized_gae_applications has been removed. See [upgrade docs](https://cloud.google.com/sql/docs/mysql/deprecation-notice) for more details (#240)
 
 ### Bug Fixes
 
