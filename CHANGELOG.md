@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.0.0...v7.1.0) (2021-09-10)
+
+
+### Features
+
+* Create random passwords for additional_users ([#236](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/236)) ([94ef3de](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/94ef3de432006bbeded6bb0b9d240d9c920a9a30))
+
 ## [7.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v6.0.0...v7.0.0) (2021-09-02)
 
 
