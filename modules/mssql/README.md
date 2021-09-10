@@ -48,6 +48,7 @@ The following dependency must be available for SQL Server module:
 
 | Name | Description |
 |------|-------------|
+| additional\_users | List of maps of additional users and passwords |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | instance\_address | The IPv4 addesses assigned for the master instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
