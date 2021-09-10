@@ -27,9 +27,11 @@ output "authorized_network" {
 }
 
 output "replicas" {
-  value = module.example.replicas
+  value     = module.example.replicas
+  sensitive = true
 }
 
 output "instances" {
-  value = module.example.instances
+  value     = module.example.instances
+  sensitive = true
 }

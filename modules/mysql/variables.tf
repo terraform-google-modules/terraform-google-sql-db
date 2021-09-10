@@ -67,12 +67,6 @@ variable "availability_type" {
   default     = "REGIONAL"
 }
 
-variable "authorized_gae_applications" {
-  description = "The list of authorized App Engine project names"
-  type        = list(string)
-  default     = []
-}
-
 variable "disk_autoresize" {
   description = "Configuration to increase storage size"
   type        = bool
