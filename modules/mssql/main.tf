@@ -51,10 +51,9 @@ resource "google_sql_database_instance" "default" {
   deletion_protection = var.deletion_protection
 
   settings {
-    tier                        = var.tier
-    activation_policy           = var.activation_policy
-    availability_type           = var.availability_type
-    authorized_gae_applications = var.authorized_gae_applications
+    tier              = var.tier
+    activation_policy = var.activation_policy
+    availability_type = var.availability_type
     dynamic "backup_configuration" {
       for_each = var.backup_configuration.enabled ? [var.backup_configuration] : []
       content {
@@ -156,6 +155,13 @@ resource "random_password" "user-password" {
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
+resource "random_password" "additional_passwords" {
+  for_each   = local.users
+  length     = 8
+  special    = true
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+}
+
 resource "google_sql_user" "default" {
   name       = var.user_name
   project    = var.project_id
@@ -168,7 +174,7 @@ resource "google_sql_user" "additional_users" {
   for_each   = local.users
   project    = var.project_id
   name       = each.value.name
-  password   = lookup(each.value, "password", random_password.user-password.result)
+  password   = lookup(each.value, "password", random_password.additional_passwords[each.value.name].result)
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }

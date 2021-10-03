@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.0.0...v7.1.0) (2021-09-10)
+
+
+### Features
+
+* Create random passwords for additional_users ([#236](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/236)) ([94ef3de](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/94ef3de432006bbeded6bb0b9d240d9c920a9a30))
+
+## [7.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v6.0.0...v7.0.0) (2021-09-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* [Deprecated](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#authorized_gae_applications) attribute authorized_gae_applications has been removed. See [upgrade docs](https://cloud.google.com/sql/docs/mysql/deprecation-notice) for more details (#240)
+
+### Bug Fixes
+
+* delete deprecated attribute authorized_gae_applications ([#240](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/240)) ([d35b23c](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/d35b23c0ec844716d7fea6ac958bbf5fa63534bf))
+
 ## [6.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v5.1.1...v6.0.0) (2021-07-02)
 
 

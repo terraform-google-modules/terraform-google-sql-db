@@ -92,6 +92,17 @@ output "generated_user_password" {
   sensitive   = true
 }
 
+output "additional_users" {
+  description = "List of maps of additional users and passwords"
+  value = [for r in google_sql_user.additional_users :
+    {
+      name     = r.name
+      password = r.password
+    }
+  ]
+  sensitive = true
+}
+
 output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
   value       = google_sql_database_instance.default.public_ip_address

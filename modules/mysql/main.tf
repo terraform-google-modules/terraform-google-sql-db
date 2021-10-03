@@ -52,10 +52,9 @@ resource "google_sql_database_instance" "default" {
   deletion_protection = var.deletion_protection
 
   settings {
-    tier                        = var.tier
-    activation_policy           = var.activation_policy
-    availability_type           = var.availability_type
-    authorized_gae_applications = var.authorized_gae_applications
+    tier              = var.tier
+    activation_policy = var.activation_policy
+    availability_type = var.availability_type
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
@@ -153,6 +152,16 @@ resource "google_sql_database" "additional_databases" {
 }
 
 resource "random_id" "user-password" {
+  keepers = {
+    name = google_sql_database_instance.default.name
+  }
+
+  byte_length = 8
+  depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+}
+
+resource "random_id" "additional_passwords" {
+  for_each = local.users
   keepers = {
     name = google_sql_database_instance.default.name
   }
