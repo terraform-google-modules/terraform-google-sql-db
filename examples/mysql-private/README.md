@@ -85,7 +85,7 @@ terraform destroy
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | db\_name | The name of the SQL Database instance | `string` | `"example-mysql-private"` | no |
-| network\_name | n/a | `string` | `"mysql-privat"` | no |
+| network\_name | n/a | `string` | `"mysql-private"` | no |
 | project\_id | The project to run tests against | `string` | n/a | yes |
 
 ## Outputs

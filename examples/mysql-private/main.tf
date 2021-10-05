@@ -63,11 +63,13 @@ module "safer-mysql-db" {
       name     = "app"
       password = "PaSsWoRd"
       host     = "localhost"
+      type     = "BUILT_IN"
     },
     {
       name     = "readonly"
       password = "PaSsWoRd"
       host     = "localhost"
+      type     = "BUILT_IN"
     },
   ]
 

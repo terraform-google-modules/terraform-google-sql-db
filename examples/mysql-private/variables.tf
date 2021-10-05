@@ -20,7 +20,7 @@ variable "project_id" {
 }
 
 variable "network_name" {
-  default = "mysql-privat"
+  default = "mysql-private"
   type    = string
 }
 

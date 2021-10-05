@@ -187,6 +187,7 @@ resource "google_sql_user" "additional_users" {
   password   = lookup(each.value, "password", random_id.user-password.hex)
   host       = lookup(each.value, "host", var.user_host)
   instance   = google_sql_database_instance.default.name
+  type       = lookup(each.value, "type", "BUILT_IN")
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 

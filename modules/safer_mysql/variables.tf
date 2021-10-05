@@ -234,6 +234,7 @@ variable "additional_users" {
     name     = string
     password = string
     host     = string
+    type     = string
   }))
   default = []
 }

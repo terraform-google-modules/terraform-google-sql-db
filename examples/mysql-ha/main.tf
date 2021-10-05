@@ -134,11 +134,13 @@ module "mysql" {
       name     = "tftest2"
       password = "abcdefg"
       host     = "localhost"
+      type     = "BUILT_IN"
     },
     {
       name     = "tftest3"
       password = "abcdefg"
       host     = "localhost"
+      type     = "BUILT_IN"
     },
   ]
 }
