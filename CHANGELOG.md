@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.2.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.1.0...v7.2.0) (2021-10-05)
+
+
+### Features
+
+* MySQL - Allow setting type for additional_users ([#237](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/237)) ([e1a6fc7](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/e1a6fc732f130d7f97e4672d7da993018f27f52f))
+
 ## [7.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.0.0...v7.1.0) (2021-09-10)
 
 
