@@ -36,6 +36,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
 | read\_replica\_deletion\_protection | Used to block Terraform from deleting replica SQL Instances. | `bool` | `false` | no |
+| read\_replica\_encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption or read reaplicas | `string` | `null` | no |
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | `string` | `""` | no |
 | read\_replicas | List of read replicas to create | <pre>list(object({<br>    name            = string<br>    tier            = string<br>    zone            = string<br>    disk_type       = string<br>    disk_autoresize = bool<br>    disk_size       = string<br>    user_labels     = map(string)<br>    database_flags = list(object({<br>      name  = string<br>      value = string<br>    }))<br>    ip_configuration = object({<br>      authorized_networks = list(map(string))<br>      ipv4_enabled        = bool<br>      private_network     = string<br>      require_ssl         = bool<br>    })<br>  }))</pre> | `[]` | no |
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |
