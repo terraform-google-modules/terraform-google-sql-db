@@ -165,7 +165,7 @@ variable "ip_configuration" {
 
 // Read Replicas
 variable "read_replicas" {
-  description = "List of read replicas to create"
+  description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
     name            = string
     tier            = string
@@ -184,6 +184,7 @@ variable "read_replicas" {
       private_network     = string
       require_ssl         = bool
     })
+    encryption_key_name = string
   }))
   default = []
 }
