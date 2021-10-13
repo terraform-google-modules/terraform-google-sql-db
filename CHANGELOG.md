@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.1.0...v8.0.0) (2021-10-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* `var.read_replicas` now requires an encryption key name. Set `encryption_key_name = null` to preserve the old behavior.
+
+### Features
+
+* Add CMEK support for cross-region read replicas ([#251](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/251)) ([426724a](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/426724a50d19ffe76a1a2571022903d53fe615b9))
+* MySQL - Allow setting type for additional_users ([#237](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/237)) ([e1a6fc7](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/e1a6fc732f130d7f97e4672d7da993018f27f52f))
+
 ## [7.1.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.0.0...v7.1.0) (2021-09-10)
 
 

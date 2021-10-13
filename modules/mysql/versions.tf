@@ -32,7 +32,7 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v7.1.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v8.0.0"
   }
 
 }
