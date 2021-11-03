@@ -45,6 +45,24 @@ steps:
     args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-public-local']
     timeout: 1800s
 
+  - id: converge-postgresql-public-iam-local
+    waitFor:
+      - create-all
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge postgresql-public-iam-local']
+    timeout: 3600s
+  - id: verify-postgresql-public-iam-local
+    waitFor:
+      - converge-postgresql-public-iam-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify postgresql-public-iam-local']
+  - id: destroy-postgresql-public-iam-local
+    waitFor:
+      - verify-postgresql-public-iam-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-public-iam-local']
+    timeout: 1800s
+
   - id: converge-mssql-public-local
     waitFor:
       - create-all
