@@ -42,12 +42,6 @@ variable "ip_version" {
   default     = ""
 }
 
-variable "labels" {
-  description = "The key/value labels for the IP range allocated to the peered network."
-  type        = map(string)
-  default     = {}
-}
-
 variable "description" {
   description = "Description of the IP range allocated to the peered network."
   type        = string
