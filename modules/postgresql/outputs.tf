@@ -112,6 +112,7 @@ output "additional_users" {
 output "primary" {
   value       = google_sql_database_instance.default
   description = "The `google_sql_database_instance` resource representing the primary instance"
+  sensitive   = true
 }
 
 output "replicas" {
@@ -122,4 +123,5 @@ output "replicas" {
 output "instances" {
   value       = concat([google_sql_database_instance.default], values(google_sql_database_instance.replicas))
   description = "A list of all `google_sql_database_instance` resources we've created"
+  sensitive   = true
 }
