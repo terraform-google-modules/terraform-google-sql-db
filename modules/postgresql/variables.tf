@@ -275,24 +275,6 @@ variable "delete_timeout" {
   default     = "15m"
 }
 
-variable "user_create_timeout" {
-  description = "The optional timout that is applied to limit long user creates."
-  type        = string
-  default     = "20m"
-}
-
-variable "user_update_timeout" {
-  description = "The optional timout that is applied to limit long user updates."
-  type        = string
-  default     = "20m"
-}
-
-variable "user_delete_timeout" {
-  description = "The optional timout that is applied to limit long user deletes."
-  type        = string
-  default     = "20m"
-}
-
 variable "encryption_key_name" {
   description = "The full path to the encryption key used for the CMEK disk encryption"
   type        = string
