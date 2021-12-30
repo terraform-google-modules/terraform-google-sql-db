@@ -43,12 +43,9 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |
 | tier | The tier for the master instance. | `string` | `"db-f1-micro"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"15m"` | no |
-| user\_create\_timeout | The optional timout that is applied to limit long user creates. | `string` | `"20m"` | no |
-| user\_delete\_timeout | The optional timout that is applied to limit long user deletes. | `string` | `"20m"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. | `string` | `""` | no |
-| user\_update\_timeout | The optional timout that is applied to limit long user updates. | `string` | `"20m"` | no |
 | zone | The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | n/a | yes |
 
 ## Outputs

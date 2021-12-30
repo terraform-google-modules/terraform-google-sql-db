@@ -182,27 +182,27 @@ resource "random_id" "additional_passwords" {
 }
 
 resource "google_sql_user" "default" {
-  count      = var.enable_default_user ? 1 : 0
-  name       = var.user_name
-  project    = var.project_id
-  instance   = google_sql_database_instance.default.name
-  password   = var.user_password == "" ? random_id.user-password.hex : var.user_password
+  count    = var.enable_default_user ? 1 : 0
+  name     = var.user_name
+  project  = var.project_id
+  instance = google_sql_database_instance.default.name
+  password = var.user_password == "" ? random_id.user-password.hex : var.user_password
   depends_on = [
-    null_resource.module_depends_on, 
-    google_sql_database_instance.default, 
+    null_resource.module_depends_on,
+    google_sql_database_instance.default,
     google_sql_database_instance.replicas,
   ]
 }
 
 resource "google_sql_user" "additional_users" {
-  for_each   = local.users
-  project    = var.project_id
-  name       = each.value.name
-  password   = coalesce(each.value["password"], random_id.additional_passwords[each.value.name].hex)
-  instance   = google_sql_database_instance.default.name
+  for_each = local.users
+  project  = var.project_id
+  name     = each.value.name
+  password = coalesce(each.value["password"], random_id.additional_passwords[each.value.name].hex)
+  instance = google_sql_database_instance.default.name
   depends_on = [
-    null_resource.module_depends_on, 
-    google_sql_database_instance.default, 
+    null_resource.module_depends_on,
+    google_sql_database_instance.default,
     google_sql_database_instance.replicas,
   ]
 }
@@ -238,7 +238,7 @@ resource "google_sql_user" "iam_account" {
   depends_on = [
     null_resource.module_depends_on,
     google_project_iam_member.iam_binding,
-  ]  
+  ]
 }
 
 resource "null_resource" "module_depends_on" {
