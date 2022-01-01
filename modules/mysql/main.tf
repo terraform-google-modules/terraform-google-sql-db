@@ -177,7 +177,11 @@ resource "google_sql_user" "default" {
   instance   = google_sql_database_instance.default.name
   host       = var.user_host
   password   = var.user_password == "" ? random_id.user-password.hex : var.user_password
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  depends_on = [
+    null_resource.module_depends_on,
+    google_sql_database_instance.default,
+    google_sql_database_instance.replicas,
+  ]
 }
 
 resource "google_sql_user" "additional_users" {
@@ -188,7 +192,11 @@ resource "google_sql_user" "additional_users" {
   host       = lookup(each.value, "host", var.user_host)
   instance   = google_sql_database_instance.default.name
   type       = lookup(each.value, "type", "BUILT_IN")
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  depends_on = [
+    null_resource.module_depends_on,
+    google_sql_database_instance.default,
+    google_sql_database_instance.replicas,
+  ]
 }
 
 resource "null_resource" "module_depends_on" {
