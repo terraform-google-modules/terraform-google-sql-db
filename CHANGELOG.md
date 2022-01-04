@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+### [8.0.1](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v8.0.0...v8.0.1) (2022-01-04)
+
+
+### Bug Fixes
+
+* add depends on replicas for user creation ([#268](https://www.github.com/terraform-google-modules/terraform-google-sql-db/issues/268)) ([d45df79](https://www.github.com/terraform-google-modules/terraform-google-sql-db/commit/d45df79be9e2d429b6fa6b1cb1620d5242a252de))
+
 ## [8.0.0](https://www.github.com/terraform-google-modules/terraform-google-sql-db/compare/v7.1.0...v8.0.0) (2021-10-13)
 
 
