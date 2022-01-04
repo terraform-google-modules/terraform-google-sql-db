@@ -23,7 +23,7 @@ module "postgresql-db" {
   project_id           = var.project_id
   zone                 = "us-central1-c"
   region               = "us-central1"
-  tier                 = "db-f1-micro"
+  tier                 = "db-custom-2-13312"
 
   deletion_protection = false
 
