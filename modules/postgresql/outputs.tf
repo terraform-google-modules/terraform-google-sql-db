@@ -112,6 +112,7 @@ output "additional_users" {
 output "primary" {
   value       = google_sql_database_instance.default
   description = "The `google_sql_database_instance` resource representing the primary instance"
+  sensitive = true
 }
 
 output "replicas" {
