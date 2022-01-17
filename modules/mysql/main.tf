@@ -171,24 +171,32 @@ resource "random_id" "additional_passwords" {
 }
 
 resource "google_sql_user" "default" {
-  count      = var.enable_default_user ? 1 : 0
-  name       = var.user_name
-  project    = var.project_id
-  instance   = google_sql_database_instance.default.name
-  host       = var.user_host
-  password   = var.user_password == "" ? random_id.user-password.hex : var.user_password
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  count    = var.enable_default_user ? 1 : 0
+  name     = var.user_name
+  project  = var.project_id
+  instance = google_sql_database_instance.default.name
+  host     = var.user_host
+  password = var.user_password == "" ? random_id.user-password.hex : var.user_password
+  depends_on = [
+    null_resource.module_depends_on,
+    google_sql_database_instance.default,
+    google_sql_database_instance.replicas,
+  ]
 }
 
 resource "google_sql_user" "additional_users" {
-  for_each   = local.users
-  project    = var.project_id
-  name       = each.value.name
-  password   = lookup(each.value, "password", random_id.user-password.hex)
-  host       = lookup(each.value, "host", var.user_host)
-  instance   = google_sql_database_instance.default.name
-  type       = lookup(each.value, "type", "BUILT_IN")
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  for_each = local.users
+  project  = var.project_id
+  name     = each.value.name
+  password = lookup(each.value, "password", random_id.user-password.hex)
+  host     = lookup(each.value, "host", var.user_host)
+  instance = google_sql_database_instance.default.name
+  type     = lookup(each.value, "type", "BUILT_IN")
+  depends_on = [
+    null_resource.module_depends_on,
+    google_sql_database_instance.default,
+    google_sql_database_instance.replicas,
+  ]
 }
 
 resource "null_resource" "module_depends_on" {
