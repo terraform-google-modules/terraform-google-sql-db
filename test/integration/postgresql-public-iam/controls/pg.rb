@@ -16,7 +16,7 @@ project_id = attribute('project_id')
 basename   = attribute('name')
 db_version = "POSTGRES_9_6"
 region = "us-central1"
-tier = "db-f1-micro"
+tier = "db-custom-2-13312"
 public_ip_address = attribute('public_ip_address')
 
 activation_policy = "ALWAYS"
