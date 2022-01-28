@@ -82,7 +82,7 @@ For MySQL :
 ```
 module "sql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version = "4.0.0"
+  version = "8.0.0"
 }
 ```
 
@@ -91,7 +91,7 @@ or for PostgreSQL :
 ```
 module "sql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
-  version = "4.0.0"
+  version = "8.0.0"
 }
 ```
 
@@ -100,7 +100,7 @@ or for MSSQL Server :
 ```
 module "sql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mssql"
-  version = "4.0.0"
+  version = "8.0.0"
 }
 ```
 
