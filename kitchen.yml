@@ -16,6 +16,10 @@
 provisioner:
   name: terraform
 
+driver:
+  name: "terraform"
+  verify_version: false
+
 platforms:
   - name: local
 
