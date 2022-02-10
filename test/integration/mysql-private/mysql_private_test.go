@@ -24,31 +24,6 @@ import (
 )
 
 func TestMySqlPrivateModule(t *testing.T) {
-
-	const databaseVersion = "MYSQL_5_6"
-	const backendType = "SECOND_GEN"
-	const state = "RUNNABLE"
-	const region = "us-central1"
-	const gceZone = "us-central1-c"
-
-	const activationPolicy = "ALWAYS"
-	const dataDiskSizeGb = int64(10)
-	const dataDiskType = "PD_SSD"
-	const kind = "sql#settings"
-	const pricingPlan = "PER_USE"
-	const replicationType = "SYNCHRONOUS"
-	const storageAutoResize = true
-	const storageAutoResizeLimit = int64(0)
-	const tier = "db-n1-standard-1"
-
-	const locationPreferenceKind = "sql#locationPreference"
-	const locationPreferenceZone = gceZone
-
-	const maintenanceWindowKind = "sql#maintenanceWindow"
-	const maintenanceWindowDay = int64(1)
-	const maintenanceWindowHour = int64(23)
-	const maintenanceWindowUpdateTrack = "stable"
-
 	mySql := tft.NewTFBlueprintTest(t)
 
 	mySql.DefineVerify(func(assert *assert.Assertions) {
@@ -57,43 +32,43 @@ func TestMySqlPrivateModule(t *testing.T) {
 		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", mySql.GetStringOutput("name"), mySql.GetStringOutput("project_id")))
 
 		// assert general database settings
-		assert.Equalf(op.Get("settings.activationPolicy").String(), activationPolicy, "Expected activationPolicy [%s]", activationPolicy)
-		assert.Equalf(op.Get("settings.dataDiskSizeGb").Int(), dataDiskSizeGb, "Expected dataDiskSizeGb [%v]", dataDiskSizeGb)
-		assert.Equalf(op.Get("settings.dataDiskType").String(), dataDiskType, "Expected dataDiskType [%s]", dataDiskType)
-		assert.Equalf(op.Get("settings.kind").String(), kind, "Expected kind [%s]", kind)
-		assert.Equalf(op.Get("settings.pricingPlan").String(), pricingPlan, "Expected pricingPlan [%s]", pricingPlan)
-		assert.Equalf(op.Get("settings.replicationType").String(), replicationType, "Expected replicationType [%s]", replicationType)
-		assert.Truef(op.Get("settings.storageAutoResize").Bool(), "Expected storageAutoResize [%t]", storageAutoResize)
-		assert.Equalf(op.Get("settings.storageAutoResizeLimit").Int(), storageAutoResizeLimit, "Expected storageAutoResizeLimit [%v]", storageAutoResizeLimit)
-		assert.Equalf(op.Get("settings.tier").String(), tier, "Expected tier [%s]", tier)
+		assert.Equal("ALWAYS", op.Get("settings.activationPolicy").String(), "Expected ALWAYS activationPolicy")
+		assert.Equal(int64(10), op.Get("settings.dataDiskSizeGb").Int(), "Expected 10 dataDiskSizeGb")
+		assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
+		assert.Equal("sql#settings", op.Get("settings.kind").String(), "Expected sql#settings kind")
+		assert.Equal("PER_USE", op.Get("settings.pricingPlan").String(), "Expected PER_USE pricingPlan")
+		assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
+		assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
+		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimi")
+		assert.Equal("db-n1-standard-1", op.Get("settings.tier").String(), "Expected db-n1-standard-1 tier")
 
 		// assert location database settings
-		assert.Equalf(op.Get("settings.locationPreference.kind").String(), locationPreferenceKind, "Expected locationPreference.kind [%s]", locationPreferenceKind)
-		assert.Equalf(op.Get("settings.locationPreference.zone").String(), locationPreferenceZone, "Expected locationPreference.zone [%s]", locationPreferenceZone)
+		assert.Equal("sql#locationPreference", op.Get("settings.locationPreference.kind").String(), "Expected sql#locationPreference locationPreference.kind")
+		assert.Equal("us-central1-c", op.Get("settings.locationPreference.zone").String(), "Expected us-central1-c locationPreference.zone")
 
 		// assert maintenance windows
-		assert.Equalf(op.Get("settings.maintenanceWindow.kind").String(), maintenanceWindowKind, "Expected maintenanceWindow.kind [%s]", maintenanceWindowKind)
-		assert.Equalf(op.Get("settings.maintenanceWindow.day").Int(), maintenanceWindowDay, "Expected maintenanceWindow.day [%v]", maintenanceWindowDay)
-		assert.Equalf(op.Get("settings.maintenanceWindow.hour").Int(), maintenanceWindowHour, "Expected maintenanceWindow.hour [%v]", maintenanceWindowHour)
-		assert.Equalf(op.Get("settings.maintenanceWindow.updateTrack").String(), maintenanceWindowUpdateTrack, "Expected maintenanceWindow.updateTrack [%s]", maintenanceWindowUpdateTrack)
+		assert.Equal("sql#maintenanceWindow", op.Get("settings.maintenanceWindow.kind").String(), "Expected sql#maintenanceWindow maintenanceWindow.kind")
+		assert.Equal(int64(1), op.Get("settings.maintenanceWindow.day").Int(), "Expected 1 maintenanceWindow.day")
+		assert.Equal(int64(23), op.Get("settings.maintenanceWindow.hour").Int(), "Expected 23 maintenanceWindow.hour")
+		assert.Equal("stable", op.Get("settings.maintenanceWindow.updateTrack").String(), "Expected stable maintenanceWindow.updateTrack")
 
 		// assert standard database settings
-		assert.Equalf(op.Get("databaseVersion").String(), databaseVersion, "Expected databaseVersion [%s]", databaseVersion)
-		assert.Equalf(op.Get("backendType").String(), backendType, "Expected backendType [%s]", backendType)
-		assert.Equalf(op.Get("state").String(), state, "Expected state [%s]", state)
-		assert.Equalf(op.Get("region").String(), region, "Expected region [%s]", region)
-		assert.Equalf(op.Get("gceZone").String(), gceZone, "Expected gceZone [%s]", gceZone)
+		assert.Equal("MYSQL_5_6", op.Get("databaseVersion").String(), "Expected MYSQL_5_6 databaseVersion")
+		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
+		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
+		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
+		assert.Equal("us-central1-c", op.Get("gceZone").String(), "Expected us-central1-c gceZone")
 
 		// assert ip database settings
 		ipAddresses := op.Get("ipAddresses").Array()
-		assert.Equal(len(ipAddresses), 2, "Expected 2 addresses")
-		assert.Equalf(ipAddresses[0].Get("ipAddress").String(), mySql.GetStringOutput("public_ip_address"), "Expected PublicIp [%s]", mySql.GetStringOutput("public_ip_address"))
-		assert.Equal(ipAddresses[0].Get("type").String(), "PRIMARY")
-		assert.Equalf(ipAddresses[1].Get("ipAddress").String(), mySql.GetStringOutput("private_ip_address"), "Expected PrivateIp [%s]", mySql.GetStringOutput("private_ip_address"))
-		assert.Equal(ipAddresses[1].Get("type").String(), "PRIVATE")
+		assert.Equal(2, len(ipAddresses), "Expected 2 addresses")
+		assert.Equalf(mySql.GetStringOutput("public_ip_address"), ipAddresses[0].Get("ipAddress").String(), "Expected %s PublicIp", mySql.GetStringOutput("public_ip_address"))
+		assert.Equal("PRIMARY", ipAddresses[0].Get("type").String())
+		assert.Equal(mySql.GetStringOutput("private_ip_address"), ipAddresses[1].Get("ipAddress").String(), "Expected %s PrivateIp", mySql.GetStringOutput("private_ip_address"))
+		assert.Equal("PRIVATE", ipAddresses[1].Get("type").String())
 
 		op = gcloud.Run(t, fmt.Sprintf("compute addresses list --global --filter='%s' --project %s", mySql.GetStringOutput("reserved_range_name"), mySql.GetStringOutput("project_id")))
-		assert.Equal(len(op.Array()), 1, "Expected one peering setup")
+		assert.Equal(1, len(op.Array()), "Expected one peering setup")
 	})
 
 	mySql.Test()
