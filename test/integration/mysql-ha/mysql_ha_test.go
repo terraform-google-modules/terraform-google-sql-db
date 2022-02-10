@@ -63,7 +63,6 @@ func TestMySqlHaModule(t *testing.T) {
 	mySql.DefineVerify(func(assert *assert.Assertions) {
 		mySql.DefaultVerify(assert)
 
-		zone := []string{"c", "a", "b", "c"}
 		instaceNames := []string{mySql.GetStringOutput("name")}
 		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instaceNames[0], mySql.GetStringOutput("project_id")))
 		assert.Equal(len(op.Get("replicaNames").Array()), 3, "Expected 3 replicas")
@@ -71,7 +70,7 @@ func TestMySqlHaModule(t *testing.T) {
 		instaceNames = append(instaceNames, op.Get("replicaNames").Array()[1].String())
 		instaceNames = append(instaceNames, op.Get("replicaNames").Array()[2].String())
 
-		for idx, instance := range instaceNames {
+		for _, instance := range instaceNames {
 			op = gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instance, mySql.GetStringOutput("project_id")))
 
 			// Master instance values
@@ -85,7 +84,6 @@ func TestMySqlHaModule(t *testing.T) {
 
 			// Replica instance values
 			if instance != mySql.GetStringOutput("name") {
-				gceZone = fmt.Sprintf("%s-%s", region, zone[idx])
 				locationPreferenceZone = gceZone
 				availabilityType = "ZONAL"
 				dataDiskType = "PD_HDD"
@@ -106,10 +104,6 @@ func TestMySqlHaModule(t *testing.T) {
 			assert.Equalf(op.Get("settings.storageAutoResizeLimit").Int(), storageAutoResizeLimit, "Expected storageAutoResizeLimit [%v]", storageAutoResizeLimit)
 			assert.Equalf(op.Get("settings.tier").String(), tier, "Expected tier [%s]", tier)
 
-			// assert location database settings
-			assert.Equalf(op.Get("settings.locationPreference.kind").String(), locationPreferenceKind, "Expected locationPreference.kind [%s]", locationPreferenceKind)
-			assert.Equalf(op.Get("settings.locationPreference.zone").String(), locationPreferenceZone, "Expected locationPreference.zone [%s]", locationPreferenceZone)
-
 			// assert user labels
 			assert.JSONEqf(op.Get("settings.userLabels").Raw, userLabels, "Expected userLabels [%s]", userLabels)
 
@@ -129,9 +123,13 @@ func TestMySqlHaModule(t *testing.T) {
 			assert.Equalf(op.Get("backendType").String(), backendType, "Expected backendType [%s]", backendType)
 			assert.Equalf(op.Get("state").String(), state, "Expected state [%s]", state)
 			assert.Equalf(op.Get("region").String(), region, "Expected region [%s]", region)
-			assert.Equalf(op.Get("gceZone").String(), gceZone, "Expected gceZone [%s]", gceZone)
 
 			if isMaster {
+				// assert location database settings
+				assert.Equalf(op.Get("settings.locationPreference.kind").String(), locationPreferenceKind, "Expected locationPreference.kind [%s]", locationPreferenceKind)
+				assert.Equalf(op.Get("settings.locationPreference.zone").String(), locationPreferenceZone, "Expected locationPreference.zone [%s]", locationPreferenceZone)
+				assert.Equalf(op.Get("gceZone").String(), gceZone, "Expected gceZone [%s]", gceZone)
+
 				// assert maintenance windows
 				assert.Equalf(op.Get("settings.maintenanceWindow.kind").String(), maintenanceWindowKind, "Expected maintenanceWindow.kind [%s]", maintenanceWindowKind)
 				assert.Equalf(op.Get("settings.maintenanceWindow.day").Int(), maintenanceWindowDay, "Expected maintenanceWindow.day [%v]", maintenanceWindowDay)
@@ -148,7 +146,7 @@ func TestMySqlHaModule(t *testing.T) {
 
 				// assert users
 				op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", mySql.GetStringOutput("name"), mySql.GetStringOutput("project_id")))
-				assert.Equal(len(op.Array()), 2, "Expected at least 3 users")
+				assert.Equal(len(op.Array()), 3, "Expected at least 3 users")
 			}
 		}
 	})
