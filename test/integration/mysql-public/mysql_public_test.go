@@ -29,7 +29,6 @@ import (
 func TestMySqlPublicModule(t *testing.T) {
 	// define constants for all required assertions in the test case
 	const databaseVersion = `MYSQL_5_6`
-	const gceZone = `us-central1-c`
 	const region = `us-central1`
 	const tier = `db-n1-standard-1`
 	const authNetName = `sample-gcp-health-checkers-range`
