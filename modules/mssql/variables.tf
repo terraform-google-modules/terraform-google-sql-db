@@ -131,12 +131,14 @@ variable "ip_configuration" {
     ipv4_enabled        = bool
     private_network     = string
     require_ssl         = bool
+    allocated_ip_range  = string
   })
   default = {
     authorized_networks = []
     ipv4_enabled        = true
     private_network     = null
     require_ssl         = null
+    allocated_ip_range  = null
   }
 }
 
