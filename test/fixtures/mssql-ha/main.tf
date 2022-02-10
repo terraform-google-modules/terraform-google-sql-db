@@ -44,7 +44,7 @@ module "mssql" {
   deletion_protection = false
 
   // Master configurations
-  tier                            = "db-custom-2-13312"
+  tier                            = "db-custom-1-3840"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
@@ -53,7 +53,7 @@ module "mssql" {
   database_flags = [
     {
       name  = "default trace enabled"
-      value = false
+      value = "off"
     },
   ]
 
