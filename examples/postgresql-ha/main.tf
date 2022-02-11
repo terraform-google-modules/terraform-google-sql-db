@@ -39,7 +39,7 @@ module "pg" {
   region               = "us-central1"
 
   // Master configurations
-  tier                            = "db-custom-2-13312"
+  tier                            = "db-custom-1-3840"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
@@ -83,7 +83,7 @@ module "pg" {
     {
       name                = "0"
       zone                = "us-central1-a"
-      tier                = "db-custom-2-13312"
+      tier                = "db-custom-1-3840"
       ip_configuration    = local.read_replica_ip_configuration
       database_flags      = [{ name = "autovacuum", value = "off" }]
       disk_autoresize     = null
@@ -95,7 +95,7 @@ module "pg" {
     {
       name                = "1"
       zone                = "us-central1-b"
-      tier                = "db-custom-2-13312"
+      tier                = "db-custom-1-3840"
       ip_configuration    = local.read_replica_ip_configuration
       database_flags      = [{ name = "autovacuum", value = "off" }]
       disk_autoresize     = null
@@ -107,7 +107,7 @@ module "pg" {
     {
       name                = "2"
       zone                = "us-central1-c"
-      tier                = "db-custom-2-13312"
+      tier                = "db-custom-1-3840"
       ip_configuration    = local.read_replica_ip_configuration
       database_flags      = [{ name = "autovacuum", value = "off" }]
       disk_autoresize     = null

@@ -21,143 +21,139 @@ steps:
       - 'TF_VAR_org_id=$_ORG_ID'
       - 'TF_VAR_folder_id=$_FOLDER_ID'
       - 'TF_VAR_billing_account=$_BILLING_ACCOUNT'
-  - id: create-all
+  - id: init-all
     waitFor:
       - prepare
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do create']
+    args: ['/bin/bash', '-c', 'cft test run all --stage init --verbose']
 
-  - id: converge-postgresql-public-local
+  - id: apply mssql-ha-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge postgresql-public-local']
-    timeout: 3600s
-  - id: verify-postgresql-public-local
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage apply --verbose']
+  - id: verify mssql-ha-local
     waitFor:
-      - converge-postgresql-public-local
+      - apply mssql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify postgresql-public-local']
-  - id: destroy-postgresql-public-local
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage verify --verbose']
+  - id: teardown mssql-ha-local
     waitFor:
-      - verify-postgresql-public-local
+      - verify mssql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-public-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage teardown --verbose']
 
-  - id: converge-postgresql-public-iam-local
+  - id: apply mssql-public-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge postgresql-public-iam-local']
-    timeout: 3600s
-  - id: verify-postgresql-public-iam-local
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage apply --verbose']
+  - id: verify mssql-public-local
     waitFor:
-      - converge-postgresql-public-iam-local
+      - apply mssql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify postgresql-public-iam-local']
-  - id: destroy-postgresql-public-iam-local
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage verify --verbose']
+  - id: teardown mssql-public-local
     waitFor:
-      - verify-postgresql-public-iam-local
+      - verify mssql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-public-iam-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage teardown --verbose']
 
-  - id: converge-mssql-public-local
+  - id: apply mysql-ha-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mssql-public-local']
-    timeout: 3600s
-  - id: verify-mssql-public-local
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlHaModule --stage apply --verbose']
+  - id: verify mysql-ha-local
     waitFor:
-      - converge-mssql-public-local
+      - apply mysql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify mssql-public-local']
-  - id: destroy-mssql-public-local
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlHaModule --stage verify --verbose']
+  - id: teardown mysql-ha-local
     waitFor:
-      - verify-mssql-public-local
+      - verify mysql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mssql-public-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlHaModule --stage teardown --verbose']
 
-  - id: mysql-public
+  - id: apply mysql-private-local
     waitFor:
-      - prepare
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlPublicModule --verbose']
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage apply --verbose']
+  - id: verify mysql-private-local
+    waitFor:
+      - apply mysql-private-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage verify --verbose']
+  - id: teardown mysql-private-local
+    waitFor:
+      - verify mysql-private-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage teardown --verbose']
 
-  - id: converge-mysql-ha-local
+  - id: apply mysql-public-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mysql-ha-local']
-    timeout: 3600s
-  - id: verify-mysql-ha-local
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPublicModule --stage apply --verbose']
+  - id: verify mysql-public-local
     waitFor:
-      - converge-mysql-ha-local
+      - apply mysql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify mysql-ha-local']
-  - id: destroy-mysql-ha-local
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPublicModule --stage verify --verbose']
+  - id: teardown mysql-public-local
     waitFor:
-      - verify-mysql-ha-local
+      - verify mysql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mysql-ha-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPublicModule --stage teardown --verbose']
 
-  - id: converge-postgresql-ha-local
+  - id: apply postgresql-ha-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge postgresql-ha-local']
-    timeout: 3600s
-  - id: verify-postgresql-ha-local
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlHaModule --stage apply --verbose']
+  - id: verify postgresql-ha-local
     waitFor:
-      - converge-postgresql-ha-local
+      - apply postgresql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify postgresql-ha-local']
-  - id: destroy-postgresql-ha-local
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlHaModule --stage verify --verbose']
+  - id: teardown postgresql-ha-local
     waitFor:
-      - verify-postgresql-ha-local
+      - verify postgresql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy postgresql-ha-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlHaModule --stage teardown --verbose']
 
-  - id: converge-mssql-ha-local
+  - id: apply postgresql-public-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mssql-ha-local']
-    timeout: 3600s
-  - id: verify-mssql-ha-local
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicModule --stage apply --verbose']
+  - id: verify postgresql-public-local
     waitFor:
-      - converge-mssql-ha-local
+      - apply postgresql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify mssql-ha-local']
-  - id: destroy-mssql-ha-local
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicModule --stage verify --verbose']
+  - id: teardown postgresql-public-local
     waitFor:
-      - verify-mssql-ha-local
+      - verify postgresql-public-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mssql-ha-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicModule --stage teardown --verbose']
 
-  - id: converge-mysql-private-local
+  - id: apply postgresql-public-iam-local
     waitFor:
-      - create-all
+      - init-all
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do converge mysql-private-local']
-    timeout: 3600s
-  - id: verify-mysql-private-local
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage apply --verbose']
+  - id: verify postgresql-public-iam-local
     waitFor:
-      - converge-mysql-private-local
+      - apply postgresql-public-iam-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do verify mysql-private-local']
-  - id: destroy-mysql-private-local
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage verify --verbose']
+  - id: teardown postgresql-public-iam-local
     waitFor:
-      - verify-mysql-private-local
+      - verify postgresql-public-iam-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy mysql-private-local']
-    timeout: 1800s
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage teardown --verbose']
 
 tags:
   - 'ci'
