@@ -48,6 +48,7 @@ module "safer_mysql" {
     authorized_networks = []
     require_ssl         = true
     private_network     = var.vpc_network
+    allocated_ip_range  = var.allocated_ip_range
   }
 
   db_name      = var.db_name

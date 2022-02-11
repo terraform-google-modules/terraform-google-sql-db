@@ -62,9 +62,10 @@ module "mssql" {
   }
 
   ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = true
-    private_network = null
+    ipv4_enabled       = true
+    require_ssl        = true
+    private_network    = null
+    allocated_ip_range = null
     authorized_networks = [
       {
         name  = "${var.project_id}-cidr"

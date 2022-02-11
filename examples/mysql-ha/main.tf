@@ -16,9 +16,10 @@
 
 locals {
   read_replica_ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = false
-    private_network = null
+    ipv4_enabled       = true
+    require_ssl        = false
+    private_network    = null
+    allocated_ip_range = null
     authorized_networks = [
       {
         name  = "${var.project_id}-cidr"
@@ -55,9 +56,10 @@ module "mysql" {
   }
 
   ip_configuration = {
-    ipv4_enabled    = true
-    require_ssl     = true
-    private_network = null
+    ipv4_enabled       = true
+    require_ssl        = true
+    private_network    = null
+    allocated_ip_range = null
     authorized_networks = [
       {
         name  = "${var.project_id}-cidr"

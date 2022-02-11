@@ -26,7 +26,7 @@ The following dependency must be available for SQL Server module:
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
-| ip\_configuration | The ip configuration for the master instances. | <pre>object({<br>    authorized_networks = list(map(string))<br>    ipv4_enabled        = bool<br>    private_network     = string<br>    require_ssl         = bool<br>  })</pre> | <pre>{<br>  "authorized_networks": [],<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "require_ssl": null<br>}</pre> | no |
+| ip\_configuration | The ip configuration for the master instances. | <pre>object({<br>    authorized_networks = list(map(string))<br>    ipv4_enabled        = bool<br>    private_network     = string<br>    require_ssl         = bool<br>    allocated_ip_range  = string<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "require_ssl": null<br>}</pre> | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |
 | maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`. | `string` | `"canary"` | no |

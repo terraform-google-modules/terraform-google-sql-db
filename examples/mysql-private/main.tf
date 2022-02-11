@@ -29,7 +29,7 @@ locals {
 
 module "network-safer-mysql-simple" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 2.5"
+  version = "~> 4.0"
 
   project_id   = var.project_id
   network_name = local.network_name
@@ -73,8 +73,9 @@ module "safer-mysql-db" {
     },
   ]
 
-  assign_public_ip = "true"
-  vpc_network      = module.network-safer-mysql-simple.network_self_link
+  assign_public_ip   = "true"
+  vpc_network        = module.network-safer-mysql-simple.network_self_link
+  allocated_ip_range = module.private-service-access.google_compute_global_address_name
 
   // Optional: used to enforce ordering in the creation of resources.
   module_depends_on = [module.private-service-access.peering_completed]
