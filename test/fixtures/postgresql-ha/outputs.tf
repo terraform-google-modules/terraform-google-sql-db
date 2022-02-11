@@ -25,13 +25,3 @@ output "name" {
 output "authorized_network" {
   value = module.example.authorized_network
 }
-
-output "replicas" {
-  value     = module.example.replicas
-  sensitive = true
-}
-
-output "instances" {
-  value     = module.example.instances
-  sensitive = true
-}
