@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [10.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v9.0.0...v10.0.0) (2022-02-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* `allocated_ip_range` must now be specified for instances; `allocated_ip_range = null` can be used to preserve old default.
+
+### Features
+
+* Add allocated_ip_range property to CloudSQL modules ([#277](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/277)) ([ab8c768](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/ab8c76836668b31ccb3999ed0825dafebac27111))
+
+
+### Bug Fixes
+
+* Ignore changes to root_password ([#279](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/279)) ([d8c9959](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/d8c99593631b5f8336b90abee4d483a27b31ac4d))
+
 ## [9.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v8.0.0...v9.0.0) (2022-01-28)
 
 
