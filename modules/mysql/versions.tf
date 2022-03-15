@@ -29,9 +29,16 @@ terraform {
       source  = "hashicorp/google"
       version = ">= 4.4.0, < 5.0"
     }
+    google-beta = {
+      source  = "hashicorp/google"
+      version = ">= 4.4.0, < 5.0"
+    }
   }
 
   provider_meta "google" {
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v10.0.0"
+  }
+  provider_meta "google-beta" {
     module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v10.0.0"
   }
 
