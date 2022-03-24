@@ -179,13 +179,14 @@ variable "read_replica_name_suffix" {
 variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
-    name            = string
-    tier            = string
-    zone            = string
-    disk_type       = string
-    disk_autoresize = bool
-    disk_size       = string
-    user_labels     = map(string)
+    name                  = string
+    tier                  = string
+    zone                  = string
+    disk_type             = string
+    disk_autoresize       = bool
+    disk_autoresize_limit = number
+    disk_size             = string
+    user_labels           = map(string)
     database_flags = list(object({
       name  = string
       value = string
