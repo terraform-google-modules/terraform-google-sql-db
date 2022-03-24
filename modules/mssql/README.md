@@ -23,7 +23,7 @@ The following dependency must be available for SQL Server module:
 | delete\_timeout | The optional timeout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | disk\_autoresize | Configuration to increase storage size. | `bool` | `true` | no |
-| disk\_autoresize\_limit | The maximum size to which storage can be auto increased | `number` | `0` | no |
+| disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
