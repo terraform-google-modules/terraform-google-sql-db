@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+### [10.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v10.0.0...v10.0.1) (2022-03-16)
+
+
+### Bug Fixes
+
+* Add missing google-beta provider to required_providers ([#282](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/282)) ([714428c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/714428cb50fc3a26caf8cb3e539d62ac092f67d1))
+* Ignore changes to CMEK on read replicas ([#284](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/284)) ([b73b465](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/b73b465baabb89112958fc23c414885c02628b48))
+
 ## [10.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v9.0.0...v10.0.0) (2022-02-18)
 
 
