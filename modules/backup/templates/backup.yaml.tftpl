@@ -1,0 +1,50 @@
+main:
+  steps:
+  - init:
+      assign:
+        - deletedBackups: []
+        - allBackups: []
+  - create new backup:
+      call: googleapis.sqladmin.v1.backupRuns.insert
+      args:
+        project: ${project}
+        instance: ${instanceName}
+        body:
+          description: Backup triggered by the Backup Workflow
+      result: backupRun
+
+    # By calling the backups list and delete only after the new backup was created
+    # we can be sure that there is always a backup existing even if the backup run
+    # is failing
+
+  - get older backups:
+      call: googleapis.sqladmin.v1.backupRuns.list
+      args:
+        project: ${project}
+        instance: ${instanceName}
+      result: backupList
+  - delete old backups:
+      for:
+        value: backup
+        in: $${backupList.items}
+        steps:
+          - get backup endtime:
+              assign:
+                - backupEndTime: $${time.parse(backup.endTime)}
+          - delete only old backups:
+              switch:
+                - condition: $${backupEndTime < sys.now() - 60 * 60 * 24 * ${backupRetentionTime}  AND backup.type == "ON_DEMAND"  }
+                  steps:
+                    - delete:
+                        call: googleapis.sqladmin.v1beta4.backupRuns.delete
+                        args:
+                            project: ${project}
+                            instance: ${instanceName}
+                            id: $${backup.id}
+                    - add to list of deleted backups:
+                        assign:
+                          - deletedBackups: $${list.concat(deletedBackups, backup.id)}
+
+  - return:
+      return:
+        deletedBackups: $${deletedBackups}

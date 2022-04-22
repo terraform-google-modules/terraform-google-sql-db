@@ -1,0 +1,76 @@
+main:
+  steps:
+  - collectInfos:
+      assign:
+        - databases: ${databases}
+        - database_type: ${dbType}
+        - backupTime: $${string(int(sys.now()))}
+%{ if databases == "[]" && (dbType == "POSTGRES" || dbType == "SQLSERVER") }
+  - list of databases:
+      call: googleapis.sqladmin.v1.databases.list
+      args:
+        project: ${project}
+        instance: ${instanceName}
+      result: dbListResult
+  - collect DB list:
+      for:
+        value: db
+        in: $${dbListResult.items}
+        steps:
+          - iterate:
+              assign:
+                - databases: $${list.concat(databases, db.name)}
+
+%{ endif }
+
+%{ if dbType == "POSTGRES" }
+  - export databases:
+      for:
+        value: database
+        in: $${databases}
+        steps:
+          - export database:
+              call: googleapis.sqladmin.v1.instances.export
+              args:
+                project: ${project}
+                instance: ${instanceName}
+                body:
+                  exportContext:
+                    databases: [$${database}]
+                    uri: $${"${gcsBucket}/${instanceName}-" + database + "-" + backupTime + ".sql"}
+%{ endif }
+
+%{ if dbType == "SQLSERVER" }
+  - export databases:
+      for:
+        value: database
+        in: $${databases}
+        steps:
+          - exclude System DB:
+              switch:
+                - condition: $${database != "tempdb" } #tempdb has to be excluded in an export
+                  steps:
+                    - export database:
+                        call: googleapis.sqladmin.v1.instances.export
+                        args:
+                          project: ${project}
+                          instance: ${instanceName}
+                          body:
+                            exportContext:
+                              databases: [$${database}]
+                              uri: $${"${gcsBucket}/${instanceName}-" + database + "-" + backupTime + ".bak"}
+                              fileType: BAK
+%{ endif }
+
+%{ if dbType == "MYSQL" }
+  - create new export:
+      call: googleapis.sqladmin.v1.instances.export
+      args:
+        project: ${project}
+        instance: ${instanceName}
+        body:
+          exportContext:
+            databases: $${databases}
+            uri: $${"${gcsBucket}/${instanceName}-" + backupTime + ".sql"}
+%{ endif }
+
