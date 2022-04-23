@@ -153,23 +153,25 @@ resource "google_sql_database" "additional_databases" {
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
-resource "random_id" "user-password" {
+resource "random_password" "user-password" {
   keepers = {
     name = google_sql_database_instance.default.name
   }
 
-  byte_length = 8
-  depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+  length     = 32
+  special    = false
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
-resource "random_id" "additional_passwords" {
+resource "random_password" "additional_passwords" {
   for_each = local.users
   keepers = {
     name = google_sql_database_instance.default.name
   }
 
-  byte_length = 8
-  depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+  length     = 32
+  special    = false
+  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
 resource "google_sql_user" "default" {
@@ -178,7 +180,7 @@ resource "google_sql_user" "default" {
   project  = var.project_id
   instance = google_sql_database_instance.default.name
   host     = var.user_host
-  password = var.user_password == "" ? random_id.user-password.hex : var.user_password
+  password = var.user_password == "" ? random_password.user-password.result : var.user_password
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,
@@ -190,7 +192,7 @@ resource "google_sql_user" "additional_users" {
   for_each = local.users
   project  = var.project_id
   name     = each.value.name
-  password = lookup(each.value, "password", random_id.user-password.hex)
+  password = lookup(each.value, "password", random_password.user-password.result)
   host     = lookup(each.value, "host", var.user_host)
   instance = google_sql_database_instance.default.name
   type     = lookup(each.value, "type", "BUILT_IN")
