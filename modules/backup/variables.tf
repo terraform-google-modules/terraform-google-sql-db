@@ -19,70 +19,70 @@ variable "region" {
   type        = string
 }
 
-variable "service-account" {
-  description = "The service account to use for running the workflow - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that"
+variable "service_account" {
+  description = "The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that"
   type        = string
   default     = null
 }
 
-variable "project-id" {
+variable "project_id" {
   description = "The project ID"
   type        = string
 }
 
-variable "sql-instance" {
+variable "sql_instance" {
   description = "The name of the SQL instance to backup"
   type        = string
 }
 
-variable "backup-retention-time" {
-  description = "The number of Days Backups should be kept"
+variable "backup_retention_time" {
+  description = "The number of days backups should be kept"
   type        = number
   default     = 30
 }
 
-variable "scheduler-timezone" {
+variable "scheduler_timezone" {
   description = "The Timezone in which the Scheduler Jobs are triggered"
   default     = "Etc/GMT"
 }
 
-variable "backup-schedule" {
+variable "backup_schedule" {
   description = "The cron schedule to execute the internal backup"
   default     = "45 2 * * *"
 }
 
-variable "export-schedule" {
+variable "export_schedule" {
   description = "The cron schedule to execute the export to GCS"
   default     = "15 3 * * *"
 }
 
-variable "backup" {
-  description = "Weather to create internal backups with this module"
+variable "enable_internal_backup" {
+  description = "Wether to create internal backups with this module"
   type        = bool
   default     = true
 }
 
-variable "export" {
+variable "enable_export_backup" {
   description = "Weather to create exports to GCS Buckets with this module"
   type        = bool
   default     = true
 }
 
-variable "export-databases" {
+variable "export_databases" {
   description = "The list of databases that should be exported - if is an empty set all databases will be exported"
   type        = set(string)
   default     = []
   validation {
-    condition     = var.export-databases != null
+    condition     = var.export_databases != null
     error_message = "Must not be null."
   }
 }
 
-variable "export-uri" {
+variable "export_uri" {
   description = "The bucket and path uri for exporting to GCS"
   type        = string
   validation {
-    condition     = can(regex("^gs:\\/\\/", var.export-uri))
+    condition     = can(regex("^gs:\\/\\/", var.export_uri))
     error_message = "Must be a full GCS URI starting with gs://." #TODO: test
   }
 }

@@ -14,7 +14,3 @@
  * limitations under the License.
  */
 
-locals {
-  create-service-account = var.service-account == null || var.service-account == "" ? true : false
-  service-account        = local.create-service-account ? google_service_account.sql_backup_serviceaccount[0].email : var.service-account
-}
