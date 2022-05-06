@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+### [10.0.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v10.0.1...v10.0.2) (2022-04-19)
+
+
+### Bug Fixes
+
+* added sensitive flag ([#294](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/294)) ([17da833](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/17da8338e8f0f6658797648d758988c676cee88f))
+
 ### [10.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v10.0.0...v10.0.1) (2022-03-16)
 
 
