@@ -2,7 +2,7 @@
 
 ## Internal Backups
 
-Cloud SQL is provides an [internal default backup options](https://cloud.google.com/sql/docs/mysql/backup-recovery/backups#automated-backups).
+Cloud SQL provides an [internal default backup options](https://cloud.google.com/sql/docs/mysql/backup-recovery/backups#automated-backups).
 This supports standard use-cases. (One Backup ~ every 24h stored for up to 365 days).
 
 For many use cases this might be enough but for many other not:
@@ -64,3 +64,11 @@ fetch workflows.googleapis.com/Workflow
 | <a name="input_scheduler_timezone"></a> [scheduler\_timezone](#input\_scheduler\_timezone) | The Timezone in which the Scheduler Jobs are triggered | `string` | `"Etc/GMT"` | no |
 | <a name="input_service_account"></a> [service\_account](#input\_service\_account) | The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that | `string` | `null` | no |
 | <a name="input_sql_instance"></a> [sql\_instance](#input\_sql\_instance) | The name of the SQL instance to backup | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_backup_workflow_name"></a> [backup\_workflow\_name](#output\_backup\_workflow\_name) | The name for internal backup workflow |
+| <a name="output_export_workflow_name"></a> [export\_workflow\_name](#output\_export\_workflow\_name) | The name for export workflow |
+| <a name="output_service_account"></a> [service\_account](#output\_service\_account) | The service account email running the scheduler and workflow |

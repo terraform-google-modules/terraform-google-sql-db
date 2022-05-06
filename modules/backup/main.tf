@@ -28,7 +28,7 @@ locals {
 ################################
 resource "google_service_account" "sql_backup_serviceaccount" {
   count        = local.create_service_account ? 1 : 0
-  account_id   = substr("backup-${var.sql_instance}", 0, 28)
+  account_id   = trimsuffix(substr("backup-${var.sql_instance}", 0, 28), "-")
   display_name = "Managed by Terraform - Service account for backup of SQL Instance ${var.sql_instance}"
   project      = var.project_id
 }
@@ -57,7 +57,6 @@ data "google_sql_database_instance" "backup_instance" {
 #       Internal Backups       #
 #                              #
 ################################
-#TODO: allow multiple backups
 resource "google_workflows_workflow" "sql_backup" {
   count           = var.enable_internal_backup ? 1 : 0
   name            = "sql-backup-${var.sql_instance}"
