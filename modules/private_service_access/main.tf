@@ -28,6 +28,7 @@ resource "google_compute_global_address" "google-managed-services-range" {
   provider      = google-beta
   project       = var.project_id
   name          = "google-managed-services-${var.vpc_network}"
+  description   = var.description
   purpose       = "VPC_PEERING"
   address       = var.address
   prefix_length = var.prefix_length
