@@ -17,7 +17,6 @@
 data "google_compute_network" "main" {
   name    = var.vpc_network
   project = var.project_id
-
 }
 
 // We define a VPC peering subnet that will be peered with the
