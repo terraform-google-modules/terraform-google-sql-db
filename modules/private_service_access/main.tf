@@ -35,6 +35,7 @@ resource "google_compute_global_address" "google-managed-services-range" {
   labels        = var.labels
   address_type  = "INTERNAL"
   network       = data.google_compute_network.main.self_link
+  depends_on    = [null_resource.module_depends_on]
 }
 
 # Creates the peering with the producer network.
@@ -47,4 +48,10 @@ resource "google_service_networking_connection" "private_service_access" {
 
 resource "null_resource" "dependency_setter" {
   depends_on = [google_service_networking_connection.private_service_access]
+}
+
+resource "null_resource" "module_depends_on" {
+  triggers = {
+    value = length(var.module_depends_on)
+  }
 }
