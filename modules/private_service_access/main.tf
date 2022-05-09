@@ -17,7 +17,6 @@
 data "google_compute_network" "main" {
   name    = var.vpc_network
   project = var.project_id
-
 }
 
 // We define a VPC peering subnet that will be peered with the
@@ -28,6 +27,7 @@ resource "google_compute_global_address" "google-managed-services-range" {
   provider      = google-beta
   project       = var.project_id
   name          = "google-managed-services-${var.vpc_network}"
+  description   = var.description
   purpose       = "VPC_PEERING"
   address       = var.address
   prefix_length = var.prefix_length

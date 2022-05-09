@@ -16,6 +16,7 @@ that are connected to the same VPC.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | address | First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you. | `string` | `""` | no |
+| description | An optional description of the Global Address resource. | `string` | `""` | no |
 | ip\_version | IP Version for the allocation. Can be IPV4 or IPV6. | `string` | `""` | no |
 | labels | The key/value labels for the IP range allocated to the peered network. | `map(string)` | `{}` | no |
 | prefix\_length | Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16. | `number` | `16` | no |

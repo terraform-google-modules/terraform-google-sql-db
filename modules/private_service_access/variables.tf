@@ -30,6 +30,12 @@ variable "address" {
   default     = ""
 }
 
+variable "description" {
+  description = "An optional description of the Global Address resource."
+  type        = string
+  default     = ""
+}
+
 variable "prefix_length" {
   description = "Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16."
   type        = number
