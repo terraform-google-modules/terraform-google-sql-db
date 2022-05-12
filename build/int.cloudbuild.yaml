@@ -28,7 +28,7 @@ steps:
     waitFor:
       - prepare
     name: 'alpine:latest'
-    args: ['sleep', '180']
+    args: ['sleep', '300']
 
   - id: init-all
     waitFor:
