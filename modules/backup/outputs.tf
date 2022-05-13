@@ -28,3 +28,7 @@ output "service_account" {
   value       = local.service_account
   description = "The service account email running the scheduler and workflow"
 }
+
+output "region" {
+  value = var.region
+}

@@ -16,12 +16,12 @@
 
 module "postgresql" {
   source               = "../../modules/postgresql"
-  name                 = var.db_name
+  name                 = "example-postgres"
   random_instance_name = true
   database_version     = "POSTGRES_9_6"
   project_id           = var.project_id
-  zone                 = "${var.region}-a"
-  region               = var.region
+  zone                 = "us-central1-a"
+  region               = "us-central1"
   tier                 = "db-custom-1-3840"
 
   deletion_protection = false
@@ -31,13 +31,13 @@ module "postgresql" {
     private_network     = null
     require_ssl         = true
     allocated_ip_range  = null
-    authorized_networks = var.authorized_networks
+    authorized_networks = []
   }
 }
 
 resource "google_storage_bucket" "backup" {
   name     = "${module.postgresql.instance_name}-backup"
-  location = var.region
+  location = "us-central1"
   # TODO: don't use force_destroy for production this is just required for testing
   force_destroy = true
   project       = var.project_id
@@ -45,7 +45,7 @@ resource "google_storage_bucket" "backup" {
 
 module "backup" {
   source                = "../../modules/backup"
-  region                = var.region
+  region                = "us-central1"
   project_id            = var.project_id
   sql_instance          = module.postgresql.instance_name
   export_databases      = []

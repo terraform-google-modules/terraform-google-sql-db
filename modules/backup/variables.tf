@@ -17,6 +17,7 @@
 variable "region" {
   description = "The region where to run the workflow"
   type        = string
+  default     = "us-central1"
 }
 
 variable "service_account" {

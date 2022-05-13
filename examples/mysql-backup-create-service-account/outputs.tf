@@ -35,7 +35,7 @@ output "service_account" {
 }
 
 output "workflow_location" {
-  value       = var.region
+  value       = module.backup.region
   description = "The location where the workflows run"
 }
 
