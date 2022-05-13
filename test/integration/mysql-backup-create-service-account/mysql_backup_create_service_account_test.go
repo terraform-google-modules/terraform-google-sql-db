@@ -34,8 +34,8 @@ func TestMySqlBackupModuleCreateServiceAccount(t *testing.T) {
 		workflowLocation := mySql.GetStringOutput("workflow_location")
 		instanceName := mySql.GetStringOutput("instance_name")
 
-		backupWorkflow := gcloud.Run(t, fmt.Sprintf("workflows describe %s --project=%s --location=%s",
-			mySql.GetStringOutput("backup_workflow_name"), projectID, workflowLocation))
+		backupWorkflow := gcloud.Runf(t, "workflows describe %s --project=%s --location=%s",
+			mySql.GetStringOutput("backup_workflow_name"), projectID, workflowLocation)
 		exportWorkflow := gcloud.Run(t, fmt.Sprintf("workflows describe %s --project=%s --location=%s",
 			mySql.GetStringOutput("export_workflow_name"), projectID, workflowLocation))
 
