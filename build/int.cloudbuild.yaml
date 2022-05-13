@@ -27,7 +27,7 @@ steps:
   - id: wait for api activation
     waitFor:
       - prepare
-    name: 'alpine:latest'
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['sleep', '$_API_ACTIVATION_SECONDS_WAIT']
 
   - id: init-all
