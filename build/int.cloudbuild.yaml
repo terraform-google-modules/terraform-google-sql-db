@@ -21,6 +21,15 @@ steps:
       - 'TF_VAR_org_id=$_ORG_ID'
       - 'TF_VAR_folder_id=$_FOLDER_ID'
       - 'TF_VAR_billing_account=$_BILLING_ACCOUNT'
+
+  # Sometimes API activation can be bit flaky therefor ensure that at least 3 mins (180s) are passed between
+  # prepare_environment and the first terraform apply (init-all runs parallel to reduce waste of time)
+  - id: wait for api activation
+    waitFor:
+      - prepare
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['sleep', '$_API_ACTIVATION_SECONDS_WAIT']
+
   - id: init-all
     waitFor:
       - prepare
@@ -28,8 +37,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run all --stage init --verbose']
 
   - id: apply mssql-ha-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage apply --verbose']
   - id: verify mssql-ha-local
@@ -44,8 +52,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage teardown --verbose']
 
   - id: apply mssql-public-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage apply --verbose']
   - id: verify mssql-public-local
@@ -60,8 +67,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage teardown --verbose']
 
   - id: apply mysql-ha-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMySqlHaModule --stage apply --verbose']
   - id: verify mysql-ha-local
@@ -76,8 +82,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestMySqlHaModule --stage teardown --verbose']
 
   - id: apply mysql-private-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage apply --verbose']
   - id: verify mysql-private-local
@@ -92,8 +97,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage teardown --verbose']
 
   - id: apply mysql-public-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMySqlPublicModule --stage apply --verbose']
   - id: verify mysql-public-local
@@ -108,8 +112,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestMySqlPublicModule --stage teardown --verbose']
 
   - id: apply postgresql-ha-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlHaModule --stage apply --verbose']
   - id: verify postgresql-ha-local
@@ -124,8 +127,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlHaModule --stage teardown --verbose']
 
   - id: apply postgresql-public-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicModule --stage apply --verbose']
   - id: verify postgresql-public-local
@@ -140,8 +142,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicModule --stage teardown --verbose']
 
   - id: apply postgresql-public-iam-local
-    waitFor:
-      - init-all
+    waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage apply --verbose']
   - id: verify postgresql-public-iam-local
@@ -155,9 +156,40 @@ steps:
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage teardown --verbose']
 
+  - id: apply mysql-backup-local
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage apply --verbose']
+  - id: verify mysql-backup-local
+    waitFor:
+      - apply mysql-backup-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage verify --verbose']
+  - id: teardown mysql-backup-local
+    waitFor:
+      - verify mysql-backup-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage teardown --verbose']
+
+  - id: apply postgresql-backup-local
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgresqlBackupModuleProvidedServiceAccount --stage apply --verbose']
+  - id: verify postgresql-backup-local
+    waitFor:
+      - apply postgresql-backup-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgresqlBackupModuleProvidedServiceAccount --stage verify --verbose']
+  - id: teardown postgresql-backup-local
+    waitFor:
+      - verify postgresql-backup-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgresqlBackupModuleProvidedServiceAccount --stage teardown --verbose']
+
 tags:
   - 'ci'
   - 'integration'
 substitutions:
   _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
   _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '1.3'
+  _API_ACTIVATION_SECONDS_WAIT: '450'

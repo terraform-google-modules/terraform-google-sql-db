@@ -1,0 +1,64 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+main:
+  steps:
+  - init:
+      assign:
+        - deletedBackups: []
+        - allBackups: []
+  - create new backup:
+      call: googleapis.sqladmin.v1.backupRuns.insert
+      args:
+        project: ${project}
+        instance: ${instanceName}
+        body:
+          description: Backup triggered by the Backup Workflow
+      result: backupRun
+
+    # By calling the backups list and delete only after the new backup was created
+    # we can be sure that there is always a backup existing even if the backup run
+    # is failing
+
+  - get older backups:
+      call: googleapis.sqladmin.v1.backupRuns.list
+      args:
+        project: ${project}
+        instance: ${instanceName}
+      result: backupList
+  - delete old backups:
+      for:
+        value: backup
+        in: $${backupList.items}
+        steps:
+          - get backup endtime:
+              assign:
+                - backupEndTime: $${time.parse(backup.endTime)}
+          - delete only old backups:
+              switch:
+                - condition: $${backupEndTime < sys.now() - 60 * 60 * 24 * ${backupRetentionTime}  AND backup.type == "ON_DEMAND"  }
+                  steps:
+                    - delete:
+                        call: googleapis.sqladmin.v1beta4.backupRuns.delete
+                        args:
+                            project: ${project}
+                            instance: ${instanceName}
+                            id: $${backup.id}
+                    - add to list of deleted backups:
+                        assign:
+                          - deletedBackups: $${list.concat(deletedBackups, backup.id)}
+
+  - return:
+      return:
+        deletedBackups: $${deletedBackups}
