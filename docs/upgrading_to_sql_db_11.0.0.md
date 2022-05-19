@@ -65,7 +65,6 @@ module "pg" {
   disk_type             = "PD_HDD"
   disk_size             = 10
   disk_autoresize       = true
-+ disk_autoresize_limit = 0
   create_timeout        = "30m"
 
   read_replicas = [
