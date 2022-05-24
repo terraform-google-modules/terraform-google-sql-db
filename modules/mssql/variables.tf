@@ -120,8 +120,8 @@ variable "database_flags" {
 
 variable "active_directory_config" {
   description = "Active domain that the SQL instance will join."
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }
 
 variable "user_labels" {

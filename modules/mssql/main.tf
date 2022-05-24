@@ -105,7 +105,7 @@ resource "google_sql_database_instance" "default" {
     dynamic "active_directory_config" {
       for_each = var.active_directory_config
       content {
-        domain =  lookup(var.active_directory_config, "domain", null)
+        domain = lookup(var.active_directory_config, "domain", null)
       }
     }
 
