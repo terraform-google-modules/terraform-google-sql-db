@@ -10,6 +10,7 @@ The following dependency must be available for SQL Server module:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | activation\_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
+| active\_directory\_config | Active domain that the SQL instance will join. | <pre>list(object({<br>    domain = string<br>  }))</pre> | `[]` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
 | additional\_users | A list of users to be created in your cluster | <pre>list(object({<br>    name     = string<br>    password = string<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |

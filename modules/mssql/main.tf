@@ -102,6 +102,12 @@ resource "google_sql_database_instance" "default" {
         value = lookup(database_flags.value, "value", null)
       }
     }
+    dynamic "active_directory_config" {
+      for_each = var.active_directory_config
+      content {
+        domain = lookup(active_directory_config.value, "domain", null)
+      }
+    }
 
     user_labels = var.user_labels
 
