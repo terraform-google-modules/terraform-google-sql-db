@@ -124,6 +124,12 @@ variable "database_flags" {
   default = []
 }
 
+variable "active_directory_config" {
+  description = "Active domain that the SQL instance will join."
+  type        = map(string)
+  default     = {}
+}
+
 variable "user_labels" {
   description = "The key/value labels for the master instances."
   type        = map(string)
