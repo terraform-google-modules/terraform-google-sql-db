@@ -23,6 +23,8 @@ The current version is 3.X. The following guides are available to assist with up
 
 - [1.X -> 2.0](./docs/upgrading_to_sql_db_2.0.0.md)
 - [2.X -> 3.0](./docs/upgrading_to_sql_db_3.0.0.md)
+- [3.X -> 4.0](./docs/upgrading_to_sql_db_4.0.0.md)
+- [10.X -> 11.0](./docs/upgrading_to_sql_db_11.0.0.md)
 
 ## Root module
 

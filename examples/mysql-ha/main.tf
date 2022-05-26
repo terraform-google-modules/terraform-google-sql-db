@@ -82,40 +82,43 @@ module "mysql" {
   read_replica_name_suffix = "-test"
   read_replicas = [
     {
-      name                = "0"
-      zone                = "us-central1-a"
-      tier                = "db-n1-standard-1"
-      ip_configuration    = local.read_replica_ip_configuration
-      database_flags      = [{ name = "long_query_time", value = 1 }]
-      disk_autoresize     = null
-      disk_size           = null
-      disk_type           = "PD_HDD"
-      user_labels         = { bar = "baz" }
-      encryption_key_name = null
+      name                  = "0"
+      zone                  = "us-central1-a"
+      tier                  = "db-n1-standard-1"
+      ip_configuration      = local.read_replica_ip_configuration
+      database_flags        = [{ name = "long_query_time", value = 1 }]
+      disk_autoresize       = null
+      disk_autoresize_limit = null
+      disk_size             = null
+      disk_type             = "PD_HDD"
+      user_labels           = { bar = "baz" }
+      encryption_key_name   = null
     },
     {
-      name                = "1"
-      zone                = "us-central1-b"
-      tier                = "db-n1-standard-1"
-      ip_configuration    = local.read_replica_ip_configuration
-      database_flags      = [{ name = "long_query_time", value = 1 }]
-      disk_autoresize     = null
-      disk_size           = null
-      disk_type           = "PD_HDD"
-      user_labels         = { bar = "baz" }
-      encryption_key_name = null
+      name                  = "1"
+      zone                  = "us-central1-b"
+      tier                  = "db-n1-standard-1"
+      ip_configuration      = local.read_replica_ip_configuration
+      database_flags        = [{ name = "long_query_time", value = 1 }]
+      disk_autoresize       = null
+      disk_autoresize_limit = null
+      disk_size             = null
+      disk_type             = "PD_HDD"
+      user_labels           = { bar = "baz" }
+      encryption_key_name   = null
     },
     {
-      name                = "2"
-      zone                = "us-central1-c"
-      tier                = "db-n1-standard-1"
-      ip_configuration    = local.read_replica_ip_configuration
-      database_flags      = [{ name = "long_query_time", value = 1 }]
-      disk_autoresize     = null
-      disk_size           = null
-      disk_type           = "PD_HDD"
-      user_labels         = { bar = "baz" }
-      encryption_key_name = null
+      name                  = "2"
+      zone                  = "us-central1-c"
+      tier                  = "db-n1-standard-1"
+      ip_configuration      = local.read_replica_ip_configuration
+      database_flags        = [{ name = "long_query_time", value = 1 }]
+      disk_autoresize       = null
+      disk_autoresize_limit = null
+      disk_size             = null
+      disk_type             = "PD_HDD"
+      user_labels           = { bar = "baz" }
+      encryption_key_name   = null
     },
   ]
 

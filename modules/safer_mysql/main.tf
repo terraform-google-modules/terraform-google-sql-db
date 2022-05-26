@@ -26,6 +26,7 @@ module "safer_mysql" {
   activation_policy               = var.activation_policy
   availability_type               = var.availability_type
   disk_autoresize                 = var.disk_autoresize
+  disk_autoresize_limit           = var.disk_autoresize_limit
   disk_size                       = var.disk_size
   disk_type                       = var.disk_type
   pricing_plan                    = var.pricing_plan

@@ -92,7 +92,8 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
-    disk_autoresize = var.disk_autoresize
+    disk_autoresize       = var.disk_autoresize
+    disk_autoresize_limit = var.disk_autoresize_limit
 
     disk_size    = var.disk_size
     disk_type    = var.disk_type

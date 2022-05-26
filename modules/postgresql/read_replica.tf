@@ -68,11 +68,12 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
-    disk_autoresize = lookup(each.value, "disk_autoresize", var.disk_autoresize)
-    disk_size       = lookup(each.value, "disk_size", var.disk_size)
-    disk_type       = lookup(each.value, "disk_type", var.disk_type)
-    pricing_plan    = "PER_USE"
-    user_labels     = lookup(each.value, "user_labels", var.user_labels)
+    disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
+    disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
+    disk_size             = lookup(each.value, "disk_size", var.disk_size)
+    disk_type             = lookup(each.value, "disk_type", var.disk_type)
+    pricing_plan          = "PER_USE"
+    user_labels           = lookup(each.value, "user_labels", var.user_labels)
 
     dynamic "database_flags" {
       for_each = lookup(each.value, "database_flags", [])
