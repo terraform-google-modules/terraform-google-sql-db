@@ -39,7 +39,7 @@ func TestMsSqlPublicModule(t *testing.T) {
 		assert.Equal("PER_USE", op.Get("settings.pricingPlan").String(), "Expected PER_USE pricingPlan")
 		assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 		assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
-		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimi")
+		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
 		assert.Equal("db-custom-2-3840", op.Get("settings.tier").String(), "Expected db-custom-2-3840 tier")
 
 		// assert location database settings
