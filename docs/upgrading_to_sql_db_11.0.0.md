@@ -4,6 +4,8 @@ The 11.0.0 release of SQL DB is a backward incompatible release. This incompatib
 
 ## Migration Instructions
 
+### Add support for setting disk_autoresize_limit
+
 Prior to the 11.0.0 release, all instances could only be created without a limit.
 
 ```hcl
@@ -89,5 +91,25 @@ module "pg" {
       }
     },
   ]
+}
+```
+
+### Switched to using random_password to generate default passwords
+
+With the 11.0.0 release, the `random_id` resource used to generate default passwords has been replaced with `random_password` resource. This improves the default behavior by generating stronger passwords as defaults. To continue using the previously generated password and prevent updates to the `google_sql_user` resources, specify the old password via `user_password` variable or `additional_users.password`. It is recommended to store this value in [Secret Manager](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets#secretmanager-create-secret-gcloud) as opposed to passing it in via plain text.
+
+```diff
++ data "google_secret_manager_secret_version" "user_password" {
++  secret_id = "pg-user-pass"
++  project   = var.project_id
++ }
+
+module "pg" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
+- version = "~> 10.0"
++ version = "~> 11.0"
+
+  project_id    = var.project_id
++ user_password = data.google_secret_manager_secret_version.user_password.secret_data
 }
 ```
