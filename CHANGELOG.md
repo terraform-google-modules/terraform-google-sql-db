@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [11.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v10.1.0...v11.0.0) (2022-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Switch to random_password instead of random_id (#308)
+* Add support for setting disk_autoresize_limit (#288)
+* add support for settings.active_directory_config for SQL module (#305)
+
+### Features
+
+* Add sensitive flag for MySQL module outputs ([#303](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/303)) ([6a15c26](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/6a15c26de30d7eb652857e5d077c980969a02990))
+* Add support for setting disk_autoresize_limit ([#288](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/288)) ([e07f141](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e07f14155e526ee205807bb85386a1bccce50c91))
+* add support for settings.active_directory_config for SQL module ([#305](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/305)) ([449f1a2](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/449f1a2dbb522cda93eae8a574345356db7497f2))
+* Switch to random_password instead of random_id ([#308](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/308)) ([9126ee6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/9126ee6c38e085d922ce3e674b429d802577277a))
+
 ## [10.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v10.0.2...v10.1.0) (2022-05-13)
 
 
