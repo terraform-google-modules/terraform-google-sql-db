@@ -114,8 +114,8 @@ resource "google_sql_database_instance" "default" {
       for_each = var.sql_server_audit_config
       content {
         bucket             = lookup(var.sql_server_audit_config, "bucket", null)
-        upload_interval    = lookup(lookup(var.sql_server_audit_config, "upload_interval", null))
-        retention_interval = lookup(lookup(var.sql_server_audit_config, "retention_interval", null))
+        upload_interval    = lookup(var.sql_server_audit_config, "upload_interval", null)
+        retention_interval = lookup(var.sql_server_audit_config, "retention_interval", null)
       }
     }
 
