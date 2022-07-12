@@ -110,6 +110,15 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
+    dynamic "sql_server_audit_config" {
+      for_each = var.sql_server_audit_config
+      content {
+        bucket             = lookup(var.sql_server_audit_config, "bucket", null)
+        upload_interval    = lookup(lookup(var.sql_server_audit_config, "upload_interval", null))
+        retention_interval = lookup(lookup(var.sql_server_audit_config, "retention_interval", null))
+      }
+    }
+
     user_labels = var.user_labels
 
     location_preference {
