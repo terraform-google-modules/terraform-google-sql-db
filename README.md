@@ -19,7 +19,7 @@ intended for Terraform 0.12.x is [v5.0.0](https://registry.terraform.io/modules/
 
 ## Upgrading
 
-The current version is 3.X. The following guides are available to assist with upgrades:
+The current version is 11.X. The following guides are available to assist with upgrades:
 
 - [1.X -> 2.0](./docs/upgrading_to_sql_db_2.0.0.md)
 - [2.X -> 3.0](./docs/upgrading_to_sql_db_3.0.0.md)
@@ -35,11 +35,11 @@ The root module has been deprecated. Please switch to using one of the submodule
 ### Installation Dependencies
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.0
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v2.5.x
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin >= v4.4.0
 
 The following dependency must be available for SQL Server module:
 
-- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v3.10
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin >= v4.22.0
 
 ### Configure a Service Account
 
