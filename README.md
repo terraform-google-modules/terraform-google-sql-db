@@ -19,7 +19,7 @@ intended for Terraform 0.12.x is [v5.0.0](https://registry.terraform.io/modules/
 
 ## Upgrading
 
-The current version is 10.X. The following guides are available to assist with upgrades:
+The current version is 11.X. The following guides are available to assist with upgrades:
 
 - [1.X -> 2.0](./docs/upgrading_to_sql_db_2.0.0.md)
 - [2.X -> 3.0](./docs/upgrading_to_sql_db_3.0.0.md)
