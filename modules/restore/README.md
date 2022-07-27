@@ -34,10 +34,10 @@ gcloud workflows run my-import-workflow --data='{"exportTimestamp": "1658779617"
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| import\_databases | The list of databases that should be imported - if is an empty set all databases will be imported except system databases | `set(string)` | `[]` | no |
-| import\_uri | The bucket and path uri of the export file stored in GCS | `string` | n/a | yes |
+| import\_databases | The list of databases that should be imported - if is an empty set all databases will be imported | `set(string)` | `[]` | no |
+| import\_uri | The bucket and path uri of GCS backup file for importing | `string` | n/a | yes |
 | project\_id | The project ID | `string` | n/a | yes |
-| region | The region where to run the workflow | `string` | `"us-central1"` | no |
+| region | The region to run the workflow | `string` | `"us-central1"` | no |
 | service\_account | The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that | `string` | `null` | no |
 | sql\_instance | The name of the SQL instance to backup | `string` | n/a | yes |
 
@@ -46,7 +46,7 @@ gcloud workflows run my-import-workflow --data='{"exportTimestamp": "1658779617"
 | Name | Description |
 |------|-------------|
 | import\_workflow\_name | The name for import workflow |
-| region | The Google cloud region for the database instance |
+| region | n/a |
 | service\_account | The service account email running the scheduler and workflow |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

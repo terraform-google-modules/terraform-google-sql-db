@@ -64,12 +64,12 @@ resource "google_workflows_workflow" "sql_import" {
   project         = var.project_id
   service_account = local.service_account
   source_contents = templatefile("${path.module}/templates/import.yaml.tftpl", {
-    project             = var.project_id
-    instanceName        = var.sql_instance
-    databases           = jsonencode(var.import_databases)
-    gcsBucket           = var.import_uri
-    exportedInstance    = split("/", var.import_uri)[3]
-    dbType              = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
+    project          = var.project_id
+    instanceName     = var.sql_instance
+    databases        = jsonencode(var.import_databases)
+    gcsBucket        = var.import_uri
+    exportedInstance = split("/", var.import_uri)[3]
+    dbType           = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
   })
 }
 
