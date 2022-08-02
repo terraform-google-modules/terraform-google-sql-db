@@ -31,6 +31,10 @@ locals {
     is_account_sa = trimsuffix(iu, "gserviceaccount.com") == iu ? false : true
   }]
 
+  // HA method using REGIONAL availability_type requires point in time recovery to be enabled
+  point_in_time_recovery_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "point_in_time_recovery_enabled", false)
+  backups_enabled                = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "enabled", false)
+
   retained_backups = lookup(var.backup_configuration, "retained_backups", null)
   retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
 }
@@ -59,10 +63,10 @@ resource "google_sql_database_instance" "default" {
       for_each = [var.backup_configuration]
       content {
         binary_log_enabled             = false
-        enabled                        = lookup(backup_configuration.value, "enabled", null)
+        enabled                        = local.backups_enabled
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         location                       = lookup(backup_configuration.value, "location", null)
-        point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", false)
+        point_in_time_recovery_enabled = local.point_in_time_recovery_enabled
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
 
         dynamic "backup_retention_settings" {
