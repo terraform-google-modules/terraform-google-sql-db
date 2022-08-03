@@ -178,6 +178,7 @@ variable "read_replicas" {
     name                  = string
     tier                  = string
     zone                  = string
+    availability_type     = string
     disk_type             = string
     disk_autoresize       = bool
     disk_autoresize_limit = number
