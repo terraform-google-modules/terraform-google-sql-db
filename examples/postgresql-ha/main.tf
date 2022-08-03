@@ -83,6 +83,7 @@ module "pg" {
     {
       name                  = "0"
       zone                  = "us-central1-a"
+      availability_type     = "ZONAL"
       tier                  = "db-custom-1-3840"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "autovacuum", value = "off" }]
@@ -96,6 +97,7 @@ module "pg" {
     {
       name                  = "1"
       zone                  = "us-central1-b"
+      availability_type     = "ZONAL"
       tier                  = "db-custom-1-3840"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "autovacuum", value = "off" }]
@@ -109,6 +111,7 @@ module "pg" {
     {
       name                  = "2"
       zone                  = "us-central1-c"
+      availability_type     = "ZONAL"
       tier                  = "db-custom-1-3840"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "autovacuum", value = "off" }]
