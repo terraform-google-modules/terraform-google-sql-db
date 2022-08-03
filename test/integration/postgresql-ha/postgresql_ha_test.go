@@ -99,7 +99,7 @@ func TestPostgreSqlHaModule(t *testing.T) {
 				// replica specific validation
 			} else {
 				// assert general database settings
-				assert.Equal("ZONAL", op.Get("settings.availabilityType").String(), "Expected ZONAL availabilityType")
+				assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 				assert.Equal("PD_HDD", op.Get("settings.dataDiskType").String(), "Expected PD_HDD dataDiskType")
 				assert.False(op.Get("settings.ipConfiguration.requireSsl").Bool(), "Expected FALSE SSL")
 

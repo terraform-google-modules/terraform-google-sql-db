@@ -36,35 +36,35 @@ steps:
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run all --stage init --verbose']
 
-  # - id: apply mssql-ha-local
-  #   waitFor: ["init-all", "wait for api activation"]
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage apply --verbose']
-  # - id: verify mssql-ha-local
-  #   waitFor:
-  #     - apply mssql-ha-local
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage verify --verbose']
-  # - id: teardown mssql-ha-local
-  #   waitFor:
-  #     - verify mssql-ha-local
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage teardown --verbose']
+  - id: apply mssql-ha-local
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage apply --verbose']
+  - id: verify mssql-ha-local
+    waitFor:
+      - apply mssql-ha-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage verify --verbose']
+  - id: teardown mssql-ha-local
+    waitFor:
+      - verify mssql-ha-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlHaModule --stage teardown --verbose']
 
-  # - id: apply mssql-public-local
-  #   waitFor: ["init-all", "wait for api activation"]
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage apply --verbose']
-  # - id: verify mssql-public-local
-  #   waitFor:
-  #     - apply mssql-public-local
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage verify --verbose']
-  # - id: teardown mssql-public-local
-  #   waitFor:
-  #     - verify mssql-public-local
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage teardown --verbose']
+  - id: apply mssql-public-local
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage apply --verbose']
+  - id: verify mssql-public-local
+    waitFor:
+      - apply mssql-public-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage verify --verbose']
+  - id: teardown mssql-public-local
+    waitFor:
+      - verify mssql-public-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMsSqlPublicModule --stage teardown --verbose']
 
   - id: apply mysql-ha-local
     waitFor: ["init-all", "wait for api activation"]
