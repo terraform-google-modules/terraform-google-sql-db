@@ -17,7 +17,7 @@
 terraform {
   required_providers {
     google = {
-      source  = "hashicorp/google"
+      source = "hashicorp/google"
       /*
         Pinning this version due to an upstream provider issue: https://github.com/hashicorp/terraform-provider-google/issues/11891
       */
