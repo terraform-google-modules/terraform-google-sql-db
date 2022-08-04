@@ -192,7 +192,7 @@ resource "google_sql_user" "additional_users" {
   for_each = local.users
   project  = var.project_id
   name     = each.value.name
-  password = lookup(each.value, "password", random_password.user-password.result)
+  password = lookup(each.value, "password", random_password.additional_passwords[each.key].result)
   host     = lookup(each.value, "host", var.user_host)
   instance = google_sql_database_instance.default.name
   type     = lookup(each.value, "type", "BUILT_IN")
