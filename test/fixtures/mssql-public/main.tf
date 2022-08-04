@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      /*
+        Pinning this version due to an upstream provider issue: https://github.com/hashicorp/terraform-provider-google/issues/11891
+      */
+      version = "4.24.0"
+    }
+  }
+}
+
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
 }
