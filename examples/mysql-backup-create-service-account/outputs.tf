@@ -45,6 +45,6 @@ output "instance_name" {
 }
 
 output "mysql-password" {
-  value = module.mysql.generated_user_password
+  value     = module.mysql.generated_user_password
   sensitive = true
 }
