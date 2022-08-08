@@ -84,6 +84,13 @@ variable "export_uri" {
   type        = string
   validation {
     condition     = can(regex("^gs:\\/\\/", var.export_uri))
-    error_message = "Must be a full GCS URI starting with gs://." #TODO: test
+    error_message = "Must be a full GCS URI starting with gs://."
   }
+}
+
+#TODO: gleichda change default to true on next major release
+variable "compress_export" {
+  description = "Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL"
+  type = bool
+  default = false
 }
