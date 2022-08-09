@@ -84,6 +84,7 @@ module "mysql" {
     {
       name                  = "0"
       zone                  = "us-central1-a"
+      availability_type     = "ZONAL"
       tier                  = "db-n1-standard-1"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
@@ -97,6 +98,7 @@ module "mysql" {
     {
       name                  = "1"
       zone                  = "us-central1-b"
+      availability_type     = "ZONAL"
       tier                  = "db-n1-standard-1"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
@@ -110,6 +112,7 @@ module "mysql" {
     {
       name                  = "2"
       zone                  = "us-central1-c"
+      availability_type     = "ZONAL"
       tier                  = "db-n1-standard-1"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]

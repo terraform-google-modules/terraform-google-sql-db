@@ -184,6 +184,7 @@ variable "read_replicas" {
   type = list(object({
     name                  = string
     tier                  = string
+    availability_type     = string
     zone                  = string
     disk_type             = string
     disk_autoresize       = bool
