@@ -55,7 +55,7 @@ func TestMySqlBackupModuleCreateServiceAccount(t *testing.T) {
 			fmt.Sprintf("instance: %s", instanceName),
 			fmt.Sprintf("project: %s", projectID),
 			"- backupTime: ${string(int(sys.now()))}",
-			fmt.Sprintf("uri: ${\"gs://%s-backup/%[1]s-\" + backupTime + \".sql\"}", instanceName),
+			fmt.Sprintf("uri: ${\"gs://%s-backup/%[1]s-\" + backupTime + \".sql.gz\"}", instanceName),
 		}
 
 		for _, expected := range backupContainsExpecations {

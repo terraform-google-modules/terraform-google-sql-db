@@ -51,7 +51,7 @@ main:
                 body:
                   exportContext:
                     databases: [$${database}]
-                    uri: $${"${gcsBucket}/${instanceName}-" + database + "-" + backupTime + %{ if compressExport == true } ".sql.gz" %{ else } ".sql" %{ endif } }
+                    uri: $${"${gcsBucket}/${instanceName}-" + database + "-" + backupTime + %{ if compressExport == true }".sql.gz"%{ else }".sql"%{ endif }}
 %{ endif }
 
 %{ if dbType == "SQLSERVER" }
@@ -85,6 +85,6 @@ main:
         body:
           exportContext:
             databases: $${databases}
-            uri: $${"${gcsBucket}/${instanceName}-" + backupTime + %{ if compressExport == true } ".sql.gz" %{ else } ".sql" %{ endif } }
+            uri: $${"${gcsBucket}/${instanceName}-" + backupTime + %{ if compressExport == true }".sql.gz"%{ else }".sql"%{ endif }}
 %{ endif }
 
