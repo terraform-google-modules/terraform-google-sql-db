@@ -43,3 +43,8 @@ output "instance_name" {
   value       = module.mysql.instance_name
   description = "The name of the SQL instance"
 }
+
+output "mysql-password" {
+  value     = module.mysql.generated_user_password
+  sensitive = true
+}
