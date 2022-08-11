@@ -118,6 +118,7 @@ output "primary" {
 output "replicas" {
   value       = values(google_sql_database_instance.replicas)
   description = "A list of `google_sql_database_instance` resources representing the replicas"
+  sensitive   = true
 }
 
 output "instances" {
