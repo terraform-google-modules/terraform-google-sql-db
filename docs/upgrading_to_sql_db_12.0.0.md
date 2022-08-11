@@ -105,9 +105,9 @@ module "mysql" {
 + version = "~> 12.0"
 
   project_id       = var.project_id
-  additional_users = {
-    user     = "admin"
+  additional_users = [{
+    name     = "admin"
 +   password = module.mysql.generated_user_password
-  }
+  }]
 }
 ```
