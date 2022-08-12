@@ -95,3 +95,19 @@ module "pg" {
   ]
 }
 ```
+
+Prior to the 12.0.0 `mysql` module release, additional users were created using the `default_user`'s password. In order to keep the password unchanged for additional users for release 12.0.0 and up, `additional_user`'s passwords need to be set explicitly using the `default_user`'s generated password.
+
+```diff
+module "mysql" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
+- version = "~> 11.0"
++ version = "~> 12.0"
+
+  project_id       = var.project_id
+  additional_users = [{
+    name     = "admin"
++   password = module.mysql.generated_user_password
+  }]
+}
+```
