@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [12.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v11.0.0...v12.0.0) (2022-08-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* add support for settings.sql_server_audit_config setting
+* Change additional user default password (#332)
+* adds availability_type for read_replicas (#329)
+
+### Features
+
+* add support for settings.sql_server_audit_config setting ([64b8a18](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/64b8a186e19b2383e3b6f9b10e413fcc31814791))
+* adds availability_type for read_replicas ([#329](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/329)) ([e26861e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e26861e5736d7001994ef7e99e72b4ecf6fea22c))
+* Provide an option to compress backups for PostreSQL and MySQL ([#335](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/335)) ([b1ef34d](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/b1ef34d0ee1a84ef2c0be4141cb83448052264da))
+
+
+### Bug Fixes
+
+* Change additional user default password ([#332](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/332)) ([f96f71e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f96f71ed00e590a56083bb4faffc5b54e4583603))
+* set replicas output as sensitive pgsql ([#334](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/334)) ([ad6f427](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/ad6f427e2063d6174eb77670772ab7b3b2153c74))
+
 ## [11.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v10.1.0...v11.0.0) (2022-06-02)
 
 
