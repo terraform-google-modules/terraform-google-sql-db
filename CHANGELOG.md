@@ -10,7 +10,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### ⚠ BREAKING CHANGES
 
-* add support for settings.sql_server_audit_config setting
+* Minimum Google Beta provider version increased to v4.28.0.
 * Change additional user default password (#332)
 * adds availability_type for read_replicas (#329)
 
