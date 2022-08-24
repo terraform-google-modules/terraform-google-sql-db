@@ -57,7 +57,7 @@ variable "zone" {
 variable "secondary_zone" {
   type        = string
   description = "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
-  default     = "null"
+  default     = null
 }
 
 variable "activation_policy" {
