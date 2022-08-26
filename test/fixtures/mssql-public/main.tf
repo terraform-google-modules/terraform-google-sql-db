@@ -39,8 +39,21 @@ locals {
   instance_name = "${var.name}-${random_id.instance_name_suffix.hex}"
 }
 
+resource "google_storage_bucket" "sql_server_audit_logs" {
+  project       = var.project_id
+  name          = "sql-server-audit-${random_id.instance_name_suffix.hex}"
+  location      = "US"
+  force_destroy = true
+}
+
 module "mssql" {
   source     = "../../../examples/mssql-public"
   name       = local.instance_name
   project_id = var.project_id
+
+  sql_server_audit_config = [{
+    bucket             = google_storage_bucket.sql_server_audit_logs.url
+    upload_interval    = "300s"
+    retention_interval = "172800s" #2days
+  }]
 }

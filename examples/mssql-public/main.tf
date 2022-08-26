@@ -23,4 +23,6 @@ module "mssql" {
   user_password        = "foobar"
 
   deletion_protection = false
+
+  sql_server_audit_config = var.sql_server_audit_config
 }
