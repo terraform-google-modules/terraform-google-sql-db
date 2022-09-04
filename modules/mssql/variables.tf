@@ -132,8 +132,8 @@ variable "active_directory_config" {
 
 variable "sql_server_audit_config" {
   description = "SQL server audit config settings."
-  type        = list(map(string))
-  default     = []
+  type        = map(string)
+  default     = {}
 }
 
 variable "user_labels" {

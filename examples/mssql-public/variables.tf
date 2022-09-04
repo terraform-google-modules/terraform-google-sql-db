@@ -31,7 +31,7 @@ variable "region" {
 }
 
 variable "sql_server_audit_config" {
-  description = "SQL server audit logs config."
-  type        = list(map(string))
-  default     = []
+  description = "SQL server audit config settings."
+  type        = map(string)
+  default     = {}
 }

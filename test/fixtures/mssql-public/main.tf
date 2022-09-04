@@ -51,9 +51,9 @@ module "mssql" {
   name       = local.instance_name
   project_id = var.project_id
 
-  sql_server_audit_config = [{
+  sql_server_audit_config = {
     bucket             = google_storage_bucket.sql_server_audit_logs.url
     upload_interval    = "300s"
     retention_interval = "172800s" #2days
-  }]
+  }
 }

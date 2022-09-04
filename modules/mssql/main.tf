@@ -111,11 +111,11 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "sql_server_audit_config" {
-      for_each = var.sql_server_audit_config
+      for_each = length(var.sql_server_audit_config) != 0 ? [var.sql_server_audit_config] : []
       content {
-        bucket             = lookup(sql_server_audit_config.value, "bucket", null)
-        upload_interval    = lookup(sql_server_audit_config.value, "upload_interval", null)
-        retention_interval = lookup(sql_server_audit_config.value, "retention_interval", null)
+        bucket             = lookup(var.sql_server_audit_config, "bucket", null)
+        upload_interval    = lookup(var.sql_server_audit_config, "upload_interval", null)
+        retention_interval = lookup(var.sql_server_audit_config, "retention_interval", null)
       }
     }
 
