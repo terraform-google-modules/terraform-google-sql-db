@@ -62,7 +62,6 @@ resource "google_sql_database_instance" "default" {
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
-        binary_log_enabled             = false
         enabled                        = local.backups_enabled
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         location                       = lookup(backup_configuration.value, "location", null)
