@@ -39,7 +39,7 @@ The following dependency must be available for SQL Server module:
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |
 | root\_password | MSSERVER password for the root user. If not set, a random one will be generated and available in the root\_password output variable. | `string` | `""` | no |
-| sql\_server\_audit\_config | Active domain that the SQL instance will join. | `map(string)` | `{}` | no |
+| sql\_server\_audit\_config | SQL server audit config settings. | `map(string)` | `{}` | no |
 | tier | The tier for the master instance. | `string` | `"db-custom-2-3840"` | no |
 | update\_timeout | The optional timeout that is applied to limit long database updates. | `string` | `"15m"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |

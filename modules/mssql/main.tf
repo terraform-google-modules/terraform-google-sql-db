@@ -111,7 +111,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "sql_server_audit_config" {
-      for_each = var.sql_server_audit_config
+      for_each = length(var.sql_server_audit_config) != 0 ? [var.sql_server_audit_config] : []
       content {
         bucket             = lookup(var.sql_server_audit_config, "bucket", null)
         upload_interval    = lookup(var.sql_server_audit_config, "upload_interval", null)

@@ -131,7 +131,7 @@ variable "active_directory_config" {
 }
 
 variable "sql_server_audit_config" {
-  description = "Active domain that the SQL instance will join."
+  description = "SQL server audit config settings."
   type        = map(string)
   default     = {}
 }
