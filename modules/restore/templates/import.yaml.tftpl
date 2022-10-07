@@ -1,0 +1,181 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+main:
+  params: [args]
+  steps:
+  - collectInfos:
+      assign:
+        - databases: ${databases}
+%{ if databases == "[]" }
+  - list of databases:
+      call: googleapis.sqladmin.v1.databases.list
+      args:
+        project: ${project}
+        instance: ${exportedInstance}
+      result: dbListResult
+  - collect DB list:
+      for:
+        value: db
+        in: $${dbListResult.items}
+        steps:
+          - iterate:
+              assign:
+                - databases: $${list.concat(databases, db.name)}
+
+%{ endif }
+
+%{ if dbType == "POSTGRES" }
+  - import databases:
+      for:
+        value: database
+        in: $${databases}
+        steps:
+          - exclude postgres DB:
+              switch:
+                - condition: $${database != "postgres"}
+                  steps:
+                    - delete database:
+                        call: googleapis.sqladmin.v1.databases.delete
+                        args:
+                          database: $${database}
+                          instance: ${instanceName}
+                          project: ${project}
+                    - create database:
+                        call: googleapis.sqladmin.v1.databases.insert
+                        args:
+                          instance: ${instanceName}
+                          project: ${project}
+                          body:
+                            name: $${database}
+                    - import database:
+                        call: http.post
+                        args:
+                          url: $${"https://sqladmin.googleapis.com/v1/projects/" + "${project}" + "/instances/" + "${instanceName}" + "/import"}
+                          auth:
+                            type: OAuth2
+                          body:
+                            importContext:
+                              uri: $${"${gcsBucket}/${exportedInstance}-" + database + "-" + args.exportTimestamp + ".sql"}
+                              database: $${database}
+                              fileType: SQL
+                        result: importstatus
+                    - checkstatus:
+                        switch:
+                          - condition: $${importstatus.body.status != "DONE"}
+                            next: wait
+                        next: continue
+                    - wait:
+                        call: sys.sleep
+                        args:
+                          seconds: 1
+                        next: getstatus
+                    - getstatus:
+                        call: http.get
+                        args:
+                          url: $${importstatus.body.selfLink}
+                          auth:
+                            type: OAuth2
+                        result: importstatus
+                        next: checkstatus
+%{ endif }
+
+%{ if dbType == "SQLSERVER" }
+  - import databases:
+      for:
+        value: database
+        in: $${databases}
+        steps:
+          - exclude System DB:
+              switch:
+                - condition: $${database != "tempdb"}
+                  steps:
+                    - delete database:
+                        call: googleapis.sqladmin.v1.databases.delete
+                        args:
+                          database: $${database}
+                          instance: ${instanceName}
+                          project: ${project}
+                    - create database:
+                        call: googleapis.sqladmin.v1.databases.insert
+                        args:
+                          instance: ${instanceName}
+                          project: ${project}
+                          body:
+                            name: $${database}
+                    - import database:
+                        call: http.post
+                        args:
+                          url: $${"https://sqladmin.googleapis.com/v1/projects/" + "${project}" + "/instances/" + "${instanceName}" + "/import"}
+                          auth:
+                            type: OAuth2
+                          body:
+                            importContext:
+                              uri: $${"${gcsBucket}/${exportedInstance}-" + database + "-" + args.exportTimestamp + ".bak"}
+                              database: $${database}
+                              fileType: BAK
+                        result: importstatus
+                    - checkstatus:
+                        switch:
+                          - condition: $${importstatus.body.status != "DONE"}
+                            next: wait
+                        next: continue
+                    - wait:
+                        call: sys.sleep
+                        args:
+                          seconds: 1
+                        next: getstatus
+                    - getstatus:
+                        call: http.get
+                        args:
+                          url: $${importstatus.body.selfLink}
+                          auth:
+                            type: OAuth2
+                        result: importstatus
+                        next: checkstatus
+%{ endif }
+
+%{ if dbType == "MYSQL" }
+  - import database:
+      call: http.post
+      args:
+        url: $${"https://sqladmin.googleapis.com/v1/projects/" + "${project}" + "/instances/" + "${instanceName}" + "/import"}
+        auth:
+          type: OAuth2
+        body:
+          importContext:
+            uri: $${"${gcsBucket}/${exportedInstance}-" + args.exportTimestamp + ".sql"}
+            fileType: SQL
+      result: importstatus
+  - checkstatus:
+      switch:
+        - condition: $${importstatus.body.status != "DONE"}
+          next: wait
+      next: completed
+  - wait:
+      call: sys.sleep
+      args:
+        seconds: 1
+      next: getstatus
+  - getstatus:
+      call: http.get
+      args:
+        url: $${importstatus.body.selfLink}
+        auth:
+          type: OAuth2
+      result: importstatus
+      next: checkstatus
+  - completed:
+      return: "Done"
+%{ endif }
