@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [12.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v12.0.0...v12.1.0) (2022-10-07)
+
+
+### Features
+
+* Added cloud sql restore module that uses database import ([#343](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/343)) ([da4033b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/da4033b0b2e12d66bbc3869d2be32096f2a685b8))
+
+
+### Bug Fixes
+
+* for_each issue on the sql_audit_config ([#340](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/340)) ([95e48a1](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/95e48a1473714fc5a5ba46b4dce69b21bb6e00d7))
+
 ## [12.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v11.0.0...v12.0.0) (2022-08-15)
 
 
