@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.13"
-  required_providers {
+output "import_workflow_name" {
+  value       = google_workflows_workflow.sql_import.name
+  description = "The name for import workflow"
+}
 
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 4.28.0, < 5.0"
-    }
-  }
+output "service_account" {
+  value       = local.service_account
+  description = "The service account email running the scheduler and workflow"
+}
 
-  provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v12.1.0"
-  }
-
+output "region" {
+  value = var.region
 }
