@@ -30,6 +30,12 @@ variable "random_instance_name" {
   default     = false
 }
 
+variable "replica_database_version" {
+  description = "The read replica database version to use. This var should only be used during a database update. The update sequence 1. read-replica 2. master, setting this to an updated version will cause the replica to update, then you may update the master with the var database_version and remove this field after update is complete"
+  type        = string
+  default     = ""
+}
+
 // required
 variable "database_version" {
   description = "The database version to use"
