@@ -51,5 +51,5 @@ module "backup" {
   backup_retention_time = 1
   backup_schedule       = "5 * * * *"
   export_schedule       = "10 * * * *"
-  compress_export       = true
+  compress_export       = false
 }
