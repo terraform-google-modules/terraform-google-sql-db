@@ -111,7 +111,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "sql_server_audit_config" {
-      for_each = var.sql_server_audit_config
+      for_each = length(var.sql_server_audit_config) != 0 ? [var.sql_server_audit_config] : []
       content {
         bucket             = lookup(var.sql_server_audit_config, "bucket", null)
         upload_interval    = lookup(var.sql_server_audit_config, "upload_interval", null)
@@ -122,7 +122,8 @@ resource "google_sql_database_instance" "default" {
     user_labels = var.user_labels
 
     location_preference {
-      zone = var.zone
+      zone           = var.zone
+      secondary_zone = var.secondary_zone
     }
 
     maintenance_window {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-module "mssql" {
-  source               = "../../modules/mssql"
-  name                 = var.name
-  random_instance_name = true
-  project_id           = var.project_id
-  user_name            = "simpleuser"
-  user_password        = "foobar"
+output "import_workflow_name" {
+  value       = google_workflows_workflow.sql_import.name
+  description = "The name for import workflow"
+}
 
-  deletion_protection = false
+output "service_account" {
+  value       = local.service_account
+  description = "The service account email running the scheduler and workflow"
+}
 
-  sql_server_audit_config = var.sql_server_audit_config
+output "region" {
+  value = var.region
 }

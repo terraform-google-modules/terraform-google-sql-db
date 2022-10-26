@@ -30,6 +30,12 @@ variable "random_instance_name" {
   default     = false
 }
 
+variable "replica_database_version" {
+  description = "The read replica database version to use. This var should only be used during a database update. The update sequence 1. read-replica 2. master, setting this to an updated version will cause the replica to update, then you may update the master with the var database_version and remove this field after update is complete"
+  type        = string
+  default     = ""
+}
+
 // required
 variable "database_version" {
   description = "The database version to use"
@@ -53,6 +59,12 @@ variable "tier" {
 variable "zone" {
   description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
   type        = string
+}
+
+variable "secondary_zone" {
+  type        = string
+  description = "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
+  default     = null
 }
 
 variable "activation_policy" {
@@ -151,6 +163,16 @@ variable "backup_configuration" {
     retained_backups               = null
     retention_unit                 = null
   }
+}
+
+variable "insights_config" {
+  description = "The insights_config settings for the database."
+  type = object({
+    query_string_length     = number
+    record_application_tags = bool
+    record_client_address   = bool
+  })
+  default = null
 }
 
 variable "ip_configuration" {

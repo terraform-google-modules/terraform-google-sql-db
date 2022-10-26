@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-module "mssql" {
-  source               = "../../modules/mssql"
-  name                 = var.name
-  random_instance_name = true
-  project_id           = var.project_id
-  user_name            = "simpleuser"
-  user_password        = "foobar"
-
-  deletion_protection = false
-
-  sql_server_audit_config = var.sql_server_audit_config
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 4.0.0, < 5.0"
+    }
+  }
 }
