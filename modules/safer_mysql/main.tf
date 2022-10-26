@@ -42,6 +42,8 @@ module "safer_mysql" {
 
   backup_configuration = var.backup_configuration
 
+  insights_config = var.insights_config
+
   ip_configuration = {
     ipv4_enabled = var.assign_public_ip
     # We never set authorized networks, we need all connections via the

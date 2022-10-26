@@ -80,6 +80,7 @@ module "mysql" {
 
   // Read replica configurations
   read_replica_name_suffix = "-test"
+  replica_database_version = "MYSQL_5_7"
   read_replicas = [
     {
       name                  = "0"

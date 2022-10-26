@@ -184,6 +184,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | disk\_size | The disk size for the master instance | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
+| insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |
 | maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | `string` | `"stable"` | no |
