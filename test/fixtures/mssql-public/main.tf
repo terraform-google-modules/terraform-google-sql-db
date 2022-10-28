@@ -21,7 +21,7 @@ terraform {
       /*
         Pinning this version due to an upstream provider issue: https://github.com/hashicorp/terraform-provider-google/issues/11891
       */
-      version = "4.24.0"
+      version = "4.41.0"
     }
   }
 }
