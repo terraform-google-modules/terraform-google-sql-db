@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [13.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v12.1.0...v13.0.0) (2022-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** update terraform null to ~> 3.2.0 (#366)
+* Make compression default for Backups
+* Adds `secondary_zone` to db modules
+
+### Features
+
+* Adds `secondary_zone` to db modules ([7818a7e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/7818a7e85107e8cfb149ced278749909eeb68b32))
+* Support Query Insights for MySQL ([d932391](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/d932391484bb02d28b27618b75dda152cbd6dc90))
+
+
+### Bug Fixes
+
+* Db master and replica update solution for MYSQL ([f991c22](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f991c22e618d77c280aa0aa496411a1df4ac8cb2))
+* Make compression default for Backups ([ff37244](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/ff3724429a04b54d25bfea6eb3db68d78d1128bb))
+* Postgresql availability type shouldn't prevent backup configuration ([#352](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/352)) ([e796b3c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e796b3cb44500bcc144fc28fc482111a461ad465)), closes [#351](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/351)
+* removed invalid parameter for PostgrSQL binary_log_enabled ([#341](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/341)) ([b51427e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/b51427ed2fee415f8d5d301374f8106c33fd0a12))
+
+
+### Miscellaneous Chores
+
+* **deps:** update terraform null to ~&gt; 3.2.0 ([#366](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/366)) ([643e6e5](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/643e6e58c24560f936ee6bb0574cde17e080fb10))
+
 ## [12.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v12.0.0...v12.1.0) (2022-10-07)
 
 
