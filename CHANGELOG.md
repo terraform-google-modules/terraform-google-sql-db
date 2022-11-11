@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [13.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v13.0.0...v13.0.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* revert null provider version to major.minor ([#372](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/372)) ([b4c0555](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/b4c055536d4abe43d78590694dbc5605fd83d7ec))
+
 ## [13.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v12.1.0...v13.0.0) (2022-11-07)
 
 
