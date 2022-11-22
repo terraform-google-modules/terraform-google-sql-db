@@ -41,8 +41,8 @@ module "postgresql-db" {
     disallow_username_substring = true
     min_length                  = 8
     # Password change interval format is in seconds. 3600s=1h
-    password_change_interval    = "3600s"
-    reuse_interval              = 1
+    password_change_interval = "3600s"
+    reuse_interval           = 1
   }
 
   database_flags = [

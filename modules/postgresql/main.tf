@@ -110,12 +110,12 @@ resource "google_sql_database_instance" "default" {
       for_each = [var.password_validation_policy_config]
 
       content {
-        enable_password_policy        = true
-        min_length                    = lookup(var.password_validation_policy_config, "min_length", 8)
-        complexity                    = lookup(var.password_validation_policy_config, "complexity", "COMPLEXITY_DEFAULT")
-        reuse_interval                = lookup(var.password_validation_policy_config, "reuse_interval", null)
-        disallow_username_substring   = lookup(var.password_validation_policy_config, "disallow_username_substring", true)
-        password_change_interval      = lookup(var.password_validation_policy_config, "password_change_interval", null)
+        enable_password_policy      = true
+        min_length                  = lookup(var.password_validation_policy_config, "min_length", 8)
+        complexity                  = lookup(var.password_validation_policy_config, "complexity", "COMPLEXITY_DEFAULT")
+        reuse_interval              = lookup(var.password_validation_policy_config, "reuse_interval", null)
+        disallow_username_substring = lookup(var.password_validation_policy_config, "disallow_username_substring", true)
+        password_change_interval    = lookup(var.password_validation_policy_config, "password_change_interval", null)
       }
     }
 
