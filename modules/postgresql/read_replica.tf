@@ -69,6 +69,18 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
+    dynamic "password_validation_policy" {
+      for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
+
+      content {
+        enable_password_policy        = true
+        min_length                    = lookup(password_validation_policy_config.value, "min_length", 8)
+        complexity                    = lookup(password_validation_policy_config.value, "complexity", true)
+        reuse_interval                = lookup(password_validation_policy_config.value, "reuse_interval", null)
+        disallow_username_substring   = lookup(password_validation_policy_config.value, "disallow_username_substring", true)
+      }
+    }
+
     disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
     disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
     disk_size             = lookup(each.value, "disk_size", var.disk_size)

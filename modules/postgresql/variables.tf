@@ -166,6 +166,18 @@ variable "insights_config" {
   default = null
 }
 
+variable "password_validation_policy_config" {
+  description = "The password validation policy settings for the database instance."
+  type = object({
+    min_length                  = number
+    complexity                  = bool
+    reuse_interval              = bool
+    disallow_username_substring = bool
+    password_change_interval    = number
+  })
+  default = null
+}
+
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
