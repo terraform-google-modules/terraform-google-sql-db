@@ -19,12 +19,13 @@ intended for Terraform 0.12.x is [v5.0.0](https://registry.terraform.io/modules/
 
 ## Upgrading
 
-The current version is 11.X. The following guides are available to assist with upgrades:
+The current version is 13.X. The following guides are available to assist with upgrades:
 
 - [1.X -> 2.0](./docs/upgrading_to_sql_db_2.0.0.md)
 - [2.X -> 3.0](./docs/upgrading_to_sql_db_3.0.0.md)
 - [3.X -> 4.0](./docs/upgrading_to_sql_db_4.0.0.md)
 - [10.X -> 11.0](./docs/upgrading_to_sql_db_11.0.0.md)
+- [11.X -> 12.0](./docs/upgrading_to_sql_db_12.0.0.md)
 
 ## Root module
 
