@@ -93,3 +93,9 @@ variable "compress_export" {
   type        = bool
   default     = true
 }
+
+variable "unique_suffix" {
+  description = "Unique suffix to add to scheduler jobs and workflows names."
+  type        = string
+  default     = "0"
+}
