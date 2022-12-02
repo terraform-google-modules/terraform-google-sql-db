@@ -55,7 +55,10 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
-| generated\_user\_password | The auto generated default user password if not input password was provided |
+| default\_database\_name | The default database name |
+| default\_user\_name | The default master user name |
+| default\_user\_password | The default master user password |
+| generated\_user\_password | [Deprecated] Use `default_user_password` instead. The auto generated default user password if not input password was provided. |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
 | instance\_ip\_address | The IPv4 address assigned for the master instance |

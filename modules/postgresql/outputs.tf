@@ -91,10 +91,26 @@ output "read_replica_instance_names" {
   description = "The instance names for the read replica instances"
 }
 
+output "default_database_name" {
+  description = "The default database name"
+  value       = var.enable_default_db ? google_sql_database.default[0].name : ""
+}
+
 output "generated_user_password" {
-  description = "The auto generated default user password if not input password was provided"
+  description = "[Deprecated] Use `default_user_password` instead. The auto generated default user password if not input password was provided."
   value       = random_password.user-password.result
   sensitive   = true
+}
+
+output "default_user_password" {
+  description = "The default master user password"
+  value       = var.enable_default_user ? google_sql_user.default[0].password : ""
+  sensitive   = true
+}
+
+output "default_user_name" {
+  description = "The default master user name"
+  value       = var.enable_default_user ? google_sql_user.default[0].name : ""
 }
 
 output "additional_users" {
