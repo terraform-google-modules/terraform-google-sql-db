@@ -120,6 +120,7 @@ resource "google_sql_database_instance" "default" {
     location_preference {
       zone           = var.zone
       secondary_zone = var.secondary_zone
+      follow_gae_application = var.follow_gae_application
     }
 
     maintenance_window {
