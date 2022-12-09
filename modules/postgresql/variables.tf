@@ -333,3 +333,15 @@ variable "enable_default_user" {
   type        = bool
   default     = true
 }
+
+variable "database_deletion_policy" {
+  description = "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}
