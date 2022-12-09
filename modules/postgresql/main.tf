@@ -156,6 +156,7 @@ resource "google_sql_database" "default" {
   charset    = var.db_charset
   collation  = var.db_collation
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  deletion_policy = var.database_deletion_policy
 }
 
 resource "google_sql_database" "additional_databases" {
@@ -166,6 +167,7 @@ resource "google_sql_database" "additional_databases" {
   collation  = lookup(each.value, "collation", null)
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  deletion_policy = var.database_deletion_policy
 }
 
 resource "random_password" "user-password" {
@@ -200,6 +202,7 @@ resource "google_sql_user" "default" {
     google_sql_database_instance.default,
     google_sql_database_instance.replicas,
   ]
+  deletion_policy = var.user_deletion_policy
 }
 
 resource "google_sql_user" "additional_users" {
@@ -213,6 +216,7 @@ resource "google_sql_user" "additional_users" {
     google_sql_database_instance.default,
     google_sql_database_instance.replicas,
   ]
+  deletion_policy = var.user_deletion_policy
 }
 
 resource "google_project_iam_member" "iam_binding" {
@@ -247,6 +251,7 @@ resource "google_sql_user" "iam_account" {
     null_resource.module_depends_on,
     google_project_iam_member.iam_binding,
   ]
+  deletion_policy = var.user_deletion_policy
 }
 
 resource "null_resource" "module_depends_on" {
