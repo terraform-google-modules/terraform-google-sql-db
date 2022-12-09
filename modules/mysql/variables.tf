@@ -67,6 +67,12 @@ variable "secondary_zone" {
   default     = null
 }
 
+variable "follow_gae_application" {
+  type        = string
+  description = "A Google App Engine application whose zone to remain in. Must be in the same region as this instance."
+  default     = null
+}
+
 variable "activation_policy" {
   description = "The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   type        = string
