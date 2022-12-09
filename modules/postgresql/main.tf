@@ -122,8 +122,9 @@ resource "google_sql_database_instance" "default" {
     user_labels = var.user_labels
 
     location_preference {
-      zone           = var.zone
-      secondary_zone = var.secondary_zone
+      zone                   = var.zone
+      secondary_zone         = var.secondary_zone
+      follow_gae_application = var.follow_gae_application
     }
 
     maintenance_window {
