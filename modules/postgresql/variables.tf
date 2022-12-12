@@ -36,7 +36,7 @@ variable "database_version" {
   type        = string
 
   validation {
-    condition     = (length(var.database_version) >= 9 && ((substr(var.database_version, 0, 9) == "POSTGRES_" || substr(var.database_version, 0, 9) == "postgres_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
+    condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
     error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\" or \"POSTGRES_14\"."
   }
 }
