@@ -82,7 +82,6 @@ module "pg" {
   read_replicas = [
     {
       name                  = "0"
-      name_override         = "OverriddenReplicaNamePG"
       zone                  = "us-central1-a"
       availability_type     = "REGIONAL"
       tier                  = "db-custom-1-3840"
