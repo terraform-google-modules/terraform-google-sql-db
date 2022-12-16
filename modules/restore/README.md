@@ -46,7 +46,7 @@ gcloud workflows run my-import-workflow --data='{"exportTimestamp": "1658779617"
 | Name | Description |
 |------|-------------|
 | import\_workflow\_name | The name for import workflow |
-| region | n/a |
+| region | The region for running the scheduler and workflow |
 | service\_account | The service account email running the scheduler and workflow |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

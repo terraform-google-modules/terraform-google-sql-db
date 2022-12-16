@@ -74,7 +74,7 @@ fetch workflows.googleapis.com/Workflow
 |------|-------------|
 | backup\_workflow\_name | The name for internal backup workflow |
 | export\_workflow\_name | The name for export workflow |
-| region | n/a |
+| region | The region for running the scheduler and workflow |
 | service\_account | The service account email running the scheduler and workflow |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
