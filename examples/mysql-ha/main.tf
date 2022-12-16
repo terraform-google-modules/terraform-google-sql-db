@@ -84,6 +84,7 @@ module "mysql" {
   read_replicas = [
     {
       name                  = "0"
+      name_override         = "OverriddenReplicaNameMySQL"
       zone                  = "us-central1-a"
       availability_type     = "ZONAL"
       tier                  = "db-n1-standard-1"
