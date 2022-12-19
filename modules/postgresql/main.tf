@@ -198,7 +198,7 @@ resource "random_password" "additional_passwords" {
   }
 
   length     = 32
-  special    = false
+  special    = true
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
