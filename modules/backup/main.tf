@@ -59,7 +59,7 @@ data "google_sql_database_instance" "backup_instance" {
 ################################
 resource "google_workflows_workflow" "sql_backup" {
   count           = var.enable_internal_backup ? 1 : 0
-  name            = "sql-backup-${var.sql_instance}"
+  name            = "sql-backup-${var.sql_instance}${var.unique_suffix}"
   region          = var.region
   description     = "Workflow for backing up the CloudSQL Instance "
   project         = var.project_id
@@ -73,7 +73,7 @@ resource "google_workflows_workflow" "sql_backup" {
 
 resource "google_cloud_scheduler_job" "sql_backup" {
   count       = var.enable_internal_backup ? 1 : 0
-  name        = "sql-backup-${var.sql_instance}"
+  name        = "sql-backup-${var.sql_instance}${var.unique_suffix}"
   project     = var.project_id
   region      = var.region
   description = "Managed by Terraform - Triggers a SQL Backup via Workflows"
@@ -97,7 +97,7 @@ resource "google_cloud_scheduler_job" "sql_backup" {
 ################################
 resource "google_workflows_workflow" "sql_export" {
   count           = var.enable_export_backup ? 1 : 0
-  name            = "sql-export-${var.sql_instance}"
+  name            = "sql-export-${var.sql_instance}${var.unique_suffix}"
   region          = var.region
   description     = "Workflow for backing up the CloudSQL Instance"
   project         = var.project_id
@@ -115,7 +115,7 @@ resource "google_workflows_workflow" "sql_export" {
 
 resource "google_cloud_scheduler_job" "sql_export" {
   count       = var.enable_export_backup ? 1 : 0
-  name        = "sql-export-${var.sql_instance}"
+  name        = "sql-export-${var.sql_instance}${var.unique_suffix}"
   project     = var.project_id
   region      = var.region
   description = "Managed by Terraform - Triggers a SQL Export via Workflows"
