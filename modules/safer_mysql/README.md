@@ -184,6 +184,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | disk\_size | The disk size for the master instance | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
+| follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |
@@ -197,6 +198,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | `string` | `""` | no |
 | read\_replicas | List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption\_key\_name = null | <pre>list(object({<br>    name                  = string<br>    tier                  = string<br>    availability_type     = string<br>    zone                  = string<br>    disk_type             = string<br>    disk_autoresize       = bool<br>    disk_autoresize_limit = number<br>    disk_size             = string<br>    user_labels           = map(string)<br>    database_flags = list(object({<br>      name  = string<br>      value = string<br>    }))<br>    ip_configuration = object({<br>      authorized_networks = list(map(string))<br>      ipv4_enabled        = bool<br>      private_network     = string<br>      require_ssl         = bool<br>      allocated_ip_range  = string<br>    })<br>    encryption_key_name = string<br>  }))</pre> | `[]` | no |
 | region | The region of the Cloud SQL resources | `string` | n/a | yes |
+| secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | tier | The tier for the master instance. | `string` | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"15m"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |

@@ -34,6 +34,11 @@ variable "random_instance_name" {
 variable "database_version" {
   description = "The database version to use"
   type        = string
+
+  validation {
+    condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
+    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\" or \"POSTGRES_14\"."
+  }
 }
 
 // required
@@ -57,6 +62,12 @@ variable "zone" {
 variable "secondary_zone" {
   type        = string
   description = "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
+  default     = null
+}
+
+variable "follow_gae_application" {
+  type        = string
+  description = "A Google App Engine application whose zone to remain in. Must be in the same region as this instance."
   default     = null
 }
 
@@ -338,4 +349,16 @@ variable "enable_default_user" {
   description = "Enable or disable the creation of the default user"
   type        = bool
   default     = true
+}
+
+variable "database_deletion_policy" {
+  description = "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
 }
