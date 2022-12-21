@@ -31,6 +31,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | ip\_configuration | The ip\_configuration settings subblock | <pre>object({<br>    authorized_networks = list(map(string))<br>    ipv4_enabled        = bool<br>    private_network     = string<br>    require_ssl         = bool<br>    allocated_ip_range  = string<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "require_ssl": null<br>}</pre> | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
+| maintenance\_window\_enabled | Whether to enable maintenance window setting for the instance. Replicas must have this set to false. | `bool` | `true` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |
 | maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | `string` | `"canary"` | no |
 | module\_depends\_on | List of modules or resources this module depends on. | `list(any)` | `[]` | no |
