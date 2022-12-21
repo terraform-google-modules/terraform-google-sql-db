@@ -152,10 +152,13 @@ resource "google_sql_database_instance" "default" {
       follow_gae_application = var.follow_gae_application
     }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
+    dynamic "maintenance_window" {
+      for_each = var.maintenance_window_enabled ? ["enabled"] : []
+      content {
+        day          = var.maintenance_window_day
+        hour         = var.maintenance_window_hour
+        update_track = var.maintenance_window_update_track
+      }
     }
   }
 
