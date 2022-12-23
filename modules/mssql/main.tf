@@ -72,6 +72,14 @@ resource "google_sql_database_instance" "default" {
         }
       }
     }
+    dynamic "deny_maintenance_period" {
+      for_each = var.deny_maintenance_period
+      content {
+        end_date   = lookup(deny_maintenance_period.value, "end_date" , null)
+        start_date = lookup(deny_maintenance_period.value, "start_date" , null)
+        time       = lookup(deny_maintenance_period.value, "time" , null)
+      } 
+    }
     dynamic "ip_configuration" {
       for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
       content {
