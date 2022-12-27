@@ -44,16 +44,19 @@ variable "backup_retention_time" {
 
 variable "scheduler_timezone" {
   description = "The Timezone in which the Scheduler Jobs are triggered"
+  type        = string
   default     = "Etc/GMT"
 }
 
 variable "backup_schedule" {
   description = "The cron schedule to execute the internal backup"
+  type        = string
   default     = "45 2 * * *"
 }
 
 variable "export_schedule" {
   description = "The cron schedule to execute the export to GCS"
+  type        = string
   default     = "15 3 * * *"
 }
 
