@@ -25,5 +25,6 @@ output "service_account" {
 }
 
 output "region" {
-  value = var.region
+  description = "The region for running the scheduler and workflow"
+  value       = var.region
 }
