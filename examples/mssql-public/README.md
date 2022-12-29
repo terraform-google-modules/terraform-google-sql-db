@@ -9,7 +9,6 @@ This example shows how create MS SQL Server database using the Terraform module.
 |------|-------------|------|---------|:--------:|
 | name | The name for Cloud SQL instance | `string` | `"tf-mssql-public"` | no |
 | project\_id | The project to run tests against | `string` | n/a | yes |
-| region | n/a | `string` | `"us-central1"` | no |
 | sql\_server\_audit\_config | SQL server audit config settings. | `map(string)` | `{}` | no |
 
 ## Outputs
