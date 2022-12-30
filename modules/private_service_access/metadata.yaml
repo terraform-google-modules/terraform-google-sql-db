@@ -1,0 +1,108 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-sql-db
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: Submodule for VPC peering Cloud SQL services
+  source:
+    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
+    sourceType: git
+  version: 13.0.1
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  examples:
+  - name: mssql-public
+    location: examples/mssql-public
+  - name: mysql-backup-create-service-account
+    location: examples/mysql-backup-create-service-account
+  - name: mysql-ha
+    location: examples/mysql-ha
+  - name: mysql-private
+    location: examples/mysql-private
+  - name: mysql-public
+    location: examples/mysql-public
+  - name: postgresql-backup-provided-service-account
+    location: examples/postgresql-backup-provided-service-account
+  - name: postgresql-ha
+    location: examples/postgresql-ha
+  - name: postgresql-public
+    location: examples/postgresql-public
+  - name: postgresql-public-iam
+    location: examples/postgresql-public-iam
+  variables:
+  - name: address
+    description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
+    type: string
+    default: ""
+    required: false
+  - name: description
+    description: An optional description of the Global Address resource.
+    type: string
+    default: ""
+    required: false
+  - name: ip_version
+    description: IP Version for the allocation. Can be IPV4 or IPV6.
+    type: string
+    default: ""
+    required: false
+  - name: labels
+    description: The key/value labels for the IP range allocated to the peered network.
+    type: map(string)
+    default: {}
+    required: false
+  - name: prefix_length
+    description: Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16.
+    type: number
+    default: 16
+    required: false
+  - name: project_id
+    description: The project ID of the VPC network to peer. This can be a shared VPC host projec.
+    type: string
+    required: true
+  - name: vpc_network
+    description: Name of the VPC network to peer.
+    type: string
+    required: true
+  outputs:
+  - name: address
+    description: First IP of the reserved range.
+  - name: google_compute_global_address_name
+    description: URL of the reserved range.
+  - name: peering_completed
+    description: Use for enforce ordering between resource creation
+  roles:
+  - level: Project
+    roles:
+    - roles/cloudsql.admin
+    - roles/compute.networkAdmin
+    - roles/iam.serviceAccountAdmin
+    - roles/resourcemanager.projectIamAdmin
+    - roles/storage.admin
+    - roles/workflows.admin
+    - roles/cloudscheduler.admin
+    - roles/iam.serviceAccountUser
+  services:
+  - cloudresourcemanager.googleapis.com
+  - compute.googleapis.com
+  - servicenetworking.googleapis.com
+  - sqladmin.googleapis.com
+  - iam.googleapis.com
+  - workflows.googleapis.com
+  - cloudscheduler.googleapis.com

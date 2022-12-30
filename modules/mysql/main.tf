@@ -15,9 +15,7 @@
  */
 
 locals {
-  master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
-
-  default_user_host        = "%"
+  master_instance_name     = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
   ip_configurations = {
