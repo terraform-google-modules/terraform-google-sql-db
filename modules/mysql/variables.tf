@@ -204,6 +204,7 @@ variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
     name                  = string
+    name_override         = optional(string)
     tier                  = string
     zone                  = string
     availability_type     = string
