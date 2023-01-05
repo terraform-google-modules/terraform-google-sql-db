@@ -36,7 +36,7 @@ The root module has been deprecated. Please switch to using one of the submodule
 ### Installation Dependencies
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 0.13.0
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin >= v4.45.0
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin >= v4.45.0 
 
 The following dependency must be available for SQL Server module:
 
