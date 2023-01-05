@@ -114,6 +114,19 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
+    dynamic "password_validation_policy" {
+      for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
+
+      content {
+        enable_password_policy      = true
+        min_length                  = lookup(password_validation_policy.value, "min_length", 8)
+        complexity                  = lookup(password_validation_policy.value, "complexity", "COMPLEXITY_DEFAULT")
+        reuse_interval              = lookup(password_validation_policy.value, "reuse_interval", null)
+        disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", true)
+        password_change_interval    = lookup(password_validation_policy.value, "password_change_interval", null)
+      }
+    }
+
     disk_autoresize       = var.disk_autoresize
     disk_autoresize_limit = var.disk_autoresize_limit
     disk_size             = var.disk_size
@@ -185,7 +198,7 @@ resource "random_password" "user-password" {
   }
 
   length     = 32
-  special    = false
+  special    = true
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -196,7 +209,7 @@ resource "random_password" "additional_passwords" {
   }
 
   length     = 32
-  special    = false
+  special    = true
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 

@@ -42,6 +42,14 @@ func TestPostgreSqlPublicIamModule(t *testing.T) {
 		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
 		assert.Equal("db-custom-1-3840", op.Get("settings.tier").String(), "Expected db-custom-1-3840 tier")
 
+		// assert password policy settings
+		assert.Equal("COMPLEXITY_DEFAULT", op.Get("settings.passwordValidationPolicy.complexity").String(), "Expected COMPLEXITY_DEFAULT complexity")
+		assert.True(op.Get("settings.passwordValidationPolicy.disallowUsernameSubstring").Bool(), "Expected TRUE disallowUsernameSubstring")
+		assert.True(op.Get("settings.passwordValidationPolicy.enablePasswordPolicy").Bool(), "Expected TRUE enablePasswordPolicy")
+		assert.Equal(int64(8), op.Get("settings.passwordValidationPolicy.minLength").Int(), "Expected 8 minLength")
+		assert.Equal("3600s", op.Get("settings.passwordValidationPolicy.passwordChangeInterval").String(), "Expected 3600s passwordChangeInterval")
+		assert.Equal(int64(1), op.Get("settings.passwordValidationPolicy.reuseInterval").Int(), "Expected 1 reuseInterval")
+
 		// assert location database settings
 		assert.Equal("sql#locationPreference", op.Get("settings.locationPreference.kind").String(), "Expected sql#locationPreference locationPreference.kind")
 		assert.Equal("us-central1-c", op.Get("settings.locationPreference.zone").String(), "Expected us-central1-c locationPreference.zone")
