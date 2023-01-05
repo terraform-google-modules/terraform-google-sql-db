@@ -35,6 +35,16 @@ module "postgresql-db" {
     authorized_networks = var.authorized_networks
   }
 
+  password_validation_policy_config = {
+    # Complexity Default - password must contain at least one lowercase, one uppercase, one number and one non-alphanumeric characters.
+    complexity                  = "COMPLEXITY_DEFAULT"
+    disallow_username_substring = true
+    min_length                  = 8
+    # Password change interval format is in seconds. 3600s=1h
+    password_change_interval = "3600s"
+    reuse_interval           = 1
+  }
+
   database_flags = [
     {
       name  = "cloudsql.iam_authentication"
@@ -45,12 +55,12 @@ module "postgresql-db" {
   additional_users = [
     {
       name     = "tftest2"
-      password = "abcdefg"
+      password = "Ex@mp!e1"
       host     = "localhost"
     },
     {
       name     = "tftest3"
-      password = "abcdefg"
+      password = "Ex@mp!e2"
       host     = "localhost"
     },
   ]
