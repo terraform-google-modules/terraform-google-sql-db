@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ metadata:
 spec:
   title: terraform-google-sql for MSSQL Server
   source:
-    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
+    repo: https://github.com/ravisiddhu/terraform-google-sql-db.git
     sourceType: git
   version: 13.0.1
   actuationTool:
@@ -69,6 +69,15 @@ spec:
     required: false
   - name: additional_users
     description: A list of users to be created in your cluster
+    type: |-
+      list(object({
+          name     = string
+          password = string
+        }))
+    default: []
+    required: false
+  - name: additional_users_with_random_password
+    description: A list of users, each with random password to be created in your cluster.
     type: |-
       list(object({
           name     = string
@@ -280,6 +289,8 @@ spec:
     required: false
   outputs:
   - name: additional_users
+    description: List of maps of additional users and passwords
+  - name: additional_users_with_random_password
     description: List of maps of additional users and passwords
   - name: generated_user_password
     description: The auto generated default user password if not input password was provided

@@ -237,8 +237,20 @@ variable "user_password" {
 
 variable "additional_users" {
   description = "A list of users to be created in your cluster"
-  type        = list(map(any))
-  default     = []
+  type = list(object({
+    name     = string
+    password = string
+  }))
+  default = []
+}
+
+variable "additional_users_with_random_password" {
+  description = "A list of users, each with random password to be created in your cluster."
+  type = list(object({
+    name     = string
+    password = string
+  }))
+  default = []
 }
 
 variable "root_password" {

@@ -72,6 +72,17 @@ output "additional_users" {
   sensitive = true
 }
 
+output "additional_users_with_random_password" {
+  description = "List of maps of additional users and passwords"
+  value = [for r in google_sql_user.additional_users_with_random_password :
+    {
+      name     = r.name
+      password = r.password
+    }
+  ]
+  sensitive = true
+}
+
 output "root_password" {
   description = "MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable."
   value       = coalesce(var.root_password, random_password.root-password.result)
