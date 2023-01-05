@@ -1,0 +1,324 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-sql-db
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: terraform-google-sql for MSSQL Server
+  source:
+    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
+    sourceType: git
+  version: 13.0.1
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  examples:
+  - name: mssql-public
+    location: examples/mssql-public
+  - name: mysql-backup-create-service-account
+    location: examples/mysql-backup-create-service-account
+  - name: mysql-ha
+    location: examples/mysql-ha
+  - name: mysql-private
+    location: examples/mysql-private
+  - name: mysql-public
+    location: examples/mysql-public
+  - name: postgresql-backup-provided-service-account
+    location: examples/postgresql-backup-provided-service-account
+  - name: postgresql-ha
+    location: examples/postgresql-ha
+  - name: postgresql-public
+    location: examples/postgresql-public
+  - name: postgresql-public-iam
+    location: examples/postgresql-public-iam
+  variables:
+  - name: activation_policy
+    description: The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
+    type: string
+    default: ALWAYS
+    required: false
+  - name: active_directory_config
+    description: Active domain that the SQL instance will join.
+    type: map(string)
+    default: {}
+    required: false
+  - name: additional_databases
+    description: A list of databases to be created in your cluster
+    type: |-
+      list(object({
+          name      = string
+          charset   = string
+          collation = string
+        }))
+    default: []
+    required: false
+  - name: additional_users
+    description: A list of users to be created in your cluster
+    type: |-
+      list(object({
+          name     = string
+          password = string
+        }))
+    default: []
+    required: false
+  - name: availability_type
+    description: The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`.
+    type: string
+    default: ZONAL
+    required: false
+  - name: backup_configuration
+    description: The database backup configuration.
+    type: |-
+      object({
+          binary_log_enabled             = bool
+          enabled                        = bool
+          point_in_time_recovery_enabled = bool
+          start_time                     = string
+          transaction_log_retention_days = string
+          retained_backups               = number
+          retention_unit                 = string
+        })
+    default:
+      binary_log_enabled: null
+      enabled: false
+      point_in_time_recovery_enabled: null
+      retained_backups: null
+      retention_unit: null
+      start_time: null
+      transaction_log_retention_days: null
+    required: false
+  - name: create_timeout
+    description: The optional timeout that is applied to limit long database creates.
+    type: string
+    default: 15m
+    required: false
+  - name: database_flags
+    description: The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags)
+    type: |-
+      list(object({
+          name  = string
+          value = string
+        }))
+    default: []
+    required: false
+  - name: database_version
+    description: 'The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB'
+    type: string
+    default: SQLSERVER_2017_STANDARD
+    required: false
+  - name: db_charset
+    description: The charset for the default database
+    type: string
+    default: ""
+    required: false
+  - name: db_collation
+    description: 'The collation for the default database. Example: ''en_US.UTF8'''
+    type: string
+    default: ""
+    required: false
+  - name: db_name
+    description: The name of the default database to create
+    type: string
+    default: default
+    required: false
+  - name: delete_timeout
+    description: The optional timeout that is applied to limit long database deletes.
+    type: string
+    default: 30m
+    required: false
+  - name: deletion_protection
+    description: Used to block Terraform from deleting a SQL Instance.
+    type: bool
+    default: true
+    required: false
+  - name: disk_autoresize
+    description: Configuration to increase storage size.
+    type: bool
+    default: true
+    required: false
+  - name: disk_autoresize_limit
+    description: The maximum size to which storage can be auto increased.
+    type: number
+    default: 0
+    required: false
+  - name: disk_size
+    description: The disk size for the master instance.
+    type: number
+    default: 10
+    required: false
+  - name: disk_type
+    description: The disk type for the master instance.
+    type: string
+    default: PD_SSD
+    required: false
+  - name: encryption_key_name
+    description: The full path to the encryption key used for the CMEK disk encryption
+    type: string
+    required: false
+  - name: follow_gae_application
+    description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
+    type: string
+    required: false
+  - name: ip_configuration
+    description: The ip configuration for the master instances.
+    type: |-
+      object({
+          authorized_networks = list(map(string))
+          ipv4_enabled        = bool
+          private_network     = string
+          require_ssl         = bool
+          allocated_ip_range  = string
+        })
+    default:
+      allocated_ip_range: null
+      authorized_networks: []
+      ipv4_enabled: true
+      private_network: null
+      require_ssl: null
+    required: false
+  - name: maintenance_window_day
+    description: The day of week (1-7) for the master instance maintenance.
+    type: number
+    default: 1
+    required: false
+  - name: maintenance_window_hour
+    description: The hour of day (0-23) maintenance window for the master instance maintenance.
+    type: number
+    default: 23
+    required: false
+  - name: maintenance_window_update_track
+    description: The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`.
+    type: string
+    default: canary
+    required: false
+  - name: module_depends_on
+    description: List of modules or resources this module depends on.
+    type: list(any)
+    default: []
+    required: false
+  - name: name
+    description: The name of the Cloud SQL resources
+    type: string
+    required: true
+  - name: pricing_plan
+    description: The pricing plan for the master instance.
+    type: string
+    default: PER_USE
+    required: false
+  - name: project_id
+    description: The project ID to manage the Cloud SQL resources
+    type: string
+    required: true
+  - name: random_instance_name
+    description: Sets random suffix at the end of the Cloud SQL resource name
+    type: bool
+    default: false
+    required: false
+  - name: region
+    description: The region of the Cloud SQL resources
+    type: string
+    default: us-central1
+    required: false
+  - name: root_password
+    description: MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable.
+    type: string
+    default: ""
+    required: false
+  - name: secondary_zone
+    description: 'The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`.'
+    type: string
+    required: false
+  - name: sql_server_audit_config
+    description: SQL server audit config settings.
+    type: map(string)
+    default: {}
+    required: false
+  - name: tier
+    description: The tier for the master instance.
+    type: string
+    default: db-custom-2-3840
+    required: false
+  - name: update_timeout
+    description: The optional timeout that is applied to limit long database updates.
+    type: string
+    default: 15m
+    required: false
+  - name: user_labels
+    description: The key/value labels for the master instances.
+    type: map(string)
+    default: {}
+    required: false
+  - name: user_name
+    description: The name of the default user
+    type: string
+    default: default
+    required: false
+  - name: user_password
+    description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
+    type: string
+    default: ""
+    required: false
+  - name: zone
+    description: The zone for the master instance.
+    type: string
+    default: us-central1-a
+    required: false
+  outputs:
+  - name: additional_users
+    description: List of maps of additional users and passwords
+  - name: generated_user_password
+    description: The auto generated default user password if not input password was provided
+  - name: instance_address
+    description: The IPv4 addesses assigned for the master instance
+  - name: instance_connection_name
+    description: The connection name of the master instance to be used in connection strings
+  - name: instance_first_ip_address
+    description: The first IPv4 address of the addresses assigned.
+  - name: instance_name
+    description: The instance name for the master instance
+  - name: instance_self_link
+    description: The URI of the master instance
+  - name: instance_server_ca_cert
+    description: The CA certificate information used to connect to the SQL instance via SSL
+  - name: instance_service_account_email_address
+    description: The service account email address assigned to the master instance
+  - name: primary
+    description: The `google_sql_database_instance` resource representing the primary instance
+  - name: private_address
+    description: The private IP address assigned for the master instance
+  - name: root_password
+    description: MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable.
+  roles:
+  - level: Project
+    roles:
+    - roles/cloudsql.admin
+    - roles/compute.networkAdmin
+    - roles/iam.serviceAccountAdmin
+    - roles/resourcemanager.projectIamAdmin
+    - roles/storage.admin
+    - roles/workflows.admin
+    - roles/cloudscheduler.admin
+    - roles/iam.serviceAccountUser
+  services:
+  - cloudresourcemanager.googleapis.com
+  - compute.googleapis.com
+  - servicenetworking.googleapis.com
+  - sqladmin.googleapis.com
+  - iam.googleapis.com
+  - workflows.googleapis.com
+  - cloudscheduler.googleapis.com

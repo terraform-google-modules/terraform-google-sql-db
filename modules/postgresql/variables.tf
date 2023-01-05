@@ -34,6 +34,11 @@ variable "random_instance_name" {
 variable "database_version" {
   description = "The database version to use"
   type        = string
+
+  validation {
+    condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
+    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\" or \"POSTGRES_14\"."
+  }
 }
 
 // required
@@ -92,6 +97,7 @@ variable "disk_autoresize_limit" {
 
 variable "disk_size" {
   description = "The disk size for the master instance."
+  type        = number
   default     = 10
 }
 
@@ -195,6 +201,7 @@ variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
     name                  = string
+    name_override         = optional(string)
     tier                  = string
     availability_type     = string
     zone                  = string

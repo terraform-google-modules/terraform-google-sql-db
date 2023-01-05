@@ -48,10 +48,10 @@ variable "vpc_network" {
   type        = string
 }
 
-// required
 variable "allocated_ip_range" {
   description = "Existing allocated IP range name for the Private IP CloudSQL instance. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access."
   type        = string
+  default     = null
 }
 
 // Master
@@ -64,6 +64,18 @@ variable "tier" {
 variable "zone" {
   description = "The zone for the master instance, it should be something like: `a`, `c`."
   type        = string
+}
+
+variable "secondary_zone" {
+  type        = string
+  description = "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
+  default     = null
+}
+
+variable "follow_gae_application" {
+  type        = string
+  description = "A Google App Engine application whose zone to remain in. Must be in the same region as this instance."
+  default     = null
 }
 
 variable "activation_policy" {
@@ -180,6 +192,7 @@ variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
     name                  = string
+    name_override         = optional(string)
     tier                  = string
     availability_type     = string
     zone                  = string

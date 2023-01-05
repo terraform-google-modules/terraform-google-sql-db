@@ -24,7 +24,7 @@ resource "google_sql_database_instance" "replicas" {
   provider             = google-beta
   for_each             = local.replicas
   project              = var.project_id
-  name                 = "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}"
+  name                 = each.value.name_override == null || each.value.name_override == "" ? "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}" : each.value.name_override
   database_version     = var.database_version
   region               = join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))
   master_instance_name = google_sql_database_instance.default.name

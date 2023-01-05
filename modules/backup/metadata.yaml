@@ -1,0 +1,142 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-sql-db
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: GCP CloudSQL Backup
+  source:
+    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
+    sourceType: git
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  examples:
+  - name: mssql-public
+    location: examples/mssql-public
+  - name: mysql-backup-create-service-account
+    location: examples/mysql-backup-create-service-account
+  - name: mysql-ha
+    location: examples/mysql-ha
+  - name: mysql-private
+    location: examples/mysql-private
+  - name: mysql-public
+    location: examples/mysql-public
+  - name: postgresql-backup-provided-service-account
+    location: examples/postgresql-backup-provided-service-account
+  - name: postgresql-ha
+    location: examples/postgresql-ha
+  - name: postgresql-public
+    location: examples/postgresql-public
+  - name: postgresql-public-iam
+    location: examples/postgresql-public-iam
+  variables:
+  - name: backup_retention_time
+    description: The number of days backups should be kept
+    type: number
+    default: 30
+    required: false
+  - name: backup_schedule
+    description: The cron schedule to execute the internal backup
+    type: string
+    default: 45 2 * * *
+    required: false
+  - name: compress_export
+    description: Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL
+    type: bool
+    default: true
+    required: false
+  - name: enable_export_backup
+    description: Weather to create exports to GCS Buckets with this module
+    type: bool
+    default: true
+    required: false
+  - name: enable_internal_backup
+    description: Wether to create internal backups with this module
+    type: bool
+    default: true
+    required: false
+  - name: export_databases
+    description: The list of databases that should be exported - if is an empty set all databases will be exported
+    type: set(string)
+    default: []
+    required: false
+  - name: export_schedule
+    description: The cron schedule to execute the export to GCS
+    type: string
+    default: 15 3 * * *
+    required: false
+  - name: export_uri
+    description: The bucket and path uri for exporting to GCS
+    type: string
+    required: true
+  - name: project_id
+    description: The project ID
+    type: string
+    required: true
+  - name: region
+    description: The region where to run the workflow
+    type: string
+    default: us-central1
+    required: false
+  - name: scheduler_timezone
+    description: The Timezone in which the Scheduler Jobs are triggered
+    type: string
+    default: Etc/GMT
+    required: false
+  - name: service_account
+    description: The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that
+    type: string
+    required: false
+  - name: sql_instance
+    description: The name of the SQL instance to backup
+    type: string
+    required: true
+  - name: unique_suffix
+    description: Unique suffix to add to scheduler jobs and workflows names.
+    type: string
+    default: ""
+    required: false
+  outputs:
+  - name: backup_workflow_name
+    description: The name for internal backup workflow
+  - name: export_workflow_name
+    description: The name for export workflow
+  - name: region
+    description: The region for running the scheduler and workflow
+  - name: service_account
+    description: The service account email running the scheduler and workflow
+  roles:
+  - level: Project
+    roles:
+    - roles/cloudsql.admin
+    - roles/compute.networkAdmin
+    - roles/iam.serviceAccountAdmin
+    - roles/resourcemanager.projectIamAdmin
+    - roles/storage.admin
+    - roles/workflows.admin
+    - roles/cloudscheduler.admin
+    - roles/iam.serviceAccountUser
+  services:
+  - cloudresourcemanager.googleapis.com
+  - compute.googleapis.com
+  - servicenetworking.googleapis.com
+  - sqladmin.googleapis.com
+  - iam.googleapis.com
+  - workflows.googleapis.com
+  - cloudscheduler.googleapis.com

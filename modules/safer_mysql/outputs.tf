@@ -81,14 +81,17 @@ output "instance_ip_address" {
 output "primary" {
   value       = module.safer_mysql.primary
   description = "The `google_sql_database_instance` resource representing the primary instance"
+  sensitive   = true
 }
 
 output "replicas" {
   value       = module.safer_mysql.replicas
   description = "A list of `google_sql_database_instance` resources representing the replicas"
+  sensitive   = true
 }
 
 output "instances" {
   value       = module.safer_mysql.instances
   description = "A list of all `google_sql_database_instance` resources we've created"
+  sensitive   = true
 }

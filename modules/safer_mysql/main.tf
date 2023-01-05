@@ -22,6 +22,8 @@ module "safer_mysql" {
   database_version                = var.database_version
   region                          = var.region
   zone                            = var.zone
+  secondary_zone                  = var.secondary_zone
+  follow_gae_application          = var.follow_gae_application
   tier                            = var.tier
   activation_policy               = var.activation_policy
   availability_type               = var.availability_type
