@@ -241,20 +241,6 @@ resource "google_sql_user" "additional_users" {
   deletion_policy = var.user_deletion_policy
 }
 
-resource "google_project_iam_member" "iam_binding" {
-  for_each = {
-    for iu in local.iam_users :
-    "${iu.email} ${iu.is_account_sa}" => iu
-  }
-  project = var.project_id
-  role    = "roles/cloudsql.instanceUser"
-  member = each.value.is_account_sa ? (
-    "serviceAccount:${each.value.email}"
-    ) : (
-    "user:${each.value.email}"
-  )
-}
-
 resource "google_sql_user" "iam_account" {
   for_each = {
     for iu in local.iam_users :
@@ -271,7 +257,6 @@ resource "google_sql_user" "iam_account" {
 
   depends_on = [
     null_resource.module_depends_on,
-    google_project_iam_member.iam_binding,
   ]
   deletion_policy = var.user_deletion_policy
 }
