@@ -128,7 +128,7 @@ variable "pricing_plan" {
 }
 
 variable "maintenance_window_enabled" {
-  description = "Whether to enable maintenance window setting for the instance. Replicas must have this set to false."
+  description = "Whether to enable maintenance window setting for the instance. This does not apply to replicas."
   type        = bool
   default     = true
 }
