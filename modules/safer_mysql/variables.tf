@@ -138,6 +138,16 @@ variable "maintenance_window_update_track" {
   default     = "stable"
 }
 
+variable "deny_maintenance_period" {
+  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
+  type = list(object({
+    end_date   = string
+    start_date = string
+    time       = string
+  }))
+  default = []
+}
+
 variable "database_flags" {
   description = "The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)"
   type = list(object({
