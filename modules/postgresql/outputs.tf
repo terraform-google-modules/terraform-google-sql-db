@@ -103,7 +103,6 @@ output "additional_users" {
     {
       name            = r.name
       password        = r.password
-      random_password = r.random_password
     }
   ]
   sensitive = true
