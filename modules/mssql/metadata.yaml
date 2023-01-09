@@ -68,20 +68,12 @@ spec:
     default: []
     required: false
   - name: additional_users
-    description: A list of users to be created in your cluster
+    description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
     type: |-
       list(object({
-          name     = string
-          password = string
-        }))
-    default: []
-    required: false
-  - name: additional_users_with_random_password
-    description: A list of users, each with random password to be created in your cluster.
-    type: |-
-      list(object({
-          name     = string
-          password = string
+          name            = string
+          password        = string
+          random_password = bool
         }))
     default: []
     required: false
@@ -289,8 +281,6 @@ spec:
     required: false
   outputs:
   - name: additional_users
-    description: List of maps of additional users and passwords
-  - name: additional_users_with_random_password
     description: List of maps of additional users and passwords
   - name: generated_user_password
     description: The auto generated default user password if not input password was provided

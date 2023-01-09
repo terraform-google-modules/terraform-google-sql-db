@@ -12,8 +12,7 @@ The following dependency must be available for SQL Server module:
 | activation\_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
 | active\_directory\_config | Active domain that the SQL instance will join. | `map(string)` | `{}` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
-| additional\_users | A list of users to be created in your cluster | <pre>list(object({<br>    name     = string<br>    password = string<br>  }))</pre> | `[]` | no |
-| additional\_users\_with\_random\_password | A list of users, each with random password to be created in your cluster. | <pre>list(object({<br>    name     = string<br>    password = string<br>  }))</pre> | `[]` | no |
+| additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |
 | backup\_configuration | The database backup configuration. | <pre>object({<br>    binary_log_enabled             = bool<br>    enabled                        = bool<br>    point_in_time_recovery_enabled = bool<br>    start_time                     = string<br>    transaction_log_retention_days = string<br>    retained_backups               = number<br>    retention_unit                 = string<br>  })</pre> | <pre>{<br>  "binary_log_enabled": null,<br>  "enabled": false,<br>  "point_in_time_recovery_enabled": null,<br>  "retained_backups": null,<br>  "retention_unit": null,<br>  "start_time": null,<br>  "transaction_log_retention_days": null<br>}</pre> | no |
 | create\_timeout | The optional timeout that is applied to limit long database creates. | `string` | `"15m"` | no |
@@ -55,7 +54,6 @@ The following dependency must be available for SQL Server module:
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
-| additional\_users\_with\_random\_password | List of maps of additional users and passwords |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | instance\_address | The IPv4 addesses assigned for the master instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |

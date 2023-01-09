@@ -143,16 +143,18 @@ module "mysql" {
 
   additional_users = [
     {
-      name     = "tftest2"
-      password = "abcdefg"
-      host     = "localhost"
-      type     = "BUILT_IN"
+      name            = "tftest2"
+      password        = "abcdefg"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
     },
     {
-      name     = "tftest3"
-      password = "abcdefg"
-      host     = "localhost"
-      type     = "BUILT_IN"
+      name            = "tftest3"
+      password        = "abcdefg"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
     },
   ]
 }

@@ -101,8 +101,9 @@ output "additional_users" {
   description = "List of maps of additional users and passwords"
   value = [for r in google_sql_user.additional_users :
     {
-      name     = r.name
-      password = r.password
+      name            = r.name
+      password        = r.password
+      random_password = r.random_password
     }
   ]
   sensitive = true

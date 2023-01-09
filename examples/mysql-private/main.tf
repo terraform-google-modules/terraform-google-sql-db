@@ -60,16 +60,18 @@ module "safer-mysql-db" {
   // Cloud SQL proxy.
   additional_users = [
     {
-      name     = "app"
-      password = "PaSsWoRd"
-      host     = "localhost"
-      type     = "BUILT_IN"
+      name            = "app"
+      password        = "PaSsWoRd"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
     },
     {
-      name     = "readonly"
-      password = "PaSsWoRd"
-      host     = "localhost"
-      type     = "BUILT_IN"
+      name            = "readonly"
+      password        = "PaSsWoRd"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
     },
   ]
 

@@ -282,9 +282,17 @@ variable "user_password" {
 }
 
 variable "additional_users" {
-  description = "A list of users to be created in your cluster"
-  type        = list(map(any))
-  default     = []
+  description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
+  type = list(object({
+    name            = string
+    password        = string
+    random_password = bool
+  }))
+  default = []
+  validation {
+    condition     = length([for user in var.additional_users : false if user.random_password == true && (user.password != null && user.password != "")]) == 0
+    error_message = "You cannot set both password and random_password, choose one of them."
+  }
 }
 
 variable "create_timeout" {

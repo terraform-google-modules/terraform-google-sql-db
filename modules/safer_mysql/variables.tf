@@ -258,12 +258,13 @@ variable "user_password" {
 }
 
 variable "additional_users" {
-  description = "A list of users to be created in your cluster"
+  description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
   type = list(object({
-    name     = string
-    password = string
-    host     = string
-    type     = string
+    name            = string
+    password        = string
+    host            = string
+    type            = string
+    random_password = bool
   }))
   default = []
 }

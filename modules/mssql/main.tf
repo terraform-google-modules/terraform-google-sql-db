@@ -22,9 +22,8 @@ locals {
     disabled = {}
   }
 
-  databases                  = { for db in var.additional_databases : db.name => db }
-  users                      = { for u in var.additional_users : u.name => u }
-  users_with_random_password = { for u in var.additional_users_with_random_password : u.name => u }
+  databases = { for db in var.additional_databases : db.name => db }
+  users     = { for u in var.additional_users : u.name => u }
 
   retained_backups = lookup(var.backup_configuration, "retained_backups", null)
   retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
@@ -177,8 +176,11 @@ resource "random_password" "user-password" {
 }
 
 resource "random_password" "additional_passwords" {
-  for_each   = local.users_with_random_password
-  length     = 8
+  for_each = local.users
+  keepers = {
+    name = google_sql_database_instance.default.name
+  }
+  length     = 32
   special    = true
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
@@ -195,16 +197,7 @@ resource "google_sql_user" "additional_users" {
   for_each   = local.users
   project    = var.project_id
   name       = each.value.name
-  password   = each.value.password
-  instance   = google_sql_database_instance.default.name
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
-}
-
-resource "google_sql_user" "additional_users_with_random_password" {
-  for_each   = local.users_with_random_password
-  project    = var.project_id
-  name       = each.value.name
-  password   = coalesce(each.value["password"], random_password.additional_passwords[each.value.name].result)
+  password   = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
   instance   = google_sql_database_instance.default.name
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
