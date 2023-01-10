@@ -2,7 +2,7 @@
 
 The following dependency must be available for SQL Server module:
 
-- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin >= 4.22.0
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin >= 4.45.0
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -12,7 +12,7 @@ The following dependency must be available for SQL Server module:
 | activation\_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
 | active\_directory\_config | Active domain that the SQL instance will join. | `map(string)` | `{}` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
-| additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>    type            = string<br>  }))</pre> | `[]` | no |
+| additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |
 | backup\_configuration | The database backup configuration. | <pre>object({<br>    binary_log_enabled             = bool<br>    enabled                        = bool<br>    point_in_time_recovery_enabled = bool<br>    start_time                     = string<br>    transaction_log_retention_days = string<br>    retained_backups               = number<br>    retention_unit                 = string<br>  })</pre> | <pre>{<br>  "binary_log_enabled": null,<br>  "enabled": false,<br>  "point_in_time_recovery_enabled": null,<br>  "retained_backups": null,<br>  "retention_unit": null,<br>  "start_time": null,<br>  "transaction_log_retention_days": null<br>}</pre> | no |
 | create\_timeout | The optional timeout that is applied to limit long database creates. | `string` | `"15m"` | no |
@@ -23,6 +23,7 @@ The following dependency must be available for SQL Server module:
 | db\_name | The name of the default database to create | `string` | `"default"` | no |
 | delete\_timeout | The optional timeout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
+| deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size. | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |

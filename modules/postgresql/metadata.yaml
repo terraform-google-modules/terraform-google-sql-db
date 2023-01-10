@@ -21,7 +21,7 @@ metadata:
 spec:
   title: terraform-google-sql for PostgreSQL
   source:
-    repo: https://github.com/ravisiddhu/terraform-google-sql-db.git
+    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
   version: 13.0.1
   actuationTool:
@@ -69,7 +69,6 @@ spec:
           name            = string
           password        = string
           random_password = bool
-          type            = string
         }))
     default: []
     required: false
@@ -279,7 +278,6 @@ spec:
     type: |-
       list(object({
           name                  = string
-          name_override         = optional(string)
           tier                  = string
           availability_type     = string
           zone                  = string

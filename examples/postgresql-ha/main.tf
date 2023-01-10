@@ -145,14 +145,12 @@ module "pg" {
       password        = "abcdefg"
       host            = "localhost"
       random_password = false
-      type            = "BUILT_IN"
     },
     {
       name            = "tftest3"
       password        = "abcdefg"
       host            = "localhost"
       random_password = false
-      type            = "BUILT_IN"
     },
   ]
 }

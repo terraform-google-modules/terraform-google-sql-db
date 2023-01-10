@@ -21,7 +21,7 @@ metadata:
 spec:
   title: GCP CloudSQL Restore
   source:
-    repo: https://github.com/ravisiddhu/terraform-google-sql-db.git
+    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
   actuationTool:
     type: Terraform

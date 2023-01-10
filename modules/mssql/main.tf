@@ -72,6 +72,14 @@ resource "google_sql_database_instance" "default" {
         }
       }
     }
+    dynamic "deny_maintenance_period" {
+      for_each = var.deny_maintenance_period
+      content {
+        end_date   = lookup(deny_maintenance_period.value, "end_date", null)
+        start_date = lookup(deny_maintenance_period.value, "start_date", null)
+        time       = lookup(deny_maintenance_period.value, "time", null)
+      }
+    }
     dynamic "ip_configuration" {
       for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
       content {
@@ -199,7 +207,6 @@ resource "google_sql_user" "additional_users" {
   name       = each.value.name
   password   = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
   instance   = google_sql_database_instance.default.name
-  type       = coalesce(each.value.type, "BUILT_IN")
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 

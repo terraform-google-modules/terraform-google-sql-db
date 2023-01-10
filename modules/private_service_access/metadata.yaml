@@ -21,7 +21,7 @@ metadata:
 spec:
   title: Submodule for VPC peering Cloud SQL services
   source:
-    repo: https://github.com/ravisiddhu/terraform-google-sql-db.git
+    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
   version: 13.0.1
   actuationTool:

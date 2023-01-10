@@ -146,6 +146,16 @@ variable "user_labels" {
   default     = {}
 }
 
+variable "deny_maintenance_period" {
+  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance)"
+  type = list(object({
+    end_date   = string
+    start_date = string
+    time       = string
+  }))
+  default = []
+}
+
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
@@ -290,11 +300,10 @@ variable "additional_users" {
     name            = string
     password        = string
     random_password = bool
-    type            = string
   }))
   default = []
   validation {
-    condition     = length([for user in var.additional_users : false if(user.random_password == false && (user.password == null || user.password == "") && (user.type != "CLOUD_IAM_USER" && user.type != "CLOUD_IAM_SERVICE_ACCOUNT")) || (user.random_password == true && (user.password != null && user.password != ""))]) == 0
+    condition     = length([for user in var.additional_users : false if(user.random_password == false && (user.password == null || user.password == "")) || (user.random_password == true && (user.password != null && user.password != ""))]) == 0
     error_message = "Password is a requird field for built_in Postgres users and you cannot set both password and random_password, choose one of them."
   }
 }

@@ -9,7 +9,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 |------|-------------|------|---------|:--------:|
 | activation\_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
-| additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>    type            = string<br>  }))</pre> | `[]` | no |
+| additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |
 | backup\_configuration | The backup\_configuration settings subblock for the database setings | <pre>object({<br>    enabled                        = bool<br>    start_time                     = string<br>    location                       = string<br>    point_in_time_recovery_enabled = bool<br>    transaction_log_retention_days = string<br>    retained_backups               = number<br>    retention_unit                 = string<br>  })</pre> | <pre>{<br>  "enabled": false,<br>  "location": null,<br>  "point_in_time_recovery_enabled": false,<br>  "retained_backups": null,<br>  "retention_unit": null,<br>  "start_time": null,<br>  "transaction_log_retention_days": null<br>}</pre> | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"15m"` | no |
@@ -21,6 +21,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | db\_name | The name of the default database to create | `string` | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"15m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
+| deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size. | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |
@@ -60,6 +61,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
+| iam\_user\_emails | The list of the IAM users with the access to the Cloudsql instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
 | instance\_ip\_address | The IPv4 address assigned for the master instance |
