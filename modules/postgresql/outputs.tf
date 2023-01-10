@@ -109,6 +109,11 @@ output "additional_users" {
   sensitive = true
 }
 
+output "iam_user_emails" {
+  description = "The list of the IAM users with the access to the Cloudsql instance"
+  value       = var.iam_user_emails
+}
+
 // Resources
 output "primary" {
   value       = google_sql_database_instance.default
