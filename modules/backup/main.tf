@@ -103,13 +103,15 @@ resource "google_workflows_workflow" "sql_export" {
   project         = var.project_id
   service_account = local.service_account
   source_contents = templatefile("${path.module}/templates/export.yaml.tftpl", {
-    project             = var.project_id
-    instanceName        = var.sql_instance
-    backupRetentionTime = var.backup_retention_time
-    databases           = jsonencode(var.export_databases)
-    gcsBucket           = var.export_uri
-    dbType              = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
-    compressExport      = var.compress_export
+    project                = var.project_id
+    instanceName           = var.sql_instance
+    backupRetentionTime    = var.backup_retention_time
+    databases              = jsonencode(var.export_databases)
+    gcsBucket              = var.export_uri
+    dbType                 = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
+    compressExport         = var.compress_export
+    enableConnectorParams  = var.enable_connector_params
+    connectorParamsTimeout = var.connector_params_timeout
   })
 }
 

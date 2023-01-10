@@ -69,6 +69,10 @@ main:
                         args:
                           project: ${project}
                           instance: ${instanceName}
+                          %{ if enableConnectorParams }
+                          connector_params:
+                            timeout: ${connectorParamsTimeout}
+                          %{ endif }
                           body:
                             exportContext:
                               databases: [$${database}]
@@ -87,4 +91,3 @@ main:
             databases: $${databases}
             uri: $${"${gcsBucket}/${instanceName}-" + backupTime + %{ if compressExport == true }".sql.gz"%{ else }".sql"%{ endif }}
 %{ endif }
-
