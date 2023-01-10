@@ -74,6 +74,7 @@ spec:
           name            = string
           password        = string
           random_password = bool
+          type            = string
         }))
     default: []
     required: false

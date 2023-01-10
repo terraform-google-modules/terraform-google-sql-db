@@ -241,6 +241,7 @@ variable "additional_users" {
     name            = string
     password        = string
     random_password = bool
+    type            = string
   }))
   default = []
   validation {

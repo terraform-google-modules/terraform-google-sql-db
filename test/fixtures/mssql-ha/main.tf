@@ -95,6 +95,7 @@ module "mssql" {
       host            = "localhost"
       instance        = local.instance_name
       random_password = false
+      type            = "BUILT_IN"
     },
     {
       project         = var.project_id
@@ -103,6 +104,7 @@ module "mssql" {
       host            = "localhost"
       instance        = local.instance_name
       random_password = false
+      type            = "BUILT_IN"
     },
   ]
 }

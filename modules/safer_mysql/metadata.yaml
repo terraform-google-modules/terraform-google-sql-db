@@ -242,6 +242,7 @@ spec:
     type: |-
       list(object({
           name                  = string
+          name_override         = optional(string)
           tier                  = string
           availability_type     = string
           zone                  = string

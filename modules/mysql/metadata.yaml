@@ -69,6 +69,8 @@ spec:
           name            = string
           password        = string
           random_password = bool
+          type            = string
+          host            = string
         }))
     default: []
     required: false
@@ -258,6 +260,7 @@ spec:
     type: |-
       list(object({
           name                  = string
+          name_override         = optional(string)
           tier                  = string
           zone                  = string
           availability_type     = string

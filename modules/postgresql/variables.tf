@@ -290,11 +290,12 @@ variable "additional_users" {
     name            = string
     password        = string
     random_password = bool
+    type            = string
   }))
   default = []
   validation {
-    condition     = length([for user in var.additional_users : false if(user.random_password == false && (user.password == null || user.password == "")) || (user.random_password == true && (user.password != null && user.password != ""))]) == 0
-    error_message = "Password is a requird field for Postgres users and you cannot set both password and random_password, choose one of them."
+    condition     = length([for user in var.additional_users : false if(user.random_password == false && (user.password == null || user.password == "") && (user.type != "CLOUD_IAM_USER" && user.type != "CLOUD_IAM_SERVICE_ACCOUNT")) || (user.random_password == true && (user.password != null && user.password != ""))]) == 0
+    error_message = "Password is a requird field for built_in Postgres users and you cannot set both password and random_password, choose one of them."
   }
 }
 

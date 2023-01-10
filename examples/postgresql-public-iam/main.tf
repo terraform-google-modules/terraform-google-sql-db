@@ -58,12 +58,14 @@ module "postgresql-db" {
       password        = "Ex@mp!e1"
       host            = "localhost"
       random_password = false
+      type            = "BUILT_IN"
     },
     {
       name            = "tftest3"
       password        = "Ex@mp!e2"
       host            = "localhost"
       random_password = false
+      type            = "BUILT_IN"
     },
   ]
 

@@ -69,6 +69,7 @@ spec:
           name            = string
           password        = string
           random_password = bool
+          type            = string
         }))
     default: []
     required: false
@@ -238,6 +239,17 @@ spec:
     description: The name of the Cloud SQL resources
     type: string
     required: true
+  - name: password_validation_policy_config
+    description: The password validation policy settings for the database instance.
+    type: |-
+      object({
+          min_length                  = number
+          complexity                  = string
+          reuse_interval              = number
+          disallow_username_substring = bool
+          password_change_interval    = string
+        })
+    required: false
   - name: pricing_plan
     description: The pricing plan for the master instance.
     type: string
@@ -267,6 +279,7 @@ spec:
     type: |-
       list(object({
           name                  = string
+          name_override         = optional(string)
           tier                  = string
           availability_type     = string
           zone                  = string
