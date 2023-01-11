@@ -55,9 +55,10 @@ resource "google_sql_database_instance" "default" {
   deletion_protection = var.deletion_protection
 
   settings {
-    tier              = var.tier
-    activation_policy = var.activation_policy
-    availability_type = var.availability_type
+    tier                        = var.tier
+    activation_policy           = var.activation_policy
+    availability_type           = var.availability_type
+    deletion_protection_enabled = var.deletion_protection_enabled
 
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]

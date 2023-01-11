@@ -83,6 +83,12 @@ variable "availability_type" {
   default     = "ZONAL"
 }
 
+variable "deletion_protection_enabled" {
+  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
 variable "disk_autoresize" {
   description = "Configuration to increase storage size."
   type        = bool
