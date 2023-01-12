@@ -102,3 +102,9 @@ variable "unique_suffix" {
   type        = string
   default     = ""
 }
+
+variable "enable_database_name_log_export" {
+  description = "Whether or not to log database name in the export workflow"
+  type        = bool
+  default     = false
+}

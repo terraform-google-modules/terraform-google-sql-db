@@ -56,6 +56,7 @@ fetch workflows.googleapis.com/Workflow
 | backup\_retention\_time | The number of days backups should be kept | `number` | `30` | no |
 | backup\_schedule | The cron schedule to execute the internal backup | `string` | `"45 2 * * *"` | no |
 | compress\_export | Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL | `bool` | `true` | no |
+| enable\_database\_name\_log\_export | Whether or not to log database name in the export workflow | `bool` | `false` | no |
 | enable\_export\_backup | Weather to create exports to GCS Buckets with this module | `bool` | `true` | no |
 | enable\_internal\_backup | Wether to create internal backups with this module | `bool` | `true` | no |
 | export\_databases | The list of databases that should be exported - if is an empty set all databases will be exported | `set(string)` | `[]` | no |

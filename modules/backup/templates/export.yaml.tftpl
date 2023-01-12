@@ -43,6 +43,12 @@ main:
         value: database
         in: $${databases}
         steps:
+        %{ if databaseNameLog }
+          - log:
+              call: sys.log
+              args:
+                data: $${"Starting backup from database " + database}
+        %{ endif }
           - export database:
               call: googleapis.sqladmin.v1.instances.export
               args:
@@ -60,6 +66,12 @@ main:
         value: database
         in: $${databases}
         steps:
+        %{ if databaseNameLog }
+          - log:
+              call: sys.log
+              args:
+                data: $${"Starting backup from database " + database}
+        %{ endif }
           - exclude System DB:
               switch:
                 - condition: $${database != "tempdb" } #tempdb has to be excluded in an export
