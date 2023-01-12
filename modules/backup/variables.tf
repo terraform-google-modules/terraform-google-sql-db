@@ -114,3 +114,16 @@ variable "unique_suffix" {
   type        = string
   default     = ""
 }
+
+variable "use_sql_instance_replica_in_exporter" {
+  description = "Whether or not to use replica instance on exporter workflow."
+  type        = bool
+  default     = false
+}
+
+
+variable "sql_instance_replica" {
+  description = "The name of the SQL instance replica to export"
+  type        = string
+  default     = null
+}

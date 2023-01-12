@@ -68,7 +68,9 @@ fetch workflows.googleapis.com/Workflow
 | scheduler\_timezone | The Timezone in which the Scheduler Jobs are triggered | `string` | `"Etc/GMT"` | no |
 | service\_account | The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that | `string` | `null` | no |
 | sql\_instance | The name of the SQL instance to backup | `string` | n/a | yes |
+| sql\_instance\_replica | The name of the SQL instance replica to export | `string` | `null` | no |
 | unique\_suffix | Unique suffix to add to scheduler jobs and workflows names. | `string` | `""` | no |
+| use\_sql\_instance\_replica\_in\_exporter | Whether or not to use replica instance on exporter workflow. | `bool` | `false` | no |
 
 ## Outputs
 
