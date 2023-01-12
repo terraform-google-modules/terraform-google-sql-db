@@ -122,7 +122,7 @@ module "pg" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
 - version = "~> 13.0"
 + version = "~> 14.0"
-  
+
   name                 = "test"
   database_version     = "POSTGRES_14"
   project_id           = var.project_id
@@ -134,9 +134,9 @@ module "pg" {
     {
       name            = "john"
       password        = "password"
-+     random_password = false 
++     random_password = false
     }
-  ] 
+  ]
 }
 ```
 
@@ -148,7 +148,7 @@ module "mssql" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mssql"
 - version = "~> 13.0"
 + version = "~> 14.0"
-  
+
   name                 = "test"
   database_version     = "SQLSERVER_2017_STANDARD"
   project_id           = var.project_id
@@ -160,9 +160,9 @@ module "mssql" {
     {
       name            = "john"
       password        = "password"
-+     random_password = false 
++     random_password = false
     }
-  ] 
+  ]
 }
 ```
 
@@ -174,7 +174,7 @@ module "mysql" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
 - version = "~> 13.0"
 + version = "~> 14.0"
-  
+
   name                 = "test"
   database_version     = "MYSQL_8_0"
   project_id           = var.project_id
@@ -188,9 +188,9 @@ module "mysql" {
       password        = "password"
 +     random_password = false
 +     host            = null
-+     type            = null 
++     type            = null
     }
-  ] 
+  ]
 }
 ```
 
@@ -202,7 +202,7 @@ module "smysql" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/safer_mysql"
 - version = "~> 13.0"
 + version = "~> 14.0"
-  
+
   name                 = "test"
   database_version     = "MYSQL_8_0"
   project_id           = var.project_id
@@ -216,8 +216,8 @@ module "smysql" {
       password        = "password"
       type            = "BUILT_IN"
       host            = "%"
-+     random_password = false 
++     random_password = false
     }
-  ] 
+  ]
 }
 ```
