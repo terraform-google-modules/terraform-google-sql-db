@@ -141,14 +141,16 @@ module "pg" {
 
   additional_users = [
     {
-      name     = "tftest2"
-      password = "abcdefg"
-      host     = "localhost"
+      name            = "tftest2"
+      password        = "abcdefg"
+      host            = "localhost"
+      random_password = false
     },
     {
-      name     = "tftest3"
-      password = "abcdefg"
-      host     = "localhost"
+      name            = "tftest3"
+      password        = "abcdefg"
+      host            = "localhost"
+      random_password = false
     },
   ]
 }

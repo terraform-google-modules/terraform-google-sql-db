@@ -166,7 +166,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 |------|-------------|------|---------|:--------:|
 | activation\_policy | The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
-| additional\_users | A list of users to be created in your cluster | <pre>list(object({<br>    name     = string<br>    password = string<br>    host     = string<br>    type     = string<br>  }))</pre> | `[]` | no |
+| additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    host            = string<br>    type            = string<br>    random_password = bool<br>  }))</pre> | `[]` | no |
 | allocated\_ip\_range | Existing allocated IP range name for the Private IP CloudSQL instance. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access. | `string` | `null` | no |
 | assign\_public\_ip | Set to true if the master instance should also have a public IP (less secure). | `string` | `false` | no |
 | availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | `string` | `"REGIONAL"` | no |

@@ -1,6 +1,6 @@
 # Upgrading to SQL DB 14.0.0
 
-The 14.0.0 release of SQL DB is a backward incompatible release. This incompatibility affects `postgresql` submodule that uses IAM authentication.
+The 14.0.0 release of SQL DB is a backward incompatible release. This incompatibility affects `postgresql` submodule that uses IAM authentication. It also affects `additional_users` variable in all 3 modules.
 
 ## Migration Instructions
 
@@ -113,3 +113,111 @@ done
 ```
 
 After IAM bindings are moved, **terraform apply should be without any changes**.
+
+### Added `random_password` field in `additional_users` variable in postgresql module
+This change is in effort to align the behavior of `additional_users` variable in all the modules. Setting `random_password` field generates a random password for the user. Exactly one of `password` or `random_password` should be set.
+
+```diff
+module "pg" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
+- version = "~> 13.0"
++ version = "~> 14.0"
+
+  name                 = "test"
+  database_version     = "POSTGRES_14"
+  project_id           = var.project_id
+  zone                 = "europe-west1-b"
+  region               = "europe-west1"
+  tier                 = "db-custom-1-3840"
+
+  additional_users = [
+    {
+      name            = "john"
+      password        = "password"
++     random_password = false
+    }
+  ]
+}
+```
+
+### Added `random_password` field in `additional_users` variable in mssql module
+This change is in effort to align the behavior of `additional_users` variable in all the modules. Setting `random_password` field generates a random password for the user. At most one of `password` or `random_password` should be set.
+
+```diff
+module "mssql" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/mssql"
+- version = "~> 13.0"
++ version = "~> 14.0"
+
+  name                 = "test"
+  database_version     = "SQLSERVER_2017_STANDARD"
+  project_id           = var.project_id
+  zone                 = "europe-west1-b"
+  region               = "europe-west1"
+  tier                 = "db-custom-1-3840"
+
+  additional_users = [
+    {
+      name            = "john"
+      password        = "password"
++     random_password = false
+    }
+  ]
+}
+```
+
+### Changed the variable type of `additional_users` in mysql module
+This change is in effort to align the behavior of `additional_users` variable in all the modules. Setting `random_password` field generates a random password for the user. At most one of `password` or `random_password` should be set. `user_host` would be the host value for the additional users if the `host` field is set as `null`. You can use `type` to create IAM users.
+
+```diff
+module "mysql" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
+- version = "~> 13.0"
++ version = "~> 14.0"
+
+  name                 = "test"
+  database_version     = "MYSQL_8_0"
+  project_id           = var.project_id
+  zone                 = "europe-west1-b"
+  region               = "europe-west1"
+  tier                 = "db-custom-1-3840"
+
+  additional_users = [
+    {
+      name            = "john"
+      password        = "password"
++     random_password = false
++     host            = null
++     type            = null
+    }
+  ]
+}
+```
+
+### Added `random_password` field in `additional_users` variable in safer_mysql module
+This change is in effort to align the behavior of `additional_users` variable in all the modules. Setting `random_password` field generates a random password for the user. At most one of `password` or `random_password` should be set.
+
+```diff
+module "smysql" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/safer_mysql"
+- version = "~> 13.0"
++ version = "~> 14.0"
+
+  name                 = "test"
+  database_version     = "MYSQL_8_0"
+  project_id           = var.project_id
+  zone                 = "europe-west1-b"
+  region               = "europe-west1"
+  tier                 = "db-custom-1-3840"
+
+  additional_users = [
+    {
+      name            = "john"
+      password        = "password"
+      type            = "BUILT_IN"
+      host            = "%"
++     random_password = false
+    }
+  ]
+}
+```

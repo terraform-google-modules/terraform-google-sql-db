@@ -187,9 +187,8 @@ resource "random_password" "additional_passwords" {
   keepers = {
     name = google_sql_database_instance.default.name
   }
-
   length     = 32
-  special    = false
+  special    = true
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -211,10 +210,10 @@ resource "google_sql_user" "additional_users" {
   for_each = local.users
   project  = var.project_id
   name     = each.value.name
-  password = lookup(each.value, "password", random_password.additional_passwords[each.key].result)
-  host     = lookup(each.value, "host", var.user_host)
+  password = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
+  host     = each.value.host == null ? var.user_host : each.value.host
   instance = google_sql_database_instance.default.name
-  type     = lookup(each.value, "type", "BUILT_IN")
+  type     = coalesce(each.value.type, "BUILT_IN")
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,
