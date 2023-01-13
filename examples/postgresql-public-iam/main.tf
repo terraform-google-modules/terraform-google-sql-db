@@ -54,14 +54,16 @@ module "postgresql-db" {
 
   additional_users = [
     {
-      name     = "tftest2"
-      password = "Ex@mp!e1"
-      host     = "localhost"
+      name            = "tftest2"
+      password        = "Ex@mp!e1"
+      host            = "localhost"
+      random_password = false
     },
     {
-      name     = "tftest3"
-      password = "Ex@mp!e2"
-      host     = "localhost"
+      name            = "tftest3"
+      password        = "Ex@mp!e2"
+      host            = "localhost"
+      random_password = false
     },
   ]
 
