@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -63,11 +63,12 @@ spec:
     default: []
     required: false
   - name: additional_users
-    description: A list of users to be created in your cluster
+    description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
     type: |-
       list(object({
-          name     = string
-          password = string
+          name            = string
+          password        = string
+          random_password = bool
         }))
     default: []
     required: false
@@ -237,6 +238,17 @@ spec:
     description: The name of the Cloud SQL resources
     type: string
     required: true
+  - name: password_validation_policy_config
+    description: The password validation policy settings for the database instance.
+    type: |-
+      object({
+          min_length                  = number
+          complexity                  = string
+          reuse_interval              = number
+          disallow_username_substring = bool
+          password_change_interval    = string
+        })
+    required: false
   - name: pricing_plan
     description: The pricing plan for the master instance.
     type: string

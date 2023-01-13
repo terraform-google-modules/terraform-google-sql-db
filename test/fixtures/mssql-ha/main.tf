@@ -89,18 +89,20 @@ module "mssql" {
 
   additional_users = [
     {
-      project  = var.project_id
-      name     = "tftest2"
-      password = "abcdefg"
-      host     = "localhost"
-      instance = local.instance_name
+      project         = var.project_id
+      name            = "tftest2"
+      password        = "abcdefg"
+      host            = "localhost"
+      instance        = local.instance_name
+      random_password = false
     },
     {
-      project  = var.project_id
-      name     = "tftest3"
-      password = "abcdefg"
-      host     = "localhost"
-      instance = local.instance_name
+      project         = var.project_id
+      name            = "tftest3"
+      password        = "abcdefg"
+      host            = "localhost"
+      instance        = local.instance_name
+      random_password = false
     },
   ]
 }
