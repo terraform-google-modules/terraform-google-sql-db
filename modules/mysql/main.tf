@@ -90,6 +90,16 @@ resource "google_sql_database_instance" "default" {
         time       = lookup(deny_maintenance_period.value, "time", null)
       }
     }
+    dynamic "password_validation_policy" {
+      for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
+
+      content {
+        enable_password_policy      = lookup(password_validation_policy.value, "enable_password_policy", true)
+        min_length                  = lookup(password_validation_policy.value, "min_length", 8)
+        complexity                  = lookup(password_validation_policy.value, "complexity", "COMPLEXITY_DEFAULT")
+        disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", true)
+      }
+    }
     dynamic "ip_configuration" {
       for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
       content {

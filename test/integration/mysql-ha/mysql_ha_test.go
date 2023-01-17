@@ -65,6 +65,12 @@ func TestMySqlHaModule(t *testing.T) {
 			assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 			assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
 
+			// assert password policy settings
+			assert.Equal("COMPLEXITY_DEFAULT", op.Get("settings.passwordValidationPolicy.complexity").String(), "Expected COMPLEXITY_DEFAULT complexity")
+			assert.True(op.Get("settings.passwordValidationPolicy.disallowUsernameSubstring").Bool(), "Expected TRUE disallowUsernameSubstring")
+			assert.True(op.Get("settings.passwordValidationPolicy.enablePasswordPolicy").Bool(), "Expected TRUE enablePasswordPolicy")
+			assert.Equal(int64(8), op.Get("settings.passwordValidationPolicy.minLength").Int(), "Expected 8 minLength")
+
 			// master specific validation
 			if instance == mySql.GetStringOutput("name") {
 				// assert general database settings

@@ -144,14 +144,14 @@ module "mysql" {
   additional_users = [
     {
       name            = "tftest2"
-      password        = "abcdefg"
+      password        = "Example!12345"
       host            = "localhost"
       type            = "BUILT_IN"
       random_password = false
     },
     {
       name            = "tftest3"
-      password        = "abcdefg"
+      password        = "Example!12345"
       host            = "localhost"
       type            = "BUILT_IN"
       random_password = false

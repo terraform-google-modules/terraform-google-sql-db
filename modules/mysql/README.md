@@ -37,6 +37,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | `string` | `"canary"` | no |
 | module\_depends\_on | List of modules or resources this module depends on. | `list(any)` | `[]` | no |
 | name | The name of the Cloud SQL resources | `string` | n/a | yes |
+| password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    min_length                  = number<br>    complexity                  = string<br>    disallow_username_substring = bool<br>  })</pre> | `null` | no |
 | pricing\_plan | The pricing plan for the master instance. | `string` | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |

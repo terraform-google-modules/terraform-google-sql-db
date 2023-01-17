@@ -215,6 +215,16 @@ variable "ip_configuration" {
   }
 }
 
+variable "password_validation_policy_config" {
+  description = "The password validation policy settings for the database instance."
+  type = object({
+    min_length                  = number
+    complexity                  = string
+    disallow_username_substring = bool
+  })
+  default = null
+}
+
 // Read Replicas
 variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
