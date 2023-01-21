@@ -199,9 +199,9 @@ spec:
     type: string
     required: false
   - name: iam_user_emails
-    description: A list of IAM users to be created in your cluster
-    type: list(string)
-    default: []
+    description: A map of name to IAM user email addresses to be created in your cluster
+    type: map(string)
+    default: {}
     required: false
   - name: insights_config
     description: The insights_config settings for the database.

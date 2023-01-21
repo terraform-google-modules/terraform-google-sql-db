@@ -315,9 +315,9 @@ variable "additional_users" {
 }
 
 variable "iam_user_emails" {
-  description = "A list of IAM users to be created in your cluster"
-  type        = list(string)
-  default     = []
+  description = "A map of name to IAM user email addresses to be created in your cluster"
+  type        = map(string)
+  default     = {}
 }
 
 variable "create_timeout" {
