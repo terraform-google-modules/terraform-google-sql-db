@@ -68,6 +68,13 @@ module "mysql" {
     ]
   }
 
+  password_validation_policy_config = {
+    enable_password_policy      = true
+    complexity                  = "COMPLEXITY_DEFAULT"
+    disallow_username_substring = true
+    min_length                  = 8
+  }
+
   backup_configuration = {
     enabled                        = true
     binary_log_enabled             = true
@@ -139,7 +146,8 @@ module "mysql" {
   ]
 
   user_name     = "tftest"
-  user_password = "foobar"
+  user_password = "Example!12345"
+  root_password = ".5nHITPioEJk^k}="
 
   additional_users = [
     {

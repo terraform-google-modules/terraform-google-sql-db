@@ -40,6 +40,11 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
+resource "random_password" "root-password" {
+  length  = 8
+  special = true
+}
+
 resource "google_sql_database_instance" "default" {
   provider            = google-beta
   project             = var.project_id
@@ -48,6 +53,7 @@ resource "google_sql_database_instance" "default" {
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection
+  root_password       = coalesce(var.root_password, random_password.root-password.result)
 
   settings {
     tier                        = var.tier
@@ -94,10 +100,10 @@ resource "google_sql_database_instance" "default" {
       for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
 
       content {
-        enable_password_policy      = lookup(password_validation_policy.value, "enable_password_policy", true)
-        min_length                  = lookup(password_validation_policy.value, "min_length", 8)
-        complexity                  = lookup(password_validation_policy.value, "complexity", "COMPLEXITY_DEFAULT")
-        disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", true)
+        enable_password_policy      = lookup(password_validation_policy.value, "enable_password_policy", null)
+        min_length                  = lookup(password_validation_policy.value, "min_length", null)
+        complexity                  = lookup(password_validation_policy.value, "complexity", null)
+        disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", null)
       }
     }
     dynamic "ip_configuration" {
@@ -188,7 +194,7 @@ resource "random_password" "user-password" {
   }
 
   length     = 32
-  special    = false
+  special    = true
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 

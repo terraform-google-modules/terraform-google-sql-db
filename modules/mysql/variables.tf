@@ -218,6 +218,7 @@ variable "ip_configuration" {
 variable "password_validation_policy_config" {
   description = "The password validation policy settings for the database instance."
   type = object({
+    enable_password_policy      = bool
     min_length                  = number
     complexity                  = string
     disallow_username_substring = bool
@@ -299,6 +300,12 @@ variable "user_host" {
   description = "The host for the default user"
   type        = string
   default     = "%"
+}
+
+variable "root_password" {
+  description = "Mysql password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  type        = string
+  default     = ""
 }
 
 variable "user_password" {
