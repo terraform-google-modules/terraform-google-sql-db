@@ -40,11 +40,6 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
-resource "random_password" "root-password" {
-  length  = 8
-  special = true
-}
-
 resource "google_sql_database_instance" "default" {
   provider            = google-beta
   project             = var.project_id
@@ -53,7 +48,7 @@ resource "google_sql_database_instance" "default" {
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection
-  root_password       = coalesce(var.root_password, random_password.root-password.result)
+  root_password       = var.root_password ? var.root_password : null
 
   settings {
     tier                        = var.tier
