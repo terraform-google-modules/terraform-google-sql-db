@@ -145,6 +145,21 @@ spec:
     type: bool
     default: true
     required: false
+  - name: deletion_protection_enabled
+    description: Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform).
+    type: bool
+    default: false
+    required: false
+  - name: deny_maintenance_period
+    description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance)
+    type: |-
+      list(object({
+          end_date   = string
+          start_date = string
+          time       = string
+        }))
+    default: []
+    required: false
   - name: disk_autoresize
     description: Configuration to increase storage size.
     type: bool
@@ -278,6 +293,7 @@ spec:
     type: |-
       list(object({
           name                  = string
+          name_override         = optional(string)
           tier                  = string
           availability_type     = string
           zone                  = string
@@ -348,6 +364,8 @@ spec:
     description: List of maps of additional users and passwords
   - name: generated_user_password
     description: The auto generated default user password if not input password was provided
+  - name: iam_user_emails
+    description: The list of the IAM users with the access to the Cloudsql instance
   - name: instance_connection_name
     description: The connection name of the master instance to be used in connection strings
   - name: instance_first_ip_address
