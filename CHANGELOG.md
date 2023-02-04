@@ -10,6 +10,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### ⚠ BREAKING CHANGES
 
+* Requires [Terraform](https://www.terraform.io/downloads.html) >= 1.3.0
 * Add pwd validation policy for mysql modules ([#409](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/409))
 * adds settings.deletion_protection_enabled to modules ([#404](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/404))
 * Aligned the behaviour of additional_users resource in all 3 Cloud SQL instance modules. ([#398](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/398))

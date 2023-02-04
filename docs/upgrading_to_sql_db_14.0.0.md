@@ -222,6 +222,6 @@ module "smysql" {
 }
 ```
 
-### Made `name_override` optional in the `read_replica` object
+### [Terraform](https://www.terraform.io/downloads.html) >= 1.3.0 is required as `name_override` is made optional in the `read_replica` object
 The [`name_override`](https://github.com/terraform-google-modules/terraform-google-sql-db/blob/master/modules/postgresql/variables.tf#L232) attribute for [`read_replica`](https://github.com/terraform-google-modules/terraform-google-sql-db/blob/master/modules/postgresql/variables.tf#L228) is optional now. If passed, the name for the read replica will be set as such. Since [optional attributes](https://developer.hashicorp.com/terraform/language/expressions/type-constraints#optional-object-type-attributes)
 is a version 1.3 feature, the configuration will fail if the pinned version is < 1.3.
