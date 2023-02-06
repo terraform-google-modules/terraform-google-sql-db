@@ -15,7 +15,7 @@
  */
 
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.3"
   required_providers {
     null = {
       source  = "hashicorp/null"
@@ -36,10 +36,10 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v13.0.1"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v14.0.0"
   }
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v13.0.1"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v14.0.0"
   }
 
 }
