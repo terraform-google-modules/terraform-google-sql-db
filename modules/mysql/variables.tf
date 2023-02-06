@@ -383,3 +383,9 @@ variable "enable_default_user" {
   type        = bool
   default     = true
 }
+
+variable "enable_random_password_special" {
+  description = "Enable special characters in generated random passwords."
+  type        = bool
+  default     = false
+}

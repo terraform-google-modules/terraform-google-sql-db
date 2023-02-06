@@ -385,3 +385,9 @@ variable "user_deletion_policy" {
   type        = string
   default     = null
 }
+
+variable "enable_random_password_special" {
+  description = "Enable special characters in generated random passwords."
+  type        = bool
+  default     = false
+}
