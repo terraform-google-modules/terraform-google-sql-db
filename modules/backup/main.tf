@@ -72,7 +72,7 @@ resource "google_workflows_workflow" "sql_backup" {
 }
 
 resource "google_cloud_scheduler_job" "sql_backup" {
-  count       = var.enable_internal_backup ? 1 : 0
+  count       = var.enable_internal_backup && !var.disable_cloud_scheduler ? 1 : 0
   name        = "sql-backup-${var.sql_instance}${var.unique_suffix}"
   project     = var.project_id
   region      = var.region
@@ -114,7 +114,7 @@ resource "google_workflows_workflow" "sql_export" {
 }
 
 resource "google_cloud_scheduler_job" "sql_export" {
-  count       = var.enable_export_backup ? 1 : 0
+  count       = var.enable_export_backup && !var.disable_cloud_scheduler ? 1 : 0
   name        = "sql-export-${var.sql_instance}${var.unique_suffix}"
   project     = var.project_id
   region      = var.region

@@ -102,3 +102,9 @@ variable "unique_suffix" {
   type        = string
   default     = ""
 }
+
+variable "disable_cloud_scheduler" {
+  description = "Wether to disable Cloud Scheduler with this module. Usefull when regions does not support Cloud Scheduler. The worflows will have to be triggered manually."
+  type        = bool
+  default     = false
+}
