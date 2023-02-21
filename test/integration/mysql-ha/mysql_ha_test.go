@@ -94,6 +94,12 @@ func TestMySqlHaModule(t *testing.T) {
 				assert.Equal(int64(365), op.Get("settings.backupConfiguration.backupRetentionSettings.retainedBackups").Int(), "Expected 365 backupConfigurationRetainedBackups")
 				assert.Equal("COUNT", op.Get("settings.backupConfiguration.backupRetentionSettings.retentionUnit").String(), "Expected COUNT backupConfigurationRetentionUnit")
 
+				// assert password policy settings
+				assert.True(op.Get("settings.passwordValidationPolicy.enablePasswordPolicy").Bool(), "Expected TRUE enablePasswordPolicy")
+				assert.Equal("COMPLEXITY_DEFAULT", op.Get("settings.passwordValidationPolicy.complexity").String(), "Expected COMPLEXITY_DEFAULT complexity")
+				assert.True(op.Get("settings.passwordValidationPolicy.disallowUsernameSubstring").Bool(), "Expected TRUE disallowUsernameSubstring")
+				assert.Equal(int64(8), op.Get("settings.passwordValidationPolicy.minLength").Int(), "Expected 8 minLength")
+
 				// assert users
 				op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", mySql.GetStringOutput("name"), mySql.GetStringOutput("project_id")))
 				assert.Equal(3, len(op.Array()), "Expected at least 3 users")

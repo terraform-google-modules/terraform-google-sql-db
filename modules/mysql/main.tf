@@ -48,6 +48,7 @@ resource "google_sql_database_instance" "default" {
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection
+  root_password       = var.root_password != "" ? var.root_password : null
 
   settings {
     tier                        = var.tier
@@ -88,6 +89,16 @@ resource "google_sql_database_instance" "default" {
         end_date   = lookup(deny_maintenance_period.value, "end_date", null)
         start_date = lookup(deny_maintenance_period.value, "start_date", null)
         time       = lookup(deny_maintenance_period.value, "time", null)
+      }
+    }
+    dynamic "password_validation_policy" {
+      for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
+
+      content {
+        enable_password_policy      = lookup(password_validation_policy.value, "enable_password_policy", null)
+        min_length                  = lookup(password_validation_policy.value, "min_length", null)
+        complexity                  = lookup(password_validation_policy.value, "complexity", null)
+        disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", null)
       }
     }
     dynamic "ip_configuration" {
@@ -178,7 +189,7 @@ resource "random_password" "user-password" {
   }
 
   length     = 32
-  special    = false
+  special    = var.enable_random_password_special
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -188,7 +199,7 @@ resource "random_password" "additional_passwords" {
     name = google_sql_database_instance.default.name
   }
   length     = 32
-  special    = true
+  special    = var.enable_random_password_special
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 

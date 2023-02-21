@@ -215,6 +215,17 @@ variable "ip_configuration" {
   }
 }
 
+variable "password_validation_policy_config" {
+  description = "The password validation policy settings for the database instance."
+  type = object({
+    enable_password_policy      = bool
+    min_length                  = number
+    complexity                  = string
+    disallow_username_substring = bool
+  })
+  default = null
+}
+
 // Read Replicas
 variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
@@ -291,6 +302,12 @@ variable "user_host" {
   default     = "%"
 }
 
+variable "root_password" {
+  description = "Mysql password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  type        = string
+  default     = ""
+}
+
 variable "user_password" {
   description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
   type        = string
@@ -365,4 +382,10 @@ variable "enable_default_user" {
   description = "Enable or disable the creation of the default user"
   type        = bool
   default     = true
+}
+
+variable "enable_random_password_special" {
+  description = "Enable special characters in generated random passwords."
+  type        = bool
+  default     = false
 }
