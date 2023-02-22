@@ -189,7 +189,7 @@ resource "random_password" "user-password" {
   }
 
   length     = 32
-  special    = true
+  special    = var.enable_random_password_special
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -199,7 +199,7 @@ resource "random_password" "additional_passwords" {
     name = google_sql_database_instance.default.name
   }
   length     = 32
-  special    = true
+  special    = var.enable_random_password_special
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 

@@ -274,13 +274,13 @@ variable "root_password" {
 variable "create_timeout" {
   description = "The optional timeout that is applied to limit long database creates."
   type        = string
-  default     = "15m"
+  default     = "30m"
 }
 
 variable "update_timeout" {
   description = "The optional timeout that is applied to limit long database updates."
   type        = string
-  default     = "15m"
+  default     = "30m"
 }
 
 variable "delete_timeout" {
