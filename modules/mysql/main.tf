@@ -170,6 +170,11 @@ resource "google_sql_database" "default" {
   instance   = google_sql_database_instance.default.name
   charset    = var.db_charset
   collation  = var.db_collation
+
+  lifecycle {
+    prevent_destroy = var.db_prevent_destroy
+  }
+
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
