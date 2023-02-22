@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [14.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v14.0.0...v14.0.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* make special chars opt in for generated passwords ([#421](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/421)) ([1c9ce24](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/1c9ce24b910802b58409731a99bca28135b29d42))
+* updates the TF version constraint to 1.3 ([#419](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/419)) ([add16eb](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/add16eb6969334bdf85d0754467b0beea4a36db2))
+
 ## [14.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v13.0.1...v14.0.0) (2023-01-27)
 
 

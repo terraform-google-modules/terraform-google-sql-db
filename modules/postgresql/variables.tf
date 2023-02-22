@@ -323,19 +323,19 @@ variable "iam_user_emails" {
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
-  default     = "15m"
+  default     = "30m"
 }
 
 variable "update_timeout" {
   description = "The optional timout that is applied to limit long database updates."
   type        = string
-  default     = "15m"
+  default     = "30m"
 }
 
 variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
-  default     = "15m"
+  default     = "30m"
 }
 
 variable "encryption_key_name" {
