@@ -164,12 +164,12 @@ resource "google_sql_database_instance" "default" {
 }
 
 resource "google_sql_database" "default" {
-  count      = var.enable_default_db ? 1 : 0
-  name       = var.db_name
-  project    = var.project_id
-  instance   = google_sql_database_instance.default.name
-  charset    = var.db_charset
-  collation  = var.db_collation
+  count     = var.enable_default_db ? 1 : 0
+  name      = var.db_name
+  project   = var.project_id
+  instance  = google_sql_database_instance.default.name
+  charset   = var.db_charset
+  collation = var.db_collation
 
   lifecycle {
     prevent_destroy = var.db_prevent_destroy
