@@ -41,7 +41,7 @@ resource "google_sql_database_instance" "replicas" {
     availability_type = lookup(each.value, "availability_type", var.availability_type)
 
     dynamic "ip_configuration" {
-      for_each = [lookup(each.value, "ip_configuration", {})]
+      for_each = [lookup(each.value, "ip_configuration", var.ip_configuration)]
       content {
         ipv4_enabled       = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network    = lookup(ip_configuration.value, "private_network", null)
@@ -90,7 +90,7 @@ resource "google_sql_database_instance" "replicas" {
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
 
     dynamic "database_flags" {
-      for_each = lookup(each.value, "database_flags", [])
+      for_each = lookup(each.value, "database_flags", var.database_flags)
       content {
         name  = lookup(database_flags.value, "name", null)
         value = lookup(database_flags.value, "value", null)
