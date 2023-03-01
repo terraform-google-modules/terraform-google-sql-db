@@ -172,7 +172,7 @@ resource "google_sql_database" "default" {
   collation = var.db_collation
 
   lifecycle {
-    prevent_destroy = var.db_prevent_destroy
+    prevent_destroy = true
   }
 
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]

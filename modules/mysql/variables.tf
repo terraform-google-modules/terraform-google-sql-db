@@ -389,9 +389,3 @@ variable "enable_random_password_special" {
   type        = bool
   default     = false
 }
-
-variable "db_prevent_destroy" {
-  description = "Enable or disable prevent_destroy on default database"
-  type        = bool
-  default     = true
-}
