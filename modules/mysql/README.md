@@ -20,7 +20,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | db\_name | The name of the default database to create | `string` | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"10m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
-| deletion\_protection\_enabled | Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
+| deletion\_protection\_enabled | Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
@@ -43,6 +43,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
 | read\_replica\_deletion\_protection | Used to block Terraform from deleting replica SQL Instances. | `bool` | `false` | no |
+| read\_replica\_deletion\_protection\_enabled | Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | read\_replica\_name\_suffix | The optional suffix to add to the read instance name | `string` | `""` | no |
 | read\_replicas | List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption\_key\_name = null | <pre>list(object({<br>    name                  = string<br>    name_override         = optional(string)<br>    tier                  = string<br>    zone                  = string<br>    availability_type     = string<br>    disk_type             = string<br>    disk_autoresize       = bool<br>    disk_autoresize_limit = number<br>    disk_size             = string<br>    user_labels           = map(string)<br>    database_flags = list(object({<br>      name  = string<br>      value = string<br>    }))<br>    ip_configuration = object({<br>      authorized_networks = list(map(string))<br>      ipv4_enabled        = bool<br>      private_network     = string<br>      require_ssl         = bool<br>      allocated_ip_range  = string<br>    })<br>    encryption_key_name = string<br>  }))</pre> | `[]` | no |
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |

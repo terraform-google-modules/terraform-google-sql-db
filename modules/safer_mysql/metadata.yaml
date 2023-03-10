@@ -152,6 +152,11 @@ spec:
     type: bool
     default: true
     required: false
+  - name: deletion_protection_enabled
+    description: Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+    type: bool
+    default: false
+    required: false
   - name: disk_autoresize
     description: Configuration to increase storage size
     type: bool
@@ -229,6 +234,11 @@ spec:
     required: false
   - name: read_replica_deletion_protection
     description: Used to block Terraform from deleting replica SQL Instances.
+    type: bool
+    default: false
+    required: false
+  - name: read_replica_deletion_protection_enabled
+    description: Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
     type: bool
     default: false
     required: false
