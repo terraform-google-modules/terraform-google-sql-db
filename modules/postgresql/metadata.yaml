@@ -198,8 +198,8 @@ spec:
     description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
     type: string
     required: false
-  - name: iam_user_emails
-    description: A map of name to IAM user email addresses to be created in your cluster
+  - name: iam_users
+    description: A list of IAM users to be created in your CloudSQL instance
     type: map(string)
     default: {}
     required: false
@@ -364,8 +364,8 @@ spec:
     description: List of maps of additional users and passwords
   - name: generated_user_password
     description: The auto generated default user password if not input password was provided
-  - name: iam_user_emails
-    description: The list of the IAM users with the access to the Cloudsql instance
+  - name: iam_users
+    description: The list of the IAM users with access to the CloudSQL instance
   - name: instance_connection_name
     description: The connection name of the master instance to be used in connection strings
   - name: instance_first_ip_address

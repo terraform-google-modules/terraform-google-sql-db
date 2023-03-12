@@ -27,9 +27,9 @@ locals {
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
   iam_users = {
-    for k, iu in var.iam_user_emails : k => {
-      email         = iu,
-      is_account_sa = trimsuffix(iu, "gserviceaccount.com") == iu ? false : true
+    for user in var.iam_users : user.id => {
+      email         = user.email,
+      is_account_sa = trimsuffix(user.email, "gserviceaccount.com") == user.email ? false : true
     }
   }
 
