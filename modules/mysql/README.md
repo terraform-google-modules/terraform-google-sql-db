@@ -12,13 +12,13 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>    type            = string<br>    host            = string<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | `string` | `"REGIONAL"` | no |
 | backup\_configuration | The backup\_configuration settings subblock for the database setings | <pre>object({<br>    binary_log_enabled             = bool<br>    enabled                        = bool<br>    start_time                     = string<br>    location                       = string<br>    transaction_log_retention_days = string<br>    retained_backups               = number<br>    retention_unit                 = string<br>  })</pre> | <pre>{<br>  "binary_log_enabled": false,<br>  "enabled": false,<br>  "location": null,<br>  "retained_backups": null,<br>  "retention_unit": null,<br>  "start_time": null,<br>  "transaction_log_retention_days": null<br>}</pre> | no |
-| create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"10m"` | no |
+| create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"30m"` | no |
 | database\_flags | List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'utf8\_general\_ci' | `string` | `""` | no |
 | db\_name | The name of the default database to create | `string` | `"default"` | no |
-| delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"10m"` | no |
+| delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | deletion\_protection\_enabled | Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
@@ -28,6 +28,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
+| enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
@@ -49,7 +50,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | root\_password | Mysql password for the root user. If not set, a random one will be generated and available in the root\_password output variable. | `string` | `""` | no |
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | tier | The tier for the master instance. | `string` | `"db-n1-standard-1"` | no |
-| update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"10m"` | no |
+| update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_host | The host for the default user | `string` | `"%"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |

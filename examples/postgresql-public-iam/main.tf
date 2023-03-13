@@ -44,6 +44,7 @@ module "postgresql-db" {
     password_change_interval = "3600s"
     reuse_interval           = 1
   }
+  enable_random_password_special = true
 
   database_flags = [
     {

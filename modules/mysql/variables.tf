@@ -333,19 +333,19 @@ variable "additional_users" {
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
-  default     = "10m"
+  default     = "30m"
 }
 
 variable "update_timeout" {
   description = "The optional timout that is applied to limit long database updates."
   type        = string
-  default     = "10m"
+  default     = "30m"
 }
 
 variable "delete_timeout" {
   description = "The optional timout that is applied to limit long database deletes."
   type        = string
-  default     = "10m"
+  default     = "30m"
 }
 
 variable "encryption_key_name" {
@@ -382,4 +382,10 @@ variable "enable_default_user" {
   description = "Enable or disable the creation of the default user"
   type        = bool
   default     = true
+}
+
+variable "enable_random_password_special" {
+  description = "Enable special characters in generated random passwords."
+  type        = bool
+  default     = false
 }
