@@ -19,7 +19,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'utf8\_general\_ci' | `string` | `""` | no |
 | db\_name | The name of the default database to create | `string` | `"default"` | no |
-| delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"10m"` | no |
+| delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | deletion\_protection\_enabled | Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
@@ -51,7 +51,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | root\_password | Mysql password for the root user. If not set, a random one will be generated and available in the root\_password output variable. | `string` | `""` | no |
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | tier | The tier for the master instance. | `string` | `"db-n1-standard-1"` | no |
-| update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"10m"` | no |
+| update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_host | The host for the default user | `string` | `"%"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |
