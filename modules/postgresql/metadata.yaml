@@ -264,6 +264,17 @@ spec:
           password_change_interval    = string
         })
     required: false
+  - name: replica_password_validation_policy_config
+    description: The password validation policy settings for the replica database instance.
+    type: |-
+      object({
+          min_length                  = number
+          complexity                  = string
+          reuse_interval              = number
+          disallow_username_substring = bool
+          password_change_interval    = string
+        })
+    required: false
   - name: pricing_plan
     description: The pricing plan for the master instance.
     type: string
