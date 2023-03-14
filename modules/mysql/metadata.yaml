@@ -103,7 +103,7 @@ spec:
   - name: connector_enforcement
     description: Force the client to use the connector. See [more details](https://cloud.google.com/sql/docs/mysql/connect-connectors)
     type: bool
-    default: true
+    default: false
     required: false
   - name: create_timeout
     description: The optional timout that is applied to limit long database creates.
