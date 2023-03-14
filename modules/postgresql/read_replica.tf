@@ -68,7 +68,6 @@ resource "google_sql_database_instance" "replicas" {
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
       }
     }
-    
     disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
     disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
     disk_size             = lookup(each.value, "disk_size", var.disk_size)
