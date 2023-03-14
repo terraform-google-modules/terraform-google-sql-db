@@ -100,6 +100,11 @@ spec:
       start_time: null
       transaction_log_retention_days: null
     required: false
+  - name: connector_enforcement
+    description: Force the client to use the connector. See [more details](https://cloud.google.com/sql/docs/mysql/connect-connectors)
+    type: bool
+    default: false
+    required: false
   - name: create_timeout
     description: The optional timout that is applied to limit long database creates.
     type: string
