@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [14.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v14.0.1...v14.1.0) (2023-03-15)
+
+
+### Features
+
+* increased timeout to 30m to support micro instances also. ([#425](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/425)) ([5ed6288](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5ed6288d064e4cb18d435ab7e740ae9d8ed200b8))
+* make connector enforcement configurable ([#439](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/439)) ([2df794b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/2df794beefdbea5737e6ebd848c7ebecd4ec9a12))
+
+
+### Bug Fixes
+
+* random password for default user and additional users will also follow password validation policy ([#443](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/443)) ([0ceb0ed](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0ceb0ed1fdd5fb12129ded7fff7eebf9bb3042fe))
+
 ## [14.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v14.0.0...v14.0.1) (2023-02-10)
 
 
