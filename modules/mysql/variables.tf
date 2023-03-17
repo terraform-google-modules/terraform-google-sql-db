@@ -395,3 +395,9 @@ variable "enable_random_password_special" {
   type        = bool
   default     = false
 }
+
+variable "connector_enforcement" {
+  description = "Enforce that clients use the connector library"
+  type        = bool
+  default     = false
+}
