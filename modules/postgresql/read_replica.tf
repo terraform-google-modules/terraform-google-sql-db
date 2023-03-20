@@ -69,20 +69,6 @@ resource "google_sql_database_instance" "replicas" {
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
       }
     }
-
-    dynamic "password_validation_policy" {
-      for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
-
-      content {
-        enable_password_policy      = true
-        min_length                  = lookup(password_validation_policy.value, "min_length", 8)
-        complexity                  = lookup(password_validation_policy.value, "complexity", "COMPLEXITY_DEFAULT")
-        reuse_interval              = lookup(password_validation_policy.value, "reuse_interval", null)
-        disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", true)
-        password_change_interval    = lookup(password_validation_policy.value, "password_change_interval", null)
-      }
-    }
-
     disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
     disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
     disk_size             = lookup(each.value, "disk_size", var.disk_size)
