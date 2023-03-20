@@ -205,7 +205,7 @@ spec:
           id    = string
           email = string
         }))
-    default: {}
+    default: []
     required: false
   - name: insights_config
     description: The insights_config settings for the database.
