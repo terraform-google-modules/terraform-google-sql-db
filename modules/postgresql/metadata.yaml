@@ -200,7 +200,11 @@ spec:
     required: false
   - name: iam_users
     description: A list of IAM users to be created in your CloudSQL instance
-    type: map(string)
+    type: |-
+      list(object({
+          id    = string
+          email = string
+        }))
     default: {}
     required: false
   - name: insights_config
