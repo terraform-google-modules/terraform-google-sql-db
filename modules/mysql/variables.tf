@@ -200,18 +200,20 @@ variable "insights_config" {
 variable "ip_configuration" {
   description = "The ip_configuration settings subblock"
   type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-    allocated_ip_range  = string
+    authorized_networks                           = list(map(string))
+    ipv4_enabled                                  = bool
+    private_network                               = string
+    require_ssl                                   = bool
+    allocated_ip_range                            = string
+    enable_private_path_for_google_cloud_services = optional(bool)
   })
   default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-    allocated_ip_range  = null
+    authorized_networks                           = []
+    ipv4_enabled                                  = true
+    private_network                               = null
+    require_ssl                                   = null
+    allocated_ip_range                            = null
+    enable_private_path_for_google_cloud_services = false
   }
 }
 
