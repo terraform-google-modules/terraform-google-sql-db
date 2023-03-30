@@ -23,10 +23,10 @@ spec:
   source:
     repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
-  version: 13.0.1
+  version: 14.1.0
   actuationTool:
     type: Terraform
-    version: '>= 0.13'
+    version: '>= 1.3'
   examples:
   - name: mssql-public
     location: examples/mssql-public
@@ -101,7 +101,7 @@ spec:
   - name: create_timeout
     description: The optional timout that is applied to limit long database creates.
     type: string
-    default: 15m
+    default: 30m
     required: false
   - name: database_deletion_policy
     description: 'The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: "ABANDON".'
@@ -138,7 +138,7 @@ spec:
   - name: delete_timeout
     description: The optional timout that is applied to limit long database deletes.
     type: string
-    default: 15m
+    default: 30m
     required: false
   - name: deletion_protection
     description: Used to block Terraform from deleting a SQL Instance.
@@ -190,6 +190,11 @@ spec:
     type: bool
     default: true
     required: false
+  - name: enable_random_password_special
+    description: Enable special characters in generated random passwords.
+    type: bool
+    default: false
+    required: false
   - name: encryption_key_name
     description: The full path to the encryption key used for the CMEK disk encryption
     type: string
@@ -220,15 +225,17 @@ spec:
     description: The ip configuration for the master instances.
     type: |-
       object({
-          authorized_networks = list(map(string))
-          ipv4_enabled        = bool
-          private_network     = string
-          require_ssl         = bool
-          allocated_ip_range  = string
+          authorized_networks                           = list(map(string))
+          ipv4_enabled                                  = bool
+          private_network                               = string
+          require_ssl                                   = bool
+          allocated_ip_range                            = string
+          enable_private_path_for_google_cloud_services = optional(bool)
         })
     default:
       allocated_ip_range: null
       authorized_networks: []
+      enable_private_path_for_google_cloud_services: false
       ipv4_enabled: true
       private_network: null
       require_ssl: null
@@ -338,7 +345,7 @@ spec:
   - name: update_timeout
     description: The optional timout that is applied to limit long database updates.
     type: string
-    default: 15m
+    default: 30m
     required: false
   - name: user_deletion_policy
     description: 'The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON".'
