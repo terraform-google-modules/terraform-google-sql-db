@@ -59,6 +59,7 @@ resource "google_sql_database_instance" "default" {
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
     connector_enforcement       = local.connector_enforcement
+
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
       content {
@@ -108,10 +109,11 @@ resource "google_sql_database_instance" "default" {
     dynamic "ip_configuration" {
       for_each = [local.ip_configurations[local.ip_configuration_enabled ? "enabled" : "disabled"]]
       content {
-        ipv4_enabled       = lookup(ip_configuration.value, "ipv4_enabled", null)
-        private_network    = lookup(ip_configuration.value, "private_network", null)
-        require_ssl        = lookup(ip_configuration.value, "require_ssl", null)
-        allocated_ip_range = lookup(ip_configuration.value, "allocated_ip_range", null)
+        ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
+        private_network                               = lookup(ip_configuration.value, "private_network", null)
+        require_ssl                                   = lookup(ip_configuration.value, "require_ssl", null)
+        allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
+        enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 
         dynamic "authorized_networks" {
           for_each = lookup(ip_configuration.value, "authorized_networks", [])
@@ -196,9 +198,15 @@ resource "random_password" "user-password" {
   min_numeric = 1
   min_upper   = 1
   length      = var.password_validation_policy_config != null ? (var.password_validation_policy_config.min_length != null ? var.password_validation_policy_config.min_length + 4 : 32) : 32
-  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? true : false) : false)
-  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? 1 : 0) : 0)
+  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? true : false) : false)
+  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? 1 : 0) : 0)
   depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+
+  lifecycle {
+    ignore_changes = [
+      min_lower, min_upper, min_numeric
+    ]
+  }
 }
 
 resource "random_password" "additional_passwords" {
@@ -210,9 +218,15 @@ resource "random_password" "additional_passwords" {
   min_numeric = 1
   min_upper   = 1
   length      = var.password_validation_policy_config != null ? (var.password_validation_policy_config.min_length != null ? var.password_validation_policy_config.min_length + 4 : 32) : 32
-  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? true : false) : false)
-  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? 1 : 0) : 0)
+  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? true : false) : false)
+  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? 1 : 0) : 0)
   depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+
+  lifecycle {
+    ignore_changes = [
+      min_lower, min_upper, min_numeric
+    ]
+  }
 }
 
 resource "google_sql_user" "default" {
