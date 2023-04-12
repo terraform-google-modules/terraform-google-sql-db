@@ -86,7 +86,13 @@ variable "availability_type" {
 }
 
 variable "deletion_protection_enabled" {
-  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_deletion_protection_enabled" {
+  description = "Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
   default     = false
 }

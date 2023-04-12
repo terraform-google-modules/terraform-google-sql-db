@@ -36,9 +36,10 @@ resource "google_sql_database_instance" "replicas" {
   }
 
   settings {
-    tier              = lookup(each.value, "tier", var.tier)
-    activation_policy = "ALWAYS"
-    availability_type = lookup(each.value, "availability_type", var.availability_type)
+    tier                        = lookup(each.value, "tier", var.tier)
+    activation_policy           = "ALWAYS"
+    availability_type           = lookup(each.value, "availability_type", var.availability_type)
+    deletion_protection_enabled = var.read_replica_deletion_protection_enabled
 
 
     dynamic "insights_config" {

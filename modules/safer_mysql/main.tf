@@ -72,9 +72,10 @@ module "safer_mysql" {
   additional_users = var.additional_users
 
   // Read replica
-  read_replica_name_suffix         = var.read_replica_name_suffix
-  read_replica_deletion_protection = var.read_replica_deletion_protection
-  read_replicas                    = var.read_replicas
+  read_replica_name_suffix                 = var.read_replica_name_suffix
+  read_replica_deletion_protection         = var.read_replica_deletion_protection
+  read_replica_deletion_protection_enabled = var.read_replica_deletion_protection_enabled
+  read_replicas                            = var.read_replicas
 
   create_timeout    = var.create_timeout
   update_timeout    = var.update_timeout

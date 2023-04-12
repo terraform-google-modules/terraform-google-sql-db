@@ -27,6 +27,7 @@ spec:
   actuationTool:
     type: Terraform
     version: '>= 1.3'
+  description: {}
   examples:
   - name: mssql-public
     location: examples/mssql-public
@@ -51,7 +52,6 @@ spec:
     description: The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
     type: string
     default: ALWAYS
-    required: false
   - name: additional_databases
     description: A list of databases to be created in your cluster
     type: |-
@@ -61,7 +61,6 @@ spec:
           collation = string
         }))
     default: []
-    required: false
   - name: additional_users
     description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
     type: |-
@@ -73,21 +72,17 @@ spec:
           random_password = bool
         }))
     default: []
-    required: false
   - name: allocated_ip_range
     description: Existing allocated IP range name for the Private IP CloudSQL instance. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access.
     type: string
-    required: false
   - name: assign_public_ip
     description: Set to true if the master instance should also have a public IP (less secure).
     type: string
     default: false
-    required: false
   - name: availability_type
     description: The availability type for the master instance. Can be either `REGIONAL` or `null`.
     type: string
     default: REGIONAL
-    required: false
   - name: backup_configuration
     description: The backup_configuration settings subblock for the database setings
     type: |-
@@ -108,12 +103,10 @@ spec:
       retention_unit: null
       start_time: null
       transaction_log_retention_days: null
-    required: false
   - name: create_timeout
     description: The optional timout that is applied to limit long database creates.
     type: string
     default: 30m
-    required: false
   - name: database_flags
     description: The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)
     type: |-
@@ -122,7 +115,6 @@ spec:
           value = string
         }))
     default: []
-    required: false
   - name: database_version
     description: The database version to use
     type: string
@@ -131,32 +123,26 @@ spec:
     description: The charset for the default database
     type: string
     default: ""
-    required: false
   - name: db_collation
     description: 'The collation for the default database. Example: ''utf8_general_ci'''
     type: string
     default: ""
-    required: false
   - name: db_name
     description: The name of the default database to create
     type: string
     default: default
-    required: false
   - name: delete_timeout
     description: The optional timout that is applied to limit long database deletes.
     type: string
     default: 30m
-    required: false
   - name: deletion_protection
     description: Used to block Terraform from deleting a SQL Instance.
     type: bool
     default: true
-    required: false
   - name: deletion_protection_enabled
-    description: Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform).
+    description: Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
     type: bool
     default: false
-    required: false
   - name: deny_maintenance_period
     description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)
     type: |-
@@ -166,35 +152,28 @@ spec:
           time       = string
         }))
     default: []
-    required: false
   - name: disk_autoresize
     description: Configuration to increase storage size
     type: bool
     default: true
-    required: false
   - name: disk_autoresize_limit
     description: The maximum size to which storage can be auto increased.
     type: number
     default: 0
-    required: false
   - name: disk_size
     description: The disk size for the master instance
     type: number
     default: 10
-    required: false
   - name: disk_type
     description: The disk type for the master instance.
     type: string
     default: PD_SSD
-    required: false
   - name: encryption_key_name
     description: The full path to the encryption key used for the CMEK disk encryption
     type: string
-    required: false
   - name: follow_gae_application
     description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
     type: string
-    required: false
   - name: insights_config
     description: The insights_config settings for the database.
     type: |-
@@ -203,27 +182,22 @@ spec:
           record_application_tags = bool
           record_client_address   = bool
         })
-    required: false
   - name: maintenance_window_day
     description: The day of week (1-7) for the master instance maintenance.
     type: number
     default: 1
-    required: false
   - name: maintenance_window_hour
     description: The hour of day (0-23) maintenance window for the master instance maintenance.
     type: number
     default: 23
-    required: false
   - name: maintenance_window_update_track
     description: The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`.
     type: string
     default: stable
-    required: false
   - name: module_depends_on
     description: List of modules or resources this module depends on.
     type: list(any)
     default: []
-    required: false
   - name: name
     description: The name of the Cloud SQL resources
     type: string
@@ -232,7 +206,6 @@ spec:
     description: The pricing plan for the master instance.
     type: string
     default: PER_USE
-    required: false
   - name: project_id
     description: The project ID to manage the Cloud SQL resources
     type: string
@@ -241,17 +214,18 @@ spec:
     description: Sets random suffix at the end of the Cloud SQL resource name
     type: bool
     default: false
-    required: false
   - name: read_replica_deletion_protection
     description: Used to block Terraform from deleting replica SQL Instances.
     type: bool
     default: false
-    required: false
+  - name: read_replica_deletion_protection_enabled
+    description: Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+    type: bool
+    default: false
   - name: read_replica_name_suffix
     description: The optional suffix to add to the read instance name
     type: string
     default: ""
-    required: false
   - name: read_replicas
     description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null
     type: |-
@@ -280,7 +254,6 @@ spec:
           encryption_key_name = string
         }))
     default: []
-    required: false
   - name: region
     description: The region of the Cloud SQL resources
     type: string
@@ -288,32 +261,26 @@ spec:
   - name: secondary_zone
     description: 'The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`.'
     type: string
-    required: false
   - name: tier
     description: The tier for the master instance.
     type: string
     default: db-n1-standard-1
-    required: false
   - name: update_timeout
     description: The optional timout that is applied to limit long database updates.
     type: string
     default: 30m
-    required: false
   - name: user_labels
     description: The key/value labels for the master instances.
     type: map(string)
     default: {}
-    required: false
   - name: user_name
     description: The name of the default user
     type: string
     default: default
-    required: false
   - name: user_password
     description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
     type: string
     default: ""
-    required: false
   - name: vpc_network
     description: Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access.
     type: string
