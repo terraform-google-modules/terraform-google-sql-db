@@ -27,6 +27,7 @@ spec:
   actuationTool:
     type: Terraform
     version: '>= 0.13'
+  description: {}
   examples:
   - name: mssql-public
     location: examples/mssql-public
@@ -51,27 +52,22 @@ spec:
     description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
     type: string
     default: ""
-    required: false
   - name: description
     description: An optional description of the Global Address resource.
     type: string
     default: ""
-    required: false
   - name: ip_version
     description: IP Version for the allocation. Can be IPV4 or IPV6.
     type: string
     default: ""
-    required: false
   - name: labels
     description: The key/value labels for the IP range allocated to the peered network.
     type: map(string)
     default: {}
-    required: false
   - name: prefix_length
     description: Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16.
     type: number
     default: 16
-    required: false
   - name: project_id
     description: The project ID of the VPC network to peer. This can be a shared VPC host projec.
     type: string
