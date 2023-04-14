@@ -27,6 +27,7 @@ spec:
   actuationTool:
     type: Terraform
     version: '>= 0.13'
+  description: {}
   examples:
   - name: mssql-public
     location: examples/mssql-public
@@ -51,12 +52,10 @@ spec:
     description: The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
     type: string
     default: ALWAYS
-    required: false
   - name: active_directory_config
     description: Active domain that the SQL instance will join.
     type: map(string)
     default: {}
-    required: false
   - name: additional_databases
     description: A list of databases to be created in your cluster
     type: |-
@@ -66,7 +65,6 @@ spec:
           collation = string
         }))
     default: []
-    required: false
   - name: additional_users
     description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
     type: |-
@@ -76,12 +74,10 @@ spec:
           random_password = bool
         }))
     default: []
-    required: false
   - name: availability_type
     description: The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`.
     type: string
     default: ZONAL
-    required: false
   - name: backup_configuration
     description: The database backup configuration.
     type: |-
@@ -102,12 +98,10 @@ spec:
       retention_unit: null
       start_time: null
       transaction_log_retention_days: null
-    required: false
   - name: create_timeout
     description: The optional timeout that is applied to limit long database creates.
     type: string
     default: 30m
-    required: false
   - name: database_flags
     description: The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags)
     type: |-
@@ -116,42 +110,34 @@ spec:
           value = string
         }))
     default: []
-    required: false
   - name: database_version
     description: 'The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB'
     type: string
     default: SQLSERVER_2017_STANDARD
-    required: false
   - name: db_charset
     description: The charset for the default database
     type: string
     default: ""
-    required: false
   - name: db_collation
     description: 'The collation for the default database. Example: ''en_US.UTF8'''
     type: string
     default: ""
-    required: false
   - name: db_name
     description: The name of the default database to create
     type: string
     default: default
-    required: false
   - name: delete_timeout
     description: The optional timeout that is applied to limit long database deletes.
     type: string
     default: 30m
-    required: false
   - name: deletion_protection
     description: Used to block Terraform from deleting a SQL Instance.
     type: bool
     default: true
-    required: false
   - name: deletion_protection_enabled
     description: Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform).
     type: bool
     default: false
-    required: false
   - name: deny_maintenance_period
     description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance)
     type: |-
@@ -161,35 +147,28 @@ spec:
           time       = string
         }))
     default: []
-    required: false
   - name: disk_autoresize
     description: Configuration to increase storage size.
     type: bool
     default: true
-    required: false
   - name: disk_autoresize_limit
     description: The maximum size to which storage can be auto increased.
     type: number
     default: 0
-    required: false
   - name: disk_size
     description: The disk size for the master instance.
     type: number
     default: 10
-    required: false
   - name: disk_type
     description: The disk type for the master instance.
     type: string
     default: PD_SSD
-    required: false
   - name: encryption_key_name
     description: The full path to the encryption key used for the CMEK disk encryption
     type: string
-    required: false
   - name: follow_gae_application
     description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
     type: string
-    required: false
   - name: ip_configuration
     description: The ip configuration for the master instances.
     type: |-
@@ -206,27 +185,22 @@ spec:
       ipv4_enabled: true
       private_network: null
       require_ssl: null
-    required: false
   - name: maintenance_window_day
     description: The day of week (1-7) for the master instance maintenance.
     type: number
     default: 1
-    required: false
   - name: maintenance_window_hour
     description: The hour of day (0-23) maintenance window for the master instance maintenance.
     type: number
     default: 23
-    required: false
   - name: maintenance_window_update_track
     description: The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`.
     type: string
     default: canary
-    required: false
   - name: module_depends_on
     description: List of modules or resources this module depends on.
     type: list(any)
     default: []
-    required: false
   - name: name
     description: The name of the Cloud SQL resources
     type: string
@@ -235,7 +209,6 @@ spec:
     description: The pricing plan for the master instance.
     type: string
     default: PER_USE
-    required: false
   - name: project_id
     description: The project ID to manage the Cloud SQL resources
     type: string
@@ -244,56 +217,45 @@ spec:
     description: Sets random suffix at the end of the Cloud SQL resource name
     type: bool
     default: false
-    required: false
   - name: region
     description: The region of the Cloud SQL resources
     type: string
     default: us-central1
-    required: false
   - name: root_password
     description: MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable.
     type: string
     default: ""
-    required: false
   - name: secondary_zone
     description: 'The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`.'
     type: string
-    required: false
   - name: sql_server_audit_config
     description: SQL server audit config settings.
     type: map(string)
     default: {}
-    required: false
   - name: tier
     description: The tier for the master instance.
     type: string
     default: db-custom-2-3840
-    required: false
   - name: update_timeout
     description: The optional timeout that is applied to limit long database updates.
     type: string
     default: 30m
-    required: false
   - name: user_labels
     description: The key/value labels for the master instances.
     type: map(string)
     default: {}
-    required: false
   - name: user_name
     description: The name of the default user
     type: string
     default: default
-    required: false
   - name: user_password
     description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
     type: string
     default: ""
-    required: false
   - name: zone
     description: The zone for the master instance.
     type: string
     default: us-central1-a
-    required: false
   outputs:
   - name: additional_users
     description: List of maps of additional users and passwords
