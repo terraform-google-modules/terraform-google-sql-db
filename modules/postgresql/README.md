@@ -32,7 +32,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
-| iam\_user\_emails | A list of IAM users to be created in your cluster | `list(string)` | `[]` | no |
+| iam\_users | A list of IAM users to be created in your CloudSQL instance | <pre>list(object({<br>    id    = string,<br>    email = string<br>  }))</pre> | `[]` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | ip\_configuration | The ip configuration for the master instances. | <pre>object({<br>    authorized_networks                           = list(map(string))<br>    ipv4_enabled                                  = bool<br>    private_network                               = string<br>    require_ssl                                   = bool<br>    allocated_ip_range                            = string<br>    enable_private_path_for_google_cloud_services = optional(bool)<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "enable_private_path_for_google_cloud_services": false,<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "require_ssl": null<br>}</pre> | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
@@ -64,7 +64,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
-| iam\_user\_emails | The list of the IAM users with the access to the Cloudsql instance |
+| iam\_users | The list of the IAM users with access to the CloudSQL instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
 | instance\_ip\_address | The IPv4 address assigned for the master instance |

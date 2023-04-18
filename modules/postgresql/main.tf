@@ -26,10 +26,12 @@ locals {
 
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
-  iam_users = [for iu in var.iam_user_emails : {
-    email         = iu,
-    is_account_sa = trimsuffix(iu, "gserviceaccount.com") == iu ? false : true
-  }]
+  iam_users = {
+    for user in var.iam_users : user.id => {
+      email         = user.email,
+      is_account_sa = trimsuffix(user.email, "gserviceaccount.com") == user.email ? false : true
+    }
+  }
 
   // HA method using REGIONAL availability_type requires point in time recovery to be enabled
   point_in_time_recovery_enabled = var.availability_type == "REGIONAL" ? lookup(var.backup_configuration, "point_in_time_recovery_enabled", true) : lookup(var.backup_configuration, "point_in_time_recovery_enabled", false)
@@ -262,10 +264,8 @@ resource "google_sql_user" "additional_users" {
 }
 
 resource "google_sql_user" "iam_account" {
-  for_each = {
-    for iu in local.iam_users :
-    "${iu.email} ${iu.is_account_sa}" => iu
-  }
+  for_each = local.iam_users
+
   project = var.project_id
   name = each.value.is_account_sa ? (
     trimsuffix(each.value.email, ".gserviceaccount.com")

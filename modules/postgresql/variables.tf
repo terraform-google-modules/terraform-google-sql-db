@@ -322,10 +322,13 @@ variable "additional_users" {
   }
 }
 
-variable "iam_user_emails" {
-  description = "A list of IAM users to be created in your cluster"
-  type        = list(string)
-  default     = []
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance"
+  type = list(object({
+    id    = string,
+    email = string
+  }))
+  default = []
 }
 
 variable "create_timeout" {
