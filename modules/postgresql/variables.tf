@@ -323,7 +323,7 @@ variable "additional_users" {
 }
 
 variable "iam_users" {
-  description = "A list of IAM users to be created in your CloudSQL instance"
+  description = "A list of IAM account emails to create corresponding CloudSQL instance users"
   type = list(object({
     id    = string,
     email = string

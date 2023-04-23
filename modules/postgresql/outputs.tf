@@ -109,8 +109,14 @@ output "additional_users" {
 }
 
 output "iam_users" {
-  description = "The list of the IAM users with access to the CloudSQL instance"
-  value       = var.iam_users
+  description = "List of CloudSQL instance users for IAM accounts"
+  value = [for id, r in google_sql_user.iam_account :
+    {
+      id    = id
+      email = local.iam_users[id].email
+      name  = r.name
+    }
+  ]
 }
 
 // Resources
