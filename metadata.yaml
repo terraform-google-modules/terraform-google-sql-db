@@ -23,6 +23,7 @@ spec:
   source:
     repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
+  description: {}
   subBlueprints:
   - name: backup
     location: modules/backup

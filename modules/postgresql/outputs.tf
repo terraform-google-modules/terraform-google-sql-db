@@ -108,9 +108,9 @@ output "additional_users" {
   sensitive = true
 }
 
-output "iam_user_emails" {
-  description = "The list of the IAM users with the access to the Cloudsql instance"
-  value       = var.iam_user_emails
+output "iam_users" {
+  description = "The list of the IAM users with access to the CloudSQL instance"
+  value       = var.iam_users
 }
 
 // Resources

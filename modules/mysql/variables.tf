@@ -86,7 +86,13 @@ variable "availability_type" {
 }
 
 variable "deletion_protection_enabled" {
-  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_deletion_protection_enabled" {
+  description = "Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
   default     = false
 }
@@ -200,18 +206,20 @@ variable "insights_config" {
 variable "ip_configuration" {
   description = "The ip_configuration settings subblock"
   type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-    allocated_ip_range  = string
+    authorized_networks                           = list(map(string))
+    ipv4_enabled                                  = bool
+    private_network                               = string
+    require_ssl                                   = bool
+    allocated_ip_range                            = string
+    enable_private_path_for_google_cloud_services = optional(bool)
   })
   default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-    allocated_ip_range  = null
+    authorized_networks                           = []
+    ipv4_enabled                                  = true
+    private_network                               = null
+    require_ssl                                   = null
+    allocated_ip_range                            = null
+    enable_private_path_for_google_cloud_services = false
   }
 }
 
@@ -243,6 +251,11 @@ variable "read_replicas" {
     database_flags = list(object({
       name  = string
       value = string
+    }))
+    insights_config = optional(object({
+      query_string_length     = number
+      record_application_tags = bool
+      record_client_address   = bool
     }))
     ip_configuration = object({
       authorized_networks = list(map(string))
