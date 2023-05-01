@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [15.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v14.1.0...v15.0.0) (2023-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* pass iam_user_emails as map to postgres module ([#414](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/414))
+
+### Features
+
+* add deletion_protection.enabled for read replicas ([#437](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/437)) ([4cdb81c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/4cdb81c86c702aebed269d82e7fcbbd92afa699d))
+* added enable_private_path_for_google_cloud_services field in ip_configuration for google_sql_database_instance resource ([#449](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/449)) ([64618c4](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/64618c48df3a99052aad765d97e04dfcfd739479))
+* support query insights for MySQL for read replicas ([#453](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/453)) ([59b32af](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/59b32af83e03da4b4dc0eb1fa6d5372dc4a3b696))
+
+
+### Bug Fixes
+
+* pass iam_user_emails as map to postgres module ([#414](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/414)) ([15298c2](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/15298c275e2d531e3379d1c445b2317c99e6363b))
+* prevent auto-update of random_password resource ([#446](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/446)) ([ed83b8b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/ed83b8b67875ac9641b99fb8071aa2cd196511a9))
+* remove replica pwd validation config ([#441](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/441)) ([daa3772](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/daa3772575bbf0788e5754fed1a5b7384e55b1a9))
+
 ## [14.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v14.0.1...v14.1.0) (2023-03-15)
 
 

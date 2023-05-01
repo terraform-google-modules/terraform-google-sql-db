@@ -84,7 +84,13 @@ variable "availability_type" {
 }
 
 variable "deletion_protection_enabled" {
-  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_deletion_protection_enabled" {
+  description = "Enables protection of replica instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
   default     = false
 }
@@ -209,18 +215,20 @@ variable "password_validation_policy_config" {
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-    allocated_ip_range  = string
+    authorized_networks                           = list(map(string))
+    ipv4_enabled                                  = bool
+    private_network                               = string
+    require_ssl                                   = bool
+    allocated_ip_range                            = string
+    enable_private_path_for_google_cloud_services = optional(bool)
   })
   default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    require_ssl         = null
-    allocated_ip_range  = null
+    authorized_networks                           = []
+    ipv4_enabled                                  = true
+    private_network                               = null
+    require_ssl                                   = null
+    allocated_ip_range                            = null
+    enable_private_path_for_google_cloud_services = false
   }
 }
 
@@ -314,10 +322,13 @@ variable "additional_users" {
   }
 }
 
-variable "iam_user_emails" {
-  description = "A list of IAM users to be created in your cluster"
-  type        = list(string)
-  default     = []
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance"
+  type = list(object({
+    id    = string,
+    email = string
+  }))
+  default = []
 }
 
 variable "create_timeout" {
