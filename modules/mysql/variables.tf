@@ -252,6 +252,10 @@ variable "read_replicas" {
       name  = string
       value = string
     }))
+    backup_configuration = optional(object({
+      binary_log_enabled             = bool
+      transaction_log_retention_days = string
+    }))
     insights_config = optional(object({
       query_string_length     = number
       record_application_tags = bool

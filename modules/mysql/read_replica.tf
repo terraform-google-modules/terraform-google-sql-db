@@ -41,6 +41,13 @@ resource "google_sql_database_instance" "replicas" {
     availability_type           = lookup(each.value, "availability_type", var.availability_type)
     deletion_protection_enabled = var.read_replica_deletion_protection_enabled
 
+    dynamic "backup_configuration" {
+      for_each = lookup(each.value, "backup_configuration") != null ? [lookup(each.value, "backup_configuration")] : []
+      content {
+        binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+      }
+    }
 
     dynamic "insights_config" {
       for_each = lookup(each.value, "insights_config") != null ? [lookup(each.value, "insights_config")] : []
