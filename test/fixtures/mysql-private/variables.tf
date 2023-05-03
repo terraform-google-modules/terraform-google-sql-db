@@ -23,3 +23,8 @@ variable "network_name" {
   default = "mysql-private"
   type    = string
 }
+
+variable "cloudsql_mysql_sa" {
+  type        = string
+  description = "IAM service account user created for Cloud SQL."
+}
