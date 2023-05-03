@@ -25,6 +25,12 @@ locals {
 
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
+  iam_users = {
+    for user in var.iam_users : user.id => {
+      email         = user.email,
+      is_account_sa = trimsuffix(user.email, "gserviceaccount.com") == user.email ? false : true
+    }
+  }
 
   // HA method using REGIONAL availability_type requires binary logs to be enabled
   binary_log_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
@@ -255,6 +261,23 @@ resource "google_sql_user" "additional_users" {
     null_resource.module_depends_on,
     google_sql_database_instance.default,
     google_sql_database_instance.replicas,
+  ]
+}
+
+resource "google_sql_user" "iam_account" {
+  for_each = local.iam_users
+
+  project = var.project_id
+  name = each.value.is_account_sa ? (
+    trimsuffix(each.value.email, ".gserviceaccount.com")
+    ) : (
+    each.value.email
+  )
+  instance = google_sql_database_instance.default.name
+  type     = each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : "CLOUD_IAM_USER"
+
+  depends_on = [
+    null_resource.module_depends_on,
   ]
 }
 

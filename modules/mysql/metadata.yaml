@@ -191,6 +191,13 @@ spec:
           record_application_tags = bool
           record_client_address   = bool
         })
+  - name: iam_users
+    description: A list of IAM users to be created in your CloudSQL instance
+    type: |-
+      list(object({
+          id    = string
+          email = string
+        }))
   - name: ip_configuration
     description: The ip_configuration settings subblock
     type: |-
@@ -338,6 +345,8 @@ spec:
     description: List of maps of additional users and passwords
   - name: generated_user_password
     description: The auto generated default user password if not input password was provided
+  - name: iam_users
+    description: The list of the IAM users with access to the CloudSQL instance
   - name: instance_connection_name
     description: The connection name of the master instance to be used in connection strings
   - name: instance_first_ip_address
