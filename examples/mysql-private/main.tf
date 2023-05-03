@@ -75,6 +75,18 @@ module "safer-mysql-db" {
     },
   ]
 
+  # Supports creation of both IAM Users and IAM Service Accounts with provided emails
+  iam_users = [
+    {
+      id    = "cloudsql_mysql_sa",
+      email = var.cloudsql_mysql_sa
+    },
+    {
+      id    = "dbadmin",
+      email = "dbadmin@goosecorp.org"
+    }
+  ]
+
   assign_public_ip   = "true"
   vpc_network        = module.network-safer-mysql-simple.network_self_link
   allocated_ip_range = module.private-service-access.google_compute_global_address_name
