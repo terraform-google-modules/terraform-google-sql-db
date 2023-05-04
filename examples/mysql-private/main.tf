@@ -51,7 +51,7 @@ module "safer-mysql-db" {
 
   deletion_protection = false
 
-  database_version = "MYSQL_5_6"
+  database_version = "MYSQL_8_0"
   region           = "us-central1"
   zone             = "us-central1-c"
   tier             = "db-n1-standard-1"
