@@ -267,12 +267,8 @@ resource "google_sql_user" "additional_users" {
 resource "google_sql_user" "iam_account" {
   for_each = local.iam_users
 
-  project = var.project_id
-  name = each.value.is_account_sa ? (
-    trimsuffix(each.value.email, ".gserviceaccount.com")
-    ) : (
-    each.value.email
-  )
+  project  = var.project_id
+  name     = each.value.email
   instance = google_sql_database_instance.default.name
   type     = each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : "CLOUD_IAM_USER"
 
