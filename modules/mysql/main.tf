@@ -275,6 +275,7 @@ resource "google_sql_user" "iam_account" {
   depends_on = [
     null_resource.module_depends_on,
   ]
+  deletion_policy = var.user_deletion_policy
 }
 
 resource "null_resource" "module_depends_on" {

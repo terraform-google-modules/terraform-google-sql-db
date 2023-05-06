@@ -417,3 +417,9 @@ variable "connector_enforcement" {
   type        = bool
   default     = false
 }
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}

@@ -56,6 +56,13 @@ module "safer-mysql-db" {
   zone             = "us-central1-c"
   tier             = "db-n1-standard-1"
 
+  database_flags = [
+    {
+      name  = "cloudsql_iam_authentication"
+      value = "on"
+    },
+  ]
+
   // By default, all users will be permitted to connect only via the
   // Cloud SQL proxy.
   additional_users = [
