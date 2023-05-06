@@ -51,10 +51,17 @@ module "safer-mysql-db" {
 
   deletion_protection = false
 
-  database_version = "MYSQL_5_6"
+  database_version = "MYSQL_8_0"
   region           = "us-central1"
   zone             = "us-central1-c"
   tier             = "db-n1-standard-1"
+
+  database_flags = [
+    {
+      name  = "cloudsql_iam_authentication"
+      value = "on"
+    },
+  ]
 
   // By default, all users will be permitted to connect only via the
   // Cloud SQL proxy.
@@ -73,6 +80,18 @@ module "safer-mysql-db" {
       type            = "BUILT_IN"
       random_password = false
     },
+  ]
+
+  # Supports creation of both IAM Users and IAM Service Accounts with provided emails
+  iam_users = [
+    {
+      id    = "cloudsql_mysql_sa",
+      email = var.cloudsql_mysql_sa
+    },
+    {
+      id    = "dbadmin",
+      email = "dbadmin@goosecorp.org"
+    }
   ]
 
   assign_public_ip   = "true"

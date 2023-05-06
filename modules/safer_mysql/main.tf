@@ -70,6 +70,7 @@ module "safer_mysql" {
 
   user_password    = var.user_password
   additional_users = var.additional_users
+  iam_users        = var.iam_users
 
   // Read replica
   read_replica_name_suffix                 = var.read_replica_name_suffix

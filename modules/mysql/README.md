@@ -32,6 +32,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
+| iam\_users | A list of IAM users to be created in your CloudSQL instance | <pre>list(object({<br>    id    = string,<br>    email = string<br>  }))</pre> | `[]` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | ip\_configuration | The ip\_configuration settings subblock | <pre>object({<br>    authorized_networks                           = list(map(string))<br>    ipv4_enabled                                  = bool<br>    private_network                               = string<br>    require_ssl                                   = bool<br>    allocated_ip_range                            = string<br>    enable_private_path_for_google_cloud_services = optional(bool)<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "enable_private_path_for_google_cloud_services": false,<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "require_ssl": null<br>}</pre> | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
@@ -53,6 +54,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | tier | The tier for the master instance. | `string` | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
+| user\_deletion\_policy | The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON". | `string` | `null` | no |
 | user\_host | The host for the default user | `string` | `"%"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |
@@ -65,6 +67,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
+| iam\_users | The list of the IAM users with access to the CloudSQL instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned for the master instance. |
 | instance\_ip\_address | The IPv4 address assigned for the master instance |

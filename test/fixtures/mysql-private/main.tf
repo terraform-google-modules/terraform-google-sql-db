@@ -15,8 +15,8 @@
  */
 
 module "example" {
-  source       = "../../../examples/mysql-private"
-  project_id   = var.project_id
-  network_name = var.network_name
+  source            = "../../../examples/mysql-private"
+  project_id        = var.project_id
+  network_name      = var.network_name
+  cloudsql_mysql_sa = var.cloudsql_mysql_sa
 }
-
