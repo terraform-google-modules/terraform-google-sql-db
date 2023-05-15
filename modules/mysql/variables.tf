@@ -258,11 +258,12 @@ variable "read_replicas" {
       record_client_address   = bool
     }))
     ip_configuration = object({
-      authorized_networks = list(map(string))
-      ipv4_enabled        = bool
-      private_network     = string
-      require_ssl         = bool
-      allocated_ip_range  = string
+      authorized_networks                           = list(map(string))
+      ipv4_enabled                                  = bool
+      private_network                               = string
+      require_ssl                                   = bool
+      allocated_ip_range                            = string
+      enable_private_path_for_google_cloud_services = optional(bool)
     })
     encryption_key_name = string
   }))
