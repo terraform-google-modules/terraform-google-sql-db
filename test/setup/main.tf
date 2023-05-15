@@ -39,3 +39,8 @@ resource "google_service_account" "cloudsql_pg_sa" {
   project    = module.project.project_id
   account_id = "cloudsql-pg-sa-01"
 }
+
+resource "google_service_account" "cloudsql_mysql_sa" {
+  project    = module.project.project_id
+  account_id = "cloudsql-mysql-sa-01"
+}

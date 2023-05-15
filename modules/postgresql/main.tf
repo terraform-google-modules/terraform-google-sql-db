@@ -26,10 +26,12 @@ locals {
 
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
-  iam_users = [for iu in var.iam_user_emails : {
-    email         = iu,
-    is_account_sa = trimsuffix(iu, "gserviceaccount.com") == iu ? false : true
-  }]
+  iam_users = {
+    for user in var.iam_users : user.id => {
+      email         = user.email,
+      is_account_sa = trimsuffix(user.email, "gserviceaccount.com") == user.email ? false : true
+    }
+  }
 
   // HA method using REGIONAL availability_type requires point in time recovery to be enabled
   point_in_time_recovery_enabled = var.availability_type == "REGIONAL" ? lookup(var.backup_configuration, "point_in_time_recovery_enabled", true) : lookup(var.backup_configuration, "point_in_time_recovery_enabled", false)
@@ -202,9 +204,15 @@ resource "random_password" "user-password" {
   min_numeric = 1
   min_upper   = 1
   length      = var.password_validation_policy_config != null ? (var.password_validation_policy_config.min_length != null ? var.password_validation_policy_config.min_length + 4 : 32) : 32
-  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? true : false) : false)
-  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? 1 : 0) : 0)
+  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? true : false) : false)
+  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? 1 : 0) : 0)
   depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+
+  lifecycle {
+    ignore_changes = [
+      min_lower, min_upper, min_numeric
+    ]
+  }
 }
 
 resource "random_password" "additional_passwords" {
@@ -216,9 +224,15 @@ resource "random_password" "additional_passwords" {
   min_numeric = 1
   min_upper   = 1
   length      = var.password_validation_policy_config != null ? (var.password_validation_policy_config.min_length != null ? var.password_validation_policy_config.min_length + 4 : 32) : 32
-  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? true : false) : false)
-  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity != "COMPLEXITY_UNSPECIFIED" ? 1 : 0) : 0)
+  special     = var.enable_random_password_special ? true : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? true : false) : false)
+  min_special = var.enable_random_password_special ? 1 : (var.password_validation_policy_config != null ? (var.password_validation_policy_config.complexity == "COMPLEXITY_DEFAULT" ? 1 : 0) : 0)
   depends_on  = [null_resource.module_depends_on, google_sql_database_instance.default]
+
+  lifecycle {
+    ignore_changes = [
+      min_lower, min_upper, min_numeric
+    ]
+  }
 }
 
 resource "google_sql_user" "default" {
@@ -250,10 +264,8 @@ resource "google_sql_user" "additional_users" {
 }
 
 resource "google_sql_user" "iam_account" {
-  for_each = {
-    for iu in local.iam_users :
-    "${iu.email} ${iu.is_account_sa}" => iu
-  }
+  for_each = local.iam_users
+
   project = var.project_id
   name = each.value.is_account_sa ? (
     trimsuffix(each.value.email, ".gserviceaccount.com")

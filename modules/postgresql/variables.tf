@@ -84,7 +84,13 @@ variable "availability_type" {
 }
 
 variable "deletion_protection_enabled" {
-  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_deletion_protection_enabled" {
+  description = "Enables protection of replica instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
   default     = false
 }
@@ -316,10 +322,13 @@ variable "additional_users" {
   }
 }
 
-variable "iam_user_emails" {
-  description = "A list of IAM users to be created in your cluster"
-  type        = list(string)
-  default     = []
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance"
+  type = list(object({
+    id    = string,
+    email = string
+  }))
+  default = []
 }
 
 variable "create_timeout" {

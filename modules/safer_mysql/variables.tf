@@ -91,7 +91,13 @@ variable "availability_type" {
 }
 
 variable "deletion_protection_enabled" {
-  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_deletion_protection_enabled" {
+  description = "Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
   default     = false
 }
@@ -221,6 +227,11 @@ variable "read_replicas" {
       name  = string
       value = string
     }))
+    insights_config = optional(object({
+      query_string_length     = number
+      record_application_tags = bool
+      record_client_address   = bool
+    }))
     ip_configuration = object({
       authorized_networks = list(map(string))
       ipv4_enabled        = bool
@@ -281,6 +292,15 @@ variable "additional_users" {
     host            = string
     type            = string
     random_password = bool
+  }))
+  default = []
+}
+
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance"
+  type = list(object({
+    id    = string,
+    email = string
   }))
   default = []
 }

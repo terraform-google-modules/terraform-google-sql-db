@@ -86,7 +86,13 @@ variable "availability_type" {
 }
 
 variable "deletion_protection_enabled" {
-  description = "Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
+  type        = bool
+  default     = false
+}
+
+variable "read_replica_deletion_protection_enabled" {
+  description = "Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
   default     = false
 }
@@ -246,6 +252,11 @@ variable "read_replicas" {
       name  = string
       value = string
     }))
+    insights_config = optional(object({
+      query_string_length     = number
+      record_application_tags = bool
+      record_client_address   = bool
+    }))
     ip_configuration = object({
       authorized_networks = list(map(string))
       ipv4_enabled        = bool
@@ -332,6 +343,15 @@ variable "additional_users" {
   }
 }
 
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance"
+  type = list(object({
+    id    = string,
+    email = string
+  }))
+  default = []
+}
+
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
@@ -396,4 +416,10 @@ variable "connector_enforcement" {
   description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
+}
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
 }

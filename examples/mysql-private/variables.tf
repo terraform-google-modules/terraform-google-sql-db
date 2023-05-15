@@ -29,3 +29,7 @@ variable "db_name" {
   default     = "example-mysql-private"
 }
 
+variable "cloudsql_mysql_sa" {
+  type        = string
+  description = "IAM service account user created for Cloud SQL."
+}
