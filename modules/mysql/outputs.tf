@@ -115,6 +115,11 @@ output "private_ip_address" {
   value       = google_sql_database_instance.default.private_ip_address
 }
 
+output "iam_users" {
+  description = "The list of the IAM users with access to the CloudSQL instance"
+  value       = var.iam_users
+}
+
 // Resources
 output "primary" {
   value       = google_sql_database_instance.default

@@ -63,10 +63,11 @@ resource "google_sql_database_instance" "replicas" {
     dynamic "ip_configuration" {
       for_each = [lookup(each.value, "ip_configuration", {})]
       content {
-        ipv4_enabled       = lookup(ip_configuration.value, "ipv4_enabled", null)
-        private_network    = lookup(ip_configuration.value, "private_network", null)
-        require_ssl        = lookup(ip_configuration.value, "require_ssl", null)
-        allocated_ip_range = lookup(ip_configuration.value, "allocated_ip_range", null)
+        ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
+        private_network                               = lookup(ip_configuration.value, "private_network", null)
+        require_ssl                                   = lookup(ip_configuration.value, "require_ssl", null)
+        allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
+        enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 
         dynamic "authorized_networks" {
           for_each = lookup(ip_configuration.value, "authorized_networks", [])

@@ -25,5 +25,10 @@ output "sa_key" {
 
 output "cloudsql_pg_sa" {
   value       = google_service_account.cloudsql_pg_sa.email
-  description = "IAM service account user created for Cloud SQL."
+  description = "IAM service account user created for Cloud SQL for PostgreSQL."
+}
+
+output "cloudsql_mysql_sa" {
+  value       = google_service_account.cloudsql_mysql_sa.email
+  description = "IAM service account user created for Cloud SQL for MySql."
 }
