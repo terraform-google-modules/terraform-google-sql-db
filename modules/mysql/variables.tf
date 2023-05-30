@@ -258,11 +258,12 @@ variable "read_replicas" {
       record_client_address   = bool
     }))
     ip_configuration = object({
-      authorized_networks = list(map(string))
-      ipv4_enabled        = bool
-      private_network     = string
-      require_ssl         = bool
-      allocated_ip_range  = string
+      authorized_networks                           = list(map(string))
+      ipv4_enabled                                  = bool
+      private_network                               = string
+      require_ssl                                   = bool
+      allocated_ip_range                            = string
+      enable_private_path_for_google_cloud_services = optional(bool)
     })
     encryption_key_name = string
   }))
@@ -343,6 +344,15 @@ variable "additional_users" {
   }
 }
 
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance"
+  type = list(object({
+    id    = string,
+    email = string
+  }))
+  default = []
+}
+
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string
@@ -407,4 +417,10 @@ variable "connector_enforcement" {
   description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
+}
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
 }

@@ -110,6 +110,7 @@ resource "google_workflows_workflow" "sql_export" {
     gcsBucket           = var.export_uri
     dbType              = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
     compressExport      = var.compress_export
+    logDbName           = var.log_db_name_to_export
   })
 }
 

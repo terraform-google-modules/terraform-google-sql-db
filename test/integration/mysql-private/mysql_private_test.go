@@ -53,7 +53,7 @@ func TestMySqlPrivateModule(t *testing.T) {
 		assert.Equal("stable", op.Get("settings.maintenanceWindow.updateTrack").String(), "Expected stable maintenanceWindow.updateTrack")
 
 		// assert standard database settings
-		assert.Equal("MYSQL_5_6", op.Get("databaseVersion").String(), "Expected MYSQL_5_6 databaseVersion")
+		assert.Equal("MYSQL_8_0", op.Get("databaseVersion").String(), "Expected MYSQL_5_6 databaseVersion")
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
@@ -69,6 +69,21 @@ func TestMySqlPrivateModule(t *testing.T) {
 
 		op = gcloud.Run(t, fmt.Sprintf("compute addresses list --global --filter='%s' --project %s", mySql.GetStringOutput("reserved_range_name"), mySql.GetStringOutput("project_id")))
 		assert.Equal(1, len(op.Array()), "Expected one peering setup")
+
+		// assert users
+		op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", mySql.GetStringOutput("name"), mySql.GetStringOutput("project_id")))
+		containsIamUser := false
+		containsIamSa := false
+		for _, element := range op.Array() {
+			if element.Get("type").String() == "CLOUD_IAM_USER" && element.Get("name").String() == "dbadmin" {
+				containsIamUser = true
+			}
+			if element.Get("type").String() == "CLOUD_IAM_SERVICE_ACCOUNT" && element.Get("name").String() == "cloudsql-mysql-sa-01" {
+				containsIamSa = true
+			}
+		}
+		assert.Truef(containsIamUser, "Expected %s cloud iam user", "dbadmin")
+		assert.Truef(containsIamSa, "Expected cloud iam sa [%s]", "cloudsql-mysql-sa-01")
 	})
 
 	mySql.Test()
