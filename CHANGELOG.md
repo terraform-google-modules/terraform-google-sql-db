@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [15.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v15.0.0...v15.1.0) (2023-06-20)
+
+
+### Features
+
+* added support for enable_private_path_for_google_cloud_services field in replica instances. ([#471](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/471)) ([3d0c204](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3d0c204ac670ad99c08c64a8024325f3c8f90a9d))
+* include log for each database name in export workflow ([#407](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/407)) ([e638a24](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e638a24eacc953d3e8ebf248c12bda0b66021745))
+
+
+### Bug Fixes
+
+* port iam_users from postgresql module ([#467](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/467)) ([5732125](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/573212575b70325eb344dae7c7cf4086eb147f41))
+* to avoid password reset for existing additional users ([#461](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/461)) ([1fcdcc4](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/1fcdcc4616ab37436e7344ed7530077e7221fa08))
+
 ## [15.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v14.1.0...v15.0.0) (2023-04-18)
 
 
