@@ -256,6 +256,10 @@ spec:
     description: The zone for the master instance.
     type: string
     default: us-central1-a
+  - name: time_zone
+    description: The time_zone for SQL Instance.
+    type: string
+    default: UTC
   outputs:
   - name: additional_users
     description: List of maps of additional users and passwords
