@@ -306,3 +306,9 @@ variable "deletion_protection" {
   type        = bool
   default     = true
 }
+
+variable "time_zone" {
+  description = "The time_zone for SQL Instance."
+  type        = string
+  default     = "UTC"
+}
