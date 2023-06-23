@@ -257,7 +257,7 @@ spec:
     type: string
     default: us-central1-a
   - name: time_zone
-    description: The time zone for SQL Instance.
+    description: The time zone for SQL instance.
     type: string
     default: UTC
   outputs:
