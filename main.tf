@@ -22,7 +22,7 @@ resource "google_sql_database_instance" "default" {
   master_instance_name = "${var.master_instance_name}"
 
   lifecycle {
-    ignore_changes        = [settings.0.disk_size]
+    ignore_changes = [settings.0.disk_size]
   }
 
   settings {
@@ -38,10 +38,15 @@ resource "google_sql_database_instance" "default" {
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
     replication_type            = "${var.replication_type}"
-    database_flags              = ["${var.database_flags}"]
-  }
 
-  replica_configuration = ["${var.replica_configuration}"]
+    dynamic "database_flags" {
+      for_each = var.database_flags
+      content {
+        name  = database_flags.value["name"]
+        value = database_flags.value["value"]
+      }
+    }
+  }
 }
 
 resource "google_sql_database" "default" {
