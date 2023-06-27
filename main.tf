@@ -66,6 +66,7 @@ resource "google_sql_database_instance" "default" {
         ipv4_enabled    = ip_configuration.value["ipv4_enabled"]
         private_network = ip_configuration.value["private_network"]
         authorized_networks = ip_configuration.value["authorized_networks"]
+      }
     }
 
     dynamic "backup_configuration" {
