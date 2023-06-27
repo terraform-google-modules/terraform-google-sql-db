@@ -55,7 +55,7 @@ resource "google_sql_database_instance" "default" {
     dynamic "location_preference" {
       for_each = var.location_preference
       content {
-        follow_gae_application = location_preference.value["follow_gae_application"]
+        follow_gae_application = try(location_preference.value["follow_gae_application"], null)
         zone                   = location_preference.value["zone"]
       }
     }
