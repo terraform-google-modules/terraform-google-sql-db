@@ -75,7 +75,6 @@ resource "google_sql_database_instance" "default" {
         binary_log_enabled = backup_configuration.value["binary_log_enabled"]
         enabled = backup_configuration.value["enabled"]
         start_time = backup_configuration.value["start_time"]
-        point_in_time_recovery_enabled = backup_configuration.value["point_in_time_recovery_enabled"]
       }
     }
   }
