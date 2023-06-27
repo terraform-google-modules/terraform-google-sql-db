@@ -30,7 +30,6 @@ resource "google_sql_database_instance" "default" {
     activation_policy           = "${var.activation_policy}"
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     disk_autoresize             = "${var.disk_autoresize}"
-    backup_configuration        = ["${var.backup_configuration}"]
     disk_size                   = "${var.disk_size}"
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
@@ -68,6 +67,15 @@ resource "google_sql_database_instance" "default" {
         private_network = ip_configuration.value["private_network"]
         require_ssl     = ip_configuration.value["require_ssl"]
       }
+    }
+
+    dynamic "backup_configuration" {
+      for_each = var.backup_configuration
+      content {
+        binary_log_enabled = backup_configuration.value["binary_log_enabled"]
+        enabled = backup_configuration.value["enabled"]
+        start_time = backup_configuration.value["start_time"]
+        point_in_time_recovery_enabled = backup_configuration.value["point_in_time_recovery_enabled"]
     }
   }
 }
