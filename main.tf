@@ -64,7 +64,7 @@ resource "google_sql_database_instance" "default" {
       for_each = var.ip_configuration
       content {
         ipv4_enabled    = ip_configuration.value["ipv4_enabled"]
-        private_network = ip_configuration.value["private_network"]
+        private_network = try(ip_configuration.value["private_network"], null)
 
         dynamic "authorized_networks" {
           for_each = ip_configuration.value["authorized_networks"]
