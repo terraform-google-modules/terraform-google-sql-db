@@ -70,7 +70,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "backup_configuration" {
-      for_each = var.backup_configuration
+      for_each = var.backup_configuration ? [] : [1]
       content {
         binary_log_enabled = backup_configuration.value["binary_log_enabled"]
         enabled = backup_configuration.value["enabled"]
