@@ -137,9 +137,3 @@ variable maintenance_window {
   type        = "list"
   default     = []
 }
-
-variable replica_configuration {
-  description = "The optional replica_configuration block for the database instance"
-  type        = "list"
-  default     = []
-}

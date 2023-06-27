@@ -40,8 +40,6 @@ resource "google_sql_database_instance" "default" {
     replication_type            = "${var.replication_type}"
     database_flags              = ["${var.database_flags}"]
   }
-
-  replica_configuration = ["${var.replica_configuration}"]
 }
 
 resource "google_sql_database" "default" {
