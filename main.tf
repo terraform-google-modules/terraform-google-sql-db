@@ -67,7 +67,7 @@ resource "google_sql_database_instance" "default" {
         private_network = ip_configuration.value["private_network"]
 
         dynamic "authorized_networks" {
-          for_each = ip_configuration["authorized_networks"]
+          for_each = ip_configuration.value["authorized_networks"]
           content {
             name = authorized_networks.value["name"]
             value = authorized_networks.value["value"]
