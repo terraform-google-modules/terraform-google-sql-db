@@ -33,7 +33,6 @@ resource "google_sql_database_instance" "default" {
     backup_configuration        = ["${var.backup_configuration}"]
     ip_configuration            = ["${var.ip_configuration}"]
     location_preference         = ["${var.location_preference}"]
-    maintenance_window          = ["${var.maintenance_window}"]
     disk_size                   = "${var.disk_size}"
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
@@ -44,6 +43,15 @@ resource "google_sql_database_instance" "default" {
       content {
         name  = database_flags.value["name"]
         value = database_flags.value["value"]
+      }
+    }
+
+    dynamic "maintenance_window" {
+      for_each = var.maintenance_window
+      content {
+        day          = maintenance_window.value["day"]
+        hour         = maintenance_window.value["hour"]
+        update_track = maintenance_window.value["update_track"]
       }
     }
   }
