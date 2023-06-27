@@ -22,7 +22,7 @@ resource "google_sql_database_instance" "default" {
   master_instance_name = "${var.master_instance_name}"
 
   lifecycle {
-    ignore_changes        = ["settings.0.disk_size"]
+    ignore_changes        = [settings.0.disk_size]
   }
 
   settings {
