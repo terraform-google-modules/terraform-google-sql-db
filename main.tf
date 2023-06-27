@@ -48,7 +48,7 @@ resource "google_sql_database_instance" "default" {
       content {
         day          = maintenance_window.value["day"]
         hour         = maintenance_window.value["hour"]
-        update_track = maintenance_window.value["update_track"]
+        update_track = try(maintenance_window.value["update_track"], null)
       }
     }
 
