@@ -65,12 +65,11 @@ resource "google_sql_database_instance" "default" {
       content {
         ipv4_enabled    = ip_configuration.value["ipv4_enabled"]
         private_network = ip_configuration.value["private_network"]
-        require_ssl     = ip_configuration.value["require_ssl"]
-      }
+        authorized_networks = ip_configuration.value["authorized_networks"]
     }
 
     dynamic "backup_configuration" {
-      for_each = var.backup_configuration == null ? [] : [1]
+      for_each = var.backup_configuration == {} ? [] : [1]
       content {
         binary_log_enabled = var.backup_configuration["binary_log_enabled"]
         enabled = var.backup_configuration["enabled"]

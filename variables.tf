@@ -116,7 +116,7 @@ variable database_flags {
 
 variable backup_configuration {
   description = "The backup_configuration settings subblock for the database setings"
-  type        = "map"
+  type        = map
   default     = {}
 }
 
