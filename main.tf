@@ -31,7 +31,6 @@ resource "google_sql_database_instance" "default" {
     authorized_gae_applications = ["${var.authorized_gae_applications}"]
     disk_autoresize             = "${var.disk_autoresize}"
     backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration            = ["${var.ip_configuration}"]
     disk_size                   = "${var.disk_size}"
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
@@ -59,6 +58,15 @@ resource "google_sql_database_instance" "default" {
       content {
         follow_gae_application = location_preference.value["follow_gae_application"]
         zone                   = location_preference.value["zone"]
+      }
+    }
+
+    dynamic "ip_configuration" {
+      for_each = var.ip_configuration
+      content {
+        ipv4_enabled    = ip_configuration.value["ipv4_enabled"]
+        private_network = ip_configuration.value["private_network"]
+        require_ssl     = ip_configuration.value["require_ssl"]
       }
     }
   }
