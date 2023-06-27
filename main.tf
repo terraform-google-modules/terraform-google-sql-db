@@ -65,7 +65,15 @@ resource "google_sql_database_instance" "default" {
       content {
         ipv4_enabled    = ip_configuration.value["ipv4_enabled"]
         private_network = ip_configuration.value["private_network"]
-        authorized_networks = ip_configuration.value["authorized_networks"]
+
+        dynamic "authorized_networks" {
+          for_each = var.ip_configuration["authorized_networks"]
+          content {
+            name = authorized_networks.value["name"]
+            value = authorized_networks.value["value"]
+          }
+
+        }
       }
     }
 
@@ -73,8 +81,8 @@ resource "google_sql_database_instance" "default" {
       for_each = var.backup_configuration == {} ? [] : [1]
       content {
         binary_log_enabled = var.backup_configuration["binary_log_enabled"]
-        enabled = var.backup_configuration["enabled"]
-        start_time = var.backup_configuration["start_time"]
+        enabled            = var.backup_configuration["enabled"]
+        start_time         = var.backup_configuration["start_time"]
       }
     }
   }
