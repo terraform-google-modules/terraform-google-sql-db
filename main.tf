@@ -81,8 +81,6 @@ resource "google_sql_database_instance" "master" {
       start_time         = var.backup_configuration["start_time"]
     }
   }
-
-  deletion_protection = false
 }
 
 resource "google_sql_database" "default" {
