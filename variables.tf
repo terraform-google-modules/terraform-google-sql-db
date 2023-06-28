@@ -137,7 +137,7 @@ variable maintenance_window {
   type        = list(object({
     day = string
     hour = string
-    update_track = optional(string)
+    update_track = string
   }))
   default     = []
 }
