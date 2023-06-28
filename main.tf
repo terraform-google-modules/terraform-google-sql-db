@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+terraform {
+  experiments = [module_variable_optional_attrs]
+}
+
 resource "google_sql_database_instance" "master" {
   name                 = "${var.name}"
   project              = "${var.project}"
