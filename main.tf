@@ -28,7 +28,6 @@ resource "google_sql_database_instance" "master" {
   settings {
     tier                        = "${var.tier}"
     activation_policy           = "${var.activation_policy}"
-    authorized_gae_applications = var.authorized_gae_applications
     disk_autoresize             = "${var.disk_autoresize}"
     disk_size                   = "${var.disk_size}"
     disk_type                   = "${var.disk_type}"
