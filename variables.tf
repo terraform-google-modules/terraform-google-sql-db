@@ -104,11 +104,6 @@ variable pricing_plan {
   default     = "PER_USE"
 }
 
-variable replication_type {
-  description = "Replication type for this instance, can be one of `ASYNCHRONOUS` or `SYNCHRONOUS`."
-  default     = "SYNCHRONOUS"
-}
-
 variable database_flags {
   description = "List of Cloud SQL flags that are applied to the database server"
   default     = []
