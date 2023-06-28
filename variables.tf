@@ -111,8 +111,12 @@ variable database_flags {
 
 variable backup_configuration {
   description = "The backup_configuration settings subblock for the database setings"
-  type        = map
-  default     = {}
+  type = object({
+    binary_log_enabled = optional(bool)
+    enabled            = optional(bool)
+    start_time         = optional(string)
+  })
+  default = {}
 }
 
 variable ip_configuration {
