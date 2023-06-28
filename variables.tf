@@ -80,7 +80,7 @@ variable activation_policy {
 
 variable authorized_gae_applications {
   description = "A list of Google App Engine (GAE) project names that are allowed to access this instance."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
