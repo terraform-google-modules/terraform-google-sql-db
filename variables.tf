@@ -122,25 +122,29 @@ variable backup_configuration {
 
 variable ip_configuration {
   description = "The ip_configuration settings subblock"
-  type        = "list"
-  default     = [{}]
+  type = list(object({
+    ipv4_enabled        = bool
+    authorized_networks = list(object({ name = string, value = string }))
+    private_network     = string
+  }))
+  default = [{}]
 }
 
 variable location_preference {
   description = "The location_preference settings subblock"
-  type        = list(object({
+  type = list(object({
     follow_gae_application = bool
-    zone = string
+    zone                   = string
   }))
-  default     = []
+  default = []
 }
 
 variable maintenance_window {
   description = "The maintenance_window settings subblock"
-  type        = list(object({
-    day = string
-    hour = string
+  type = list(object({
+    day          = string
+    hour         = string
     update_track = string
   }))
-  default     = []
+  default = []
 }
