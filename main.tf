@@ -76,9 +76,9 @@ resource "google_sql_database_instance" "master" {
     }
 
     backup_configuration {
-      binary_log_enabled = try(var.backup_configuration["binary_log_enabled"], null)
-      enabled            = try(var.backup_configuration["enabled"], null)
-      start_time         = try(var.backup_configuration["start_time"], null)
+      binary_log_enabled = var.backup_configuration["binary_log_enabled"]
+      enabled            = var.backup_configuration["enabled"]
+      start_time         = var.backup_configuration["start_time"]
     }
   }
 }

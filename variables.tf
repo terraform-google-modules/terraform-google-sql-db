@@ -116,7 +116,11 @@ variable backup_configuration {
     enabled            = optional(bool)
     start_time         = optional(string)
   })
-  default = {}
+  default = {
+    binary_log_enabled = false
+    enabled            = false
+    start_time         = ""
+  }
 }
 
 variable ip_configuration {
