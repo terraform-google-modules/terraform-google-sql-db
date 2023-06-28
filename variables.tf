@@ -128,7 +128,10 @@ variable ip_configuration {
 
 variable location_preference {
   description = "The location_preference settings subblock"
-  type        = "list"
+  type        = list(object({
+    follow_gae_application = bool
+    zone = string
+  }))
   default     = []
 }
 
