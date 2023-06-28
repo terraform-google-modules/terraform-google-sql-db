@@ -125,7 +125,7 @@ variable ip_configuration {
   type = list(object({
     ipv4_enabled        = bool
     authorized_networks = list(object({ name = string, value = string }))
-    private_network     = string
+    private_network     = optional(string)
   }))
   default = []
 }
