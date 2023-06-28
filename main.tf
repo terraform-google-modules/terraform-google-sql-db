@@ -75,13 +75,10 @@ resource "google_sql_database_instance" "master" {
       }
     }
 
-    dynamic "backup_configuration" {
-      for_each = var.backup_configuration == {} ? [] : [1]
-      content {
-        binary_log_enabled = try(var.backup_configuration["binary_log_enabled"], null)
-        enabled            = try(var.backup_configuration["enabled"], null)
-        start_time         = try(var.backup_configuration["start_time"], null)
-      }
+    backup_configuration {
+      binary_log_enabled = try(var.backup_configuration["binary_log_enabled"], null)
+      enabled            = try(var.backup_configuration["enabled"], null)
+      start_time         = try(var.backup_configuration["start_time"], null)
     }
   }
 }
