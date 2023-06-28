@@ -133,7 +133,7 @@ variable ip_configuration {
 variable location_preference {
   description = "The location_preference settings subblock"
   type = list(object({
-    follow_gae_application = bool
+    follow_gae_application = optional(bool)
     zone                   = string
   }))
   default = []
@@ -144,7 +144,7 @@ variable maintenance_window {
   type = list(object({
     day          = string
     hour         = string
-    update_track = string
+    update_track = optional(string)
   }))
   default = []
 }
