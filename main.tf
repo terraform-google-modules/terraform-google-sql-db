@@ -26,12 +26,12 @@ resource "google_sql_database_instance" "master" {
   }
 
   settings {
-    tier                        = "${var.tier}"
-    activation_policy           = "${var.activation_policy}"
-    disk_autoresize             = "${var.disk_autoresize}"
-    disk_size                   = "${var.disk_size}"
-    disk_type                   = "${var.disk_type}"
-    pricing_plan                = "${var.pricing_plan}"
+    tier              = "${var.tier}"
+    activation_policy = "${var.activation_policy}"
+    disk_autoresize   = "${var.disk_autoresize}"
+    disk_size         = "${var.disk_size}"
+    disk_type         = "${var.disk_type}"
+    pricing_plan      = "${var.pricing_plan}"
 
     dynamic "database_flags" {
       for_each = var.database_flags
@@ -67,7 +67,7 @@ resource "google_sql_database_instance" "master" {
         dynamic "authorized_networks" {
           for_each = ip_configuration.value["authorized_networks"]
           content {
-            name = authorized_networks.value["name"]
+            name  = authorized_networks.value["name"]
             value = authorized_networks.value["value"]
           }
 
@@ -81,6 +81,8 @@ resource "google_sql_database_instance" "master" {
       start_time         = var.backup_configuration["start_time"]
     }
   }
+
+  deletion_protection = false
 }
 
 resource "google_sql_database" "default" {
