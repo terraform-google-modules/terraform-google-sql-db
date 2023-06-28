@@ -134,6 +134,10 @@ variable location_preference {
 
 variable maintenance_window {
   description = "The maintenance_window settings subblock"
-  type        = "list"
+  type        = list(object({
+    day = string
+    hour = string
+    update_track = optional(string)
+  }))
   default     = []
 }
