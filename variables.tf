@@ -127,7 +127,7 @@ variable ip_configuration {
     authorized_networks = list(object({ name = string, value = string }))
     private_network     = string
   }))
-  default = [{}]
+  default = []
 }
 
 variable location_preference {
