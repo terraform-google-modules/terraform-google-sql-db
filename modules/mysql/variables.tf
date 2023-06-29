@@ -196,6 +196,7 @@ variable "backup_configuration" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
+    query_plans_per_minute  = number
     query_string_length     = number
     record_application_tags = bool
     record_client_address   = bool
@@ -253,6 +254,7 @@ variable "read_replicas" {
       value = string
     }))
     insights_config = optional(object({
+      query_plans_per_minute  = number
       query_string_length     = number
       record_application_tags = bool
       record_client_address   = bool
