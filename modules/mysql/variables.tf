@@ -424,3 +424,9 @@ variable "user_deletion_policy" {
   type        = string
   default     = null
 }
+
+variable "is_failover_target" {
+  description = "Specifies if the replica is the failover target. If the field is set to true the replica will be designated as a failover replica. If the master instance fails, the replica instance will be promoted as the new master instance. Only one replica can be specified as failover target, and the replica has to be in different zone with the master instance."
+  type        = bool
+  default     = false
+}

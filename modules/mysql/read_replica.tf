@@ -32,7 +32,7 @@ resource "google_sql_database_instance" "replicas" {
   encryption_key_name  = (join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
 
   replica_configuration {
-    failover_target = false
+    failover_target = var.is_failover_target
   }
 
   settings {
