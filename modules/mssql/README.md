@@ -45,6 +45,7 @@ The following dependency must be available for SQL Server module:
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | sql\_server\_audit\_config | SQL server audit config settings. | `map(string)` | `{}` | no |
 | tier | The tier for the master instance. | `string` | `"db-custom-2-3840"` | no |
+| time\_zone | The time zone for SQL instance. | `string` | `"UTC"` | no |
 | update\_timeout | The optional timeout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |
