@@ -310,5 +310,5 @@ variable "deletion_protection" {
 variable "time_zone" {
   description = "The time zone for SQL instance."
   type        = string
-  default     = "UTC"
+  default     = null
 }
