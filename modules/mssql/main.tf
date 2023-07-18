@@ -181,6 +181,12 @@ resource "google_sql_database" "additional_databases" {
 resource "random_password" "user-password" {
   length     = 8
   special    = true
+
+  lifecycle {
+    ignore_changes = [
+     special, length
+    ]
+  }
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -191,6 +197,12 @@ resource "random_password" "additional_passwords" {
   }
   length     = 32
   special    = true
+
+   lifecycle {
+    ignore_changes = [
+     special, length
+    ]
+  }
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
