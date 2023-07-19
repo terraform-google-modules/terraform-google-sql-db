@@ -306,3 +306,9 @@ variable "deletion_protection" {
   type        = bool
   default     = true
 }
+
+variable "time_zone" {
+  description = "The time_zone to be used by the database engine (supported only for SQL Server), in SQL Server timezone format."
+  type        = string
+  default     = null
+}

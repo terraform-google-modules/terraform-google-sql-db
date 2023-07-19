@@ -61,7 +61,7 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
     dynamic "insights_config" {
-      for_each = var.insights_config != null ? [var.insights_config] : []
+      for_each = lookup(each.value, "insights_config") != null ? [lookup(each.value, "insights_config")] : []
 
       content {
         query_insights_enabled  = true

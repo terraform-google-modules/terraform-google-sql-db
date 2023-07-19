@@ -61,10 +61,17 @@ resource "google_sql_database_instance" "default" {
 
   settings {
     tier                        = var.tier
+    edition                     = var.edition
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
     connector_enforcement       = local.connector_enforcement
+    dynamic "data_cache_config" {
+      for_each = var.edition == "ENTERPRISE_PLUS" && var.data_cache_enabled ? ["cache_enabled"] : []
+      content {
+        data_cache_enabled = var.data_cache_enabled
+      }
+    }
 
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]

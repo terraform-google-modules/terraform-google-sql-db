@@ -250,6 +250,11 @@ variable "read_replicas" {
       name  = string
       value = string
     }))
+    insights_config = optional(object({
+      query_string_length     = number
+      record_application_tags = bool
+      record_client_address   = bool
+    }))
     ip_configuration = object({
       authorized_networks                           = list(map(string))
       ipv4_enabled                                  = bool
@@ -402,4 +407,10 @@ variable "enable_random_password_special" {
   description = "Enable special characters in generated random passwords."
   type        = bool
   default     = false
+}
+
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = "ENTERPRISE"
 }

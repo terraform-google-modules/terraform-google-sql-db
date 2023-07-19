@@ -25,6 +25,8 @@ module "safer_mysql" {
   secondary_zone                  = var.secondary_zone
   follow_gae_application          = var.follow_gae_application
   tier                            = var.tier
+  edition                         = var.edition
+  data_cache_enabled              = var.data_cache_enabled
   activation_policy               = var.activation_policy
   availability_type               = var.availability_type
   deletion_protection_enabled     = var.deletion_protection_enabled
