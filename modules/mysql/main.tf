@@ -98,7 +98,7 @@ resource "google_sql_database_instance" "default" {
     dynamic "data_cache_config" {
       for_each = var.data_cache_config
       content {
-        data_cache_enabled   = lookup(data_cache_config.value, "data_cache_enabled", false)
+        data_cache_enabled = lookup(data_cache_config.value, "data_cache_enabled", false)
       }
     }
     dynamic "deny_maintenance_period" {

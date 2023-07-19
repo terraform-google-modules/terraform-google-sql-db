@@ -159,7 +159,7 @@ variable "maintenance_window_update_track" {
 variable "data_cache_config" {
   description = "Whether data cache is enabled for the instance. Only applicable for ENTERPRISE_PLUS MYSQL instance."
   type = list(object({
-    data_cache_enabled   = bool
+    data_cache_enabled = bool
   }))
   default = null
 }
