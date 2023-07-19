@@ -255,7 +255,7 @@ variable "read_replicas" {
     name                  = string
     name_override         = optional(string)
     tier                  = string
-    edition               = string
+    edition               = optional(string)
     zone                  = string
     availability_type     = string
     disk_type             = string
