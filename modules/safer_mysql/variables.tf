@@ -156,12 +156,10 @@ variable "maintenance_window_update_track" {
   default     = "stable"
 }
 
-variable "data_cache_config" {
-  description = "Whether data cache is enabled for the instance. Only applicable for ENTERPRISE_PLUS MYSQL instance."
-  type = list(object({
-    data_cache_enabled = bool
-  }))
-  default = null
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
 }
 
 variable "deny_maintenance_period" {

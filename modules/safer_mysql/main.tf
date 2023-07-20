@@ -38,7 +38,7 @@ module "safer_mysql" {
   maintenance_window_hour         = var.maintenance_window_hour
   maintenance_window_update_track = var.maintenance_window_update_track
   database_flags                  = var.database_flags
-  data_cache_config               = var.data_cache_config
+  data_cache_config               = var.data_cache_enabled
   deny_maintenance_period         = var.deny_maintenance_period
   encryption_key_name             = var.encryption_key_name
 
