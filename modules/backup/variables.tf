@@ -115,12 +115,17 @@ variable "unique_suffix" {
   default     = ""
 }
 
+variable "log_db_name_to_export" {
+  description = "Whether or not to log database name in the export workflow"
+  type        = bool
+  default     = false
+}
+
 variable "use_sql_instance_replica_in_exporter" {
   description = "Whether or not to use replica instance on exporter workflow."
   type        = bool
   default     = false
 }
-
 
 variable "sql_instance_replica" {
   description = "The name of the SQL instance replica to export"

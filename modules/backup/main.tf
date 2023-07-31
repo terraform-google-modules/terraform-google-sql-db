@@ -112,6 +112,7 @@ resource "google_workflows_workflow" "sql_export" {
     compressExport         = var.compress_export
     enableConnectorParams  = var.enable_connector_params
     connectorParamsTimeout = var.connector_params_timeout
+    logDbName              = var.log_db_name_to_export
   })
 }
 
