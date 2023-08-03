@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [15.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v15.1.0...v15.2.0) (2023-07-18)
+
+
+### Features
+
+* add time_zone for mssql ([#488](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/488)) ([0938dec](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0938deceedac7cf15c0fa51d6b81faac7216e0ad))
+
 ## [15.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v15.0.0...v15.1.0) (2023-06-20)
 
 
