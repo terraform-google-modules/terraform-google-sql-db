@@ -52,13 +52,6 @@ main:
                           database: $${database}
                           instance: ${instanceName}
                           project: ${project}
-                    - create database:
-                        call: googleapis.sqladmin.v1.databases.insert
-                        args:
-                          instance: ${instanceName}
-                          project: ${project}
-                          body:
-                            name: $${database}
                     - import database:
                         call: http.post
                         args:
