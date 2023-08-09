@@ -105,6 +105,7 @@ resource "google_sql_database_instance" "default" {
     disk_size             = var.disk_size
     disk_type             = var.disk_type
     pricing_plan          = var.pricing_plan
+    time_zone             = var.time_zone
     dynamic "database_flags" {
       for_each = var.database_flags
       content {
@@ -179,8 +180,14 @@ resource "google_sql_database" "additional_databases" {
 }
 
 resource "random_password" "user-password" {
-  length     = 8
-  special    = true
+  length  = 8
+  special = true
+
+  lifecycle {
+    ignore_changes = [
+      special, length
+    ]
+  }
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
@@ -189,8 +196,14 @@ resource "random_password" "additional_passwords" {
   keepers = {
     name = google_sql_database_instance.default.name
   }
-  length     = 32
-  special    = true
+  length  = 32
+  special = true
+
+  lifecycle {
+    ignore_changes = [
+      special, length
+    ]
+  }
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
