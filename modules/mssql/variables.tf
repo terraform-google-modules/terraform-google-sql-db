@@ -50,6 +50,12 @@ variable "tier" {
   default     = "db-custom-2-3840"
 }
 
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
 variable "zone" {
   type        = string
   description = "The zone for the master instance."

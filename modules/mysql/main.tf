@@ -61,6 +61,7 @@ resource "google_sql_database_instance" "default" {
 
   settings {
     tier                        = var.tier
+    edition                     = var.edition
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
@@ -92,6 +93,12 @@ resource "google_sql_database_instance" "default" {
         query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
         record_application_tags = lookup(insights_config.value, "record_application_tags", false)
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
+      }
+    }
+    dynamic "data_cache_config" {
+      for_each = var.edition == "ENTERPRISE_PLUS" && var.data_cache_enabled ? ["cache_enabled"] : []
+      content {
+        data_cache_enabled = var.data_cache_enabled
       }
     }
     dynamic "deny_maintenance_period" {
