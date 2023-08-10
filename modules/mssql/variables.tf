@@ -205,6 +205,7 @@ variable "backup_configuration" {
     transaction_log_retention_days = string
     retained_backups               = number
     retention_unit                 = string
+    location                       = string
   })
   default = {
     binary_log_enabled             = null
@@ -214,6 +215,7 @@ variable "backup_configuration" {
     transaction_log_retention_days = null
     retained_backups               = null
     retention_unit                 = null
+    location                       = null
   }
 }
 

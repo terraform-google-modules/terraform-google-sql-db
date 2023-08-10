@@ -64,6 +64,7 @@ resource "google_sql_database_instance" "default" {
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        location                       = lookup(backup_configuration.value, "location", null)
 
         dynamic "backup_retention_settings" {
           for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
