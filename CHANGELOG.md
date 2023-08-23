@@ -10,7 +10,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Features
 
-* config connector_enforcement in postgres ([#500](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/500)) ([5789b54](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5789b541a1b7e8c08eef58a85278e98114985d3e))
+* config connector_enforcement in postgres and mssql ([#500](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/500)) ([5789b54](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5789b541a1b7e8c08eef58a85278e98114985d3e))
 
 ## [16.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v15.2.0...v16.0.0) (2023-08-09)
 
