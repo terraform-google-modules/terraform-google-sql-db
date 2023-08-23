@@ -54,6 +54,12 @@ variable "tier" {
   default     = "db-f1-micro"
 }
 
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
 variable "zone" {
   type        = string
   description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
@@ -401,6 +407,12 @@ variable "user_deletion_policy" {
 
 variable "enable_random_password_special" {
   description = "Enable special characters in generated random passwords."
+  type        = bool
+  default     = false
+}
+
+variable "connector_enforcement" {
+  description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
 }

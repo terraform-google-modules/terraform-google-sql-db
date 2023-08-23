@@ -39,6 +39,9 @@ locals {
 
   retained_backups = lookup(var.backup_configuration, "retained_backups", null)
   retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
+
+  // Force the usage of connector_enforcement
+  connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 }
 
 resource "random_id" "suffix" {
@@ -58,9 +61,11 @@ resource "google_sql_database_instance" "default" {
 
   settings {
     tier                        = var.tier
+    edition                     = var.edition
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
+    connector_enforcement       = local.connector_enforcement
 
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]

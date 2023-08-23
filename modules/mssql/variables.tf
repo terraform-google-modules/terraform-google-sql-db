@@ -50,6 +50,12 @@ variable "tier" {
   default     = "db-custom-2-3840"
 }
 
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
 variable "zone" {
   type        = string
   description = "The zone for the master instance."
@@ -305,4 +311,16 @@ variable "deletion_protection" {
   description = "Used to block Terraform from deleting a SQL Instance."
   type        = bool
   default     = true
+}
+
+variable "connector_enforcement" {
+  description = "Enforce that clients use the connector library"
+  type        = bool
+  default     = false
+}
+
+variable "time_zone" {
+  description = "The time zone for SQL instance."
+  type        = string
+  default     = null
 }

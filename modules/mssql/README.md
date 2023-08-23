@@ -15,6 +15,7 @@ The following dependency must be available for SQL Server module:
 | additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |
 | backup\_configuration | The database backup configuration. | <pre>object({<br>    binary_log_enabled             = bool<br>    enabled                        = bool<br>    point_in_time_recovery_enabled = bool<br>    start_time                     = string<br>    transaction_log_retention_days = string<br>    retained_backups               = number<br>    retention_unit                 = string<br>  })</pre> | <pre>{<br>  "binary_log_enabled": null,<br>  "enabled": false,<br>  "point_in_time_recovery_enabled": null,<br>  "retained_backups": null,<br>  "retention_unit": null,<br>  "start_time": null,<br>  "transaction_log_retention_days": null<br>}</pre> | no |
+| connector\_enforcement | Enforce that clients use the connector library | `bool` | `false` | no |
 | create\_timeout | The optional timeout that is applied to limit long database creates. | `string` | `"30m"` | no |
 | database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | database\_version | The database version to use: SQLSERVER\_2017\_STANDARD, SQLSERVER\_2017\_ENTERPRISE, SQLSERVER\_2017\_EXPRESS, or SQLSERVER\_2017\_WEB | `string` | `"SQLSERVER_2017_STANDARD"` | no |
@@ -29,6 +30,7 @@ The following dependency must be available for SQL Server module:
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
+| edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
 | ip\_configuration | The ip configuration for the master instances. | <pre>object({<br>    authorized_networks = list(map(string))<br>    ipv4_enabled        = bool<br>    private_network     = string<br>    require_ssl         = bool<br>    allocated_ip_range  = string<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "require_ssl": null<br>}</pre> | no |
@@ -45,6 +47,7 @@ The following dependency must be available for SQL Server module:
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | sql\_server\_audit\_config | SQL server audit config settings. | `map(string)` | `{}` | no |
 | tier | The tier for the master instance. | `string` | `"db-custom-2-3840"` | no |
+| time\_zone | The time zone for SQL instance. | `string` | `null` | no |
 | update\_timeout | The optional timeout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |

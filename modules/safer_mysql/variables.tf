@@ -61,6 +61,12 @@ variable "tier" {
   default     = "db-n1-standard-1"
 }
 
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
 variable "zone" {
   description = "The zone for the master instance, it should be something like: `a`, `c`."
   type        = string
@@ -150,6 +156,12 @@ variable "maintenance_window_update_track" {
   default     = "stable"
 }
 
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
+}
+
 variable "deny_maintenance_period" {
   description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
   type = list(object({
@@ -216,6 +228,7 @@ variable "read_replicas" {
     name                  = string
     name_override         = optional(string)
     tier                  = string
+    edition               = string
     availability_type     = string
     zone                  = string
     disk_type             = string
