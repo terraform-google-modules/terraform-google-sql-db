@@ -315,6 +315,12 @@ variable "deletion_protection" {
   default     = true
 }
 
+variable "connector_enforcement" {
+  description = "Enforce that clients use the connector library"
+  type        = bool
+  default     = false
+}
+
 variable "time_zone" {
   description = "The time zone for SQL instance."
   type        = string

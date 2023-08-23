@@ -25,8 +25,9 @@ locals {
   databases = { for db in var.additional_databases : db.name => db }
   users     = { for u in var.additional_users : u.name => u }
 
-  retained_backups = lookup(var.backup_configuration, "retained_backups", null)
-  retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
+  retained_backups      = lookup(var.backup_configuration, "retained_backups", null)
+  retention_unit        = lookup(var.backup_configuration, "retention_unit", null)
+  connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 }
 
 resource "random_id" "suffix" {
@@ -56,6 +57,8 @@ resource "google_sql_database_instance" "default" {
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
+    connector_enforcement       = local.connector_enforcement
+
     dynamic "backup_configuration" {
       for_each = var.backup_configuration.enabled ? [var.backup_configuration] : []
       content {
