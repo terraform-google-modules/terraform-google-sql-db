@@ -192,10 +192,10 @@ variable "backup_configuration" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
-    query_plans_per_minute  = number
-    query_string_length     = number
-    record_application_tags = bool
-    record_client_address   = bool
+    query_plans_per_minute  = optional(number, 5)
+    query_string_length     = optional(number, 1024)
+    record_application_tags = optional(bool, false)
+    record_client_address   = optional(bool, false)
   })
   default = null
 }
@@ -246,6 +246,12 @@ variable "read_replicas" {
       name  = string
       value = string
     })), [])
+    insights_config = optional(object({
+      query_plans_per_minute  = optional(number, 5)
+      query_string_length     = optional(number, 1024)
+      record_application_tags = optional(bool, false)
+      record_client_address   = optional(bool, false)
+    }), null)
     ip_configuration = object({
       authorized_networks                           = optional(list(map(string)), [])
       ipv4_enabled                                  = optional(bool)

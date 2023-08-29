@@ -48,6 +48,10 @@ module "pg" {
     foo = "bar"
   }
 
+  insights_config = {
+    query_plans_per_minute = 5
+  }
+
   ip_configuration = {
     ipv4_enabled                  = false
     psc_enabled                   = true
