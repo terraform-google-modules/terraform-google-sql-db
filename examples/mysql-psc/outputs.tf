@@ -20,5 +20,5 @@ output "project_id" {
 
 output "name" {
   description = "The name for Cloud SQL instance"
-  value       = module.pg.instance_name
+  value       = module.mysql.instance_name
 }

@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = var.project_id
+variable "project_id" {
+  type        = string
+  description = "The project to run tests against"
 }
 
-output "name" {
+variable "mysql_ha_name" {
+  type        = string
   description = "The name for Cloud SQL instance"
-  value       = module.pg.instance_name
+  default     = "tf-mysql-psc"
 }

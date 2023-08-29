@@ -71,6 +71,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
 | instance\_ip\_address | The IPv4 address assigned for the master instance |
 | instance\_name | The instance name for the master instance |
+| instance\_psc\_attachment | The psc\_service\_attachment\_link created for the master instance |
 | instance\_self\_link | The URI of the master instance |
 | instance\_server\_ca\_cert | The CA certificate information used to connect to the SQL instance via SSL |
 | instance\_service\_account\_email\_address | The service account email address assigned to the master instance |

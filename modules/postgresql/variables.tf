@@ -186,15 +186,7 @@ variable "backup_configuration" {
     retained_backups               = optional(number)
     retention_unit                 = optional(string)
   })
-  default = {
-    # enabled                        = false
-    # start_time                     = null
-    # location                       = null
-    # point_in_time_recovery_enabled = false
-    # transaction_log_retention_days = null
-    # retained_backups               = null
-    # retention_unit                 = null
-  }
+  default = {}
 }
 
 variable "insights_config" {
@@ -232,14 +224,7 @@ variable "ip_configuration" {
     psc_enabled                                   = optional(bool, false)
     psc_allowed_consumer_projects                 = optional(list(string), [])
   })
-  default = {
-    # authorized_networks                           = []
-    # ipv4_enabled                                  = true
-    # private_network                               = null
-    # require_ssl                                   = null
-    # allocated_ip_range                            = null
-    # enable_private_path_for_google_cloud_services = false
-  }
+  default = {}
 }
 
 // Read Replicas

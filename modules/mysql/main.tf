@@ -41,6 +41,12 @@ locals {
 
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
+  zone                  = var.zone == null ? data.google_compute_zones.available.names[0] : var.zone
+}
+
+data "google_compute_zones" "available" {
+  project = var.project_id
+  region  = var.region
 }
 
 resource "random_id" "suffix" {
@@ -137,6 +143,15 @@ resource "google_sql_database_instance" "default" {
             value           = lookup(authorized_networks.value, "value", null)
           }
         }
+
+        dynamic "psc_config" {
+          for_each = ip_configuration.value.psc_enabled ? ["psc_enabled"] : []
+          content {
+            psc_enabled               = ip_configuration.value.psc_enabled
+            allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+          }
+        }
+
       }
     }
 
@@ -155,10 +170,13 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
-    location_preference {
-      zone                   = var.zone
-      secondary_zone         = var.secondary_zone
-      follow_gae_application = var.follow_gae_application
+    dynamic "location_preference" {
+      for_each = var.zone != null ? ["location_preference"] : []
+      content {
+        zone                   = var.zone
+        secondary_zone         = var.secondary_zone
+        follow_gae_application = var.follow_gae_application
+      }
     }
 
     maintenance_window {
