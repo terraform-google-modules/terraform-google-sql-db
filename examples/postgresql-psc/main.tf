@@ -69,10 +69,10 @@ module "pg" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix = "-test"
+  read_replica_name_suffix = "-test-psc"
   read_replicas = [
     {
-      name              = "0-psc"
+      name              = "0"
       zone              = "us-central1-a"
       availability_type = "REGIONAL"
       tier              = "db-custom-16-61440"

@@ -73,11 +73,11 @@ module "mysql" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix = "-test"
+  read_replica_name_suffix = "-test-psc"
   replica_database_version = "MYSQL_8_0"
   read_replicas = [
     {
-      name              = "0-psc"
+      name              = "0"
       zone              = "us-central1-a"
       availability_type = "REGIONAL"
       tier              = "db-custom-4-15360"
