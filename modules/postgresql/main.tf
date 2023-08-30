@@ -42,12 +42,6 @@ locals {
 
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
-  zone                  = var.zone == null ? data.google_compute_zones.available.names[0] : var.zone
-}
-
-data "google_compute_zones" "available" {
-  project = var.project_id
-  region  = var.region
 }
 
 resource "random_id" "suffix" {

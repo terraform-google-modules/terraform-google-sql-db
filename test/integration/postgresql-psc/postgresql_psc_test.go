@@ -15,7 +15,6 @@
 package postgresql_psc
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/gcloud"
@@ -31,12 +30,13 @@ func TestPostgreSqlPscModule(t *testing.T) {
 		pSql.DefaultVerify(assert)
 
 		instaceNames := []string{pSql.GetStringOutput("name")}
-		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instaceNames[0], pSql.GetStringOutput("project_id")))
+		projectId := pSql.GetStringOutput("project_id")
+		op := gcloud.Runf(t, "sql instances describe %s --project %s", instaceNames[0], projectId)
 		assert.Equal(1, len(op.Get("replicaNames").Array()), "Expected 1 replicas")
 		instaceNames = append(instaceNames, utils.GetResultStrSlice(op.Get("replicaNames").Array())...)
 
 		for _, instance := range instaceNames {
-			op = gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instance, pSql.GetStringOutput("project_id")))
+			op = gcloud.Runf(t, "sql instances describe %s --project %s", instance, projectId)
 
 			// assert general database settings
 			assert.Equal("ALWAYS", op.Get("settings.activationPolicy").String(), "Expected ALWAYS activationPolicy")
@@ -90,7 +90,7 @@ func TestPostgreSqlPscModule(t *testing.T) {
 				assert.Equal("COUNT", op.Get("settings.backupConfiguration.backupRetentionSettings.retentionUnit").String(), "Expected COUNT backupConfigurationRetentionUnit")
 
 				// assert users
-				op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", pSql.GetStringOutput("name"), pSql.GetStringOutput("project_id")))
+				op = gcloud.Runf(t, "sql users list --instance %s --project %s", pSql.GetStringOutput("name"), projectId)
 				assert.Equal(4, len(op.Array()), "Expected at least 4 users")
 
 				// replica specific validation

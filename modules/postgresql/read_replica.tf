@@ -18,6 +18,14 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  // Zone for replica instances
+  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+}
+
+data "google_compute_zones" "available" {
+  count   = var.zone == null ? 0 : 1
+  project = var.project_id
+  region  = var.region
 }
 
 resource "google_sql_database_instance" "replicas" {
@@ -68,17 +76,6 @@ resource "google_sql_database_instance" "replicas" {
         }
       }
     }
-    # dynamic "insights_config" {
-    #   for_each = var.insights_config != null ? [var.insights_config] : []
-
-    #   content {
-    #     query_insights_enabled  = true
-    #     query_plans_per_minute  = lookup(insights_config.value, "query_plans_per_minute", 5)
-    #     query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
-    #     record_application_tags = lookup(insights_config.value, "record_application_tags", false)
-    #     record_client_address   = lookup(insights_config.value, "record_client_address", false)
-    #   }
-    # }
     dynamic "insights_config" {
       for_each = lookup(each.value, "insights_config") != null ? [lookup(each.value, "insights_config")] : var.insights_config != null ? [var.insights_config] : []
 

@@ -18,6 +18,14 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  // Zone for replica instances
+  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+}
+
+data "google_compute_zones" "available" {
+  count   = var.zone == null ? 0 : 1
+  project = var.project_id
+  region  = var.region
 }
 
 resource "google_sql_database_instance" "replicas" {

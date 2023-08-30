@@ -15,7 +15,6 @@
 package mysql_psc
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/gcloud"
@@ -32,12 +31,13 @@ func TestMySqlPscModule(t *testing.T) {
 		mySql.DefaultVerify(assert)
 
 		instaceNames := []string{mySql.GetStringOutput("name")}
-		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instaceNames[0], mySql.GetStringOutput("project_id")))
+		projectId := mySql.GetStringOutput("project_id")
+		op := gcloud.Runf(t, "sql instances describe %s --project %s", instaceNames[0], projectId)
 		assert.Equal(1, len(op.Get("replicaNames").Array()), "Expected 1 replicas")
 		instaceNames = append(instaceNames, utils.GetResultStrSlice(op.Get("replicaNames").Array())...)
 
 		for _, instance := range instaceNames {
-			op = gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instance, mySql.GetStringOutput("project_id")))
+			op = gcloud.Runf(t, "sql instances describe %s --project %s", instance, projectId)
 
 			// assert general database settings
 			assert.Equal("ALWAYS", op.Get("settings.activationPolicy").String(), "Expected ALWAYS activationPolicy")
@@ -98,7 +98,7 @@ func TestMySqlPscModule(t *testing.T) {
 				assert.Equal(int64(8), op.Get("settings.passwordValidationPolicy.minLength").Int(), "Expected 8 minLength")
 
 				// assert users
-				op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", mySql.GetStringOutput("name"), mySql.GetStringOutput("project_id")))
+				op = gcloud.Runf(t, "sql users list --instance %s --project %s", mySql.GetStringOutput("name"), projectId)
 				assert.Equal(3, len(op.Array()), "Expected at least 3 users")
 
 				// replica specific validation
