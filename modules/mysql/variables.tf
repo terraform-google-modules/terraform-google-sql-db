@@ -56,6 +56,12 @@ variable "tier" {
   default     = "db-n1-standard-1"
 }
 
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
 variable "zone" {
   description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
   type        = string
@@ -161,6 +167,12 @@ variable "user_labels" {
   description = "The key/value labels for the master instances."
 }
 
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
+}
+
 variable "deny_maintenance_period" {
   description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
   type = list(object({
@@ -196,6 +208,7 @@ variable "backup_configuration" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
+    query_plans_per_minute  = number
     query_string_length     = number
     record_application_tags = bool
     record_client_address   = bool
@@ -241,6 +254,7 @@ variable "read_replicas" {
     name                  = string
     name_override         = optional(string)
     tier                  = string
+    edition               = optional(string)
     zone                  = string
     availability_type     = string
     disk_type             = string
@@ -253,6 +267,7 @@ variable "read_replicas" {
       value = string
     }))
     insights_config = optional(object({
+      query_plans_per_minute  = number
       query_string_length     = number
       record_application_tags = bool
       record_client_address   = bool

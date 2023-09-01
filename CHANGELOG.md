@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [16.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v16.0.0...v16.1.0) (2023-08-23)
+
+
+### Features
+
+* config connector_enforcement in postgres and mssql ([#500](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/500)) ([5789b54](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5789b541a1b7e8c08eef58a85278e98114985d3e))
+
+## [16.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v15.2.0...v16.0.0) (2023-08-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* added `edition` in mssql, mysql, postgresql, safer_sql and `data_cache_config` to mysql and safer_sql modules ([#491](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/491))
+
+### Features
+
+* added `edition` in mssql, mysql, postgresql, safer_sql and `data_cache_config` to mysql and safer_sql modules ([#491](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/491)) ([0024b24](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0024b24c22525ac21870d7ccea15930e1c9c301a))
+
+
+### Bug Fixes
+
+* to avoid password reset for existing additional users for mssql ([#489](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/489)) ([923cd11](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/923cd1129fafa98c2dbe596fed75d6611334e484))
+
 ## [15.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v15.1.0...v15.2.0) (2023-07-18)
 
 

@@ -39,6 +39,9 @@ locals {
 
   retained_backups = lookup(var.backup_configuration, "retained_backups", null)
   retention_unit   = lookup(var.backup_configuration, "retention_unit", null)
+
+  // Force the usage of connector_enforcement
+  connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 }
 
 resource "random_id" "suffix" {
@@ -58,9 +61,11 @@ resource "google_sql_database_instance" "default" {
 
   settings {
     tier                        = var.tier
+    edition                     = var.edition
     activation_policy           = var.activation_policy
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
+    connector_enforcement       = local.connector_enforcement
 
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
@@ -112,6 +117,7 @@ resource "google_sql_database_instance" "default" {
 
       content {
         query_insights_enabled  = true
+        query_plans_per_minute  = lookup(insights_config.value, "query_plans_per_minute", 5)
         query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
         record_application_tags = lookup(insights_config.value, "record_application_tags", false)
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
