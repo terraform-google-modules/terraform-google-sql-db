@@ -97,26 +97,28 @@ resource "google_cloud_scheduler_job" "sql_backup" {
 ################################
 resource "google_workflows_workflow" "sql_export" {
   count           = var.enable_export_backup ? 1 : 0
-  name            = "sql-export-${var.sql_instance}${var.unique_suffix}"
+  name            = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
   region          = var.region
   description     = "Workflow for backing up the CloudSQL Instance"
   project         = var.project_id
   service_account = local.service_account
   source_contents = templatefile("${path.module}/templates/export.yaml.tftpl", {
-    project             = var.project_id
-    instanceName        = var.sql_instance
-    backupRetentionTime = var.backup_retention_time
-    databases           = jsonencode(var.export_databases)
-    gcsBucket           = var.export_uri
-    dbType              = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
-    compressExport      = var.compress_export
-    logDbName           = var.log_db_name_to_export
+    project                = var.project_id
+    instanceName           = var.use_sql_instance_replica_in_exporter ? var.sql_instance_replica : var.sql_instance
+    backupRetentionTime    = var.backup_retention_time
+    databases              = jsonencode(var.export_databases)
+    gcsBucket              = var.export_uri
+    dbType                 = split("_", data.google_sql_database_instance.backup_instance.database_version)[0]
+    compressExport         = var.compress_export
+    enableConnectorParams  = var.enable_connector_params
+    connectorParamsTimeout = var.connector_params_timeout
+    logDbName              = var.log_db_name_to_export
   })
 }
 
 resource "google_cloud_scheduler_job" "sql_export" {
   count       = var.enable_export_backup ? 1 : 0
-  name        = "sql-export-${var.sql_instance}${var.unique_suffix}"
+  name        = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
   project     = var.project_id
   region      = var.region
   description = "Managed by Terraform - Triggers a SQL Export via Workflows"

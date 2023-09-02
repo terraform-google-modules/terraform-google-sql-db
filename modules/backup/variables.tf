@@ -97,6 +97,18 @@ variable "compress_export" {
   default     = true
 }
 
+variable "enable_connector_params" {
+  description = "Whether to enable connector-specific parameters for Google Workflow SQL Export."
+  type        = bool
+  default     = false
+}
+
+variable "connector_params_timeout" {
+  description = "The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year)."
+  type        = number
+  default     = 1800
+}
+
 variable "unique_suffix" {
   description = "Unique suffix to add to scheduler jobs and workflows names."
   type        = string
@@ -107,4 +119,16 @@ variable "log_db_name_to_export" {
   description = "Whether or not to log database name in the export workflow"
   type        = bool
   default     = false
+}
+
+variable "use_sql_instance_replica_in_exporter" {
+  description = "Whether or not to use replica instance on exporter workflow."
+  type        = bool
+  default     = false
+}
+
+variable "sql_instance_replica" {
+  description = "The name of the SQL instance replica to export"
+  type        = string
+  default     = null
 }
