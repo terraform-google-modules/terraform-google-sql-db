@@ -60,6 +60,11 @@ output "instance_service_account_email_address" {
   description = "The service account email address assigned to the master instance"
 }
 
+output "instance_psc_attachment" {
+  value       = google_sql_database_instance.default.psc_service_attachment_link
+  description = "The psc_service_attachment_link created for the master instance"
+}
+
 // Replicas
 output "replicas_instance_first_ip_addresses" {
   value       = [for r in google_sql_database_instance.replicas : r.ip_address]

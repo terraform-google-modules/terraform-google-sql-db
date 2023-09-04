@@ -16,16 +16,10 @@
 
 locals {
   read_replica_ip_configuration = {
-    ipv4_enabled       = true
-    require_ssl        = false
-    private_network    = null
-    allocated_ip_range = null
-    authorized_networks = [
-      {
-        name  = "${var.project_id}-cidr"
-        value = var.mysql_ha_external_ip_range
-      },
-    ]
+    ipv4_enabled                  = false
+    require_ssl                   = false
+    psc_enabled                   = true
+    psc_allowed_consumer_projects = [var.project_id]
   }
 
 }
@@ -36,13 +30,13 @@ module "mysql" {
   name                 = var.mysql_ha_name
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "MYSQL_5_7"
+  database_version     = "MYSQL_8_0"
   region               = "us-central1"
 
   deletion_protection = false
 
   // Master configurations
-  tier                            = "db-n1-standard-1"
+  tier                            = "db-custom-4-15360"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
@@ -56,16 +50,9 @@ module "mysql" {
   }
 
   ip_configuration = {
-    ipv4_enabled       = true
-    require_ssl        = true
-    private_network    = null
-    allocated_ip_range = null
-    authorized_networks = [
-      {
-        name  = "${var.project_id}-cidr"
-        value = var.mysql_ha_external_ip_range
-      },
-    ]
+    ipv4_enabled                  = false
+    psc_enabled                   = true
+    psc_allowed_consumer_projects = [var.project_id]
   }
 
   password_validation_policy_config = {
@@ -86,50 +73,18 @@ module "mysql" {
   }
 
   // Read replica configurations
-  read_replica_name_suffix = "-test-ha"
-  replica_database_version = "MYSQL_5_7"
+  read_replica_name_suffix = "-test-psc"
+  replica_database_version = "MYSQL_8_0"
   read_replicas = [
     {
-      name                  = "0"
-      zone                  = "us-central1-a"
-      availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
-      ip_configuration      = local.read_replica_ip_configuration
-      database_flags        = [{ name = "long_query_time", value = 1 }]
-      disk_autoresize       = null
-      disk_autoresize_limit = null
-      disk_size             = null
-      disk_type             = "PD_HDD"
-      user_labels           = { bar = "baz" }
-      encryption_key_name   = null
-    },
-    {
-      name                  = "1"
-      zone                  = "us-central1-b"
-      availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
-      ip_configuration      = local.read_replica_ip_configuration
-      database_flags        = [{ name = "long_query_time", value = 1 }]
-      disk_autoresize       = null
-      disk_autoresize_limit = null
-      disk_size             = null
-      disk_type             = "PD_HDD"
-      user_labels           = { bar = "baz" }
-      encryption_key_name   = null
-    },
-    {
-      name                  = "2"
-      zone                  = "us-central1-c"
-      availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
-      ip_configuration      = local.read_replica_ip_configuration
-      database_flags        = [{ name = "long_query_time", value = 1 }]
-      disk_autoresize       = null
-      disk_autoresize_limit = null
-      disk_size             = null
-      disk_type             = "PD_HDD"
-      user_labels           = { bar = "baz" }
-      encryption_key_name   = null
+      name              = "0"
+      zone              = "us-central1-a"
+      availability_type = "REGIONAL"
+      tier              = "db-custom-4-15360"
+      ip_configuration  = local.read_replica_ip_configuration
+      database_flags    = [{ name = "long_query_time", value = 1 }]
+      disk_type         = "PD_SSD"
+      user_labels       = { bar = "baz" }
     },
   ]
 

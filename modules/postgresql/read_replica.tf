@@ -18,6 +18,14 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  // Zone for replica instances
+  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+}
+
+data "google_compute_zones" "available" {
+  count   = var.zone == null ? 0 : 1
+  project = var.project_id
+  region  = var.region
 }
 
 resource "google_sql_database_instance" "replicas" {
@@ -59,10 +67,17 @@ resource "google_sql_database_instance" "replicas" {
             value           = lookup(authorized_networks.value, "value", null)
           }
         }
+        dynamic "psc_config" {
+          for_each = ip_configuration.value.psc_enabled ? ["psc_enabled"] : []
+          content {
+            psc_enabled               = ip_configuration.value.psc_enabled
+            allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+          }
+        }
       }
     }
     dynamic "insights_config" {
-      for_each = var.insights_config != null ? [var.insights_config] : []
+      for_each = lookup(each.value, "insights_config") != null ? [lookup(each.value, "insights_config")] : var.insights_config != null ? [var.insights_config] : []
 
       content {
         query_insights_enabled  = true
@@ -72,6 +87,7 @@ resource "google_sql_database_instance" "replicas" {
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
       }
     }
+
     disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
     disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
     disk_size             = lookup(each.value, "disk_size", var.disk_size)
@@ -88,7 +104,7 @@ resource "google_sql_database_instance" "replicas" {
     }
 
     location_preference {
-      zone = lookup(each.value, "zone", var.zone)
+      zone = lookup(each.value, "zone", local.zone)
     }
 
   }

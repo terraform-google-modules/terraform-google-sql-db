@@ -81,6 +81,21 @@ steps:
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMySqlHaModule --stage teardown --verbose']
 
+  - id: apply mysql-psc-local
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPscModule --stage apply --verbose']
+  - id: verify mysql-psc-local
+    waitFor:
+      - apply mysql-psc-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPscModule --stage verify --verbose']
+  - id: teardown mysql-psc-local
+    waitFor:
+      - verify mysql-psc-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPscModule --stage teardown --verbose']
+
   - id: apply mysql-private-local
     waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
@@ -125,6 +140,21 @@ steps:
       - verify postgresql-ha-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlHaModule --stage teardown --verbose']
+
+  - id: apply postgresql-psc-local
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPscModule --stage apply --verbose']
+  - id: verify postgresql-psc-local
+    waitFor:
+      - apply postgresql-psc-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPscModule --stage verify --verbose']
+  - id: teardown postgresql-psc-local
+    waitFor:
+      - verify postgresql-psc-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPscModule --stage teardown --verbose']
 
   - id: apply postgresql-public-local
     waitFor: ["init-all", "wait for api activation"]
