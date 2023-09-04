@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [17.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v16.1.0...v17.0.0) (2023-09-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG >= 4.80:** add support for psc (private service connect) ([#507](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/507))
+
+### Features
+
+* add connector params timeout and export from replica ([#406](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/406)) ([e563f8a](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e563f8a1f2a13f16ab1e787e904566cd73f564ba))
+* add support for query_plans_per_minute ([#484](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/484)) ([ffb674c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/ffb674ccffc632ffb8bb25e479a87a317eb9134b))
+* MySQL binary logs on replica ([#466](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/466)) ([0e0c196](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0e0c19637ffaee07e2eaaa9e003a49e01e2acec0))
+* **TPG >= 4.80:** add support for psc (private service connect) ([#507](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/507)) ([64c2435](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/64c24358c2a79f1ba89674f1cfebad28ba476b2a))
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/googlecloudplatform/cloud-foundation-toolkit/infra/blueprint-test to v0.8.0 ([#505](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/505)) ([5b111a6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5b111a66614ffb9d8d41a93c73bdf73cdf093c50))
+
 ## [16.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v16.0.0...v16.1.0) (2023-08-23)
 
 
