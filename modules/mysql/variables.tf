@@ -59,7 +59,7 @@ variable "tier" {
 variable "edition" {
   description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
   type        = string
-  default     = null
+  default     = "ENTERPRISE"
 }
 
 variable "zone" {
