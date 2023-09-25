@@ -143,3 +143,9 @@ variable replica_configuration {
   type        = "list"
   default     = []
 }
+
+variable labels {
+  type        = map(string)
+  description = "Labels to apply to resources created by the module"
+  default     = {}
+}
