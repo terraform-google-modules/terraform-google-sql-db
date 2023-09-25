@@ -33,7 +33,6 @@ resource "google_sql_database_instance" "default" {
     disk_size                   = "${var.disk_size}"
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
-    replication_type            = "${var.replication_type}"
     user_labels                 = var.labels
 
     dynamic database_flags {
