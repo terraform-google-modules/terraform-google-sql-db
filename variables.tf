@@ -123,7 +123,7 @@ variable "backup_configuration" {
 variable "ip_configuration" {
   description = "The ip_configuration settings subblock"
   type        = list(string)
-  default     = [{}]
+  default     = []
 }
 
 variable "location_preference" {
