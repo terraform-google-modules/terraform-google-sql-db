@@ -34,8 +34,15 @@ resource "google_sql_database_instance" "default" {
     disk_type                   = "${var.disk_type}"
     pricing_plan                = "${var.pricing_plan}"
     replication_type            = "${var.replication_type}"
-    database_flags              = ["${var.database_flags}"]
     user_labels                 = var.labels
+
+    dynamic database_flags {
+      for_each = var.database_flags
+      content {
+        name  = database_flags["name"]
+        value = database_flags["value"]
+      }
+    }
   }
 
   dynamic replica_configuration {
