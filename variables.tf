@@ -138,8 +138,14 @@ variable "location_preference" {
 
 variable "maintenance_window" {
   description = "The maintenance_window settings subblock"
-  type        = list(string)
-  default     = []
+  type = list(object({
+    day  = string
+    hour = string
+  }))
+  default = [{
+    day  = null
+    hour = null
+  }]
 }
 
 variable "replica_configuration" {
