@@ -131,7 +131,9 @@ variable "location_preference" {
   type = object({
     zone = string
   })
-  default = {}
+  default = {
+    zone = null
+  }
 }
 
 variable "maintenance_window" {
