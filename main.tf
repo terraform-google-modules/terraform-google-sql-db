@@ -32,6 +32,7 @@ resource "google_sql_database_instance" "master" {
     disk_size         = "${var.disk_size}"
     disk_type         = "${var.disk_type}"
     pricing_plan      = "${var.pricing_plan}"
+    user_labels       = var.labels
 
     dynamic "database_flags" {
       for_each = var.database_flags
