@@ -128,8 +128,10 @@ variable "ip_configuration" {
 
 variable "location_preference" {
   description = "The location_preference settings subblock"
-  type        = list(string)
-  default     = []
+  type = object({
+    zone = string
+  })
+  default = {}
 }
 
 variable "maintenance_window" {
