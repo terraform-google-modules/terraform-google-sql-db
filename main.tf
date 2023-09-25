@@ -14,38 +14,81 @@
  * limitations under the License.
  */
 
-resource "google_sql_database_instance" "default" {
+resource "google_sql_database_instance" "master" {
   name                 = "${var.name}"
   project              = "${var.project}"
   region               = "${var.region}"
   database_version     = "${var.database_version}"
   master_instance_name = "${var.master_instance_name}"
 
-  settings {
-    tier                        = "${var.tier}"
-    activation_policy           = "${var.activation_policy}"
-    authorized_gae_applications = ["${var.authorized_gae_applications}"]
-    disk_autoresize             = "${var.disk_autoresize}"
-    backup_configuration        = ["${var.backup_configuration}"]
-    ip_configuration            = ["${var.ip_configuration}"]
-    location_preference         = ["${var.location_preference}"]
-    maintenance_window          = ["${var.maintenance_window}"]
-    disk_size                   = "${var.disk_size}"
-    disk_type                   = "${var.disk_type}"
-    pricing_plan                = "${var.pricing_plan}"
-    replication_type            = "${var.replication_type}"
-    database_flags              = ["${var.database_flags}"]
-    user_labels                 = var.labels
+  lifecycle {
+    ignore_changes = [settings.0.disk_size]
   }
 
-  replica_configuration = ["${var.replica_configuration}"]
+  settings {
+    tier              = "${var.tier}"
+    activation_policy = "${var.activation_policy}"
+    disk_autoresize   = "${var.disk_autoresize}"
+    disk_size         = "${var.disk_size}"
+    disk_type         = "${var.disk_type}"
+    pricing_plan      = "${var.pricing_plan}"
+    user_labels       = var.labels
+
+    dynamic "database_flags" {
+      for_each = var.database_flags
+      content {
+        name  = database_flags.value["name"]
+        value = database_flags.value["value"]
+      }
+    }
+
+    dynamic "maintenance_window" {
+      for_each = var.maintenance_window
+      content {
+        day          = maintenance_window.value["day"]
+        hour         = maintenance_window.value["hour"]
+        update_track = try(maintenance_window.value["update_track"], null)
+      }
+    }
+
+    dynamic "location_preference" {
+      for_each = var.location_preference
+      content {
+        follow_gae_application = try(location_preference.value["follow_gae_application"], null)
+        zone                   = location_preference.value["zone"]
+      }
+    }
+
+    dynamic "ip_configuration" {
+      for_each = var.ip_configuration
+      content {
+        ipv4_enabled    = ip_configuration.value["ipv4_enabled"]
+        private_network = try(ip_configuration.value["private_network"], null)
+
+        dynamic "authorized_networks" {
+          for_each = ip_configuration.value["authorized_networks"]
+          content {
+            name  = authorized_networks.value["name"]
+            value = authorized_networks.value["value"]
+          }
+
+        }
+      }
+    }
+
+    backup_configuration {
+      binary_log_enabled = var.backup_configuration["binary_log_enabled"]
+      enabled            = var.backup_configuration["enabled"]
+      start_time         = var.backup_configuration["start_time"]
+    }
+  }
 }
 
 resource "google_sql_database" "default" {
   count     = "${var.master_instance_name == "" ? 1 : 0}"
   name      = "${var.db_name}"
   project   = "${var.project}"
-  instance  = "${google_sql_database_instance.default.name}"
+  instance  = "${google_sql_database_instance.master.name}"
   charset   = "${var.db_charset}"
   collation = "${var.db_collation}"
 }
@@ -58,7 +101,7 @@ resource "google_sql_user" "default" {
   count    = "${var.master_instance_name == "" ? 1 : 0}"
   name     = "${var.user_name}"
   project  = "${var.project}"
-  instance = "${google_sql_database_instance.default.name}"
+  instance = "${google_sql_database_instance.master.name}"
   host     = "${var.user_host}"
   password = "${var.user_password == "" ? random_id.user-password.hex : var.user_password}"
 }

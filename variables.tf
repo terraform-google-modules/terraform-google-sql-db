@@ -104,47 +104,55 @@ variable "pricing_plan" {
   default     = "PER_USE"
 }
 
-variable "replication_type" {
-  description = "Replication type for this instance, can be one of `ASYNCHRONOUS` or `SYNCHRONOUS`."
-  default     = "SYNCHRONOUS"
-}
-
-variable "database_flags" {
+variable database_flags {
   description = "List of Cloud SQL flags that are applied to the database server"
   default     = []
 }
 
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
-  type        = map(string)
-  default     = {}
+  type = object({
+    binary_log_enabled = optional(bool)
+    enabled            = optional(bool)
+    start_time         = optional(string)
+  })
+  default = {
+    binary_log_enabled = false
+    enabled            = false
+    start_time         = ""
+  }
 }
 
 variable "ip_configuration" {
   description = "The ip_configuration settings subblock"
-  type        = list(string)
-  default     = []
+  type = list(object({
+    ipv4_enabled        = bool
+    authorized_networks = list(object({ name = string, value = string }))
+    private_network     = optional(string)
+  }))
+  default = []
 }
 
 variable "location_preference" {
   description = "The location_preference settings subblock"
-  type        = list(string)
-  default     = []
+  type = list(object({
+    follow_gae_application = optional(bool)
+    zone                   = string
+  }))
+  default = []
 }
 
 variable "maintenance_window" {
   description = "The maintenance_window settings subblock"
-  type        = list(string)
-  default     = []
+  type = list(object({
+    day          = string
+    hour         = string
+    update_track = optional(string)
+  }))
+  default = []
 }
 
-variable "replica_configuration" {
-  description = "The optional replica_configuration block for the database instance"
-  type        = list(string)
-  default     = []
-}
-
-variable "labels" {
+variable labels {
   type        = map(string)
   description = "Labels to apply to resources created by the module"
   default     = {}
