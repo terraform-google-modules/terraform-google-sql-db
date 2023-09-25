@@ -44,7 +44,7 @@ resource "google_sql_database_instance" "default" {
 
     dynamic maintenance_window {
       for_each = var.maintenance_window
-      content = {
+      content {
         day  = maintenance_window.value["day"]
         hour = maintenance_window.value["hour"]
       }
