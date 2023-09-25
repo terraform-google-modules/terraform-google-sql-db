@@ -151,3 +151,9 @@ variable "maintenance_window" {
   }))
   default = []
 }
+
+variable labels {
+  type        = map(string)
+  description = "Labels to apply to resources created by the module"
+  default     = {}
+}
