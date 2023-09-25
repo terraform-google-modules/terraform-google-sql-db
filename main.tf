@@ -49,7 +49,7 @@ resource "google_sql_database_instance" "default" {
       failover_target           = try(replica_configuration.value["failover_target"], null)
       master_heartbeat_period   = try(replica_configuration.value["master_heartbeat_period"], null)
       password                  = try(replica_configuration.value["password"], null)
-      sslCipher                 = try(replica_configuration.value["sslCipher"], null)
+      ssl_cipher                = try(replica_configuration.value["ssl_cipher"], null)
       username                  = try(replica_configuration.value["username"], null)
       verify_server_certificate = try(replica_configuration.value["verify_server_certificate"], null)
     }
