@@ -38,7 +38,22 @@ resource "google_sql_database_instance" "default" {
     user_labels                 = var.labels
   }
 
-  replica_configuration = ["${var.replica_configuration}"]
+  dynamic replica_configuration {
+    for_each = var.replica_configuration
+    content {
+      ca_certificate            = try(replica_configuration.value["ca_certificate"], null)
+      client_certificate        = try(replica_configuration.value["client_certificate"], null)
+      client_key                = try(replica_configuration.value["client_key"], null)
+      connect_retry_interval    = try(replica_configuration.value["connect_retry_interval"], null)
+      dump_file_path            = try(replica_configuration.value["dump_file_path"], null)
+      failover_target           = try(replica_configuration.value["failover_target"], null)
+      master_heartbeat_period   = try(replica_configuration.value["master_heartbeat_period"], null)
+      password                  = try(replica_configuration.value["password"], null)
+      sslCipher                 = try(replica_configuration.value["sslCipher"], null)
+      username                  = try(replica_configuration.value["username"], null)
+      verify_server_certificate = try(replica_configuration.value["verify_server_certificate"], null)
+    }
+  }
 }
 
 resource "google_sql_database" "default" {
