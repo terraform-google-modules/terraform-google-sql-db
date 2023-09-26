@@ -195,20 +195,22 @@ resource "random_password" "additional_passwords" {
 }
 
 resource "google_sql_user" "default" {
-  name       = var.user_name
-  project    = var.project_id
-  instance   = google_sql_database_instance.default.name
-  password   = coalesce(var.user_password, random_password.user-password.result)
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  name            = var.user_name
+  project         = var.project_id
+  instance        = google_sql_database_instance.default.name
+  password        = coalesce(var.user_password, random_password.user-password.result)
+  depends_on      = [null_resource.module_depends_on, google_sql_database_instance.default]
+  deletion_policy = ABANDON
 }
 
 resource "google_sql_user" "additional_users" {
-  for_each   = local.users
-  project    = var.project_id
-  name       = each.value.name
-  password   = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
-  instance   = google_sql_database_instance.default.name
-  depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
+  for_each        = local.users
+  project         = var.project_id
+  name            = each.value.name
+  password        = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
+  instance        = google_sql_database_instance.default.name
+  depends_on      = [null_resource.module_depends_on, google_sql_database_instance.default]
+  deletion_policy = ABANDON
 }
 
 resource "null_resource" "module_depends_on" {
