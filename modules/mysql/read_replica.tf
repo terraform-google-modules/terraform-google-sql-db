@@ -18,6 +18,8 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  // Edition should default to Enterprise
+  edition = var.edition != null ? var.edition : "ENTERPRISE"
   // Zone for replica instances
   zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
 }
@@ -45,7 +47,7 @@ resource "google_sql_database_instance" "replicas" {
 
   settings {
     tier                        = coalesce(each.value["tier"], var.tier)
-    edition                     = coalesce(each.value["edition"], var.edition)
+    edition                     = coalesce(each.value["edition"], local.edition)
     activation_policy           = "ALWAYS"
     availability_type           = coalesce(each.value["availability_type"], var.availability_type)
     deletion_protection_enabled = var.read_replica_deletion_protection_enabled
