@@ -21,11 +21,10 @@ locals {
   // Edition should default to Enterprise
   edition = var.edition != null ? var.edition : "ENTERPRISE"
   // Zone for replica instances
-  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+  zone = var.zone == null ? data.google_compute_zones.available.names[0] : var.zone
 }
 
 data "google_compute_zones" "available" {
-  count   = var.zone == null ? 0 : 1
   project = var.project_id
   region  = var.region
 }
