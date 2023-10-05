@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,13 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.13"
-  required_providers {
+variable "project_id" {
+  type        = string
+  description = "The project to run tests against"
+}
 
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 4.74.0, < 5.0"
-    }
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 4.74.0, < 5.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.4"
-    }
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.2"
-    }
-  }
-
-  provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v17.0.0"
-  }
-
+variable "pg_psc_name" {
+  type        = string
+  description = "The name for Cloud SQL instance"
+  default     = "tf-pg-psc"
 }

@@ -63,6 +63,7 @@ variable "edition" {
 variable "zone" {
   type        = string
   description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
+  default     = null
 }
 
 variable "secondary_zone" {
@@ -177,31 +178,24 @@ variable "deny_maintenance_period" {
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
-    enabled                        = bool
-    start_time                     = string
-    location                       = string
-    point_in_time_recovery_enabled = bool
-    transaction_log_retention_days = string
-    retained_backups               = number
-    retention_unit                 = string
+    enabled                        = optional(bool, false)
+    start_time                     = optional(string)
+    location                       = optional(string)
+    point_in_time_recovery_enabled = optional(bool, false)
+    transaction_log_retention_days = optional(string)
+    retained_backups               = optional(number)
+    retention_unit                 = optional(string)
   })
-  default = {
-    enabled                        = false
-    start_time                     = null
-    location                       = null
-    point_in_time_recovery_enabled = false
-    transaction_log_retention_days = null
-    retained_backups               = null
-    retention_unit                 = null
-  }
+  default = {}
 }
 
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
-    query_string_length     = number
-    record_application_tags = bool
-    record_client_address   = bool
+    query_plans_per_minute  = optional(number, 5)
+    query_string_length     = optional(number, 1024)
+    record_application_tags = optional(bool, false)
+    record_client_address   = optional(bool, false)
   })
   default = null
 }
@@ -221,21 +215,16 @@ variable "password_validation_policy_config" {
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
-    authorized_networks                           = list(map(string))
-    ipv4_enabled                                  = bool
-    private_network                               = string
-    require_ssl                                   = bool
-    allocated_ip_range                            = string
-    enable_private_path_for_google_cloud_services = optional(bool)
+    authorized_networks                           = optional(list(map(string)), [])
+    ipv4_enabled                                  = optional(bool, true)
+    private_network                               = optional(string)
+    require_ssl                                   = optional(bool)
+    allocated_ip_range                            = optional(string)
+    enable_private_path_for_google_cloud_services = optional(bool, false)
+    psc_enabled                                   = optional(bool, false)
+    psc_allowed_consumer_projects                 = optional(list(string), [])
   })
-  default = {
-    authorized_networks                           = []
-    ipv4_enabled                                  = true
-    private_network                               = null
-    require_ssl                                   = null
-    allocated_ip_range                            = null
-    enable_private_path_for_google_cloud_services = false
-  }
+  default = {}
 }
 
 // Read Replicas
@@ -244,27 +233,36 @@ variable "read_replicas" {
   type = list(object({
     name                  = string
     name_override         = optional(string)
-    tier                  = string
-    availability_type     = string
-    zone                  = string
-    disk_type             = string
-    disk_autoresize       = bool
-    disk_autoresize_limit = number
-    disk_size             = string
+    tier                  = optional(string)
+    edition               = optional(string)
+    availability_type     = optional(string)
+    zone                  = optional(string)
+    disk_type             = optional(string)
+    disk_autoresize       = optional(bool)
+    disk_autoresize_limit = optional(number)
+    disk_size             = optional(string)
     user_labels           = map(string)
-    database_flags = list(object({
+    database_flags = optional(list(object({
       name  = string
       value = string
-    }))
+    })), [])
+    insights_config = optional(object({
+      query_plans_per_minute  = optional(number, 5)
+      query_string_length     = optional(number, 1024)
+      record_application_tags = optional(bool, false)
+      record_client_address   = optional(bool, false)
+    }), null)
     ip_configuration = object({
-      authorized_networks                           = list(map(string))
-      ipv4_enabled                                  = bool
-      private_network                               = string
-      require_ssl                                   = bool
-      allocated_ip_range                            = string
-      enable_private_path_for_google_cloud_services = optional(bool)
+      authorized_networks                           = optional(list(map(string)), [])
+      ipv4_enabled                                  = optional(bool)
+      private_network                               = optional(string, )
+      require_ssl                                   = optional(bool)
+      allocated_ip_range                            = optional(string)
+      enable_private_path_for_google_cloud_services = optional(bool, false)
+      psc_enabled                                   = optional(bool, false)
+      psc_allowed_consumer_projects                 = optional(list(string), [])
     })
-    encryption_key_name = string
+    encryption_key_name = optional(string)
   }))
   default = []
 }

@@ -18,6 +18,14 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  // Zone for replica instances
+  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+}
+
+data "google_compute_zones" "available" {
+  count   = var.zone == null ? 0 : 1
+  project = var.project_id
+  region  = var.region
 }
 
 resource "google_sql_database_instance" "replicas" {
@@ -42,12 +50,20 @@ resource "google_sql_database_instance" "replicas" {
     availability_type           = lookup(each.value, "availability_type", var.availability_type)
     deletion_protection_enabled = var.read_replica_deletion_protection_enabled
 
+    dynamic "backup_configuration" {
+      for_each = each.value["backup_configuration"] != null ? [each.value["backup_configuration"]] : []
+      content {
+        binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
+        transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+      }
+    }
 
     dynamic "insights_config" {
       for_each = lookup(each.value, "insights_config") != null ? [lookup(each.value, "insights_config")] : []
 
       content {
         query_insights_enabled  = true
+        query_plans_per_minute  = lookup(insights_config.value, "query_plans_per_minute", 5)
         query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
         record_application_tags = lookup(insights_config.value, "record_application_tags", false)
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
@@ -71,6 +87,13 @@ resource "google_sql_database_instance" "replicas" {
             value           = lookup(authorized_networks.value, "value", null)
           }
         }
+        dynamic "psc_config" {
+          for_each = ip_configuration.value.psc_enabled ? ["psc_enabled"] : []
+          content {
+            psc_enabled               = ip_configuration.value.psc_enabled
+            allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+          }
+        }
       }
     }
 
@@ -90,7 +113,7 @@ resource "google_sql_database_instance" "replicas" {
     }
 
     location_preference {
-      zone = lookup(each.value, "zone", var.zone)
+      zone = lookup(each.value, "zone", local.zone)
     }
 
   }
@@ -110,4 +133,3 @@ resource "google_sql_database_instance" "replicas" {
     delete = var.delete_timeout
   }
 }
-
