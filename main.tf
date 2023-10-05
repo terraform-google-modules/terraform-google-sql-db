@@ -28,6 +28,7 @@ resource "google_sql_database_instance" "master" {
   settings {
     tier              = "${var.tier}"
     activation_policy = "${var.activation_policy}"
+    availability_type = "${var.availability_type}"
     disk_autoresize   = "${var.disk_autoresize}"
     disk_size         = "${var.disk_size}"
     disk_type         = "${var.disk_type}"
@@ -77,9 +78,10 @@ resource "google_sql_database_instance" "master" {
     }
 
     backup_configuration {
-      binary_log_enabled = var.backup_configuration["binary_log_enabled"]
-      enabled            = var.backup_configuration["enabled"]
-      start_time         = var.backup_configuration["start_time"]
+      binary_log_enabled              = var.backup_configuration["binary_log_enabled"]
+      enabled                         = var.backup_configuration["enabled"]
+      start_time                      = var.backup_configuration["start_time"]
+      transaction_log_retention_days  = var.backup_configuration["transaction_log_retention_days"]
     }
   }
 }

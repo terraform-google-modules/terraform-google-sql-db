@@ -84,6 +84,11 @@ variable "authorized_gae_applications" {
   default     = []
 }
 
+variable "availability_type" {
+  description = "The availability type of the Cloud SQL instance, high availability (REGIONAL) or single zone (ZONAL)."
+  default     = "ZONAL"
+}
+
 variable "disk_autoresize" {
   description = "Second Generation only. Configuration to increase storage size automatically."
   default     = true
@@ -112,14 +117,16 @@ variable database_flags {
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
-    binary_log_enabled = optional(bool)
-    enabled            = optional(bool)
-    start_time         = optional(string)
+    binary_log_enabled              = optional(bool)
+    enabled                         = optional(bool)
+    start_time                      = optional(string)
+    transaction_log_retention_days  = optional(number)
   })
   default = {
-    binary_log_enabled = false
-    enabled            = false
-    start_time         = ""
+    binary_log_enabled              = false
+    enabled                         = false
+    start_time                      = ""
+    transaction_log_retention_days  = 7
   }
 }
 
