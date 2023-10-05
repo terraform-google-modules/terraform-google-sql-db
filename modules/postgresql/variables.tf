@@ -415,3 +415,8 @@ variable "connector_enforcement" {
   type        = bool
   default     = false
 }
+
+variable "root_password" {
+  description = "Initial root password during creation"
+  default     = null
+}
