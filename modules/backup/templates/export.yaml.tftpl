@@ -61,6 +61,7 @@ main:
                 body:
                   exportContext:
                     databases: [$${database}]
+                    offload: "${serverlessExport}"
                     uri: $${"${gcsBucket}/${instanceName}-" + database + "-" + backupTime + %{ if compressExport == true }".sql.gz"%{ else }".sql"%{ endif }}
 %{ endif }
 
