@@ -71,6 +71,7 @@ fetch workflows.googleapis.com/Workflow
 | sql\_instance | The name of the SQL instance to backup | `string` | n/a | yes |
 | sql\_instance\_replica | The name of the SQL instance replica to export | `string` | `null` | no |
 | unique\_suffix | Unique suffix to add to scheduler jobs and workflows names. | `string` | `""` | no |
+| use\_serverless\_export | Whether to use serverless export for DB export | `bool` | `false` | no |
 | use\_sql\_instance\_replica\_in\_exporter | Whether or not to use replica instance on exporter workflow. | `bool` | `false` | no |
 
 ## Outputs
