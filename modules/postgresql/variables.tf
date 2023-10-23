@@ -413,3 +413,9 @@ variable "connector_enforcement" {
   type        = bool
   default     = false
 }
+
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
+}
