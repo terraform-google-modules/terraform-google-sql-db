@@ -23,7 +23,7 @@ locals {
 }
 
 data "google_compute_zones" "available" {
-  count   = var.zone == null ? 0 : 1
+  count   = var.zone == null ? 1 : 0
   project = var.project_id
   region  = var.region
 }
