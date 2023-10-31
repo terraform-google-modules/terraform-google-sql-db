@@ -90,7 +90,7 @@ module "safer-mysql-db" {
     },
     {
       id    = "dbadmin",
-      email = "dbadmin@goosecorp.org"
+      email = "dbadmin@develop.blueprints.joonix.net"
     }
   ]
 
