@@ -82,14 +82,14 @@ func TestPostgreSqlPublicIamModule(t *testing.T) {
 		containsIamUser := false
 		containsIamSa := false
 		for _, element := range op.Array() {
-			if element.Get("type").String() == "CLOUD_IAM_USER" && element.Get("name").String() == "dbadmin@goosecorp.org" {
+			if element.Get("type").String() == "CLOUD_IAM_USER" && element.Get("name").String() == "dbadmin@develop.blueprints.joonix.net" {
 				containsIamUser = true
 			}
 			if element.Get("type").String() == "CLOUD_IAM_SERVICE_ACCOUNT" && element.Get("name").String() == cloudIamSa {
 				containsIamSa = true
 			}
 		}
-		assert.Truef(containsIamUser, "Expected %s cloud iam user", "dbadmin@goosecorp.org")
+		assert.Truef(containsIamUser, "Expected %s cloud iam user", "dbadmin@develop.blueprints.joonix.net")
 		assert.Truef(containsIamSa, "Expected cloud iam sa [%s]", cloudIamSa)
 	})
 
