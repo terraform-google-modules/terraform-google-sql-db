@@ -53,6 +53,7 @@ module "backup" {
   backup_retention_time = 1
   backup_schedule       = "5 * * * *"
   export_schedule       = "10 * * * *"
+  use_serverless_export = true
   service_account       = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
 }
 
