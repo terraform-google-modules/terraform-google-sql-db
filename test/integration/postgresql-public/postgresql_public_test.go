@@ -40,8 +40,7 @@ func TestPostgreSqlPublicModule(t *testing.T) {
 		assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 		assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-		assert.Equal("db-custom-1-3840", op.Get("settings.tier").String(), "Expected db-custom-1-3840 tier")
-
+		assert.Equal("db-perf-optimized-N-2", op.Get("settings.tier").String(), "Expected db-perf-optimized-N-2 tier")
 		// assert location database settings
 		assert.Equal("sql#locationPreference", op.Get("settings.locationPreference.kind").String(), "Expected sql#locationPreference locationPreference.kind")
 		assert.Equal("us-central1-c", op.Get("settings.locationPreference.zone").String(), "Expected us-central1-c locationPreference.zone")
@@ -53,7 +52,7 @@ func TestPostgreSqlPublicModule(t *testing.T) {
 		assert.Equal("canary", op.Get("settings.maintenanceWindow.updateTrack").String(), "Expected canary maintenanceWindow.updateTrack")
 
 		// assert standard database settings
-		assert.Equal("POSTGRES_9_6", op.Get("databaseVersion").String(), "Expected POSTGRES_9_6 databaseVersion")
+		assert.Equal("POSTGRES_14", op.Get("databaseVersion").String(), "Expected POSTGRES_14 databaseVersion")
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
