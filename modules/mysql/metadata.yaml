@@ -23,7 +23,7 @@ spec:
   source:
     repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
-  version: 14.1.0
+  version: 17.0.1
   actuationTool:
     type: Terraform
     version: '>= 1.3'
