@@ -23,8 +23,8 @@ module "postgresql-db" {
   project_id           = var.project_id
   zone                 = "us-central1-c"
   region               = "us-central1"
+  edition              = "ENTERPRISE_PLUS"
   tier                 = "db-perf-optimized-N-2"
-  edition	       = "ENTERPRISE_PLUS"
   data_cache_enabled   = true
 
   deletion_protection = false
