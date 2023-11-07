@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [17.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.0.0...v17.0.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update actions/checkout action to v4 ([#510](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/510)) ([9012164](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/90121648e30b9c82dc72ada72fb9adcec2b9ffb0))
+* **deps:** update cft/developer-tools docker tag to v1.15 ([#508](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/508)) ([8c32574](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8c325747ef30e668a5462be2839eb062be9d2f8f))
+* Fix zone auto-detection when var.zones are not set ([#534](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/534)) ([8409f72](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8409f72ba7ffaeb23e07f795eff969d8775fb3d4))
+* upgraded versions.tf to include minor bumps from tpg v5 ([#523](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/523)) ([5102a7b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5102a7b1dcf413380367c3aed730aca839636a0b))
+
 ## [17.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v16.1.0...v17.0.0) (2023-09-04)
 
 
