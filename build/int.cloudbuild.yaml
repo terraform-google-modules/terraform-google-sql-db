@@ -105,11 +105,13 @@ steps:
       - apply mysql-private-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage verify --verbose']
-  - id: teardown mysql-private-local
-    waitFor:
-      - verify mysql-private-local
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage teardown --verbose']
+
+  # Disabling due to issue: https://github.com/hashicorp/terraform-provider-google/issues/16275
+  # - id: teardown mysql-private-local
+  #   waitFor:
+  #     - verify mysql-private-local
+  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  #   args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage teardown --verbose']
 
   - id: apply mysql-public-local
     waitFor: ["init-all", "wait for api activation"]
