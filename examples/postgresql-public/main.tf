@@ -19,11 +19,13 @@ module "postgresql-db" {
   source               = "../../modules/postgresql"
   name                 = var.db_name
   random_instance_name = true
-  database_version     = "POSTGRES_9_6"
+  database_version     = "POSTGRES_14"
   project_id           = var.project_id
   zone                 = "us-central1-c"
   region               = "us-central1"
-  tier                 = "db-custom-1-3840"
+  edition              = "ENTERPRISE_PLUS"
+  tier                 = "db-perf-optimized-N-2"
+  data_cache_enabled   = true
 
   deletion_protection = false
 
