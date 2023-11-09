@@ -5,6 +5,7 @@ This example shows how to create:
 - a PostgreSQL Cloud SQL Instance
 - A GCS Bucket for storing the Backup
 - The Workflows for exports (external backups) and (internal) backups
+- The Workflows with serverless export
 
 ## Run Terraform
 

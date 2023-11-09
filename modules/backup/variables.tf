@@ -132,3 +132,9 @@ variable "sql_instance_replica" {
   type        = string
   default     = null
 }
+
+variable "use_serverless_export" {
+  description = "Whether to use serverless export for DB export"
+  type        = bool
+  default     = false
+}
