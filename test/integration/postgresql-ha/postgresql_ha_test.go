@@ -32,7 +32,7 @@ func TestPostgreSqlHaModule(t *testing.T) {
 
 		instaceNames := []string{pSql.GetStringOutput("name")}
 		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instaceNames[0], pSql.GetStringOutput("project_id")))
-		assert.Equal(2, len(op.Get("replicaNames").Array()), "Expected 2 replicas")
+		assert.Equal(1, len(op.Get("replicaNames").Array()), "Expected 1 replicas")
 		instaceNames = append(instaceNames, utils.GetResultStrSlice(op.Get("replicaNames").Array())...)
 
 		for _, instance := range instaceNames {

@@ -94,20 +94,6 @@ module "pg" {
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },
-    {
-      name                  = "1"
-      zone                  = "us-central1-b"
-      availability_type     = "REGIONAL"
-      tier                  = "db-custom-1-3840"
-      ip_configuration      = local.read_replica_ip_configuration
-      database_flags        = [{ name = "autovacuum", value = "off" }]
-      disk_autoresize       = null
-      disk_autoresize_limit = null
-      disk_size             = null
-      disk_type             = "PD_HDD"
-      user_labels           = { bar = "baz" }
-      encryption_key_name   = null
-    },
   ]
 
   db_name      = var.pg_ha_name
