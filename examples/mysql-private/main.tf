@@ -94,7 +94,7 @@ module "safer-mysql-db" {
     }
   ]
 
-  assign_public_ip   = "true"
+  assign_public_ip   = true
   vpc_network        = module.network-safer-mysql-simple.network_self_link
   allocated_ip_range = module.private-service-access.google_compute_global_address_name
 
