@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [17.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.0.1...v17.1.0) (2023-11-09)
+
+
+### Features
+
+* added cloudsql serverless_export ([#530](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/530)) ([aae3181](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/aae3181fcfd45a7df08c25a28503a6080e5d20ad))
+* adding data_cache_config to postgresql module ([#531](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/531)) ([f04d617](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f04d617ee31459cccc2df70013697a10286dd49d))
+
+
+### Bug Fixes
+
+* reduce number of replicas in postgres-ha test ([#539](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/539)) ([c769aa5](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c769aa53e92df5f48b7e7e71ad425c5748502376))
+
 ## [17.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.0.0...v17.0.1) (2023-11-03)
 
 
