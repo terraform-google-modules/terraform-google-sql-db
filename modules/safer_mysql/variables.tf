@@ -211,7 +211,7 @@ variable "backup_configuration" {
 
 variable "assign_public_ip" {
   description = "Set to true if the master instance should also have a public IP (less secure)."
-  type        = string
+  type        = bool
   default     = false
 }
 
