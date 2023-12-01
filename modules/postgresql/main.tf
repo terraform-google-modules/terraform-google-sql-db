@@ -242,7 +242,7 @@ resource "random_password" "user-password" {
 
 resource "random_password" "additional_passwords" {
   for_each = local.users
-  
+
   keepers = {
     name = google_sql_database_instance.default.name
   }
