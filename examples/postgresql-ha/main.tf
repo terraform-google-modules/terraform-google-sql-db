@@ -19,6 +19,7 @@ locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = true
     require_ssl        = false
+    ssl_mode           = "ENCRYPTED_ONLY"
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [

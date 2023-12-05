@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [18.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.1.0...v18.0.0) (2023-12-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* safer_mysql module's `assign_public_ip` input should be bool type ([#541](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/541))
+
+### Features
+
+* add support for ssl_mode to postgresql module ([#547](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/547)) ([9c59232](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/9c59232a37725aef57162e836090c64495e6acd9))
+
+
+### Bug Fixes
+
+* safer_mysql module's `assign_public_ip` input should be bool type ([#541](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/541)) ([4521594](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/45215943968dc371d5198b8cb3d4fa956aa745dd))
+
 ## [17.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.0.1...v17.1.0) (2023-11-09)
 
 
