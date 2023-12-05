@@ -416,6 +416,12 @@ variable "connector_enforcement" {
   default     = false
 }
 
+variable "root_password" {
+  description = "Initial root password during creation"
+  type        = string
+  default     = null
+}
+
 variable "data_cache_enabled" {
   description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
   type        = bool
