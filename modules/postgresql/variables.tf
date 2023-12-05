@@ -219,6 +219,7 @@ variable "ip_configuration" {
     ipv4_enabled                                  = optional(bool, true)
     private_network                               = optional(string)
     require_ssl                                   = optional(bool)
+    ssl_mode                                      = optional(string)
     allocated_ip_range                            = optional(string)
     enable_private_path_for_google_cloud_services = optional(bool, false)
     psc_enabled                                   = optional(bool, false)
@@ -257,6 +258,7 @@ variable "read_replicas" {
       ipv4_enabled                                  = optional(bool)
       private_network                               = optional(string, )
       require_ssl                                   = optional(bool)
+      ssl_mode                                      = optional(string)
       allocated_ip_range                            = optional(string)
       enable_private_path_for_google_cloud_services = optional(bool, false)
       psc_enabled                                   = optional(bool, false)
@@ -418,4 +420,9 @@ variable "root_password" {
   description = "Initial root password during creation"
   type        = string
   default     = null
+
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
 }

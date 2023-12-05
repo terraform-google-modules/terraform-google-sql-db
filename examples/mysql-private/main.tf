@@ -29,7 +29,7 @@ locals {
 
 module "network-safer-mysql-simple" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   project_id   = var.project_id
   network_name = local.network_name
@@ -90,11 +90,11 @@ module "safer-mysql-db" {
     },
     {
       id    = "dbadmin",
-      email = "dbadmin@goosecorp.org"
+      email = "dbadmin@develop.blueprints.joonix.net"
     }
   ]
 
-  assign_public_ip   = "true"
+  assign_public_ip   = true
   vpc_network        = module.network-safer-mysql-simple.network_self_link
   allocated_ip_range = module.private-service-access.google_compute_global_address_name
 

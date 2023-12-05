@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [18.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.1.0...v18.0.0) (2023-12-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* safer_mysql module's `assign_public_ip` input should be bool type ([#541](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/541))
+
+### Features
+
+* add support for ssl_mode to postgresql module ([#547](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/547)) ([9c59232](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/9c59232a37725aef57162e836090c64495e6acd9))
+
+
+### Bug Fixes
+
+* safer_mysql module's `assign_public_ip` input should be bool type ([#541](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/541)) ([4521594](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/45215943968dc371d5198b8cb3d4fa956aa745dd))
+
+## [17.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.0.1...v17.1.0) (2023-11-09)
+
+
+### Features
+
+* added cloudsql serverless_export ([#530](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/530)) ([aae3181](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/aae3181fcfd45a7df08c25a28503a6080e5d20ad))
+* adding data_cache_config to postgresql module ([#531](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/531)) ([f04d617](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f04d617ee31459cccc2df70013697a10286dd49d))
+
+
+### Bug Fixes
+
+* reduce number of replicas in postgres-ha test ([#539](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/539)) ([c769aa5](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c769aa53e92df5f48b7e7e71ad425c5748502376))
+
+## [17.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.0.0...v17.0.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update actions/checkout action to v4 ([#510](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/510)) ([9012164](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/90121648e30b9c82dc72ada72fb9adcec2b9ffb0))
+* **deps:** update cft/developer-tools docker tag to v1.15 ([#508](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/508)) ([8c32574](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8c325747ef30e668a5462be2839eb062be9d2f8f))
+* Fix zone auto-detection when var.zones are not set ([#534](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/534)) ([8409f72](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8409f72ba7ffaeb23e07f795eff969d8775fb3d4))
+* upgraded versions.tf to include minor bumps from tpg v5 ([#523](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/523)) ([5102a7b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5102a7b1dcf413380367c3aed730aca839636a0b))
+
 ## [17.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v16.1.0...v17.0.0) (2023-09-04)
 
 

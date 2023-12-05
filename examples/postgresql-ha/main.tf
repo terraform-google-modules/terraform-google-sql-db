@@ -19,6 +19,7 @@ locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = true
     require_ssl        = false
+    ssl_mode           = "ENCRYPTED_ONLY"
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [
@@ -83,34 +84,6 @@ module "pg" {
     {
       name                  = "0"
       zone                  = "us-central1-a"
-      availability_type     = "REGIONAL"
-      tier                  = "db-custom-1-3840"
-      ip_configuration      = local.read_replica_ip_configuration
-      database_flags        = [{ name = "autovacuum", value = "off" }]
-      disk_autoresize       = null
-      disk_autoresize_limit = null
-      disk_size             = null
-      disk_type             = "PD_HDD"
-      user_labels           = { bar = "baz" }
-      encryption_key_name   = null
-    },
-    {
-      name                  = "1"
-      zone                  = "us-central1-b"
-      availability_type     = "REGIONAL"
-      tier                  = "db-custom-1-3840"
-      ip_configuration      = local.read_replica_ip_configuration
-      database_flags        = [{ name = "autovacuum", value = "off" }]
-      disk_autoresize       = null
-      disk_autoresize_limit = null
-      disk_size             = null
-      disk_type             = "PD_HDD"
-      user_labels           = { bar = "baz" }
-      encryption_key_name   = null
-    },
-    {
-      name                  = "2"
-      zone                  = "us-central1-c"
       availability_type     = "REGIONAL"
       tier                  = "db-custom-1-3840"
       ip_configuration      = local.read_replica_ip_configuration
