@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [18.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v18.0.0...v18.1.0) (2023-12-13)
+
+
+### Features
+
+* **postgres:** add root password parameter ([#521](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/521)) ([be2da56](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/be2da560ca7a006c56cbffab71e0b6e931661f7c))
+
+
+### Bug Fixes
+
+* add dns_name to output in postgresql module ([#544](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/544)) ([2ade7eb](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/2ade7ebe44362c0593cfb38e0704d9098d231092))
+
 ## [18.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v17.1.0...v18.0.0) (2023-12-04)
 
 
