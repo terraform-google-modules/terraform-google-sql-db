@@ -50,14 +50,16 @@ resource "random_id" "suffix" {
 }
 
 resource "google_sql_database_instance" "default" {
-  provider            = google-beta
-  project             = var.project_id
-  name                = local.master_instance_name
-  database_version    = var.database_version
-  region              = var.region
-  encryption_key_name = var.encryption_key_name
-  deletion_protection = var.deletion_protection
-  root_password       = var.root_password != "" ? var.root_password : null
+  provider             = google-beta
+  project              = var.project_id
+  name                 = local.master_instance_name
+  database_version     = var.database_version
+  region               = var.region
+  master_instance_name = var.master_instance_name
+  instance_type        = var.instance_type
+  encryption_key_name  = var.encryption_key_name
+  deletion_protection  = var.deletion_protection
+  root_password        = var.root_password != "" ? var.root_password : null
 
   settings {
     tier                        = var.tier
