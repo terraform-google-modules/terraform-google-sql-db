@@ -68,7 +68,7 @@ resource "google_sql_database_instance" "default" {
     connector_enforcement       = local.connector_enforcement
 
     dynamic "backup_configuration" {
-      for_each = [var.backup_configuration]
+      for_each = var.backup_configuration.enabled ? [var.backup_configuration] : []
       content {
         binary_log_enabled             = local.binary_log_enabled
         enabled                        = local.backups_enabled
