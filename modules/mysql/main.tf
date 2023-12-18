@@ -175,10 +175,15 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
+    // Maintenance windows cannot be set for read replicas: https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-window-2ndgen
+    dynamic "maintenance_window" {
+      for_each = var.master_instance_name != null ? [] : ["true"]
+
+      content {
+        day          = var.maintenance_window_day
+        hour         = var.maintenance_window_hour
+        update_track = var.maintenance_window_update_track
+      }
     }
   }
 
