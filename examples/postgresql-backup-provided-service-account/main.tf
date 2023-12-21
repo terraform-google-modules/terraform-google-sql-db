@@ -15,7 +15,9 @@
  */
 
 module "postgresql" {
-  source               = "../../modules/postgresql"
+  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
+  version = "~> 18.0"
+
   name                 = "example-postgres"
   random_instance_name = true
   database_version     = "POSTGRES_9_6"
@@ -44,7 +46,9 @@ resource "google_storage_bucket" "backup" {
 }
 
 module "backup" {
-  source                = "../../modules/backup"
+  source  = "terraform-google-modules/sql-db/google//modules/backup"
+  version = "~> 18.0"
+
   region                = "us-central1"
   project_id            = var.project_id
   sql_instance          = module.postgresql.instance_name

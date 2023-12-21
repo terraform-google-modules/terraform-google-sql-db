@@ -16,7 +16,9 @@
 
 
 module "postgresql-db" {
-  source               = "../../modules/postgresql"
+  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
+  version = "~> 18.0"
+
   name                 = var.db_name
   random_instance_name = true
   database_version     = "POSTGRES_14"

@@ -19,7 +19,9 @@ resource "random_id" "name" {
 }
 
 module "mysql-db" {
-  source               = "../../modules/mysql"
+  source  = "terraform-google-modules/sql-db/google//modules/mysql"
+  version = "~> 18.0"
+
   name                 = var.db_name
   random_instance_name = true
   database_version     = "MYSQL_5_6"

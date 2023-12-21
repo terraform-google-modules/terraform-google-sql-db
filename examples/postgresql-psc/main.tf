@@ -26,7 +26,9 @@ locals {
 }
 
 module "pg" {
-  source               = "../../modules/postgresql"
+  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
+  version = "~> 18.0"
+
   name                 = var.pg_psc_name
   random_instance_name = true
   project_id           = var.project_id
