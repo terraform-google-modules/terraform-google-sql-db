@@ -138,7 +138,7 @@ spec:
     type: bool
     default: false
   - name: deny_maintenance_period
-    description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance)
+    description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance)
     type: |-
       list(object({
           end_date   = string
