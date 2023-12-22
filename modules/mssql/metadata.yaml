@@ -142,7 +142,7 @@ spec:
     description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance)
     type: |-
       list(object({
-          end_date   = string list accepts only one value
+          end_date   = string
           start_date = string
           time       = string
         }))
