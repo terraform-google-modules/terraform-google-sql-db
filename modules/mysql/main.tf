@@ -50,14 +50,16 @@ resource "random_id" "suffix" {
 }
 
 resource "google_sql_database_instance" "default" {
-  provider            = google-beta
-  project             = var.project_id
-  name                = local.master_instance_name
-  database_version    = var.database_version
-  region              = var.region
-  encryption_key_name = var.encryption_key_name
-  deletion_protection = var.deletion_protection
-  root_password       = var.root_password != "" ? var.root_password : null
+  provider             = google-beta
+  project              = var.project_id
+  name                 = local.master_instance_name
+  database_version     = var.database_version
+  region               = var.region
+  master_instance_name = var.master_instance_name
+  instance_type        = var.instance_type
+  encryption_key_name  = var.encryption_key_name
+  deletion_protection  = var.deletion_protection
+  root_password        = var.root_password != "" ? var.root_password : null
 
   settings {
     tier                        = var.tier
@@ -173,10 +175,15 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
+    // Maintenance windows cannot be set for read replicas: https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-window-2ndgen
+    dynamic "maintenance_window" {
+      for_each = var.master_instance_name != null ? [] : ["true"]
+
+      content {
+        day          = var.maintenance_window_day
+        hour         = var.maintenance_window_hour
+        update_track = var.maintenance_window_update_track
+      }
     }
   }
 
