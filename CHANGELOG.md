@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [18.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v18.1.0...v18.2.0) (2024-01-03)
+
+
+### Features
+
+* add master_instance_name and instance_type to mysql module ([#556](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/556)) ([6cda644](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/6cda644a136a1cac3ada9358007619f02f90a169))
+
+
+### Bug Fixes
+
+* Don't define backup_configuration if default DB is configured as a replica ([#559](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/559)) ([52224ad](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/52224ada14af2f828fefc84f1e7fce2aeb52f670))
+
 ## [18.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v18.0.0...v18.1.0) (2023-12-13)
 
 
