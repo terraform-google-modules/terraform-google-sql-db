@@ -42,6 +42,12 @@ variable "backup_retention_time" {
   default     = 30
 }
 
+variable "backup_runs_list_max_results" {
+  description = "The max amount of backups to list when fetching internal backup runs for the instance. This number must be larger then the amount of backups you wish to keep. E.g. for a daily backup schedule and a backup_retention_time of 30 days, you'd need to set this to at least 31 for old backups to get deleted."
+  type        = number
+  default     = 31
+}
+
 variable "scheduler_timezone" {
   description = "The Timezone in which the Scheduler Jobs are triggered"
   type        = string
