@@ -59,7 +59,7 @@ resource "google_sql_database_instance" "default" {
   instance_type        = var.instance_type
   encryption_key_name  = var.encryption_key_name
   deletion_protection  = var.deletion_protection
-  root_password        = var.root_password != "" ? var.root_password : null
+  root_password        = var.root_password == "" ? null : var.root_password
 
   settings {
     tier                        = var.tier

@@ -339,9 +339,9 @@ variable "user_host" {
 }
 
 variable "root_password" {
-  description = "Mysql password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  description = "MySQL password for the root user."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "user_password" {
