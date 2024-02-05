@@ -29,7 +29,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
-| edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
+| edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. Defaults to ENTERPRISE. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
