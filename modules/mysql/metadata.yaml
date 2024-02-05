@@ -23,7 +23,7 @@ spec:
   source:
     repo: https://github.com/terraform-google-modules/terraform-google-sql-db
     sourceType: git
-  version: 14.1.0
+  version: 18.2.0
   actuationTool:
     type: Terraform
     version: '>= 1.3'
@@ -141,7 +141,7 @@ spec:
     type: bool
     default: false
   - name: deny_maintenance_period
-    description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)
+    description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)
     type: |-
       list(object({
           end_date   = string
@@ -199,6 +199,9 @@ spec:
           id    = string
           email = string
         }))
+  - name: instance_type
+    description: Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart.
+    type: string
   - name: ip_configuration
     description: The ip_configuration settings subblock
     type: |-
@@ -229,6 +232,9 @@ spec:
     description: The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`.
     type: string
     default: canary
+  - name: master_instance_name
+    description: (Optional) The name of the existing instance that will act as the master in the replication setup. Note, this requires the master to have `binary_log_enabled` set, as well as existing backups.
+    type: string
   - name: module_depends_on
     description: List of modules or resources this module depends on.
     type: list(any)

@@ -58,6 +58,7 @@ resource "google_sql_database_instance" "default" {
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection
+  root_password       = var.root_password
 
   settings {
     tier                        = var.tier
@@ -85,6 +86,12 @@ resource "google_sql_database_instance" "default" {
         }
       }
     }
+    dynamic "data_cache_config" {
+      for_each = var.edition == "ENTERPRISE_PLUS" && var.data_cache_enabled ? ["cache_enabled"] : []
+      content {
+        data_cache_enabled = var.data_cache_enabled
+      }
+    }
     dynamic "deny_maintenance_period" {
       for_each = var.deny_maintenance_period
       content {
@@ -99,6 +106,7 @@ resource "google_sql_database_instance" "default" {
         ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network                               = lookup(ip_configuration.value, "private_network", null)
         require_ssl                                   = lookup(ip_configuration.value, "require_ssl", null)
+        ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 
@@ -235,6 +243,7 @@ resource "random_password" "user-password" {
 
 resource "random_password" "additional_passwords" {
   for_each = local.users
+
   keepers = {
     name = google_sql_database_instance.default.name
   }

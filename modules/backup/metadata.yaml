@@ -102,6 +102,10 @@ spec:
     description: Unique suffix to add to scheduler jobs and workflows names.
     type: string
     default: ""
+  - name: use_serverless_export
+    description: Whether to use serverless export for DB export
+    type: bool
+    default: false
   outputs:
   - name: backup_workflow_name
     description: The name for internal backup workflow

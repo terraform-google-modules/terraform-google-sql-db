@@ -136,3 +136,8 @@ output "instances" {
   description = "A list of all `google_sql_database_instance` resources we've created"
   sensitive   = true
 }
+
+output "dns_name" {
+  value       = google_sql_database_instance.default.dns_name
+  description = "DNS name of the instance endpoint"
+}
