@@ -25,7 +25,7 @@ The following dependency must be available for SQL Server module:
 | delete\_timeout | The optional timeout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | deletion\_protection\_enabled | Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
-| deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
+| deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size. | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance. | `number` | `10` | no |

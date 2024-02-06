@@ -188,7 +188,7 @@ variable "data_cache_enabled" {
 }
 
 variable "deny_maintenance_period" {
-  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
+  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
   type = list(object({
     end_date   = string
     start_date = string
