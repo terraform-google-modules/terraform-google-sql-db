@@ -189,7 +189,7 @@ variable "data_cache_enabled" {
 }
 
 variable "deny_maintenance_period" {
-  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
+  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
   type = list(object({
     end_date   = string
     start_date = string
@@ -340,9 +340,9 @@ variable "user_host" {
 }
 
 variable "root_password" {
-  description = "Mysql password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  description = "MySQL password for the root user."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "user_password" {
