@@ -181,7 +181,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | deletion\_protection\_enabled | Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
-| deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
+| deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
 | disk\_size | The disk size for the master instance | `number` | `10` | no |
@@ -211,7 +211,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | user\_name | The name of the default user | `string` | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. | `string` | `""` | no |
 | vpc\_network | Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access. | `string` | n/a | yes |
-| zone | The zone for the master instance, it should be something like: `a`, `c`. | `string` | n/a | yes |
+| zone | The zone for the master instance, it should be something like: `a`, `c`. | `string` | `null` | no |
 
 ## Outputs
 

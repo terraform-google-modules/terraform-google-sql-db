@@ -79,6 +79,7 @@ variable "edition" {
 variable "zone" {
   description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
   type        = string
+  default     = null
 }
 
 variable "secondary_zone" {
@@ -188,7 +189,7 @@ variable "data_cache_enabled" {
 }
 
 variable "deny_maintenance_period" {
-  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
+  description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
   type = list(object({
     end_date   = string
     start_date = string
@@ -229,6 +230,7 @@ variable "ip_configuration" {
     ipv4_enabled                                  = optional(bool, true)
     private_network                               = optional(string)
     require_ssl                                   = optional(bool)
+    ssl_mode                                      = optional(string)
     allocated_ip_range                            = optional(string)
     enable_private_path_for_google_cloud_services = optional(bool, false)
     psc_enabled                                   = optional(bool, false)
@@ -339,9 +341,9 @@ variable "user_host" {
 }
 
 variable "root_password" {
-  description = "Mysql password for the root user. If not set, a random one will be generated and available in the root_password output variable."
+  description = "MySQL password for the root user."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "user_password" {
