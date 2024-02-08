@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [19.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v18.2.0...v19.0.0) (2024-02-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* Allow passing ssl_mode for MySQL Module ([#575](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/575))
+
+### Features
+
+* Allow passing ssl_mode for MySQL Module ([#575](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/575)) ([c7ab6ec](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c7ab6ecbcdfaaee94586b2251ff643d05311a5cc))
+* Make MySQL CloudSQL zone optional ([#572](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/572)) ([3c4b504](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3c4b504671cffc222b408b1f3051175837757b1e))
+
+
+### Bug Fixes
+
+* **backup:** backups are not deleted when retained nr of backups &gt;= 20 ([#566](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/566)) ([6c4b0e3](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/6c4b0e38b7d37e67107955da3d9a46e691b3f47a))
+* Cloud SQL does not support multiple deny_maintenance_period block. Update variable description ([#564](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/564)) ([9e55c87](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/9e55c87c54371780f175734212abce3e4d4963c3))
+* **deps:** Update cft/developer-tools Docker tag to v1.19 ([#571](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/571)) ([bd18ee6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/bd18ee68a2a05c5587706d9cbca6023b8eab0ae1))
+* Improve MySQL root_password documentation ([#573](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/573)) ([611edfd](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/611edfd8d72d4560c629fa8e3863932eb309323d))
+
 ## [18.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v18.1.0...v18.2.0) (2024-01-03)
 
 
