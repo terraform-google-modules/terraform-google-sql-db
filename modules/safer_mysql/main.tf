@@ -56,6 +56,7 @@ module "safer_mysql" {
     # public IP to be mediated by Cloud SQL.
     authorized_networks = []
     require_ssl         = true
+    ssl_mode            = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
     private_network     = var.vpc_network
     allocated_ip_range  = var.allocated_ip_range
   }

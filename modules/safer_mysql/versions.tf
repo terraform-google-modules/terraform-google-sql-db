@@ -20,12 +20,12 @@ terraform {
 
     google = {
       source  = "hashicorp/google"
-      version = ">= 4.74.0, < 6"
+      version = ">= 5.7, < 6"
     }
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:safer_mysql/v18.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:safer_mysql/v19.0.0"
   }
 
 }

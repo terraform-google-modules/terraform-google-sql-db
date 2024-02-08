@@ -54,6 +54,7 @@ fetch workflows.googleapis.com/Workflow
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | backup\_retention\_time | The number of days backups should be kept | `number` | `30` | no |
+| backup\_runs\_list\_max\_results | The max amount of backups to list when fetching internal backup runs for the instance. This number must be larger then the amount of backups you wish to keep. E.g. for a daily backup schedule and a backup\_retention\_time of 30 days, you'd need to set this to at least 31 for old backups to get deleted. | `number` | `31` | no |
 | backup\_schedule | The cron schedule to execute the internal backup | `string` | `"45 2 * * *"` | no |
 | compress\_export | Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL | `bool` | `true` | no |
 | connector\_params\_timeout | The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year). | `number` | `1800` | no |

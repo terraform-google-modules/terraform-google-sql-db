@@ -37,7 +37,7 @@ terraform {
   }
 
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v18.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v19.0.0"
   }
 
 }

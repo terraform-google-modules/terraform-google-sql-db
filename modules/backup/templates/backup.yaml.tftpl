@@ -36,6 +36,7 @@ main:
       args:
         project: ${project}
         instance: ${instanceName}
+        maxResults: ${backupRunsListMaxResults}
       result: backupList
   - delete old backups:
       for:

@@ -65,9 +65,10 @@ resource "google_workflows_workflow" "sql_backup" {
   project         = var.project_id
   service_account = local.service_account
   source_contents = templatefile("${path.module}/templates/backup.yaml.tftpl", {
-    project             = var.project_id
-    instanceName        = var.sql_instance
-    backupRetentionTime = var.backup_retention_time
+    project                  = var.project_id
+    instanceName             = var.sql_instance
+    backupRetentionTime      = var.backup_retention_time
+    backupRunsListMaxResults = var.backup_runs_list_max_results
   })
 }
 
