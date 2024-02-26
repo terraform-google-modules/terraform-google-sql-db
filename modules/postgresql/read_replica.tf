@@ -18,12 +18,13 @@ locals {
   replicas = {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
+  // Edition should default to Enterprise
+  edition = var.edition != null ? var.edition : "ENTERPRISE"
   // Zone for replica instances
-  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+  zone = var.zone == null ? data.google_compute_zones.available.names[0] : var.zone
 }
 
 data "google_compute_zones" "available" {
-  count   = var.zone == null ? 1 : 0
   project = var.project_id
   region  = var.region
 }
@@ -34,20 +35,20 @@ resource "google_sql_database_instance" "replicas" {
   project              = var.project_id
   name                 = each.value.name_override == null || each.value.name_override == "" ? "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}" : each.value.name_override
   database_version     = var.database_version
-  region               = join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))
+  region               = join("-", slice(split("-", coalesce(each.value["zone"], local.zone)), 0, 2))
   master_instance_name = google_sql_database_instance.default.name
   deletion_protection  = var.read_replica_deletion_protection
-  encryption_key_name  = (join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
+  encryption_key_name  = (join("-", slice(split("-", coalesce(each.value["zone"], local.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
 
   replica_configuration {
     failover_target = false
   }
 
   settings {
-    tier                        = lookup(each.value, "tier", var.tier)
-    edition                     = lookup(each.value, "edition", var.edition)
+    tier                        = coalesce(each.value["tier"], var.tier)
+    edition                     = coalesce(each.value["edition"], local.edition)
     activation_policy           = "ALWAYS"
-    availability_type           = lookup(each.value, "availability_type", var.availability_type)
+    availability_type           = coalesce(each.value["availability_type"], var.availability_type)
     deletion_protection_enabled = var.read_replica_deletion_protection_enabled
 
     dynamic "ip_configuration" {
@@ -89,12 +90,12 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
-    disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
-    disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
-    disk_size             = lookup(each.value, "disk_size", var.disk_size)
-    disk_type             = lookup(each.value, "disk_type", var.disk_type)
+    disk_autoresize       = coalesce(each.value["disk_autoresize"], var.disk_autoresize)
+    disk_autoresize_limit = coalesce(each.value["disk_autoresize_limit"], var.disk_autoresize_limit)
+    disk_size             = coalesce(each.value["disk_size"], var.disk_size)
+    disk_type             = coalesce(each.value["disk_type"], var.disk_type)
     pricing_plan          = "PER_USE"
-    user_labels           = lookup(each.value, "user_labels", var.user_labels)
+    user_labels           = coalesce(each.value["user_labels"], var.user_labels)
 
     dynamic "database_flags" {
       for_each = lookup(each.value, "database_flags", [])
@@ -105,7 +106,7 @@ resource "google_sql_database_instance" "replicas" {
     }
 
     location_preference {
-      zone = lookup(each.value, "zone", local.zone)
+      zone = coalesce(each.value["zone"], local.zone)
     }
 
   }
