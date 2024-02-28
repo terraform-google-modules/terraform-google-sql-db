@@ -15,11 +15,11 @@
  */
 
 module "pg2" {
-  # source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  # version = "~> 20.0"
+  source = "terraform-google-modules/sql-db/google//modules/postgresql"
+  version = "~> 20.0"
 
-  source = "../../modules/postgresql/"
 
+  # Comment this parameter to promot instance 2 as primary instance. This will break replication between instance 1 and 2
   primary_instance_name = module.pg1.instance_name
 
   name                 = var.pg_name_2
@@ -33,8 +33,8 @@ module "pg2" {
 
   encryption_key_name = google_kms_crypto_key.cloudsql_region2_key.id
 
-  tier = local.tier
-  # zone                            = data.google_compute_zones.available_region2.names[0]
+  tier                            = local.tier
+  zone                            = data.google_compute_zones.available_region2.names[0]
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12

@@ -1,6 +1,10 @@
 # Cloud SQL Database Example with failover replication
 
-This example shows how to create a public HA Postgres Cloud SQL cluster with cross region failover replica using the Terraform module. You can promote failover replica without losing state file sync
+This example shows how to create a public HA Postgres Cloud SQL cluster with cross region failover replica using the Terraform module. You can promote failover replica without losing state file sync.
+
+- Set `enable_default_db` and `enable_default_user` to `null`
+- Dont set `additional_databases`, `user_name`, `user_password` and `additional_users`
+
 
 ## Run Terraform
 
@@ -13,7 +17,7 @@ terraform apply
 ```
 
 ## Failover to Instance 2
- 
+
 Promote instance 2 as primary and change instance 1 as failover replica
 
 1) remove  `primary_instance_name` from instance 2

@@ -16,12 +16,9 @@
 
 
 module "pg1" {
-  # source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  # version = "~> 20.0"
+  source = "terraform-google-modules/sql-db/google//modules/postgresql"
+  version = "~> 20.0"
 
-  source = "../../modules/postgresql/"
-
-  # primary_instance_name = module.pg2.instance_name
 
   name                 = var.pg_name_1
   random_instance_name = true
@@ -34,8 +31,8 @@ module "pg1" {
 
   encryption_key_name = google_kms_crypto_key.cloudsql_region1_key.id
 
-  tier = local.tier
-  # zone                            = data.google_compute_zones.available_region1.names[0]
+  tier                            = local.tier
+  zone                            = data.google_compute_zones.available_region1.names[0]
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
@@ -114,34 +111,6 @@ module "pg1" {
   db_name      = var.pg_name_1
   db_charset   = "UTF8"
   db_collation = "en_US.UTF8"
-
-  # additional_databases = [
-  #   {
-  #     name      = "${var.pg_name_1}-additional"
-  #     charset   = "UTF8"
-  #     collation = "en_US.UTF8"
-  #   },
-  # ]
-
-  # user_name     = "tftest"
-  # user_password = "foobar"
-
-  # additional_users = [
-  #   {
-  #     name            = "tftest2"
-  #     password        = "abcdefg"
-  #     host            = "localhost"
-  #     random_password = false
-  #   },
-  #   {
-  #     name            = "tftest3"
-  #     password        = "abcdefg"
-  #     host            = "localhost"
-  #     random_password = false
-  #   },
-  # ]
-
-
 
   enable_default_db   = false
   enable_default_user = false
