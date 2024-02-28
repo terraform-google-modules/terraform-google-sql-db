@@ -2,6 +2,115 @@
 
 Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen) feature which can cause a [Terraform configuration drift](https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform) due to the value in `disk_size` variable, and hence any updates to this variable is ignored in the [Terraform lifecycle](https://www.terraform.io/docs/configuration/resources.html#ignore_changes).
 
+
+## Usage
+Functional examples are included in the [examples](../../examples/) directory. If you want to create an instance with failover replica and manage lifecycle of primary and secondary instance lifecycle using this module follow example in [postgresql-with-cross-region-failover](../../examples/postgresql-with-cross-region-failover/)
+
+Basic usage of this module is as follows:
+
+- Create a Storage Pool and Storage Volumes
+
+```hcl
+module "pg" {
+  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
+  version = "~> 20.0"
+
+  name                 = var.pg_ha_name
+  random_instance_name = true
+  project_id           = var.project_id
+  database_version     = "POSTGRES_9_6"
+  region               = "us-central1"
+
+  // Master configurations
+  tier                            = "db-custom-1-3840"
+  zone                            = "us-central1-c"
+  availability_type               = "REGIONAL"
+  maintenance_window_day          = 7
+  maintenance_window_hour         = 12
+  maintenance_window_update_track = "stable"
+
+  deletion_protection = false
+
+  database_flags = [{ name = "autovacuum", value = "off" }]
+
+  user_labels = {
+    foo = "bar"
+  }
+
+  ip_configuration = {
+    ipv4_enabled       = true
+    require_ssl        = true
+    private_network    = null
+    allocated_ip_range = null
+    authorized_networks = [
+      {
+        name  = "${var.project_id}-cidr"
+        value = var.pg_ha_external_ip_range
+      },
+    ]
+  }
+
+  backup_configuration = {
+    enabled                        = true
+    start_time                     = "20:55"
+    location                       = null
+    point_in_time_recovery_enabled = false
+    transaction_log_retention_days = null
+    retained_backups               = 365
+    retention_unit                 = "COUNT"
+  }
+
+  // Read replica configurations
+  read_replica_name_suffix = "-test-ha"
+  read_replicas = [
+    {
+      name                  = "0"
+      zone                  = "us-central1-a"
+      availability_type     = "REGIONAL"
+      tier                  = "db-custom-1-3840"
+      ip_configuration      = local.read_replica_ip_configuration
+      database_flags        = [{ name = "autovacuum", value = "off" }]
+      disk_autoresize       = null
+      disk_autoresize_limit = null
+      disk_size             = null
+      disk_type             = "PD_HDD"
+      user_labels           = { bar = "baz" }
+      encryption_key_name   = null
+    },
+  ]
+
+  db_name      = var.pg_ha_name
+  db_charset   = "UTF8"
+  db_collation = "en_US.UTF8"
+
+  additional_databases = [
+    {
+      name      = "${var.pg_ha_name}-additional"
+      charset   = "UTF8"
+      collation = "en_US.UTF8"
+    },
+  ]
+
+  user_name     = "tftest"
+  user_password = "foobar"
+
+  additional_users = [
+    {
+      name            = "tftest2"
+      password        = "abcdefg"
+      host            = "localhost"
+      random_password = false
+    },
+    {
+      name            = "tftest3"
+      password        = "abcdefg"
+      host            = "localhost"
+      random_password = false
+    },
+  ]
+}
+
+```
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 

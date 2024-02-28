@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-
+// Primary instance with read replicas.
 module "pg1" {
   source = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"

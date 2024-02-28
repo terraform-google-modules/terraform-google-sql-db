@@ -26,13 +26,13 @@ variable "name" {
 
 variable "primary_instance_name" {
   type        = string
-  description = "Primary instance name. Required for creating failover replica instance. Not needed for primary instance"
+  description = "Primary instance name. Required for creating failover replica instance. Not needed for primary instance. When removed it will promote failover replica instance as primary instance"
   default     = null
 }
 
 variable "instance_type" {
   type        = string
-  description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Module will set the value to READ_REPLICA_INSTANCE if primary_instance_name is not null"
+  description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if primary_instance_name value is provided"
   default     = "CLOUD_SQL_INSTANCE"
 }
 

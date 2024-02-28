@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+
+// Failover Replica instance with its own read replicas
+
 module "pg2" {
   source = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"
