@@ -39,6 +39,21 @@ steps:
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run all --stage init --verbose']
 
+  - id: apply postgresql-cross-region-failover
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlCrossRegionFailover --stage apply --verbose']
+  - id: verify postgresql-cross-region-failover
+    waitFor:
+      - apply postgresql-cross-region-failover
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlCrossRegionFailover --stage verify --verbose']
+  - id: teardown postgresql-cross-region-failover
+    waitFor:
+      - verify postgresql-cross-region-failover
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlCrossRegionFailover --stage teardown --verbose']
+
   - id: apply mssql-ha-local
     waitFor: ["init-all", "wait for api activation"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'

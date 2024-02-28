@@ -15,7 +15,8 @@
  */
 
 locals {
-  master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
+  instance_name         = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
+  is_secondary_instance = var.primary_instance_name != null
 
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
@@ -53,12 +54,15 @@ resource "random_id" "suffix" {
 resource "google_sql_database_instance" "default" {
   provider            = google-beta
   project             = var.project_id
-  name                = local.master_instance_name
+  name                = local.instance_name
   database_version    = can(regex("\\d", substr(var.database_version, 0, 1))) ? format("POSTGRES_%s", var.database_version) : replace(var.database_version, substr(var.database_version, 0, 8), "POSTGRES")
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection
   root_password       = var.root_password
+
+  master_instance_name = local.is_secondary_instance ? var.primary_instance_name : null
+  instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
   settings {
     tier                        = var.tier
@@ -69,7 +73,7 @@ resource "google_sql_database_instance" "default" {
     connector_enforcement       = local.connector_enforcement
 
     dynamic "backup_configuration" {
-      for_each = [var.backup_configuration]
+      for_each = local.is_secondary_instance ? [] : [var.backup_configuration]
       content {
         enabled                        = local.backups_enabled
         start_time                     = lookup(backup_configuration.value, "start_time", null)
@@ -93,7 +97,7 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "deny_maintenance_period" {
-      for_each = var.deny_maintenance_period
+      for_each = local.is_secondary_instance ? [] : var.deny_maintenance_period
       content {
         end_date   = lookup(deny_maintenance_period.value, "end_date", null)
         start_date = lookup(deny_maintenance_period.value, "start_date", null)
@@ -142,7 +146,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "password_validation_policy" {
-      for_each = var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
+      for_each = !local.is_secondary_instance && var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
 
       content {
         enable_password_policy      = true
@@ -159,6 +163,7 @@ resource "google_sql_database_instance" "default" {
     disk_size             = var.disk_size
     disk_type             = var.disk_type
     pricing_plan          = var.pricing_plan
+
     dynamic "database_flags" {
       for_each = var.database_flags
       content {
@@ -173,15 +178,18 @@ resource "google_sql_database_instance" "default" {
       for_each = var.zone != null ? ["location_preference"] : []
       content {
         zone                   = var.zone
-        secondary_zone         = var.secondary_zone
-        follow_gae_application = var.follow_gae_application
+        secondary_zone         = local.is_secondary_instance ? null : var.secondary_zone
+        follow_gae_application = local.is_secondary_instance ? null : var.follow_gae_application
       }
     }
 
-    maintenance_window {
-      day          = var.maintenance_window_day
-      hour         = var.maintenance_window_hour
-      update_track = var.maintenance_window_update_track
+    dynamic "maintenance_window" {
+      for_each = local.is_secondary_instance ? [] : ["maintenance_window"]
+      content {
+        day          = var.maintenance_window_day
+        hour         = var.maintenance_window_hour
+        update_track = var.maintenance_window_update_track
+      }
     }
   }
 

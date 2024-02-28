@@ -32,22 +32,18 @@ resource "google_sql_database_instance" "replicas" {
   provider             = google-beta
   for_each             = local.replicas
   project              = var.project_id
-  name                 = each.value.name_override == null || each.value.name_override == "" ? "${local.master_instance_name}-replica${var.read_replica_name_suffix}${each.value.name}" : each.value.name_override
+  name                 = each.value.name_override == null || each.value.name_override == "" ? "${local.instance_name}-replica${var.read_replica_name_suffix}${each.value.name}" : each.value.name_override
   database_version     = var.database_version
   region               = join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))
   master_instance_name = google_sql_database_instance.default.name
   deletion_protection  = var.read_replica_deletion_protection
   encryption_key_name  = (join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
 
-  replica_configuration {
-    failover_target = false
-  }
-
   settings {
-    tier                        = lookup(each.value, "tier", var.tier)
-    edition                     = lookup(each.value, "edition", var.edition)
+    tier                        = lookup(each.value, "tier", null) == null ? var.tier : lookup(each.value, "tier", null)
+    edition                     = lookup(each.value, "edition", null) == null ? var.edition : lookup(each.value, "edition", null)
     activation_policy           = "ALWAYS"
-    availability_type           = lookup(each.value, "availability_type", var.availability_type)
+    availability_type           = lookup(each.value, "availability_type", null) == null ? var.availability_type : lookup(each.value, "availability_type", null)
     deletion_protection_enabled = var.read_replica_deletion_protection_enabled
 
     dynamic "ip_configuration" {

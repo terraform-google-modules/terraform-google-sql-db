@@ -24,6 +24,18 @@ variable "name" {
   description = "The name of the Cloud SQL resources"
 }
 
+variable "primary_instance_name" {
+  type        = string
+  description = "Primary instance name. Required for creating failover replica instance. Not needed for primary instance"
+  default     = null
+}
+
+variable "instance_type" {
+  type        = string
+  description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Module will set the value to READ_REPLICA_INSTANCE if primary_instance_name is not null"
+  default     = "CLOUD_SQL_INSTANCE"
+}
+
 variable "random_instance_name" {
   type        = bool
   description = "Sets random suffix at the end of the Cloud SQL resource name"
@@ -37,7 +49,7 @@ variable "database_version" {
 
   validation {
     condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
-    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\" or \"POSTGRES_14\"."
+    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"POSTGRES_14\" or \"POSTGRES_15\""
   }
 }
 
@@ -62,7 +74,7 @@ variable "edition" {
 
 variable "zone" {
   type        = string
-  description = "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
+  description = "The zone for the instance, it should be something like: `us-central1-a`, `us-east1-c`."
   default     = null
 }
 
@@ -203,11 +215,11 @@ variable "insights_config" {
 variable "password_validation_policy_config" {
   description = "The password validation policy settings for the database instance."
   type = object({
-    min_length                  = number
-    complexity                  = string
-    reuse_interval              = number
-    disallow_username_substring = bool
-    password_change_interval    = string
+    min_length                  = optional(number)
+    complexity                  = optional(string)
+    reuse_interval              = optional(number)
+    disallow_username_substring = optional(bool)
+    password_change_interval    = optional(string)
   })
   default = null
 }

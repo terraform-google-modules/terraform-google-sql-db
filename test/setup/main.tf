@@ -31,7 +31,9 @@ module "project" {
     "sqladmin.googleapis.com",
     "iam.googleapis.com",
     "workflows.googleapis.com",
-    "cloudscheduler.googleapis.com"
+    "cloudscheduler.googleapis.com",
+    "cloudkms.googleapis.com",
+    "serviceusage.googleapis.com",
   ]
 }
 
