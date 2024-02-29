@@ -16,7 +16,7 @@
 
 // Primary instance with read replicas.
 module "pg1" {
-  source = "terraform-google-modules/sql-db/google//modules/postgresql"
+  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"
 
 
@@ -92,7 +92,7 @@ module "pg1" {
     {
       name                  = "0"
       zone                  = data.google_compute_zones.available_region1.names[1]
-      availability_type     = "REGIONAL"
+      availability_type     = "ZONAL"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "autovacuum", value = "off" }]
       disk_autoresize       = null

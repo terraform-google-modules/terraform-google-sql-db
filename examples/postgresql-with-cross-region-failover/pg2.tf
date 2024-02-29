@@ -18,7 +18,7 @@
 // Failover Replica instance with its own read replicas
 
 module "pg2" {
-  source = "terraform-google-modules/sql-db/google//modules/postgresql"
+  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"
 
 
@@ -38,7 +38,7 @@ module "pg2" {
 
   tier                            = local.tier
   zone                            = data.google_compute_zones.available_region2.names[0]
-  availability_type               = "REGIONAL"
+  availability_type               = "ZONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
@@ -93,29 +93,27 @@ module "pg2" {
     retention_unit                 = "COUNT"
   }
 
-  # // Read replica configurations
-  # read_replica_name_suffix = "-rr-"
-  # read_replicas = [
-  #   {
-  #     name                  = "0"
-  #     zone                  = data.google_compute_zones.available_region2.names[1]
-  #     availability_type     = "REGIONAL"
-  #     ip_configuration      = local.read_replica_ip_configuration
-  #     database_flags        = [{ name = "autovacuum", value = "off" }]
-  #     disk_autoresize       = null
-  #     disk_autoresize_limit = null
-  #     disk_size             = null
-  #     disk_type             = "PD_SSD"
-  #     user_labels           = { bar = "baz" }
-  #     encryption_key_name   = null
-  #     encryption_key_name   = google_kms_crypto_key.cloudsql_region2_key.id
-  #     insights_config = {
-  #       query_plans_per_minute = 5
-  #     }
-  #   },
-  # ]
-
-
+  // Read replica configurations
+  read_replica_name_suffix = "-rr-"
+  read_replicas = [
+    {
+      name                  = "0"
+      zone                  = data.google_compute_zones.available_region2.names[1]
+      availability_type     = "ZONAL"
+      ip_configuration      = local.read_replica_ip_configuration
+      database_flags        = [{ name = "autovacuum", value = "off" }]
+      disk_autoresize       = null
+      disk_autoresize_limit = null
+      disk_size             = null
+      disk_type             = "PD_SSD"
+      user_labels           = { bar = "baz" }
+      encryption_key_name   = null
+      encryption_key_name   = google_kms_crypto_key.cloudsql_region2_key.id
+      insights_config = {
+        query_plans_per_minute = 5
+      }
+    },
+  ]
 
   enable_default_db   = false
   enable_default_user = false
