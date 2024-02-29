@@ -123,7 +123,6 @@ module "pg2" {
   depends_on = [
     google_service_networking_connection.vpc_connection,
     google_kms_crypto_key_iam_member.crypto_key_region2,
-    module.pg1,
   ]
 
 }
