@@ -20,7 +20,7 @@ module "mssql1" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
   version = "~> 20.0"
 
-  region = "us-central1"
+  region = local.region_1
 
   name                 = "tf-mssql-public-1"
   random_instance_name = true

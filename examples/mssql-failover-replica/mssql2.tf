@@ -21,7 +21,7 @@ module "mssql2" {
 
   master_instance_name = module.mssql1.instance_name
 
-  region = "us-east1"
+  region = local.region_2
 
   name                 = "tf-mssql-public-2"
   random_instance_name = true

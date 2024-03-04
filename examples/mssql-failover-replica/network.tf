@@ -25,7 +25,7 @@ resource "google_compute_network" "default" {
 }
 
 resource "google_compute_subnetwork" "subnetwork1" {
-  name                     = "subnet-${local.region_1}"
+  name                     = "subnet-${local.region_1}-mssql"
   ip_cidr_range            = "10.0.0.0/24"
   region                   = local.region_1
   project                  = var.project_id
@@ -34,7 +34,7 @@ resource "google_compute_subnetwork" "subnetwork1" {
 }
 
 resource "google_compute_subnetwork" "subnetwork_2" {
-  name                     = "subnet-${local.region_2}"
+  name                     = "subnet-${local.region_2}-mssql"
   ip_cidr_range            = "10.0.1.0/24"
   region                   = local.region_2
   project                  = var.project_id

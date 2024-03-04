@@ -33,11 +33,8 @@ The root module has been deprecated. Please switch to using one of the submodule
 ### Installation Dependencies
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.3.0
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin >= v5.12+
-
-The following dependency must be available for SQL Server module:
-
-- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin >= v4.45.0
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v5.12+
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v5.12+
 
 ### Configure a Service Account
 

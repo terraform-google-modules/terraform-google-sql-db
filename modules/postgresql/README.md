@@ -8,7 +8,7 @@ Functional examples are included in the [examples](../../examples/) directory. I
 
 Basic usage of this module is as follows:
 
-- Create a Storage Pool and Storage Volumes
+- Create simple Postgresql instance with read replica
 
 ```hcl
 module "pg" {
@@ -202,3 +202,11 @@ module "pg" {
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Requirements
+
+### Installation Dependencies
+
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.3.0
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v5.12+
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v5.12+

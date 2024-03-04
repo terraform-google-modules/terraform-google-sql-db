@@ -2,7 +2,30 @@
 
 The following dependency must be available for SQL Server module:
 
-- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin >= 4.45.0
+## Usage
+Functional examples are included in the [examples](../../examples/) directory. If you want to create an instance with failover replica and manage lifecycle of primary and secondary instance lifecycle using this module follow example in [mssql-failover-replica](../../examples/mssql-failover-replica/)
+
+Basic usage of this module is as follows:
+
+- Create simple Postgresql instance with read replica
+
+```hcl
+module "mssql" {
+  source  = "terraform-google-modules/sql-db/google//modules/mssql"
+  version = "~> 20.0"
+
+  name                 = var.name
+  random_instance_name = true
+  project_id           = var.project_id
+  user_name            = "simpleuser"
+  user_password        = "foobar"
+
+  deletion_protection = false
+
+  sql_server_audit_config = var.sql_server_audit_config
+}
+
+```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -76,3 +99,11 @@ The following dependency must be available for SQL Server module:
 | root\_password | MSSERVER password for the root user. If not set, a random one will be generated and available in the root\_password output variable. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Requirements
+
+### Installation Dependencies
+
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.3.0
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v5.12+
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v5.12+
