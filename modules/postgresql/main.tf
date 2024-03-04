@@ -16,7 +16,7 @@
 
 locals {
   instance_name         = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
-  is_secondary_instance = var.primary_instance_name != null
+  is_secondary_instance = var.master_instance_name != null
 
   ip_configuration_enabled = length(keys(var.ip_configuration)) > 0 ? true : false
 
@@ -61,7 +61,7 @@ resource "google_sql_database_instance" "default" {
   deletion_protection = var.deletion_protection
   root_password       = var.root_password
 
-  master_instance_name = local.is_secondary_instance ? var.primary_instance_name : null
+  master_instance_name = local.is_secondary_instance ? var.master_instance_name : null
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
   settings {

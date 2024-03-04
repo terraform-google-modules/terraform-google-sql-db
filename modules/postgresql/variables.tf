@@ -21,18 +21,18 @@ variable "project_id" {
 
 variable "name" {
   type        = string
-  description = "The name of the Cloud SQL resources"
+  description = "The name of the Cloud SQL Master instance"
 }
 
-variable "primary_instance_name" {
+variable "master_instance_name" {
   type        = string
-  description = "Primary instance name. Required for creating failover replica instance. Not needed for primary instance. When removed it will promote failover replica instance as primary instance"
+  description = "Name of the Master instance if this is a failover replica. Required for creating failover replica instance. Not needed for Master instance. When removed, next terraform apply will promote this failover failover replica instance as Master instance"
   default     = null
 }
 
 variable "instance_type" {
   type        = string
-  description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if primary_instance_name value is provided"
+  description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided"
   default     = "CLOUD_SQL_INSTANCE"
 }
 

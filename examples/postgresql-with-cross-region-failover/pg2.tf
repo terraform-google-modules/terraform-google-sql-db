@@ -23,7 +23,7 @@ module "pg2" {
 
 
   # Comment this parameter to promot instance 2 as primary instance. This will break replication between instance 1 and 2
-  primary_instance_name = module.pg1.instance_name
+  master_instance_name = module.pg1.instance_name
 
   name                 = var.pg_name_2
   random_instance_name = true

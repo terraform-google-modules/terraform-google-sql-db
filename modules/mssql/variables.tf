@@ -24,6 +24,18 @@ variable "name" {
   description = "The name of the Cloud SQL resources"
 }
 
+variable "master_instance_name" {
+  type        = string
+  description = "Name of the Master instance if this is a failover replica. Required for creating failover replica instance. Not needed for Master instance. When removed, next terraform apply will promote this failover failover replica instance as Master instance"
+  default     = null
+}
+
+variable "instance_type" {
+  type        = string
+  description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE when primary_instance_name is provided"
+  default     = "CLOUD_SQL_INSTANCE"
+}
+
 variable "random_instance_name" {
   type        = bool
   description = "Sets random suffix at the end of the Cloud SQL resource name"
@@ -59,7 +71,7 @@ variable "edition" {
 variable "zone" {
   type        = string
   description = "The zone for the master instance."
-  default     = "us-central1-a"
+  default     = null
 }
 
 variable "secondary_zone" {
@@ -180,11 +192,11 @@ variable "user_labels" {
 variable "ip_configuration" {
   description = "The ip configuration for the master instances."
   type = object({
-    authorized_networks = list(map(string))
-    ipv4_enabled        = bool
-    private_network     = string
-    require_ssl         = bool
-    allocated_ip_range  = string
+    authorized_networks = optional(list(map(string)), [])
+    ipv4_enabled        = optional(bool)
+    private_network     = optional(string)
+    require_ssl         = optional(bool)
+    allocated_ip_range  = optional(string)
   })
   default = {
     authorized_networks = []
@@ -323,4 +335,16 @@ variable "time_zone" {
   description = "The time zone for SQL instance."
   type        = string
   default     = null
+}
+
+variable "enable_default_db" {
+  description = "Enable or disable the creation of the default database"
+  type        = bool
+  default     = true
+}
+
+variable "enable_default_user" {
+  description = "Enable or disable the creation of the default user"
+  type        = bool
+  default     = true
 }

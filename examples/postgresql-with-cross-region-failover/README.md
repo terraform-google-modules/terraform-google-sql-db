@@ -1,9 +1,10 @@
-# Cloud SQL Database Example with failover replication
+# Cloud Postgresql Database Example with failover replication
 
-This example shows how to create a public HA Postgres Cloud SQL cluster with cross region failover replica using the Terraform module. You can promote failover replica without losing state file sync.
+This example shows how to create a private HA Postgres Cloud SQL cluster with cross region failover replica using the Terraform module. You can promote failover replica without losing state file sync.
 
 - Set `enable_default_db` and `enable_default_user` to `null`
 - Dont set `additional_databases`, `user_name`, `user_password` and `additional_users`
+- `availability_type` in all replica should be set to `ZONAL`
 
 
 ## Run Terraform
@@ -20,45 +21,33 @@ terraform apply
 
 Promote instance 2 as primary and change instance 1 as failover replica
 
-1) remove  `primary_instance_name` from instance 2
+1) remove  `master_instance_name` from instance 2 and Execute `terraform apply`
 
 ```diff
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"
 
--  primary_instance_name = module.pg1.instance_name
+-  master_instance_name = module.pg1.instance_name
 
 ...
 }
 ```
 
-2) Execute `terraform apply`
+2) Remove instance 1 by renaming [pg1.tf](./pg1.tf) to pg1.tf.bak
 
-```terraform
-terraform apply
-```
-
-3) Remove instance 1 by renaming [pg1.tf](./pg1.tf) to pg1.tf.bak
-
-4) In order to create old instance 1 as failover replica rename pg1.tf.bak to pg1.tf and add following line
+3) In order to create old instance 1 as failover replica rename pg1.tf.bak to pg1.tf,  add following line and Execute `terraform apply`
 
 ```diff
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"
 
-+ primary_instance_name = module.pg2.instance_name
++ master_instance_name = module.pg2.instance_name
 
 ...
 
 }
-```
-
-2) Execute `terraform apply`
-
-```terraform
-terraform apply
 ```
 
 
