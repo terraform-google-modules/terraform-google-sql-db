@@ -49,7 +49,7 @@ resource "google_compute_subnetwork" "subnetwork_2" {
 
 resource "google_compute_global_address" "private_ip_alloc" {
   project       = var.project_id
-  name          = "psa"
+  name          = "psa-pg"
   address_type  = "INTERNAL"
   purpose       = "VPC_PEERING"
   address       = "10.10.0.0"
