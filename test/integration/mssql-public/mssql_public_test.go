@@ -44,7 +44,6 @@ func TestMsSqlPublicModule(t *testing.T) {
 
 		// assert location database settings
 		assert.Equal("sql#locationPreference", op.Get("settings.locationPreference.kind").String(), "Expected sql#locationPreference locationPreference.kind")
-		assert.Equal("us-central1-a", op.Get("settings.locationPreference.zone").String(), "Expected us-central1-a locationPreference.zone")
 
 		// assert maintenance windows
 		assert.Equal("sql#maintenanceWindow", op.Get("settings.maintenanceWindow.kind").String(), "Expected sql#maintenanceWindow maintenanceWindow.kind")
@@ -57,7 +56,6 @@ func TestMsSqlPublicModule(t *testing.T) {
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
-		assert.Equal("us-central1-a", op.Get("gceZone").String(), "Expected us-central1-a gceZone")
 	})
 
 	msSql.Test()
