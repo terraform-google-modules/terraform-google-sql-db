@@ -61,7 +61,7 @@ resource "google_sql_database_instance" "default" {
   deletion_protection = var.deletion_protection
   root_password       = var.root_password
 
-  master_instance_name = local.is_secondary_instance ? var.master_instance_name : null
+  master_instance_name = var.master_instance_name
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
   settings {

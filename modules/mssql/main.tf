@@ -51,7 +51,7 @@ resource "google_sql_database_instance" "default" {
   encryption_key_name  = var.encryption_key_name
   root_password        = coalesce(var.root_password, random_password.root-password.result)
   deletion_protection  = var.deletion_protection
-  master_instance_name = local.is_secondary_instance ? var.master_instance_name : null
+  master_instance_name = var.master_instance_name
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
   settings {

@@ -116,29 +116,29 @@ module "pg" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| activation\_policy | The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
+| activation\_policy | The activation policy for the Cloud SQL instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`. | `string` | `"ALWAYS"` | no |
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
 | additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>  }))</pre> | `[]` | no |
-| availability\_type | The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |
+| availability\_type | The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`. | `string` | `"ZONAL"` | no |
 | backup\_configuration | The backup\_configuration settings subblock for the database setings | <pre>object({<br>    enabled                        = optional(bool, false)<br>    start_time                     = optional(string)<br>    location                       = optional(string)<br>    point_in_time_recovery_enabled = optional(bool, false)<br>    transaction_log_retention_days = optional(string)<br>    retained_backups               = optional(number)<br>    retention_unit                 = optional(string)<br>  })</pre> | `{}` | no |
 | connector\_enforcement | Enforce that clients use the connector library | `bool` | `false` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"30m"` | no |
 | data\_cache\_enabled | Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE\_PLUS tier and supported database\_versions | `bool` | `false` | no |
 | database\_deletion\_policy | The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: "ABANDON". | `string` | `null` | no |
-| database\_flags | The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| database\_flags | The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en\_US.UTF8' | `string` | `""` | no |
 | db\_name | The name of the default database to create | `string` | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
-| deletion\_protection\_enabled | Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
+| deletion\_protection\_enabled | Enables protection of an Cloud SQL instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size. | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
-| disk\_size | The disk size for the master instance. | `number` | `10` | no |
-| disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
-| edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
+| disk\_size | The disk size for the Cloud SQL instance. | `number` | `10` | no |
+| disk\_type | The disk type for the Cloud SQL instance. | `string` | `"PD_SSD"` | no |
+| edition | The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
@@ -147,15 +147,15 @@ module "pg" {
 | iam\_users | A list of IAM users to be created in your CloudSQL instance | <pre>list(object({<br>    id    = string,<br>    email = string<br>  }))</pre> | `[]` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = optional(number, 5)<br>    query_string_length     = optional(number, 1024)<br>    record_application_tags = optional(bool, false)<br>    record_client_address   = optional(bool, false)<br>  })</pre> | `null` | no |
 | instance\_type | The type of the instance. The supported values are SQL\_INSTANCE\_TYPE\_UNSPECIFIED, CLOUD\_SQL\_INSTANCE, ON\_PREMISES\_INSTANCE and READ\_REPLICA\_INSTANCE. Set to READ\_REPLICA\_INSTANCE if master\_instance\_name value is provided | `string` | `"CLOUD_SQL_INSTANCE"` | no |
-| ip\_configuration | The ip configuration for the master instances. | <pre>object({<br>    authorized_networks                           = optional(list(map(string)), [])<br>    ipv4_enabled                                  = optional(bool, true)<br>    private_network                               = optional(string)<br>    require_ssl                                   = optional(bool)<br>    ssl_mode                                      = optional(string)<br>    allocated_ip_range                            = optional(string)<br>    enable_private_path_for_google_cloud_services = optional(bool, false)<br>    psc_enabled                                   = optional(bool, false)<br>    psc_allowed_consumer_projects                 = optional(list(string), [])<br>  })</pre> | `{}` | no |
-| maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
-| maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |
-| maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`. | `string` | `"canary"` | no |
-| master\_instance\_name | Name of the Master instance if this is a failover replica. Required for creating failover replica instance. Not needed for Master instance. When removed, next terraform apply will promote this failover failover replica instance as Master instance | `string` | `null` | no |
+| ip\_configuration | The ip configuration for the Cloud SQL instances. | <pre>object({<br>    authorized_networks                           = optional(list(map(string)), [])<br>    ipv4_enabled                                  = optional(bool, true)<br>    private_network                               = optional(string)<br>    require_ssl                                   = optional(bool)<br>    ssl_mode                                      = optional(string)<br>    allocated_ip_range                            = optional(string)<br>    enable_private_path_for_google_cloud_services = optional(bool, false)<br>    psc_enabled                                   = optional(bool, false)<br>    psc_allowed_consumer_projects                 = optional(list(string), [])<br>  })</pre> | `{}` | no |
+| maintenance\_window\_day | The day of week (1-7) for the Cloud SQL instance maintenance. | `number` | `1` | no |
+| maintenance\_window\_hour | The hour of day (0-23) maintenance window for the Cloud SQL instance maintenance. | `number` | `23` | no |
+| maintenance\_window\_update\_track | The update track of maintenance window for the Cloud SQL instance maintenance.Can be either `canary` or `stable`. | `string` | `"canary"` | no |
+| master\_instance\_name | Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance | `string` | `null` | no |
 | module\_depends\_on | List of modules or resources this module depends on. | `list(any)` | `[]` | no |
-| name | The name of the Cloud SQL Master instance | `string` | n/a | yes |
+| name | The name of the Cloud SQL instance | `string` | n/a | yes |
 | password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    min_length                  = optional(number)<br>    complexity                  = optional(string)<br>    reuse_interval              = optional(number)<br>    disallow_username_substring = optional(bool)<br>    password_change_interval    = optional(string)<br>  })</pre> | `null` | no |
-| pricing\_plan | The pricing plan for the master instance. | `string` | `"PER_USE"` | no |
+| pricing\_plan | The pricing plan for the Cloud SQL instance. | `string` | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
 | read\_replica\_deletion\_protection | Used to block Terraform from deleting replica SQL Instances. | `bool` | `false` | no |
@@ -164,14 +164,14 @@ module "pg" {
 | read\_replicas | List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption\_key\_name = null | <pre>list(object({<br>    name                  = string<br>    name_override         = optional(string)<br>    tier                  = optional(string)<br>    edition               = optional(string)<br>    availability_type     = optional(string)<br>    zone                  = optional(string)<br>    disk_type             = optional(string)<br>    disk_autoresize       = optional(bool)<br>    disk_autoresize_limit = optional(number)<br>    disk_size             = optional(string)<br>    user_labels           = map(string)<br>    database_flags = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>    insights_config = optional(object({<br>      query_plans_per_minute  = optional(number, 5)<br>      query_string_length     = optional(number, 1024)<br>      record_application_tags = optional(bool, false)<br>      record_client_address   = optional(bool, false)<br>    }), null)<br>    ip_configuration = object({<br>      authorized_networks                           = optional(list(map(string)), [])<br>      ipv4_enabled                                  = optional(bool)<br>      private_network                               = optional(string, )<br>      require_ssl                                   = optional(bool)<br>      ssl_mode                                      = optional(string)<br>      allocated_ip_range                            = optional(string)<br>      enable_private_path_for_google_cloud_services = optional(bool, false)<br>      psc_enabled                                   = optional(bool, false)<br>      psc_allowed_consumer_projects                 = optional(list(string), [])<br>    })<br>    encryption_key_name = optional(string)<br>  }))</pre> | `[]` | no |
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |
 | root\_password | Initial root password during creation | `string` | `null` | no |
-| secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
-| tier | The tier for the master instance. | `string` | `"db-f1-micro"` | no |
+| secondary\_zone | The preferred zone for the replica instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
+| tier | The tier for the Cloud SQL instance. | `string` | `"db-f1-micro"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_deletion\_policy | The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON". | `string` | `null` | no |
-| user\_labels | The key/value labels for the master instances. | `map(string)` | `{}` | no |
+| user\_labels | The key/value labels for the Cloud SQL instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. | `string` | `""` | no |
-| zone | The zone for the instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
+| zone | The zone for the Cloud SQL instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 
 ## Outputs
 
