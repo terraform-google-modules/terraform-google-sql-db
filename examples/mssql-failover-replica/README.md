@@ -31,9 +31,33 @@ module "mssql2" {
 }
 ```
 
-2) Remove instance 1 by renaming [mssql1.tf](./mssql1.tf) to mssql1.tf.bak and Execute `terraform apply`
+2) Remove instance 1 by removing instance 1 code and Execute `terraform apply`
 
-3) In order to create old instance 1 as failover replica rename mssql1.tf.bak to mssql1.tf, add following line and Execute `terraform apply`
+```diff
+- module "mssql1" {
+-   source  = "terraform-google-modules/sql-db/google//modules/mssql"
+-   version = "~> 20.0"
+-   region = local.region_1
+-   name                 = "tf-mssql-public-1"
+-   random_instance_name = true
+-   project_id           = var.project_id
+- ...
+- }
+- output "instance_name1" {
+-   description = "The name for Cloud SQL instance"
+-   value       = module.mssql1.instance_name
+- }
+- output "mssql_connection" {
+-   value       = module.mssql1.instance_connection_name
+-   description = "The connection name of the master instance to be used in connection strings"
+- }
+- output "public_ip_address" {
+-   value       = module.mssql1.instance_first_ip_address
+-   description = "Public ip address"
+- }
+```
+
+3) Create instance 1 as failover replica by adding instance 1 code with following additional line and Execute `terraform apply`
 
 ```diff
 module "mssql1" {

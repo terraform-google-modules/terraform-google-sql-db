@@ -20,3 +20,68 @@ locals {
   region_2 = "us-east1"
 }
 
+# Instance 1
+
+module "mssql1" {
+  source  = "terraform-google-modules/sql-db/google//modules/mssql"
+  version = "~> 20.0"
+
+  region = local.region_1
+
+  name                 = "tf-mssql-public-1"
+  random_instance_name = true
+  project_id           = var.project_id
+
+  database_version = "SQLSERVER_2022_ENTERPRISE"
+
+  deletion_protection = false
+
+  tier = "db-custom-10-65536"
+
+  ip_configuration = {
+    ipv4_enabled    = false
+    private_network = google_compute_network.default.self_link
+  }
+
+  sql_server_audit_config = var.sql_server_audit_config
+  enable_default_db       = false
+  enable_default_user     = false
+
+  depends_on = [
+    google_service_networking_connection.vpc_connection,
+  ]
+}
+
+# instance 2
+
+module "mssql2" {
+  source  = "terraform-google-modules/sql-db/google//modules/mssql"
+  version = "~> 20.0"
+
+  master_instance_name = module.mssql1.instance_name
+
+  region = local.region_2
+
+  name                 = "tf-mssql-public-2"
+  random_instance_name = true
+  project_id           = var.project_id
+
+  database_version = "SQLSERVER_2022_ENTERPRISE"
+
+  deletion_protection = false
+
+  tier = "db-custom-10-65536"
+
+  ip_configuration = {
+    ipv4_enabled    = false
+    private_network = google_compute_network.default.self_link
+  }
+
+  sql_server_audit_config = var.sql_server_audit_config
+  enable_default_db       = false
+  enable_default_user     = false
+
+  depends_on = [
+    google_service_networking_connection.vpc_connection,
+  ]
+}

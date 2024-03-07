@@ -34,9 +34,40 @@ module "pg2" {
 }
 ```
 
-2) Remove instance 1 by renaming [pg1.tf](./pg1.tf) to pg1.tf.bak
+2) Remove instance 1 by removing all entries of instance 1 and Execute `terraform apply`
 
-3) In order to create old instance 1 as failover replica rename pg1.tf.bak to pg1.tf,  add following line and Execute `terraform apply`
+```diff
+- module "pg1" {
+-   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
+-   version = "~> 20.0"
+-   name                 = var.pg_name_1
+-   random_instance_name = true
+-   project_id           = var.project_id
+-   database_version     = "POSTGRES_14"
+-   region               = local.region_1
+-   edition            = local.edition
+-   data_cache_enabled = local.data_cache_enabled
+- ...
+- }
+- output "instance1_name" {
+-   description = "The name for Cloud SQL instance"
+-   value       = module.pg1.instance_name
+- }
+- output "instance1_replicas" {
+-   value     = module.pg1.replicas
+-   sensitive = true
+- }
+- output "instance1_instances" {
+-   value     = module.pg1.instances
+-   sensitive = true
+- }
+- output "kms_key_name1" {
+-   value     = module.pg1.primary.encryption_key_name
+-   sensitive = true
+- }
+```
+
+3) Create instance 1 as failover replica by adding instance 1 code with following additional line and Execute `terraform apply`
 
 ```diff
 module "pg1" {
