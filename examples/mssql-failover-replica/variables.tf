@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 1.3"
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = ">= 5.12, < 6"
-    }
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = ">= 5.12, < 6"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.4"
-    }
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.2"
-    }
-  }
+variable "project_id" {
+  type        = string
+  description = "The project to run tests against"
+}
 
-  provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v19.0.0"
-  }
+variable "sql_server_audit_config" {
+  description = "SQL server audit config settings."
+  type        = map(string)
+  default     = {}
+}
 
+variable "network_name" {
+  description = "The ID of the network in which to provision resources."
+  type        = string
+  default     = "test-mssql-failover"
 }
