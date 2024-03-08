@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [20.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v19.0.0...v20.0.0) (2024-03-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>=5.12:** Add option to create and failover a replica instance in Postgresql and MsSQL sub-module ([#582](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/582))
+* **TPG>=5.6:** bump required google provider to 5.6 for postgres
+
+### Features
+
+* **TPG>=5.12:** Add option to create and failover a replica instance in Postgresql and MsSQL sub-module ([#582](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/582)) ([141e54a](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/141e54a9256feae704220ceed24c9a94ebaf7e27))
+
+
+### Bug Fixes
+
+* mark replicas_instance_server_ca_certs output as sensitive ([#579](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/579)) ([faa064e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/faa064e069a4678f54e6688825e85dcfb3dcf1c2))
+* **TPG>=5.6:** bump required google provider to 5.6 for postgres ([0d3b434](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0d3b43426b93c1492f6a82e3367e40f2d41b0edc))
+
 ## [19.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v18.2.0...v19.0.0) (2024-02-08)
 
 
