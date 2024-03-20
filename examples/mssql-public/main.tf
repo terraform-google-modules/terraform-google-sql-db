@@ -16,7 +16,7 @@
 
 module "mssql" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 18.0"
+  version = "~> 20.0"
 
   name                 = var.name
   random_instance_name = true
