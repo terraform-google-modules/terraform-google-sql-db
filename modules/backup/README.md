@@ -69,7 +69,7 @@ fetch workflows.googleapis.com/Workflow
 | export\_schedule | The cron schedule to execute the export to GCS | `string` | `"15 3 * * *"` | no |
 | export\_uri | The bucket and path uri for exporting to GCS | `string` | n/a | yes |
 | log\_db\_name\_to\_export | Whether or not to log database name in the export workflow | `bool` | `false` | no |
-| monitoring\_email | Eamil address to send alerts | `string` | `null` | no |
+| monitoring\_email | Email address to send alerts | `string` | `null` | no |
 | project\_id | The project ID | `string` | n/a | yes |
 | region | The region where to run the workflow | `string` | `"us-central1"` | no |
 | scheduler\_timezone | The Timezone in which the Scheduler Jobs are triggered | `string` | `"Etc/GMT"` | no |

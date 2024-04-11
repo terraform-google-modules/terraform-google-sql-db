@@ -146,7 +146,7 @@ variable "use_serverless_export" {
 }
 
 variable "monitoring_email" {
-  description = "Eamil address to send alerts"
+  description = "Email address to send alerts"
   type        = string
   default     = null
 }
