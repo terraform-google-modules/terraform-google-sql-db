@@ -144,3 +144,33 @@ variable "use_serverless_export" {
   type        = bool
   default     = false
 }
+
+variable "monitoring_email" {
+  description = "Eamil address to send alerts"
+  type        = string
+  default     = null
+}
+
+variable "enable_backup_monitoring" {
+  description = "Whether to monitor backup workflows or not"
+  type        = bool
+  default     = true
+}
+
+variable "backup_monitoring_frequency" {
+  description = "Timeframe in which there should be at least one successfull backup"
+  type        = string
+  default     = "1d"
+}
+
+variable "enable_export_monitoring" {
+  description = "Whether to monitor export workflows or not"
+  type        = bool
+  default     = true
+}
+
+variable "export_monitoring_frequency" {
+  description = "Timeframe in which there should be at least one successfull export"
+  type        = string
+  default     = "1d"
+}

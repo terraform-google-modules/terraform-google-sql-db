@@ -53,18 +53,23 @@ fetch workflows.googleapis.com/Workflow
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| backup\_monitoring\_frequency | Timeframe in which there should be at least one successfull backup | `string` | `"1d"` | no |
 | backup\_retention\_time | The number of days backups should be kept | `number` | `30` | no |
 | backup\_runs\_list\_max\_results | The max amount of backups to list when fetching internal backup runs for the instance. This number must be larger then the amount of backups you wish to keep. E.g. for a daily backup schedule and a backup\_retention\_time of 30 days, you'd need to set this to at least 31 for old backups to get deleted. | `number` | `31` | no |
 | backup\_schedule | The cron schedule to execute the internal backup | `string` | `"45 2 * * *"` | no |
 | compress\_export | Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL | `bool` | `true` | no |
 | connector\_params\_timeout | The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year). | `number` | `1800` | no |
+| enable\_backup\_monitoring | Whether to monitor backup workflows or not | `bool` | `true` | no |
 | enable\_connector\_params | Whether to enable connector-specific parameters for Google Workflow SQL Export. | `bool` | `false` | no |
 | enable\_export\_backup | Weather to create exports to GCS Buckets with this module | `bool` | `true` | no |
+| enable\_export\_monitoring | Whether to monitor export workflows or not | `bool` | `true` | no |
 | enable\_internal\_backup | Wether to create internal backups with this module | `bool` | `true` | no |
 | export\_databases | The list of databases that should be exported - if is an empty set all databases will be exported | `set(string)` | `[]` | no |
+| export\_monitoring\_frequency | Timeframe in which there should be at least one successfull export | `string` | `"1d"` | no |
 | export\_schedule | The cron schedule to execute the export to GCS | `string` | `"15 3 * * *"` | no |
 | export\_uri | The bucket and path uri for exporting to GCS | `string` | n/a | yes |
 | log\_db\_name\_to\_export | Whether or not to log database name in the export workflow | `bool` | `false` | no |
+| monitoring\_email | Eamil address to send alerts | `string` | `null` | no |
 | project\_id | The project ID | `string` | n/a | yes |
 | region | The region where to run the workflow | `string` | `"us-central1"` | no |
 | scheduler\_timezone | The Timezone in which the Scheduler Jobs are triggered | `string` | `"Etc/GMT"` | no |
