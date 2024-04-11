@@ -59,10 +59,10 @@ fetch workflows.googleapis.com/Workflow
 | backup\_schedule | The cron schedule to execute the internal backup | `string` | `"45 2 * * *"` | no |
 | compress\_export | Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL | `bool` | `true` | no |
 | connector\_params\_timeout | The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year). | `number` | `1800` | no |
-| enable\_backup\_monitoring | Whether to monitor backup workflows or not | `bool` | `true` | no |
+| enable\_backup\_monitoring | Whether to monitor backup workflows or not | `bool` | `false` | no |
 | enable\_connector\_params | Whether to enable connector-specific parameters for Google Workflow SQL Export. | `bool` | `false` | no |
 | enable\_export\_backup | Weather to create exports to GCS Buckets with this module | `bool` | `true` | no |
-| enable\_export\_monitoring | Whether to monitor export workflows or not | `bool` | `true` | no |
+| enable\_export\_monitoring | Whether to monitor export workflows or not | `bool` | `false` | no |
 | enable\_internal\_backup | Wether to create internal backups with this module | `bool` | `true` | no |
 | export\_databases | The list of databases that should be exported - if is an empty set all databases will be exported | `set(string)` | `[]` | no |
 | export\_monitoring\_frequency | Timeframe in which there should be at least one successfull export | `string` | `"1d"` | no |

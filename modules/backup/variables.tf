@@ -154,7 +154,7 @@ variable "monitoring_email" {
 variable "enable_backup_monitoring" {
   description = "Whether to monitor backup workflows or not"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "backup_monitoring_frequency" {
@@ -166,7 +166,7 @@ variable "backup_monitoring_frequency" {
 variable "enable_export_monitoring" {
   description = "Whether to monitor export workflows or not"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "export_monitoring_frequency" {
