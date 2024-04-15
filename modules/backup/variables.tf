@@ -174,3 +174,15 @@ variable "export_monitoring_frequency" {
   type        = string
   default     = "1d"
 }
+
+variable "create_email_notification_channel" {
+  description = "Create email notification channel to send alerts"
+  type = bool
+  default = false
+}
+
+variable "email_notification_channel_name" {
+  description = "Name of email notification channel"
+  type = string
+  default = "Email Notification"
+}

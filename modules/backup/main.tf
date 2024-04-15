@@ -55,7 +55,8 @@ data "google_sql_database_instance" "backup_instance" {
 }
 
 resource "google_monitoring_notification_channel" "email" {
-  display_name = "Email Notification"
+  count = var.create_email_notification_channel ? 1 : 0
+  display_name = var.email_notification_channel_name
   type         = "email"
   labels = {
     email_address = var.monitoring_email
@@ -124,7 +125,7 @@ resource "google_monitoring_alert_policy" "sql_backup_workflow_success_alert" {
       evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
     }
   }
-  notification_channels = [google_monitoring_notification_channel.email.id]
+  notification_channels = [google_monitoring_notification_channel.email[0].id]
 }
 
 ################################
@@ -203,5 +204,5 @@ resource "google_monitoring_alert_policy" "sql_export_workflow_success_alert" {
       evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
     }
   }
-  notification_channels = [google_monitoring_notification_channel.email.id]
+  notification_channels = [google_monitoring_notification_channel.email[0].id]
 }
