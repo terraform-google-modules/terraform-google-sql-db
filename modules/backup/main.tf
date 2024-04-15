@@ -55,7 +55,7 @@ data "google_sql_database_instance" "backup_instance" {
 }
 
 resource "google_monitoring_notification_channel" "email" {
-  count = var.create_email_notification_channel ? 1 : 0
+  count        = var.create_email_notification_channel ? 1 : 0
   display_name = var.email_notification_channel_name
   type         = "email"
   labels = {
