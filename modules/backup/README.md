@@ -66,6 +66,7 @@ fetch workflows.googleapis.com/Workflow
 | enable\_export\_backup | Weather to create exports to GCS Buckets with this module | `bool` | `true` | no |
 | enable\_export\_monitoring | Whether to monitor export workflows or not | `bool` | `false` | no |
 | enable\_internal\_backup | Wether to create internal backups with this module | `bool` | `true` | no |
+| existing\_notification\_channels | List of existing notification channels to send alerts to | `list(string)` | `[]` | no |
 | export\_databases | The list of databases that should be exported - if is an empty set all databases will be exported | `set(string)` | `[]` | no |
 | export\_monitoring\_frequency | Timeframe in which there should be at least one successfull export | `string` | `"1d"` | no |
 | export\_schedule | The cron schedule to execute the export to GCS | `string` | `"15 3 * * *"` | no |

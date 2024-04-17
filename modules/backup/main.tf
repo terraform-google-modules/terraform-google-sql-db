@@ -20,6 +20,7 @@ locals {
   service_account        = local.create_service_account ? google_service_account.sql_backup_serviceaccount[0].email : var.service_account
   backup_name            = "sql-backup-${var.sql_instance}${var.unique_suffix}"
   export_name            = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
+  notification_channels  = var.create_email_notification_channel ? concat(var.existing_notification_channels, [google_monitoring_notification_channel.email[0].id]) : var.existing_notification_channels
 }
 
 
@@ -125,7 +126,7 @@ resource "google_monitoring_alert_policy" "sql_backup_workflow_success_alert" {
       evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
     }
   }
-  notification_channels = [google_monitoring_notification_channel.email[0].id]
+  notification_channels = local.notification_channels
 }
 
 ################################
@@ -204,5 +205,5 @@ resource "google_monitoring_alert_policy" "sql_export_workflow_success_alert" {
       evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
     }
   }
-  notification_channels = [google_monitoring_notification_channel.email[0].id]
+  notification_channels = local.notification_channels
 }

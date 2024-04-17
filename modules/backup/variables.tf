@@ -186,3 +186,9 @@ variable "email_notification_channel_name" {
   type        = string
   default     = "Email Notification"
 }
+
+variable "existing_notification_channels" {
+  description = "List of existing notification channels to send alerts to"
+  type        = list(string)
+  default     = []
+}
