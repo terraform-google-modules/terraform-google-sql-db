@@ -54,7 +54,7 @@ resource "google_monitoring_notification_channel" "email" {
 }
 
 module "backup" {
-  source  = "terraform-google-modules/sql-db/google//modules/postgresql"
+  source  = "terraform-google-modules/sql-db/google//modules/backup"
   version = "~> 18.0"
 
   region                      = "us-central1"
