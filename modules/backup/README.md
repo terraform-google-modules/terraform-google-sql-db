@@ -59,20 +59,20 @@ fetch workflows.googleapis.com/Workflow
 | backup\_schedule | The cron schedule to execute the internal backup | `string` | `"45 2 * * *"` | no |
 | compress\_export | Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL | `bool` | `true` | no |
 | connector\_params\_timeout | The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year). | `number` | `1800` | no |
-| create\_email\_notification\_channel | Create email notification channel to send alerts | `bool` | `false` | no |
-| email\_notification\_channel\_name | Name of email notification channel | `string` | `"Email Notification"` | no |
+| create\_notification\_channel | If set to true it will create email notification channel | `bool` | `false` | no |
 | enable\_backup\_monitoring | Whether to monitor backup workflows or not | `bool` | `false` | no |
 | enable\_connector\_params | Whether to enable connector-specific parameters for Google Workflow SQL Export. | `bool` | `false` | no |
 | enable\_export\_backup | Weather to create exports to GCS Buckets with this module | `bool` | `true` | no |
 | enable\_export\_monitoring | Whether to monitor export workflows or not | `bool` | `false` | no |
 | enable\_internal\_backup | Wether to create internal backups with this module | `bool` | `true` | no |
-| existing\_notification\_channels | List of existing notification channels to send alerts to | `list(string)` | `[]` | no |
 | export\_databases | The list of databases that should be exported - if is an empty set all databases will be exported | `set(string)` | `[]` | no |
 | export\_monitoring\_frequency | Timeframe in which there should be at least one successfull export | `string` | `"1d"` | no |
 | export\_schedule | The cron schedule to execute the export to GCS | `string` | `"15 3 * * *"` | no |
 | export\_uri | The bucket and path uri for exporting to GCS | `string` | n/a | yes |
 | log\_db\_name\_to\_export | Whether or not to log database name in the export workflow | `bool` | `false` | no |
 | monitoring\_email | Email address to send alerts | `string` | `null` | no |
+| notification\_channel\_name | Name of the email notification channel to be created. Only needed when create\_notification\_channel is set to true. | `string` | `"Email Notification"` | no |
+| notification\_channels | List of existing notification channels to send alerts to | `list(string)` | `[]` | no |
 | project\_id | The project ID | `string` | n/a | yes |
 | region | The region where to run the workflow | `string` | `"us-central1"` | no |
 | scheduler\_timezone | The Timezone in which the Scheduler Jobs are triggered | `string` | `"Etc/GMT"` | no |

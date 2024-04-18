@@ -45,20 +45,29 @@ resource "google_storage_bucket" "backup" {
   project       = var.project_id
 }
 
-module "backup" {
-  source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 18.0"
+resource "google_monitoring_notification_channel" "email" {
+  display_name = "Test email notification channel"
+  type         = "email"
+  labels = {
+    email_address = "test@acme.com"
+  }
+}
 
-  region                = "us-central1"
-  project_id            = var.project_id
-  sql_instance          = module.postgresql.instance_name
-  export_databases      = []
-  export_uri            = google_storage_bucket.backup.url
-  backup_retention_time = 1
-  backup_schedule       = "5 * * * *"
-  export_schedule       = "10 * * * *"
-  use_serverless_export = true
-  service_account       = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
+module "backup" {
+  source = "../../modules/backup"
+
+  region                      = "us-central1"
+  project_id                  = var.project_id
+  sql_instance                = module.postgresql.instance_name
+  export_databases            = []
+  export_uri                  = google_storage_bucket.backup.url
+  backup_retention_time       = 1
+  backup_schedule             = "5 * * * *"
+  export_schedule             = "10 * * * *"
+  use_serverless_export       = true
+  service_account             = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
+  create_notification_channel = true
+  notification_channels       = [google_monitoring_notification_channel.email.id]
 }
 
 data "google_project" "test_project" {
