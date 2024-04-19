@@ -48,6 +48,7 @@ resource "google_storage_bucket" "backup" {
 resource "google_monitoring_notification_channel" "email" {
   display_name = "Test email notification channel"
   type         = "email"
+  project       = var.project_id
   labels = {
     email_address = "test@acme.com"
   }
