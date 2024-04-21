@@ -38,8 +38,15 @@ resource "google_service_account" "sql_backup_serviceaccount" {
 resource "google_project_iam_member" "sql_backup_serviceaccount_sql_admin" {
   count   = local.create_service_account ? 1 : 0
   member  = "serviceAccount:${google_service_account.sql_backup_serviceaccount[0].email}"
-  role    = "roles/cloudsql.admin"
+  role    = "roles/cloudsql.viewer"
   project = var.project_id
+  condition {
+    title      = "Limit access to instance ${var.sql_instance}"
+    expression = <<-EOT
+      (resource.type == "sqladmin.googleapis.com/Instance" &&
+       resource.name == "projects/${var.project_id}/instances/${var.sql_instance}")
+    EOT
+  }
 }
 
 resource "google_project_iam_member" "sql_backup_serviceaccount_workflow_invoker" {
