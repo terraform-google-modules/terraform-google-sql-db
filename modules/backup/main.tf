@@ -58,7 +58,7 @@ data "google_sql_database_instance" "backup_instance" {
 resource "google_monitoring_notification_channel" "email" {
   count        = var.create_notification_channel ? 1 : 0
   display_name = var.notification_channel_name
-  project = var.project_id
+  project      = var.project_id
   type         = "email"
   labels = {
     email_address = var.monitoring_email
