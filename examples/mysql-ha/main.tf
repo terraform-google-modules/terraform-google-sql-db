@@ -33,7 +33,7 @@ locals {
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 18.0"
+  version = "~> 20.0"
 
   name                 = var.mysql_ha_name
   random_instance_name = true
