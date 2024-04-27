@@ -178,6 +178,13 @@ resource "google_storage_bucket_iam_member" "sql_instance_account" {
   count  = var.enable_export_backup ? 1 : 0
   bucket = split("/", var.export_uri)[2] #Get the name of the bucket out of the URI
   member = "serviceAccount:${data.google_sql_database_instance.backup_instance.service_account_email_address}"
+  role   = "roles/storage.objectCreator"
+}
+
+resource "google_storage_bucket_iam_member" "sql_instance_account_objectuser" {
+  count  = var.enable_export_backup ? 1 : 0
+  bucket = split("/", var.export_uri)[2] #Get the name of the bucket out of the URI
+  member = "serviceAccount:${data.google_sql_database_instance.backup_instance.service_account_email_address}"
   role   = "roles/storage.objectUser"
 }
 
