@@ -68,7 +68,7 @@ module "backup" {
   export_schedule             = "10 * * * *"
   use_serverless_export       = true
   service_account             = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
-  create_notification_channel = true
+  create_notification_channel = false
   notification_channels       = [google_monitoring_notification_channel.email.id]
 }
 
