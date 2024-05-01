@@ -175,14 +175,20 @@ variable "export_monitoring_frequency" {
   default     = "1d"
 }
 
-variable "create_email_notification_channel" {
-  description = "Create email notification channel to send alerts"
+variable "create_notification_channel" {
+  description = "If set to true it will create email notification channel"
   type        = bool
   default     = false
 }
 
-variable "email_notification_channel_name" {
-  description = "Name of email notification channel"
+variable "notification_channel_name" {
+  description = "Name of the email notification channel to be created. Only needed when create_notification_channel is set to true."
   type        = string
   default     = "Email Notification"
+}
+
+variable "notification_channels" {
+  description = "List of existing notification channels to send alerts to"
+  type        = list(string)
+  default     = []
 }

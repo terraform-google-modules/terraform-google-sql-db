@@ -21,6 +21,7 @@ locals {
   backup_name            = "sql-backup-${var.sql_instance}${var.unique_suffix}"
   role_name              = var.enable_export_backup ? "roles/cloudsql.editor" : "roles/cloudsql.viewer"
   export_name            = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
+  notification_channels  = var.create_notification_channel ? concat(var.notification_channels, [google_monitoring_notification_channel.email[0].id]) : var.notification_channels
 }
 
 
@@ -63,8 +64,9 @@ data "google_sql_database_instance" "backup_instance" {
 }
 
 resource "google_monitoring_notification_channel" "email" {
-  count        = var.create_email_notification_channel ? 1 : 0
-  display_name = var.email_notification_channel_name
+  count        = var.create_notification_channel ? 1 : 0
+  display_name = var.notification_channel_name
+  project      = var.project_id
   type         = "email"
   labels = {
     email_address = var.monitoring_email
@@ -133,7 +135,7 @@ resource "google_monitoring_alert_policy" "sql_backup_workflow_success_alert" {
       evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
     }
   }
-  notification_channels = [google_monitoring_notification_channel.email[0].id]
+  notification_channels = local.notification_channels
 }
 
 ################################
@@ -212,5 +214,5 @@ resource "google_monitoring_alert_policy" "sql_export_workflow_success_alert" {
       evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
     }
   }
-  notification_channels = [google_monitoring_notification_channel.email[0].id]
+  notification_channels = local.notification_channels
 }
