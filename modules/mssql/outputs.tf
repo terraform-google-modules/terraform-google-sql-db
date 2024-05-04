@@ -57,7 +57,7 @@ output "instance_service_account_email_address" {
 
 output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
-  value       = random_password.user-password.result
+  value       = var.enable_default_user ? random_password.user-password[0].result : ""
   sensitive   = true
 }
 

@@ -95,7 +95,7 @@ output "read_replica_instance_names" {
 
 output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
-  value       = random_password.user-password.result
+  value       = var.enable_default_user ? random_password.user-password[0].result : ""
   sensitive   = true
 }
 
