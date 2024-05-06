@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [20.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.0.0...v20.1.0) (2024-05-06)
+
+
+### Features
+
+* Add support for email based alerting ([#591](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/591)) ([af8ec91](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/af8ec916601c162503c3007d12e0be1b35f7efbd))
+* Add support to use existing notification channels for alerts ([#593](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/593)) ([1c18d78](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/1c18d781d1dc3975fcb0b1b7b299e0fa0849b972))
+* Follow least privilege principal for backup service account ([#597](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/597)) ([0f18fd7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0f18fd7b083221757b5d642c2bb70388ecdef88c))
+
+
+### Bug Fixes
+
+* disable random_pass when default user off ([#602](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/602)) ([98c7f8c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/98c7f8c16ccab28d3b49d451efec899bc190898b))
+* Relax assignment of backup_configuration when operating as a replica ([#589](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/589)) ([19daff8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/19daff8f66ac2ead4fe814452ecc19baee5e3978))
+
 ## [20.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v19.0.0...v20.0.0) (2024-03-08)
 
 
