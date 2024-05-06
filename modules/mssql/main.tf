@@ -194,6 +194,7 @@ resource "google_sql_database" "additional_databases" {
 }
 
 resource "random_password" "user-password" {
+  count   = var.enable_default_user ? 1 : 0
   length  = 8
   special = true
 
@@ -226,7 +227,7 @@ resource "google_sql_user" "default" {
   name       = var.user_name
   project    = var.project_id
   instance   = google_sql_database_instance.default.name
-  password   = coalesce(var.user_password, random_password.user-password.result)
+  password   = coalesce(var.user_password, random_password.user-password[0].result)
   depends_on = [null_resource.module_depends_on, google_sql_database_instance.default]
 }
 
