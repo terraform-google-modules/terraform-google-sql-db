@@ -374,6 +374,8 @@ spec:
     description: The CA certificates information used to connect to the replica instances via SSL
   - name: replicas_instance_service_account_email_addresses
     description: The service account email addresses assigned to the replica instances
+  - name: env_vars
+    description: Environment variables exposed by the CloudSQL instance that can be used by compute resources to connect to the Cloud SQL database
   roles:
   - level: Project
     roles:

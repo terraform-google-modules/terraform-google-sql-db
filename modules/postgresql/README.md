@@ -200,6 +200,7 @@ module "pg" {
 | replicas\_instance\_self\_links | The URIs of the replica instances |
 | replicas\_instance\_server\_ca\_certs | The CA certificates information used to connect to the replica instances via SSL |
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |
+| env\_vars | Environment variables exposed by the CloudSQL instance that can be used by compute resources to connect to the Cloud SQL database |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
