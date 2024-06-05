@@ -205,6 +205,7 @@ variable "backup_configuration" {
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
+    point_in_time_recovery_enabled = optional(bool, false)
     transaction_log_retention_days = optional(string)
     retained_backups               = optional(number)
     retention_unit                 = optional(string)
