@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [20.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.1.0...v20.2.0) (2024-06-06)
+
+
+### Features
+
+* Add Point in time recovery flag for mysql DB ([#607](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/607)) ([b9a6ada](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/b9a6ada308e4e539efba4191a6a8100926e0a4f2))
+
+
+### Bug Fixes
+
+* mssql - make instance_server_ca_cert output sensitive ([#609](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/609)) ([163a89c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/163a89cb47fdef473b6068d782a8a2253136e9b5))
+
 ## [20.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.0.0...v20.1.0) (2024-05-06)
 
 
