@@ -16,7 +16,7 @@ For internal backups the workflow also takes care about deleting the old backups
 ## Exports to GCS
 
 But the backups mentioned above are bound to the SQL instance.
-This means as soon as you [delete the instance](https://cloud.google.com/sql/docs/mysql/delete-instance) you are also loosing your backups.
+This means as soon as you [delete the instance](https://cloud.google.com/sql/docs/mysql/delete-instance) you are also losing your backups.
 To avoid this you can also export data. There is a second workflow doing exactly that.
 
 > **Note**: To enable or disable the exports to GCS Buckets use the Terraform variable `enable_export_backup`
