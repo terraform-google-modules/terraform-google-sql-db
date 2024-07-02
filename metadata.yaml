@@ -22,7 +22,7 @@ spec:
   info:
     title: terraform-google-sql
     source:
-      repo: https://github.com/q2w/terraform-google-sql-db.git
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
     description: {}
   content:

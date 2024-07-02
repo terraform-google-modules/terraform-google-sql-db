@@ -22,7 +22,7 @@ spec:
   info:
     title: Submodule for VPC peering Cloud SQL services
     source:
-      repo: https://github.com/q2w/terraform-google-sql-db.git
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/private_service_access
     version: 20.2.0
