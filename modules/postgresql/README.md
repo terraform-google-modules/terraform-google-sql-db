@@ -126,6 +126,7 @@ module "pg" {
 | data\_cache\_enabled | Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE\_PLUS tier and supported database\_versions | `bool` | `false` | no |
 | database\_deletion\_policy | The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: "ABANDON". | `string` | `null` | no |
 | database\_flags | The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| database\_integration\_roles | Roles assigned to database instance default service account. | `list(string)` | `[]` | no |
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en\_US.UTF8' | `string` | `""` | no |
@@ -141,6 +142,7 @@ module "pg" {
 | edition | The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
+| enable\_google\_ml\_integration | Enable ML integration. Enables ML function directly within cloud sql environment | `bool` | `false` | no |
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
@@ -179,6 +181,7 @@ module "pg" {
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
 | dns\_name | DNS name of the instance endpoint |
+| env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
@@ -200,7 +203,6 @@ module "pg" {
 | replicas\_instance\_self\_links | The URIs of the replica instances |
 | replicas\_instance\_server\_ca\_certs | The CA certificates information used to connect to the replica instances via SSL |
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |
-| env\_vars | Environment variables exposed by the CloudSQL instance that can be used by compute resources to connect to the Cloud SQL database |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
