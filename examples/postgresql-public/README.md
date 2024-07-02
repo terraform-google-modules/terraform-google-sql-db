@@ -32,6 +32,7 @@ terraform destroy
 | Name | Description |
 |------|-------------|
 | name | The name for Cloud SQL instance |
+| output\_env\_vars | Exported environment variables |
 | project\_id | The project to run tests against |
 | psql\_conn | The connection name of the master instance to be used in connection strings |
 | psql\_user\_pass | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. |

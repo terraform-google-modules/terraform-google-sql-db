@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,80 +19,100 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 spec:
-  title: GCP CloudSQL Restore
-  source:
-    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
-    sourceType: git
-  actuationTool:
-    type: Terraform
-    version: '>= 0.13'
-  description: {}
-  examples:
-  - name: mssql-public
-    location: examples/mssql-public
-  - name: mysql-backup-create-service-account
-    location: examples/mysql-backup-create-service-account
-  - name: mysql-ha
-    location: examples/mysql-ha
-  - name: mysql-private
-    location: examples/mysql-private
-  - name: mysql-public
-    location: examples/mysql-public
-  - name: postgresql-backup-provided-service-account
-    location: examples/postgresql-backup-provided-service-account
-  - name: postgresql-ha
-    location: examples/postgresql-ha
-  - name: postgresql-public
-    location: examples/postgresql-public
-  - name: postgresql-public-iam
-    location: examples/postgresql-public-iam
-  variables:
-  - name: import_databases
-    description: The list of databases that should be imported - if is an empty set all databases will be imported
-    type: set(string)
-    default: []
-  - name: import_uri
-    description: The bucket and path uri of GCS backup file for importing
-    type: string
-    required: true
-  - name: project_id
-    description: The project ID
-    type: string
-    required: true
-  - name: region
-    description: The region to run the workflow
-    type: string
-    default: us-central1
-  - name: service_account
-    description: The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that
-    type: string
-  - name: sql_instance
-    description: The name of the SQL instance to backup
-    type: string
-    required: true
-  outputs:
-  - name: import_workflow_name
-    description: The name for import workflow
-  - name: region
-    description: The region for running the scheduler and workflow
-  - name: service_account
-    description: The service account email running the scheduler and workflow
-  roles:
-  - level: Project
+  info:
+    title: GCP CloudSQL Restore
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+      dir: /modules/restore
+    actuationTool:
+      flavor: Terraform
+      version: ">= 0.13"
+    description: {}
+  content:
+    examples:
+      - name: mssql-failover-replica
+        location: examples/mssql-failover-replica
+      - name: mssql-public
+        location: examples/mssql-public
+      - name: mysql-backup-create-service-account
+        location: examples/mysql-backup-create-service-account
+      - name: mysql-ha
+        location: examples/mysql-ha
+      - name: mysql-private
+        location: examples/mysql-private
+      - name: mysql-psc
+        location: examples/mysql-psc
+      - name: mysql-public
+        location: examples/mysql-public
+      - name: postgresql-backup-provided-service-account
+        location: examples/postgresql-backup-provided-service-account
+      - name: postgresql-ha
+        location: examples/postgresql-ha
+      - name: postgresql-psc
+        location: examples/postgresql-psc
+      - name: postgresql-public
+        location: examples/postgresql-public
+      - name: postgresql-public-iam
+        location: examples/postgresql-public-iam
+      - name: postgresql-with-cross-region-failover
+        location: examples/postgresql-with-cross-region-failover
+  interfaces:
+    variables:
+      - name: import_databases
+        description: The list of databases that should be imported - if is an empty set all databases will be imported
+        varType: set(string)
+        defaultValue: []
+      - name: import_uri
+        description: The bucket and path uri of GCS backup file for importing
+        varType: string
+        required: true
+      - name: project_id
+        description: The project ID
+        varType: string
+        required: true
+      - name: region
+        description: The region to run the workflow
+        varType: string
+        defaultValue: us-central1
+      - name: service_account
+        description: The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that
+        varType: string
+      - name: sql_instance
+        description: The name of the SQL instance to backup
+        varType: string
+        required: true
+    outputs:
+      - name: import_workflow_name
+        description: The name for import workflow
+      - name: region
+        description: The region for running the scheduler and workflow
+      - name: service_account
+        description: The service account email running the scheduler and workflow
+  requirements:
     roles:
-    - roles/cloudsql.admin
-    - roles/compute.networkAdmin
-    - roles/iam.serviceAccountAdmin
-    - roles/resourcemanager.projectIamAdmin
-    - roles/storage.admin
-    - roles/workflows.admin
-    - roles/cloudscheduler.admin
-    - roles/iam.serviceAccountUser
-  services:
-  - cloudresourcemanager.googleapis.com
-  - compute.googleapis.com
-  - servicenetworking.googleapis.com
-  - sqladmin.googleapis.com
-  - iam.googleapis.com
-  - workflows.googleapis.com
-  - cloudscheduler.googleapis.com
+      - level: Project
+        roles:
+          - roles/cloudkms.admin
+          - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/cloudscheduler.admin
+          - roles/cloudsql.admin
+          - roles/compute.admin
+          - roles/compute.networkAdmin
+          - roles/iam.serviceAccountAdmin
+          - roles/iam.serviceAccountUser
+          - roles/monitoring.editor
+          - roles/resourcemanager.projectIamAdmin
+          - roles/storage.admin
+          - roles/workflows.admin
+    services:
+      - cloudkms.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - cloudscheduler.googleapis.com
+      - compute.googleapis.com
+      - iam.googleapis.com
+      - monitoring.googleapis.com
+      - servicenetworking.googleapis.com
+      - serviceusage.googleapis.com
+      - sqladmin.googleapis.com
+      - workflows.googleapis.com

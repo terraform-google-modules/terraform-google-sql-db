@@ -43,6 +43,8 @@ locals {
 
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
+
+  database_name = var.enable_default_db ? google_sql_database.default[0].name : (length(local.databases) > 0 ? google_sql_database.additional_databases[0].name : "")
 }
 
 resource "random_id" "suffix" {
@@ -65,12 +67,13 @@ resource "google_sql_database_instance" "default" {
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
   settings {
-    tier                        = var.tier
-    edition                     = var.edition
-    activation_policy           = var.activation_policy
-    availability_type           = var.availability_type
-    deletion_protection_enabled = var.deletion_protection_enabled
-    connector_enforcement       = local.connector_enforcement
+    tier                         = var.tier
+    edition                      = var.edition
+    activation_policy            = var.activation_policy
+    availability_type            = var.availability_type
+    deletion_protection_enabled  = var.deletion_protection_enabled
+    connector_enforcement        = local.connector_enforcement
+    enable_google_ml_integration = var.enable_google_ml_integration
 
     dynamic "backup_configuration" {
       for_each = local.is_secondary_instance ? [] : [var.backup_configuration]
@@ -315,6 +318,13 @@ resource "google_sql_user" "iam_account" {
     null_resource.module_depends_on,
   ]
   deletion_policy = var.user_deletion_policy
+}
+
+resource "google_project_iam_member" "database_integration" {
+  for_each = toset(var.database_integration_roles)
+  project  = var.project_id
+  role     = each.value
+  member   = "serviceAccount:${google_sql_database_instance.default.service_account_email_address}"
 }
 
 resource "null_resource" "module_depends_on" {
