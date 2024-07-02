@@ -43,6 +43,9 @@ locals {
 
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
+
+  psc_consumers = var.psc_consumer.enabled ? { for instance in concat([google_sql_database_instance.default], values(google_sql_database_instance.replicas)) : instance.name => instance } : {}
+
 }
 
 resource "random_id" "suffix" {
@@ -317,8 +320,52 @@ resource "google_sql_user" "iam_account" {
   deletion_policy = var.user_deletion_policy
 }
 
+resource "google_compute_address" "psc_ilb_consumer_address" {
+  for_each     = local.psc_consumers
+  region       = var.region
+  name         = each.value.name
+  subnetwork   = var.psc_consumer.subnet_id
+  address_type = "INTERNAL"
+}
+
+resource "google_compute_forwarding_rule" "psc_ilb_consumer" {
+  for_each                = local.psc_consumers
+  region                  = var.region
+  name                    = each.value.name
+  target                  = each.value.psc_service_attachment_link
+  load_balancing_scheme   = ""
+  network                 = var.psc_consumer.network_id
+  subnetwork              = var.psc_consumer.subnet_id
+  allow_psc_global_access = var.psc_consumer.allow_psc_global_access
+  ip_address              = google_compute_address.psc_ilb_consumer_address[each.value.name].id
+}
+
+resource "google_dns_managed_zone" "psc_dns_zone" {
+  for_each   = local.psc_consumers
+  name       = each.value.name
+  dns_name   = each.value.dns_name
+  visibility = "private"
+  private_visibility_config {
+    networks {
+      network_url = var.psc_consumer.network_id
+    }
+  }
+}
+
+resource "google_dns_record_set" "a" {
+  for_each     = local.psc_consumers
+  name         = each.value.dns_name
+  managed_zone = google_dns_managed_zone.psc_dns_zone[each.value.name].name
+  type         = "A"
+  ttl          = 300
+  rrdatas      = [google_compute_address.psc_ilb_consumer_address[each.value.name].address]
+}
+
+
 resource "null_resource" "module_depends_on" {
   triggers = {
     value = length(var.module_depends_on)
   }
 }
+
+

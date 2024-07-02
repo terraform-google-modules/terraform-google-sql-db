@@ -35,6 +35,7 @@ module "project" {
     "serviceusage.googleapis.com",
     "sqladmin.googleapis.com",
     "workflows.googleapis.com",
+    "dns.googleapis.com",
   ]
 }
 

@@ -25,6 +25,22 @@ locals {
   }
 }
 
+module "network-auto-psc" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 9.0"
+
+  project_id   = var.project_id
+  network_name = "your_network_name"
+
+  subnets = [
+    {
+      subnet_name   = "your-subnet"
+      subnet_ip     = "10.4.0.0/16"
+      subnet_region = "us-central1"
+    }
+  ]
+}
+
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
   version = "~> 20.0"
@@ -85,6 +101,12 @@ module "pg" {
       user_labels       = { bar = "baz" }
     },
   ]
+
+  psc_consumer = {
+    enabled    = true
+    subnet_id  = module.network-auto-psc.subnets_ids[0]
+    network_id = module.network-auto-psc.network_id
+  }
 
   db_name      = var.pg_psc_name
   db_charset   = "UTF8"

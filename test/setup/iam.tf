@@ -22,6 +22,7 @@ locals {
     "roles/cloudsql.admin",
     "roles/compute.admin",
     "roles/compute.networkAdmin",
+    "roles/dns.admin",
     "roles/iam.serviceAccountAdmin",
     "roles/iam.serviceAccountUser",
     "roles/monitoring.editor",

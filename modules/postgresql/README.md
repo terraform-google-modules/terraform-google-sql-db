@@ -157,6 +157,7 @@ module "pg" {
 | password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    min_length                  = optional(number)<br>    complexity                  = optional(string)<br>    reuse_interval              = optional(number)<br>    disallow_username_substring = optional(bool)<br>    password_change_interval    = optional(string)<br>  })</pre> | `null` | no |
 | pricing\_plan | The pricing plan for the Cloud SQL instance. | `string` | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
+| psc\_consumer | The psc consumer to be created on the same project as the SQL instance(s). Remember to add the project under psc\_allowed\_consumer\_projects in the ip\_configuration block. | <pre>object({<br>    subnet_id               = optional(string, "")<br>    network_id              = optional(string, "")<br>    enabled                 = optional(bool, false)<br>    allow_psc_global_access = optional(bool, false)<br>  })</pre> | `{}` | no |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
 | read\_replica\_deletion\_protection | Used to block Terraform from deleting replica SQL Instances. | `bool` | `false` | no |
 | read\_replica\_deletion\_protection\_enabled | Enables protection of replica instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
