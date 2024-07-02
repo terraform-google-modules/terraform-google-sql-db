@@ -16,7 +16,7 @@
 
 module "postgresql" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 18.0"
+  version = "~> 20.0"
 
   name                 = "example-postgres"
   random_instance_name = true
@@ -45,20 +45,31 @@ resource "google_storage_bucket" "backup" {
   project       = var.project_id
 }
 
+resource "google_monitoring_notification_channel" "email" {
+  display_name = "Test email notification channel"
+  type         = "email"
+  project      = var.project_id
+  labels = {
+    email_address = "test@acme.com"
+  }
+}
+
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 18.0"
+  version = "~> 20.0"
 
-  region                = "us-central1"
-  project_id            = var.project_id
-  sql_instance          = module.postgresql.instance_name
-  export_databases      = []
-  export_uri            = google_storage_bucket.backup.url
-  backup_retention_time = 1
-  backup_schedule       = "5 * * * *"
-  export_schedule       = "10 * * * *"
-  use_serverless_export = true
-  service_account       = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
+  region                      = "us-central1"
+  project_id                  = var.project_id
+  sql_instance                = module.postgresql.instance_name
+  export_databases            = []
+  export_uri                  = google_storage_bucket.backup.url
+  backup_retention_time       = 1
+  backup_schedule             = "5 * * * *"
+  export_schedule             = "10 * * * *"
+  use_serverless_export       = true
+  service_account             = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
+  create_notification_channel = false
+  notification_channels       = [google_monitoring_notification_channel.email.id]
 }
 
 data "google_project" "test_project" {

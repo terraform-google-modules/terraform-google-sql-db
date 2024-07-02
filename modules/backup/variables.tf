@@ -144,3 +144,51 @@ variable "use_serverless_export" {
   type        = bool
   default     = false
 }
+
+variable "monitoring_email" {
+  description = "Email address to send alerts"
+  type        = string
+  default     = null
+}
+
+variable "enable_backup_monitoring" {
+  description = "Whether to monitor backup workflows or not"
+  type        = bool
+  default     = false
+}
+
+variable "backup_monitoring_frequency" {
+  description = "Timeframe in which there should be at least one successfull backup"
+  type        = string
+  default     = "1d"
+}
+
+variable "enable_export_monitoring" {
+  description = "Whether to monitor export workflows or not"
+  type        = bool
+  default     = false
+}
+
+variable "export_monitoring_frequency" {
+  description = "Timeframe in which there should be at least one successfull export"
+  type        = string
+  default     = "1d"
+}
+
+variable "create_notification_channel" {
+  description = "If set to true it will create email notification channel"
+  type        = bool
+  default     = false
+}
+
+variable "notification_channel_name" {
+  description = "Name of the email notification channel to be created. Only needed when create_notification_channel is set to true."
+  type        = string
+  default     = "Email Notification"
+}
+
+variable "notification_channels" {
+  description = "List of existing notification channels to send alerts to"
+  type        = list(string)
+  default     = []
+}

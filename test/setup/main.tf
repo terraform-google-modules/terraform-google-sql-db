@@ -25,15 +25,16 @@ module "project" {
   billing_account   = var.billing_account
 
   activate_apis = [
-    "cloudresourcemanager.googleapis.com",
-    "compute.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "sqladmin.googleapis.com",
-    "iam.googleapis.com",
-    "workflows.googleapis.com",
-    "cloudscheduler.googleapis.com",
     "cloudkms.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "compute.googleapis.com",
+    "iam.googleapis.com",
+    "monitoring.googleapis.com",
+    "servicenetworking.googleapis.com",
     "serviceusage.googleapis.com",
+    "sqladmin.googleapis.com",
+    "workflows.googleapis.com",
   ]
 }
 

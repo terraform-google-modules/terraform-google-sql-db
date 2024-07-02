@@ -16,7 +16,7 @@
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 18.0"
+  version = "~> 20.0"
 
   name                 = "example-mysql-public"
   database_version     = "MYSQL_8_0"
@@ -45,7 +45,7 @@ resource "google_storage_bucket" "backup" {
 
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 18.0"
+  version = "~> 20.0"
 
   region                = "us-central1"
   project_id            = var.project_id

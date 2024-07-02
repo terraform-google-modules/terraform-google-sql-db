@@ -48,6 +48,7 @@ output "instance_self_link" {
 output "instance_server_ca_cert" {
   value       = google_sql_database_instance.default.server_ca_cert
   description = "The CA certificate information used to connect to the SQL instance via SSL"
+  sensitive   = true
 }
 
 output "instance_service_account_email_address" {
@@ -57,7 +58,7 @@ output "instance_service_account_email_address" {
 
 output "generated_user_password" {
   description = "The auto generated default user password if not input password was provided"
-  value       = random_password.user-password.result
+  value       = var.enable_default_user ? random_password.user-password[0].result : ""
   sensitive   = true
 }
 

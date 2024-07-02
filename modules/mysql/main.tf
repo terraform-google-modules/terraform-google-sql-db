@@ -70,12 +70,13 @@ resource "google_sql_database_instance" "default" {
     connector_enforcement       = local.connector_enforcement
 
     dynamic "backup_configuration" {
-      for_each = var.master_instance_name != null ? [] : [var.backup_configuration]
+      for_each = [var.backup_configuration]
       content {
         binary_log_enabled             = local.binary_log_enabled
-        enabled                        = local.backups_enabled
+        enabled                        = local.backups_enabled && var.master_instance_name == null ? true : false
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         location                       = lookup(backup_configuration.value, "location", null)
+        point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", false)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
 
         dynamic "backup_retention_settings" {
@@ -224,6 +225,7 @@ resource "google_sql_database" "additional_databases" {
 }
 
 resource "random_password" "user-password" {
+  count = var.enable_default_user ? 1 : 0
   keepers = {
     name = google_sql_database_instance.default.name
   }
@@ -269,7 +271,7 @@ resource "google_sql_user" "default" {
   project  = var.project_id
   instance = google_sql_database_instance.default.name
   host     = var.user_host
-  password = var.user_password == "" ? random_password.user-password.result : var.user_password
+  password = var.user_password == "" ? random_password.user-password[0].result : var.user_password
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,

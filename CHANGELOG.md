@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [20.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.1.0...v20.2.0) (2024-06-06)
+
+
+### Features
+
+* Add Point in time recovery flag for mysql DB ([#607](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/607)) ([b9a6ada](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/b9a6ada308e4e539efba4191a6a8100926e0a4f2))
+
+
+### Bug Fixes
+
+* mssql - make instance_server_ca_cert output sensitive ([#609](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/609)) ([163a89c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/163a89cb47fdef473b6068d782a8a2253136e9b5))
+
+## [20.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.0.0...v20.1.0) (2024-05-06)
+
+
+### Features
+
+* Add support for email based alerting ([#591](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/591)) ([af8ec91](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/af8ec916601c162503c3007d12e0be1b35f7efbd))
+* Add support to use existing notification channels for alerts ([#593](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/593)) ([1c18d78](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/1c18d781d1dc3975fcb0b1b7b299e0fa0849b972))
+* Follow least privilege principal for backup service account ([#597](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/597)) ([0f18fd7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0f18fd7b083221757b5d642c2bb70388ecdef88c))
+
+
+### Bug Fixes
+
+* disable random_pass when default user off ([#602](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/602)) ([98c7f8c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/98c7f8c16ccab28d3b49d451efec899bc190898b))
+* Relax assignment of backup_configuration when operating as a replica ([#589](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/589)) ([19daff8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/19daff8f66ac2ead4fe814452ecc19baee5e3978))
+
 ## [20.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v19.0.0...v20.0.0) (2024-03-08)
 
 

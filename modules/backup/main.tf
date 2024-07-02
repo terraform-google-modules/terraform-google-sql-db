@@ -18,6 +18,10 @@
 locals {
   create_service_account = var.service_account == null || var.service_account == "" ? true : false
   service_account        = local.create_service_account ? google_service_account.sql_backup_serviceaccount[0].email : var.service_account
+  backup_name            = "sql-backup-${var.sql_instance}${var.unique_suffix}"
+  role_name              = var.enable_export_backup ? "roles/cloudsql.editor" : "roles/cloudsql.viewer"
+  export_name            = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
+  notification_channels  = var.create_notification_channel ? concat(var.notification_channels, [google_monitoring_notification_channel.email[0].id]) : var.notification_channels
 }
 
 
@@ -36,8 +40,15 @@ resource "google_service_account" "sql_backup_serviceaccount" {
 resource "google_project_iam_member" "sql_backup_serviceaccount_sql_admin" {
   count   = local.create_service_account ? 1 : 0
   member  = "serviceAccount:${google_service_account.sql_backup_serviceaccount[0].email}"
-  role    = "roles/cloudsql.admin"
+  role    = local.role_name
   project = var.project_id
+  condition {
+    title      = "Limit access to instance ${var.sql_instance}"
+    expression = <<-EOT
+      (resource.type == "sqladmin.googleapis.com/Instance" &&
+       resource.name == "projects/${var.project_id}/instances/${var.sql_instance}")
+    EOT
+  }
 }
 
 resource "google_project_iam_member" "sql_backup_serviceaccount_workflow_invoker" {
@@ -52,6 +63,16 @@ data "google_sql_database_instance" "backup_instance" {
   project = var.project_id
 }
 
+resource "google_monitoring_notification_channel" "email" {
+  count        = var.create_notification_channel ? 1 : 0
+  display_name = var.notification_channel_name
+  project      = var.project_id
+  type         = "email"
+  labels = {
+    email_address = var.monitoring_email
+  }
+}
+
 ################################
 #                              #
 #       Internal Backups       #
@@ -59,7 +80,7 @@ data "google_sql_database_instance" "backup_instance" {
 ################################
 resource "google_workflows_workflow" "sql_backup" {
   count           = var.enable_internal_backup ? 1 : 0
-  name            = "sql-backup-${var.sql_instance}${var.unique_suffix}"
+  name            = local.backup_name
   region          = var.region
   description     = "Workflow for backing up the CloudSQL Instance "
   project         = var.project_id
@@ -74,7 +95,7 @@ resource "google_workflows_workflow" "sql_backup" {
 
 resource "google_cloud_scheduler_job" "sql_backup" {
   count       = var.enable_internal_backup ? 1 : 0
-  name        = "sql-backup-${var.sql_instance}${var.unique_suffix}"
+  name        = local.backup_name
   project     = var.project_id
   region      = var.region
   description = "Managed by Terraform - Triggers a SQL Backup via Workflows"
@@ -91,6 +112,32 @@ resource "google_cloud_scheduler_job" "sql_backup" {
   }
 }
 
+# We want to get notified if there hasn't been at least one successful backup in a day
+resource "google_monitoring_alert_policy" "sql_backup_workflow_success_alert" {
+  count        = var.enable_internal_backup && var.enable_backup_monitoring ? 1 : 0
+  display_name = "Failed workflow: ${local.backup_name}"
+  combiner     = "OR"
+
+  conditions {
+    display_name = "Failed workflow: ${local.backup_name}"
+    condition_monitoring_query_language {
+      query    = <<-EOT
+        fetch workflows.googleapis.com/Workflow
+        | filter workflow_id == '${local.backup_name}'
+        | metric 'workflows.googleapis.com/finished_execution_count'
+          | filter metric.status == 'SUCCEEDED'
+          | group_by ${var.backup_monitoring_frequency}, [value_finished_execution_count_sum: sum(value.finished_execution_count)]
+          | every ${var.backup_monitoring_frequency}
+          | condition val() < 1 '1'
+      EOT
+      duration = "3600s"
+      trigger { count = 1 }
+      evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
+    }
+  }
+  notification_channels = local.notification_channels
+}
+
 ################################
 #                              #
 #       External Backups       #
@@ -98,7 +145,7 @@ resource "google_cloud_scheduler_job" "sql_backup" {
 ################################
 resource "google_workflows_workflow" "sql_export" {
   count           = var.enable_export_backup ? 1 : 0
-  name            = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
+  name            = local.export_name
   region          = var.region
   description     = "Workflow for backing up the CloudSQL Instance"
   project         = var.project_id
@@ -120,7 +167,7 @@ resource "google_workflows_workflow" "sql_export" {
 
 resource "google_cloud_scheduler_job" "sql_export" {
   count       = var.enable_export_backup ? 1 : 0
-  name        = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
+  name        = local.export_name
   project     = var.project_id
   region      = var.region
   description = "Managed by Terraform - Triggers a SQL Export via Workflows"
@@ -142,4 +189,30 @@ resource "google_storage_bucket_iam_member" "sql_instance_account" {
   bucket = split("/", var.export_uri)[2] #Get the name of the bucket out of the URI
   member = "serviceAccount:${data.google_sql_database_instance.backup_instance.service_account_email_address}"
   role   = "roles/storage.objectCreator"
+}
+
+# We want to get notified if there hasn't been at least one successful backup in a day
+resource "google_monitoring_alert_policy" "sql_export_workflow_success_alert" {
+  count        = var.enable_export_backup && var.enable_export_monitoring ? 1 : 0
+  display_name = "Failed workflow: ${local.export_name}"
+  combiner     = "OR"
+
+  conditions {
+    display_name = "Failed workflow: ${local.export_name}"
+    condition_monitoring_query_language {
+      query    = <<-EOT
+        fetch workflows.googleapis.com/Workflow
+        | filter workflow_id == '${local.export_name}'
+        | metric 'workflows.googleapis.com/finished_execution_count'
+          | filter metric.status == 'SUCCEEDED'
+          | group_by ${var.export_monitoring_frequency}, [value_finished_execution_count_sum: sum(value.finished_execution_count)]
+          | every ${var.export_monitoring_frequency}
+          | condition val() < 1 '1'
+      EOT
+      duration = "3600s"
+      trigger { count = 1 }
+      evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
+    }
+  }
+  notification_channels = local.notification_channels
 }
