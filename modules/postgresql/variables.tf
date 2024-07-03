@@ -439,15 +439,3 @@ variable "data_cache_enabled" {
   type        = bool
   default     = false
 }
-
-variable "enable_google_ml_integration" {
-  description = "Enable ML integration. Enables ML function directly within cloud sql environment"
-  type        = bool
-  default     = false
-}
-
-variable "database_integration_roles" {
-  description = "Roles assigned to database instance default service account."
-  type        = list(string)
-  default     = []
-}

@@ -39,7 +39,7 @@ output "public_ip_address" {
   value       = module.postgresql-db.public_ip_address
 }
 
-output "output_env_vars" {
+output "env_vars" {
   value       = module.postgresql-db.env_vars
   description = "Exported environment variables"
 }

@@ -122,10 +122,6 @@ spec:
               value = string
             }))
         defaultValue: []
-      - name: database_integration_roles
-        description: Roles assigned to database instance default service account.
-        varType: list(string)
-        defaultValue: []
       - name: database_version
         description: The database version to use
         varType: string
@@ -190,10 +186,6 @@ spec:
         description: Enable or disable the creation of the default user
         varType: bool
         defaultValue: true
-      - name: enable_google_ml_integration
-        description: Enable ML integration. Enables ML function directly within cloud sql environment
-        varType: bool
-        defaultValue: false
       - name: enable_random_password_special
         description: Enable special characters in generated random passwords.
         varType: bool
