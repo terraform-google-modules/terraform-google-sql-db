@@ -40,3 +40,7 @@ output "public_ip_address" {
   value       = module.example.public_ip_address
 }
 
+output "env_vars" {
+  value       = module.example.env_vars
+  description = "Exported environment variables"
+}
