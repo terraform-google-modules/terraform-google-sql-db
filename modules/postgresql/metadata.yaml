@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,377 +19,424 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 spec:
-  title: terraform-google-sql for PostgreSQL
-  source:
-    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
-    sourceType: git
-  version: 20.2.0
-  actuationTool:
-    type: Terraform
-    version: '>= 1.3'
-  description: {}
-  examples:
-  - name: mssql-public
-    location: examples/mssql-public
-  - name: mysql-backup-create-service-account
-    location: examples/mysql-backup-create-service-account
-  - name: mysql-ha
-    location: examples/mysql-ha
-  - name: mysql-private
-    location: examples/mysql-private
-  - name: mysql-public
-    location: examples/mysql-public
-  - name: postgresql-backup-provided-service-account
-    location: examples/postgresql-backup-provided-service-account
-  - name: postgresql-ha
-    location: examples/postgresql-ha
-  - name: postgresql-public
-    location: examples/postgresql-public
-  - name: postgresql-public-iam
-    location: examples/postgresql-public-iam
-  variables:
-  - name: activation_policy
-    description: The activation policy for the master instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
-    type: string
-    default: ALWAYS
-  - name: additional_databases
-    description: A list of databases to be created in your cluster
-    type: |-
-      list(object({
-          name      = string
-          charset   = string
-          collation = string
-        }))
-    default: []
-  - name: additional_users
-    description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
-    type: |-
-      list(object({
-          name            = string
-          password        = string
-          random_password = bool
-        }))
-    default: []
-  - name: availability_type
-    description: The availability type for the master instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.
-    type: string
-    default: ZONAL
-  - name: backup_configuration
-    description: The backup_configuration settings subblock for the database setings
-    type: |-
-      object({
-          enabled                        = bool
-          start_time                     = string
-          location                       = string
-          point_in_time_recovery_enabled = bool
-          transaction_log_retention_days = string
-          retained_backups               = number
-          retention_unit                 = string
-        })
-    default:
-      enabled: false
-      location: null
-      point_in_time_recovery_enabled: false
-      retained_backups: null
-      retention_unit: null
-      start_time: null
-      transaction_log_retention_days: null
-  - name: create_timeout
-    description: The optional timout that is applied to limit long database creates.
-    type: string
-    default: 30m
-  - name: database_deletion_policy
-    description: 'The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: "ABANDON".'
-    type: string
-  - name: database_flags
-    description: The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)
-    type: |-
-      list(object({
-          name  = string
-          value = string
-        }))
-    default: []
-  - name: database_version
-    description: The database version to use
-    type: string
-    required: true
-  - name: db_charset
-    description: The charset for the default database
-    type: string
-    default: ""
-  - name: db_collation
-    description: 'The collation for the default database. Example: ''en_US.UTF8'''
-    type: string
-    default: ""
-  - name: db_name
-    description: The name of the default database to create
-    type: string
-    default: default
-  - name: delete_timeout
-    description: The optional timout that is applied to limit long database deletes.
-    type: string
-    default: 30m
-  - name: deletion_protection
-    description: Used to block Terraform from deleting a SQL Instance.
-    type: bool
-    default: true
-  - name: deletion_protection_enabled
-    description: Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
-    type: bool
-    default: false
-  - name: deny_maintenance_period
-    description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance)
-    type: |-
-      list(object({
-          end_date   = string
-          start_date = string
-          time       = string
-        }))
-    default: []
-  - name: disk_autoresize
-    description: Configuration to increase storage size.
-    type: bool
-    default: true
-  - name: disk_autoresize_limit
-    description: The maximum size to which storage can be auto increased.
-    type: number
-    default: 0
-  - name: disk_size
-    description: The disk size for the master instance.
-    type: number
-    default: 10
-  - name: disk_type
-    description: The disk type for the master instance.
-    type: string
-    default: PD_SSD
-  - name: enable_default_db
-    description: Enable or disable the creation of the default database
-    type: bool
-    default: true
-  - name: enable_default_user
-    description: Enable or disable the creation of the default user
-    type: bool
-    default: true
-  - name: enable_random_password_special
-    description: Enable special characters in generated random passwords.
-    type: bool
-    default: false
-  - name: encryption_key_name
-    description: The full path to the encryption key used for the CMEK disk encryption
-    type: string
-  - name: follow_gae_application
-    description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
-    type: string
-  - name: iam_users
-    description: A list of IAM users to be created in your CloudSQL instance
-    type: |-
-      list(object({
-          id    = string
-          email = string
-        }))
-    default: []
-  - name: insights_config
-    description: The insights_config settings for the database.
-    type: |-
-      object({
-          query_plans_per_minute  = number
-          query_string_length     = number
-          record_application_tags = bool
-          record_client_address   = bool
-        })
-  - name: ip_configuration
-    description: The ip configuration for the master instances.
-    type: |-
-      object({
-          authorized_networks                           = list(map(string))
-          ipv4_enabled                                  = bool
-          private_network                               = string
-          require_ssl                                   = bool
-          allocated_ip_range                            = string
-          enable_private_path_for_google_cloud_services = optional(bool)
-        })
-    default:
-      allocated_ip_range: null
-      authorized_networks: []
-      enable_private_path_for_google_cloud_services: false
-      ipv4_enabled: true
-      private_network: null
-      require_ssl: null
-  - name: maintenance_window_day
-    description: The day of week (1-7) for the master instance maintenance.
-    type: number
-    default: 1
-  - name: maintenance_window_hour
-    description: The hour of day (0-23) maintenance window for the master instance maintenance.
-    type: number
-    default: 23
-  - name: maintenance_window_update_track
-    description: The update track of maintenance window for the master instance maintenance.Can be either `canary` or `stable`.
-    type: string
-    default: canary
-  - name: module_depends_on
-    description: List of modules or resources this module depends on.
-    type: list(any)
-    default: []
-  - name: name
-    description: The name of the Cloud SQL resources
-    type: string
-    required: true
-  - name: password_validation_policy_config
-    description: The password validation policy settings for the database instance.
-    type: |-
-      object({
-          min_length                  = number
-          complexity                  = string
-          reuse_interval              = number
-          disallow_username_substring = bool
-          password_change_interval    = string
-        })
-  - name: pricing_plan
-    description: The pricing plan for the master instance.
-    type: string
-    default: PER_USE
-  - name: project_id
-    description: The project ID to manage the Cloud SQL resources
-    type: string
-    required: true
-  - name: random_instance_name
-    description: Sets random suffix at the end of the Cloud SQL resource name
-    type: bool
-    default: false
-  - name: read_replica_deletion_protection
-    description: Used to block Terraform from deleting replica SQL Instances.
-    type: bool
-    default: false
-  - name: read_replica_deletion_protection_enabled
-    description: Enables protection of replica instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
-    type: bool
-    default: false
-  - name: read_replica_name_suffix
-    description: The optional suffix to add to the read instance name
-    type: string
-    default: ""
-  - name: read_replicas
-    description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null
-    type: |-
-      list(object({
-          name                  = string
-          name_override         = optional(string)
-          tier                  = string
-          availability_type     = string
-          zone                  = string
-          disk_type             = string
-          disk_autoresize       = bool
-          disk_autoresize_limit = number
-          disk_size             = string
-          user_labels           = map(string)
-          database_flags = list(object({
-            name  = string
-            value = string
-          }))
-          ip_configuration = object({
-            authorized_networks = list(map(string))
-            ipv4_enabled        = bool
-            private_network     = string
-            require_ssl         = bool
-            allocated_ip_range  = string
-          })
-          encryption_key_name = string
-        }))
-    default: []
-  - name: region
-    description: The region of the Cloud SQL resources
-    type: string
-    default: us-central1
-  - name: secondary_zone
-    description: 'The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`.'
-    type: string
-  - name: tier
-    description: The tier for the master instance.
-    type: string
-    default: db-f1-micro
-  - name: update_timeout
-    description: The optional timout that is applied to limit long database updates.
-    type: string
-    default: 30m
-  - name: user_deletion_policy
-    description: 'The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON".'
-    type: string
-  - name: user_labels
-    description: The key/value labels for the master instances.
-    type: map(string)
-    default: {}
-  - name: user_name
-    description: The name of the default user
-    type: string
-    default: default
-  - name: user_password
-    description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
-    type: string
-    default: ""
-  - name: zone
-    description: 'The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`.'
-    type: string
-    required: true
-  outputs:
-  - name: additional_users
-    description: List of maps of additional users and passwords
-  - name: generated_user_password
-    description: The auto generated default user password if not input password was provided
-  - name: iam_users
-    description: The list of the IAM users with access to the CloudSQL instance
-  - name: instance_connection_name
-    description: The connection name of the master instance to be used in connection strings
-  - name: instance_first_ip_address
-    description: The first IPv4 address of the addresses assigned.
-  - name: instance_ip_address
-    description: The IPv4 address assigned for the master instance
-  - name: instance_name
-    description: The instance name for the master instance
-  - name: instance_self_link
-    description: The URI of the master instance
-  - name: instance_server_ca_cert
-    description: The CA certificate information used to connect to the SQL instance via SSL
-  - name: instance_service_account_email_address
-    description: The service account email address assigned to the master instance
-  - name: instances
-    description: A list of all `google_sql_database_instance` resources we've created
-  - name: primary
-    description: The `google_sql_database_instance` resource representing the primary instance
-  - name: private_ip_address
-    description: The first private (PRIVATE) IPv4 address assigned for the master instance
-  - name: public_ip_address
-    description: The first public (PRIMARY) IPv4 address assigned for the master instance
-  - name: read_replica_instance_names
-    description: The instance names for the read replica instances
-  - name: replicas
-    description: A list of `google_sql_database_instance` resources representing the replicas
-  - name: replicas_instance_connection_names
-    description: The connection names of the replica instances to be used in connection strings
-  - name: replicas_instance_first_ip_addresses
-    description: The first IPv4 addresses of the addresses assigned for the replica instances
-  - name: replicas_instance_self_links
-    description: The URIs of the replica instances
-  - name: replicas_instance_server_ca_certs
-    description: The CA certificates information used to connect to the replica instances via SSL
-  - name: replicas_instance_service_account_email_addresses
-    description: The service account email addresses assigned to the replica instances
-  roles:
-  - level: Project
+  info:
+    title: terraform-google-sql for PostgreSQL
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+      dir: /modules/postgresql
+    version: 20.2.0
+    actuationTool:
+      flavor: Terraform
+      version: ">= 1.3"
+    description: {}
+  content:
+    examples:
+      - name: mssql-failover-replica
+        location: examples/mssql-failover-replica
+      - name: mssql-public
+        location: examples/mssql-public
+      - name: mysql-backup-create-service-account
+        location: examples/mysql-backup-create-service-account
+      - name: mysql-ha
+        location: examples/mysql-ha
+      - name: mysql-private
+        location: examples/mysql-private
+      - name: mysql-psc
+        location: examples/mysql-psc
+      - name: mysql-public
+        location: examples/mysql-public
+      - name: postgresql-backup-provided-service-account
+        location: examples/postgresql-backup-provided-service-account
+      - name: postgresql-ha
+        location: examples/postgresql-ha
+      - name: postgresql-psc
+        location: examples/postgresql-psc
+      - name: postgresql-public
+        location: examples/postgresql-public
+      - name: postgresql-public-iam
+        location: examples/postgresql-public-iam
+      - name: postgresql-with-cross-region-failover
+        location: examples/postgresql-with-cross-region-failover
+  interfaces:
+    variables:
+      - name: activation_policy
+        description: The activation policy for the Cloud SQL instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
+        varType: string
+        defaultValue: ALWAYS
+      - name: additional_databases
+        description: A list of databases to be created in your cluster
+        varType: |-
+          list(object({
+              name      = string
+              charset   = string
+              collation = string
+            }))
+        defaultValue: []
+      - name: additional_users
+        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
+        varType: |-
+          list(object({
+              name            = string
+              password        = string
+              random_password = bool
+            }))
+        defaultValue: []
+      - name: availability_type
+        description: The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.
+        varType: string
+        defaultValue: ZONAL
+      - name: backup_configuration
+        description: The backup_configuration settings subblock for the database setings
+        varType: |-
+          object({
+              enabled                        = optional(bool, false)
+              start_time                     = optional(string)
+              location                       = optional(string)
+              point_in_time_recovery_enabled = optional(bool, false)
+              transaction_log_retention_days = optional(string)
+              retained_backups               = optional(number)
+              retention_unit                 = optional(string)
+            })
+        defaultValue: {}
+      - name: connector_enforcement
+        description: Enforce that clients use the connector library
+        varType: bool
+        defaultValue: false
+      - name: create_timeout
+        description: The optional timout that is applied to limit long database creates.
+        varType: string
+        defaultValue: 30m
+      - name: data_cache_enabled
+        description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
+        varType: bool
+        defaultValue: false
+      - name: database_deletion_policy
+        description: "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
+        varType: string
+      - name: database_flags
+        description: The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)
+        varType: |-
+          list(object({
+              name  = string
+              value = string
+            }))
+        defaultValue: []
+      - name: database_version
+        description: The database version to use
+        varType: string
+        required: true
+      - name: db_charset
+        description: The charset for the default database
+        varType: string
+        defaultValue: ""
+      - name: db_collation
+        description: "The collation for the default database. Example: 'en_US.UTF8'"
+        varType: string
+        defaultValue: ""
+      - name: db_name
+        description: The name of the default database to create
+        varType: string
+        defaultValue: default
+      - name: delete_timeout
+        description: The optional timout that is applied to limit long database deletes.
+        varType: string
+        defaultValue: 30m
+      - name: deletion_protection
+        description: Used to block Terraform from deleting a SQL Instance.
+        varType: bool
+        defaultValue: true
+      - name: deletion_protection_enabled
+        description: Enables protection of an Cloud SQL instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+        varType: bool
+        defaultValue: false
+      - name: deny_maintenance_period
+        description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance)
+        varType: |-
+          list(object({
+              end_date   = string
+              start_date = string
+              time       = string
+            }))
+        defaultValue: []
+      - name: disk_autoresize
+        description: Configuration to increase storage size.
+        varType: bool
+        defaultValue: true
+      - name: disk_autoresize_limit
+        description: The maximum size to which storage can be auto increased.
+        varType: number
+        defaultValue: 0
+      - name: disk_size
+        description: The disk size for the Cloud SQL instance.
+        varType: number
+        defaultValue: 10
+      - name: disk_type
+        description: The disk type for the Cloud SQL instance.
+        varType: string
+        defaultValue: PD_SSD
+      - name: edition
+        description: The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS.
+        varType: string
+      - name: enable_default_db
+        description: Enable or disable the creation of the default database
+        varType: bool
+        defaultValue: true
+      - name: enable_default_user
+        description: Enable or disable the creation of the default user
+        varType: bool
+        defaultValue: true
+      - name: enable_random_password_special
+        description: Enable special characters in generated random passwords.
+        varType: bool
+        defaultValue: false
+      - name: encryption_key_name
+        description: The full path to the encryption key used for the CMEK disk encryption
+        varType: string
+      - name: follow_gae_application
+        description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
+        varType: string
+      - name: iam_users
+        description: A list of IAM users to be created in your CloudSQL instance
+        varType: |-
+          list(object({
+              id    = string,
+              email = string
+            }))
+        defaultValue: []
+      - name: insights_config
+        description: The insights_config settings for the database.
+        varType: |-
+          object({
+              query_plans_per_minute  = optional(number, 5)
+              query_string_length     = optional(number, 1024)
+              record_application_tags = optional(bool, false)
+              record_client_address   = optional(bool, false)
+            })
+      - name: instance_type
+        description: The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided
+        varType: string
+        defaultValue: CLOUD_SQL_INSTANCE
+      - name: ip_configuration
+        description: The ip configuration for the Cloud SQL instances.
+        varType: |-
+          object({
+              authorized_networks                           = optional(list(map(string)), [])
+              ipv4_enabled                                  = optional(bool, true)
+              private_network                               = optional(string)
+              require_ssl                                   = optional(bool)
+              ssl_mode                                      = optional(string)
+              allocated_ip_range                            = optional(string)
+              enable_private_path_for_google_cloud_services = optional(bool, false)
+              psc_enabled                                   = optional(bool, false)
+              psc_allowed_consumer_projects                 = optional(list(string), [])
+            })
+        defaultValue: {}
+      - name: maintenance_window_day
+        description: The day of week (1-7) for the Cloud SQL instance maintenance.
+        varType: number
+        defaultValue: 1
+      - name: maintenance_window_hour
+        description: The hour of day (0-23) maintenance window for the Cloud SQL instance maintenance.
+        varType: number
+        defaultValue: 23
+      - name: maintenance_window_update_track
+        description: The update track of maintenance window for the Cloud SQL instance maintenance.Can be either `canary` or `stable`.
+        varType: string
+        defaultValue: canary
+      - name: master_instance_name
+        description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
+        varType: string
+      - name: module_depends_on
+        description: List of modules or resources this module depends on.
+        varType: list(any)
+        defaultValue: []
+      - name: name
+        description: The name of the Cloud SQL instance
+        varType: string
+        required: true
+      - name: password_validation_policy_config
+        description: The password validation policy settings for the database instance.
+        varType: |-
+          object({
+              min_length                  = optional(number)
+              complexity                  = optional(string)
+              reuse_interval              = optional(number)
+              disallow_username_substring = optional(bool)
+              password_change_interval    = optional(string)
+            })
+      - name: pricing_plan
+        description: The pricing plan for the Cloud SQL instance.
+        varType: string
+        defaultValue: PER_USE
+      - name: project_id
+        description: The project ID to manage the Cloud SQL resources
+        varType: string
+        required: true
+      - name: random_instance_name
+        description: Sets random suffix at the end of the Cloud SQL resource name
+        varType: bool
+        defaultValue: false
+      - name: read_replica_deletion_protection
+        description: Used to block Terraform from deleting replica SQL Instances.
+        varType: bool
+        defaultValue: false
+      - name: read_replica_deletion_protection_enabled
+        description: Enables protection of replica instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+        varType: bool
+        defaultValue: false
+      - name: read_replica_name_suffix
+        description: The optional suffix to add to the read instance name
+        varType: string
+        defaultValue: ""
+      - name: read_replicas
+        description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null
+        varType: |-
+          list(object({
+              name                  = string
+              name_override         = optional(string)
+              tier                  = optional(string)
+              edition               = optional(string)
+              availability_type     = optional(string)
+              zone                  = optional(string)
+              disk_type             = optional(string)
+              disk_autoresize       = optional(bool)
+              disk_autoresize_limit = optional(number)
+              disk_size             = optional(string)
+              user_labels           = map(string)
+              database_flags = optional(list(object({
+                name  = string
+                value = string
+              })), [])
+              insights_config = optional(object({
+                query_plans_per_minute  = optional(number, 5)
+                query_string_length     = optional(number, 1024)
+                record_application_tags = optional(bool, false)
+                record_client_address   = optional(bool, false)
+              }), null)
+              ip_configuration = object({
+                authorized_networks                           = optional(list(map(string)), [])
+                ipv4_enabled                                  = optional(bool)
+                private_network                               = optional(string, )
+                require_ssl                                   = optional(bool)
+                ssl_mode                                      = optional(string)
+                allocated_ip_range                            = optional(string)
+                enable_private_path_for_google_cloud_services = optional(bool, false)
+                psc_enabled                                   = optional(bool, false)
+                psc_allowed_consumer_projects                 = optional(list(string), [])
+              })
+              encryption_key_name = optional(string)
+            }))
+        defaultValue: []
+      - name: region
+        description: The region of the Cloud SQL resources
+        varType: string
+        defaultValue: us-central1
+      - name: root_password
+        description: Initial root password during creation
+        varType: string
+      - name: secondary_zone
+        description: "The preferred zone for the replica instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        varType: string
+      - name: tier
+        description: The tier for the Cloud SQL instance.
+        varType: string
+        defaultValue: db-f1-micro
+      - name: update_timeout
+        description: The optional timout that is applied to limit long database updates.
+        varType: string
+        defaultValue: 30m
+      - name: user_deletion_policy
+        description: "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+        varType: string
+      - name: user_labels
+        description: The key/value labels for the Cloud SQL instances.
+        varType: map(string)
+        defaultValue: {}
+      - name: user_name
+        description: The name of the default user
+        varType: string
+        defaultValue: default
+      - name: user_password
+        description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
+        varType: string
+        defaultValue: ""
+      - name: zone
+        description: "The zone for the Cloud SQL instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        varType: string
+    outputs:
+      - name: additional_users
+        description: List of maps of additional users and passwords
+      - name: dns_name
+        description: DNS name of the instance endpoint
+      - name: env_vars
+        description: Exported environment variables
+      - name: generated_user_password
+        description: The auto generated default user password if not input password was provided
+      - name: iam_users
+        description: The list of the IAM users with access to the CloudSQL instance
+      - name: instance_connection_name
+        description: The connection name of the master instance to be used in connection strings
+      - name: instance_first_ip_address
+        description: The first IPv4 address of the addresses assigned.
+      - name: instance_ip_address
+        description: The IPv4 address assigned for the master instance
+      - name: instance_name
+        description: The instance name for the master instance
+      - name: instance_psc_attachment
+        description: The psc_service_attachment_link created for the master instance
+      - name: instance_self_link
+        description: The URI of the master instance
+      - name: instance_server_ca_cert
+        description: The CA certificate information used to connect to the SQL instance via SSL
+      - name: instance_service_account_email_address
+        description: The service account email address assigned to the master instance
+      - name: instances
+        description: A list of all `google_sql_database_instance` resources we've created
+      - name: primary
+        description: The `google_sql_database_instance` resource representing the primary instance
+      - name: private_ip_address
+        description: The first private (PRIVATE) IPv4 address assigned for the master instance
+      - name: public_ip_address
+        description: The first public (PRIMARY) IPv4 address assigned for the master instance
+      - name: read_replica_instance_names
+        description: The instance names for the read replica instances
+      - name: replicas
+        description: A list of `google_sql_database_instance` resources representing the replicas
+      - name: replicas_instance_connection_names
+        description: The connection names of the replica instances to be used in connection strings
+      - name: replicas_instance_first_ip_addresses
+        description: The first IPv4 addresses of the addresses assigned for the replica instances
+      - name: replicas_instance_self_links
+        description: The URIs of the replica instances
+      - name: replicas_instance_server_ca_certs
+        description: The CA certificates information used to connect to the replica instances via SSL
+      - name: replicas_instance_service_account_email_addresses
+        description: The service account email addresses assigned to the replica instances
+  requirements:
     roles:
-    - roles/cloudsql.admin
-    - roles/compute.networkAdmin
-    - roles/iam.serviceAccountAdmin
-    - roles/resourcemanager.projectIamAdmin
-    - roles/storage.admin
-    - roles/workflows.admin
-    - roles/cloudscheduler.admin
-    - roles/iam.serviceAccountUser
-  services:
-  - cloudresourcemanager.googleapis.com
-  - compute.googleapis.com
-  - servicenetworking.googleapis.com
-  - sqladmin.googleapis.com
-  - iam.googleapis.com
-  - workflows.googleapis.com
-  - cloudscheduler.googleapis.com
+      - level: Project
+        roles:
+          - roles/cloudkms.admin
+          - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/cloudscheduler.admin
+          - roles/cloudsql.admin
+          - roles/compute.admin
+          - roles/compute.networkAdmin
+          - roles/iam.serviceAccountAdmin
+          - roles/iam.serviceAccountUser
+          - roles/monitoring.editor
+          - roles/resourcemanager.projectIamAdmin
+          - roles/storage.admin
+          - roles/workflows.admin
+    services:
+      - cloudkms.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - cloudscheduler.googleapis.com
+      - compute.googleapis.com
+      - iam.googleapis.com
+      - monitoring.googleapis.com
+      - servicenetworking.googleapis.com
+      - serviceusage.googleapis.com
+      - sqladmin.googleapis.com
+      - workflows.googleapis.com

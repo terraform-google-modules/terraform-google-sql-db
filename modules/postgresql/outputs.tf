@@ -143,3 +143,12 @@ output "dns_name" {
   value       = google_sql_database_instance.default.dns_name
   description = "DNS name of the instance endpoint"
 }
+
+output "env_vars" {
+  description = "Exported environment variables"
+  value = {
+    "CLOUD_SQL_DATABASE_HOST" : google_sql_database_instance.default.first_ip_address,
+    "CLOUD_SQL_DATABASE_CONNECTION_NAME" : google_sql_database_instance.default.connection_name,
+    "CLOUD_SQL_DATABASE_NAME" : local.database_name
+  }
+}

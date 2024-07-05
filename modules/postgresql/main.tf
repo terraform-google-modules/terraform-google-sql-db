@@ -43,6 +43,8 @@ locals {
 
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
+
+  database_name = var.enable_default_db ? google_sql_database.default[0].name : (length(local.databases) > 0 ? google_sql_database.additional_databases[0].name : "")
 }
 
 resource "random_id" "suffix" {

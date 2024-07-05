@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,86 +19,106 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 spec:
-  title: Submodule for VPC peering Cloud SQL services
-  source:
-    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
-    sourceType: git
-  version: 20.2.0
-  actuationTool:
-    type: Terraform
-    version: '>= 0.13'
-  description: {}
-  examples:
-  - name: mssql-public
-    location: examples/mssql-public
-  - name: mysql-backup-create-service-account
-    location: examples/mysql-backup-create-service-account
-  - name: mysql-ha
-    location: examples/mysql-ha
-  - name: mysql-private
-    location: examples/mysql-private
-  - name: mysql-public
-    location: examples/mysql-public
-  - name: postgresql-backup-provided-service-account
-    location: examples/postgresql-backup-provided-service-account
-  - name: postgresql-ha
-    location: examples/postgresql-ha
-  - name: postgresql-public
-    location: examples/postgresql-public
-  - name: postgresql-public-iam
-    location: examples/postgresql-public-iam
-  variables:
-  - name: address
-    description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
-    type: string
-    default: ""
-  - name: description
-    description: An optional description of the Global Address resource.
-    type: string
-    default: ""
-  - name: ip_version
-    description: IP Version for the allocation. Can be IPV4 or IPV6.
-    type: string
-    default: ""
-  - name: labels
-    description: The key/value labels for the IP range allocated to the peered network.
-    type: map(string)
-    default: {}
-  - name: prefix_length
-    description: Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16.
-    type: number
-    default: 16
-  - name: project_id
-    description: The project ID of the VPC network to peer. This can be a shared VPC host projec.
-    type: string
-    required: true
-  - name: vpc_network
-    description: Name of the VPC network to peer.
-    type: string
-    required: true
-  outputs:
-  - name: address
-    description: First IP of the reserved range.
-  - name: google_compute_global_address_name
-    description: URL of the reserved range.
-  - name: peering_completed
-    description: Use for enforce ordering between resource creation
-  roles:
-  - level: Project
+  info:
+    title: Submodule for VPC peering Cloud SQL services
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+      dir: /modules/private_service_access
+    version: 20.2.0
+    actuationTool:
+      flavor: Terraform
+      version: ">= 0.13"
+    description: {}
+  content:
+    examples:
+      - name: mssql-failover-replica
+        location: examples/mssql-failover-replica
+      - name: mssql-public
+        location: examples/mssql-public
+      - name: mysql-backup-create-service-account
+        location: examples/mysql-backup-create-service-account
+      - name: mysql-ha
+        location: examples/mysql-ha
+      - name: mysql-private
+        location: examples/mysql-private
+      - name: mysql-psc
+        location: examples/mysql-psc
+      - name: mysql-public
+        location: examples/mysql-public
+      - name: postgresql-backup-provided-service-account
+        location: examples/postgresql-backup-provided-service-account
+      - name: postgresql-ha
+        location: examples/postgresql-ha
+      - name: postgresql-psc
+        location: examples/postgresql-psc
+      - name: postgresql-public
+        location: examples/postgresql-public
+      - name: postgresql-public-iam
+        location: examples/postgresql-public-iam
+      - name: postgresql-with-cross-region-failover
+        location: examples/postgresql-with-cross-region-failover
+  interfaces:
+    variables:
+      - name: address
+        description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
+        varType: string
+        defaultValue: ""
+      - name: description
+        description: An optional description of the Global Address resource.
+        varType: string
+        defaultValue: ""
+      - name: ip_version
+        description: IP Version for the allocation. Can be IPV4 or IPV6.
+        varType: string
+        defaultValue: ""
+      - name: labels
+        description: The key/value labels for the IP range allocated to the peered network.
+        varType: map(string)
+        defaultValue: {}
+      - name: prefix_length
+        description: Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16.
+        varType: number
+        defaultValue: 16
+      - name: project_id
+        description: The project ID of the VPC network to peer. This can be a shared VPC host projec.
+        varType: string
+        required: true
+      - name: vpc_network
+        description: Name of the VPC network to peer.
+        varType: string
+        required: true
+    outputs:
+      - name: address
+        description: First IP of the reserved range.
+      - name: google_compute_global_address_name
+        description: URL of the reserved range.
+      - name: peering_completed
+        description: Use for enforce ordering between resource creation
+  requirements:
     roles:
-    - roles/cloudsql.admin
-    - roles/compute.networkAdmin
-    - roles/iam.serviceAccountAdmin
-    - roles/resourcemanager.projectIamAdmin
-    - roles/storage.admin
-    - roles/workflows.admin
-    - roles/cloudscheduler.admin
-    - roles/iam.serviceAccountUser
-  services:
-  - cloudresourcemanager.googleapis.com
-  - compute.googleapis.com
-  - servicenetworking.googleapis.com
-  - sqladmin.googleapis.com
-  - iam.googleapis.com
-  - workflows.googleapis.com
-  - cloudscheduler.googleapis.com
+      - level: Project
+        roles:
+          - roles/cloudkms.admin
+          - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/cloudscheduler.admin
+          - roles/cloudsql.admin
+          - roles/compute.admin
+          - roles/compute.networkAdmin
+          - roles/iam.serviceAccountAdmin
+          - roles/iam.serviceAccountUser
+          - roles/monitoring.editor
+          - roles/resourcemanager.projectIamAdmin
+          - roles/storage.admin
+          - roles/workflows.admin
+    services:
+      - cloudkms.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - cloudscheduler.googleapis.com
+      - compute.googleapis.com
+      - iam.googleapis.com
+      - monitoring.googleapis.com
+      - servicenetworking.googleapis.com
+      - serviceusage.googleapis.com
+      - sqladmin.googleapis.com
+      - workflows.googleapis.com

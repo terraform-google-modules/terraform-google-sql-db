@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,61 +19,80 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 spec:
-  title: terraform-google-sql
-  source:
-    repo: https://github.com/terraform-google-modules/terraform-google-sql-db
-    sourceType: git
-  description: {}
-  subBlueprints:
-  - name: backup
-    location: modules/backup
-  - name: mssql
-    location: modules/mssql
-  - name: mysql
-    location: modules/mysql
-  - name: postgresql
-    location: modules/postgresql
-  - name: private_service_access
-    location: modules/private_service_access
-  - name: restore
-    location: modules/restore
-  - name: safer_mysql
-    location: modules/safer_mysql
-  examples:
-  - name: mssql-public
-    location: examples/mssql-public
-  - name: mysql-backup-create-service-account
-    location: examples/mysql-backup-create-service-account
-  - name: mysql-ha
-    location: examples/mysql-ha
-  - name: mysql-private
-    location: examples/mysql-private
-  - name: mysql-public
-    location: examples/mysql-public
-  - name: postgresql-backup-provided-service-account
-    location: examples/postgresql-backup-provided-service-account
-  - name: postgresql-ha
-    location: examples/postgresql-ha
-  - name: postgresql-public
-    location: examples/postgresql-public
-  - name: postgresql-public-iam
-    location: examples/postgresql-public-iam
-  roles:
-  - level: Project
+  info:
+    title: terraform-google-sql
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+    description: {}
+  content:
+    subBlueprints:
+      - name: backup
+        location: modules/backup
+      - name: mssql
+        location: modules/mssql
+      - name: mysql
+        location: modules/mysql
+      - name: postgresql
+        location: modules/postgresql
+      - name: private_service_access
+        location: modules/private_service_access
+      - name: restore
+        location: modules/restore
+      - name: safer_mysql
+        location: modules/safer_mysql
+    examples:
+      - name: mssql-failover-replica
+        location: examples/mssql-failover-replica
+      - name: mssql-public
+        location: examples/mssql-public
+      - name: mysql-backup-create-service-account
+        location: examples/mysql-backup-create-service-account
+      - name: mysql-ha
+        location: examples/mysql-ha
+      - name: mysql-private
+        location: examples/mysql-private
+      - name: mysql-psc
+        location: examples/mysql-psc
+      - name: mysql-public
+        location: examples/mysql-public
+      - name: postgresql-backup-provided-service-account
+        location: examples/postgresql-backup-provided-service-account
+      - name: postgresql-ha
+        location: examples/postgresql-ha
+      - name: postgresql-psc
+        location: examples/postgresql-psc
+      - name: postgresql-public
+        location: examples/postgresql-public
+      - name: postgresql-public-iam
+        location: examples/postgresql-public-iam
+      - name: postgresql-with-cross-region-failover
+        location: examples/postgresql-with-cross-region-failover
+  interfaces: {}
+  requirements:
     roles:
-    - roles/cloudsql.admin
-    - roles/compute.networkAdmin
-    - roles/iam.serviceAccountAdmin
-    - roles/resourcemanager.projectIamAdmin
-    - roles/storage.admin
-    - roles/workflows.admin
-    - roles/cloudscheduler.admin
-    - roles/iam.serviceAccountUser
-  services:
-  - cloudresourcemanager.googleapis.com
-  - compute.googleapis.com
-  - servicenetworking.googleapis.com
-  - sqladmin.googleapis.com
-  - iam.googleapis.com
-  - workflows.googleapis.com
-  - cloudscheduler.googleapis.com
+      - level: Project
+        roles:
+          - roles/cloudkms.admin
+          - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/cloudscheduler.admin
+          - roles/cloudsql.admin
+          - roles/compute.admin
+          - roles/compute.networkAdmin
+          - roles/iam.serviceAccountAdmin
+          - roles/iam.serviceAccountUser
+          - roles/monitoring.editor
+          - roles/resourcemanager.projectIamAdmin
+          - roles/storage.admin
+          - roles/workflows.admin
+    services:
+      - cloudkms.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - cloudscheduler.googleapis.com
+      - compute.googleapis.com
+      - iam.googleapis.com
+      - monitoring.googleapis.com
+      - servicenetworking.googleapis.com
+      - serviceusage.googleapis.com
+      - sqladmin.googleapis.com
+      - workflows.googleapis.com
