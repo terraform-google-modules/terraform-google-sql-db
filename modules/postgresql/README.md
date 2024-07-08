@@ -180,6 +180,7 @@ module "pg" {
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
 | dns\_name | DNS name of the instance endpoint |
+| env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |

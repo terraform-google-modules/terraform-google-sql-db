@@ -31,6 +31,7 @@ terraform destroy
 
 | Name | Description |
 |------|-------------|
+| env\_vars | Exported environment variables |
 | name | The name for Cloud SQL instance |
 | project\_id | The project to run tests against |
 | psql\_conn | The connection name of the master instance to be used in connection strings |

@@ -38,3 +38,8 @@ output "public_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned for the master instance"
   value       = module.postgresql-db.public_ip_address
 }
+
+output "env_vars" {
+  value       = module.postgresql-db.env_vars
+  description = "Exported environment variables"
+}

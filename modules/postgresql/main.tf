@@ -44,7 +44,11 @@ locals {
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 
+
   psc_consumers = var.psc_consumer.enabled ? { for instance in concat([google_sql_database_instance.default], values(google_sql_database_instance.replicas)) : instance.name => instance } : {}
+
+
+  database_name = var.enable_default_db ? google_sql_database.default[0].name : (length(local.databases) > 0 ? google_sql_database.additional_databases[0].name : "")
 
 }
 

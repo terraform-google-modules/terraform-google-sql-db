@@ -63,6 +63,12 @@ func TestPostgreSqlPublicModule(t *testing.T) {
 		assert.Equal(2, len(ipAddresses), "Expected 2 addresses")
 		assert.Equalf(pSql.GetStringOutput("public_ip_address"), ipAddresses[0].Get("ipAddress").String(), "Expected %s PublicIp", pSql.GetStringOutput("public_ip_address"))
 		assert.Equal("PRIMARY", ipAddresses[0].Get("type").String())
+
+		// assert env_vars output
+		envVars := pSql.GetStringOutput("env_vars")
+		assert.Contains(envVars, "CLOUD_SQL_DATABASE_HOST")
+		assert.Contains(envVars, "CLOUD_SQL_DATABASE_CONNECTION_NAME")
+		assert.Contains(envVars, "CLOUD_SQL_DATABASE_NAME")
 	})
 
 	pSql.Test()
