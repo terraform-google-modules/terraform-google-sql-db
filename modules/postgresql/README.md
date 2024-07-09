@@ -126,6 +126,7 @@ module "pg" {
 | data\_cache\_enabled | Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE\_PLUS tier and supported database\_versions | `bool` | `false` | no |
 | database\_deletion\_policy | The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: "ABANDON". | `string` | `null` | no |
 | database\_flags | The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| database\_integration\_roles | The roles required by default database instance service account for integration with GCP services | `list(string)` | `[]` | no |
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en\_US.UTF8' | `string` | `""` | no |
@@ -141,6 +142,7 @@ module "pg" {
 | edition | The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
+| enable\_google\_ml\_integration | Enable database ML integration | `bool` | `false` | no |
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
