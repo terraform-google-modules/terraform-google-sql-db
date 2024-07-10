@@ -211,5 +211,5 @@ module "pg" {
 ### Installation Dependencies
 
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.3.0
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v5.12+
-- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v5.12+
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v5.25+
+- [Terraform Provider Beta for GCP](https://github.com/terraform-providers/terraform-provider-google-beta) plugin v5.25+
