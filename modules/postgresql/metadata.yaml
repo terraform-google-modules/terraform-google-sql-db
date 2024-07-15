@@ -122,6 +122,10 @@ spec:
               value = string
             }))
         defaultValue: []
+      - name: database_integration_roles
+        description: The roles required by default database instance service account for integration with GCP services
+        varType: list(string)
+        defaultValue: []
       - name: database_version
         description: The database version to use
         varType: string
@@ -186,6 +190,10 @@ spec:
         description: Enable or disable the creation of the default user
         varType: bool
         defaultValue: true
+      - name: enable_google_ml_integration
+        description: Enable database ML integration
+        varType: bool
+        defaultValue: false
       - name: enable_random_password_special
         description: Enable special characters in generated random passwords.
         varType: bool
