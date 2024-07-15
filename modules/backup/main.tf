@@ -42,12 +42,20 @@ resource "google_project_iam_member" "sql_backup_serviceaccount_sql_admin" {
   member  = "serviceAccount:${google_service_account.sql_backup_serviceaccount[0].email}"
   role    = local.role_name
   project = var.project_id
-  condition {
-    title      = "Limit access to instance ${var.sql_instance}"
-    expression = <<-EOT
-      (resource.type == "sqladmin.googleapis.com/Instance" &&
-       resource.name == "projects/${var.project_id}/instances/${var.sql_instance}")
-    EOT
+  # It is not possible to limit access to a specific instance when exports are enabled.
+  # The export workflow needs to be able to list databases for the database instance.
+  # It currently is not possible to define a condition that limits access to these
+  # sub-resources/database resources. Only Instances and BackupRuns are supported:
+  # https://cloud.google.com/iam/docs/conditions-resource-attributes#resource-type
+  dynamic "condition" {
+    for_each = var.enable_export_backup ? [] : [1]
+    content {
+      title      = "Limit access to instance ${var.sql_instance}"
+      expression = <<-EOT
+        (resource.type == "sqladmin.googleapis.com/Instance" &&
+         resource.name == "projects/${var.project_id}/instances/${var.sql_instance}")
+      EOT
+    }
   }
 }
 
