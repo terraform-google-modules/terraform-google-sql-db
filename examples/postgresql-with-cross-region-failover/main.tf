@@ -47,7 +47,7 @@ data "google_compute_zones" "available_region2" {
 
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 20.0"
+  version = "~> 21.0"
 
 
   name                 = var.pg_name_1
@@ -156,7 +156,7 @@ module "pg1" {
 
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 20.0"
+  version = "~> 21.0"
 
 
   # Comment this parameter to promot instance 2 as primary instance. This will break replication between instance 1 and 2
