@@ -440,6 +440,7 @@ variable "data_cache_enabled" {
   default     = false
 }
 
+
 variable "psc_consumer" {
   description = "The psc consumer to be created on the same project as the SQL instance(s). Remember to add the project under psc_allowed_consumer_projects in the ip_configuration block."
   type = object({
@@ -458,9 +459,15 @@ variable "psc_consumer" {
 }
 
 
+variable "enable_google_ml_integration" {
+  description = "Enable database ML integration"
+  type        = bool
+  default     = false
+}
 
-
-
-
-
+variable "database_integration_roles" {
+  description = "The roles required by default database instance service account for integration with GCP services"
+  type        = list(string)
+  default     = []
+}
 

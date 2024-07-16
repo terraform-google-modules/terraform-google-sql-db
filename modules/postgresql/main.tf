@@ -72,12 +72,13 @@ resource "google_sql_database_instance" "default" {
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
   settings {
-    tier                        = var.tier
-    edition                     = var.edition
-    activation_policy           = var.activation_policy
-    availability_type           = var.availability_type
-    deletion_protection_enabled = var.deletion_protection_enabled
-    connector_enforcement       = local.connector_enforcement
+    tier                         = var.tier
+    edition                      = var.edition
+    activation_policy            = var.activation_policy
+    availability_type            = var.availability_type
+    deletion_protection_enabled  = var.deletion_protection_enabled
+    connector_enforcement        = local.connector_enforcement
+    enable_google_ml_integration = var.enable_google_ml_integration
 
     dynamic "backup_configuration" {
       for_each = local.is_secondary_instance ? [] : [var.backup_configuration]
@@ -324,6 +325,7 @@ resource "google_sql_user" "iam_account" {
   deletion_policy = var.user_deletion_policy
 }
 
+
 resource "google_compute_address" "psc_ilb_consumer_address" {
   for_each     = local.psc_consumers
   region       = var.region
@@ -363,6 +365,15 @@ resource "google_dns_record_set" "a" {
   type         = "A"
   ttl          = 300
   rrdatas      = [google_compute_address.psc_ilb_consumer_address[each.value.name].address]
+}
+
+
+
+resource "google_project_iam_member" "database_integration" {
+  for_each = toset(var.database_integration_roles)
+  project  = var.project_id
+  role     = each.value
+  member   = "serviceAccount:${google_sql_database_instance.default.service_account_email_address}"
 }
 
 
