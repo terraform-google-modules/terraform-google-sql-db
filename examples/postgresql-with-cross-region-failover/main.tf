@@ -29,7 +29,7 @@ locals {
     ]
   }
   edition            = "ENTERPRISE_PLUS"
-  tier               = local.edition == "ENTERPRISE_PLUS" ? "db-perf-optimized-N-4" : "db-custom-4-15360"
+  tier               = local.edition == "ENTERPRISE_PLUS" ? "db-perf-optimized-N-2" : "db-custom-2-7680"
   data_cache_enabled = local.edition == "ENTERPRISE_PLUS" ? true : false
 }
 

@@ -36,7 +36,7 @@ module "pg" {
   region               = "us-central1"
 
   // Master configurations
-  tier                            = "db-custom-16-61440"
+  tier                            = "db-custom-2-7680"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
@@ -78,7 +78,7 @@ module "pg" {
       name              = "0"
       zone              = "us-central1-a"
       availability_type = "REGIONAL"
-      tier              = "db-custom-16-61440"
+      tier              = "db-custom-2-7680"
       ip_configuration  = local.read_replica_ip_configuration
       database_flags    = [{ name = "autovacuum", value = "off" }]
       disk_type         = "PD_SSD"

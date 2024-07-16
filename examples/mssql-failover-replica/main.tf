@@ -36,7 +36,7 @@ module "mssql1" {
 
   deletion_protection = false
 
-  tier = "db-custom-10-65536"
+  tier = "db-custom-4-15360"
 
   ip_configuration = {
     ipv4_enabled    = false
@@ -70,7 +70,7 @@ module "mssql2" {
 
   deletion_protection = false
 
-  tier = "db-custom-10-65536"
+  tier = "db-custom-4-15360"
 
   ip_configuration = {
     ipv4_enabled    = false
