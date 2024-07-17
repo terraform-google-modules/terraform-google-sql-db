@@ -20,7 +20,6 @@ import (
 
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/gcloud"
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft"
-	// "github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/utils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -47,7 +46,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 		assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-		assert.Equal("db-perf-optimized-N-4", op.Get("settings.tier").String(), "Expected db-perf-optimized-N-4 tier")
+		assert.Equal("db-perf-optimized-N-2", op.Get("settings.tier").String(), "Expected db-perf-optimized-N-2 tier")
 		assert.Equal("ENTERPRISE_PLUS", op.Get("settings.edition").String(), "Expected edition ENTERPRISE_PLUS")
 		assert.True(op.Get("settings.insightsConfig.queryInsightsEnabled").Bool(), "Expected queryInsightsEnabled true")
 		assert.Equal("5", op.Get("settings.insightsConfig.queryPlansPerMinute").String(), "Expected queryPlansPerMinute 5")

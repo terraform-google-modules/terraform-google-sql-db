@@ -46,7 +46,7 @@ func TestPostgreSqlPscModule(t *testing.T) {
 			assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 			assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 			assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-			assert.Equal("db-custom-16-61440", op.Get("settings.tier").String(), "Expected db-custom-16-61440 tier")
+			assert.Equal("db-custom-2-7680", op.Get("settings.tier").String(), "Expected db-custom-2-7680 tier")
 
 			// assert database flags
 			assert.JSONEq(`{"name": "autovacuum", "value": "off"}`, op.Get("settings.databaseFlags").Array()[0].Raw, `Expected {"name": "autovacuum", "value": "off"} databaseFlags`)
