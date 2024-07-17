@@ -19,7 +19,7 @@ locals {
   create_service_account = var.service_account == null || var.service_account == "" ? true : false
   service_account        = local.create_service_account ? google_service_account.sql_backup_serviceaccount[0].email : var.service_account
   backup_name            = "sql-backup-${var.sql_instance}${var.unique_suffix}"
-  role_name              = var.enable_export_backup ? "roles/cloudsql.editor" : "roles/cloudsql.viewer"
+  role_name              = var.enable_export_backup ? "roles/cloudsql.admin" : "roles/cloudsql.viewer"
   export_name            = var.use_sql_instance_replica_in_exporter ? "sql-export-${var.sql_instance_replica}${var.unique_suffix}" : "sql-export-${var.sql_instance}${var.unique_suffix}"
   notification_channels  = var.create_notification_channel ? concat(var.notification_channels, [google_monitoring_notification_channel.email[0].id]) : var.notification_channels
 }
