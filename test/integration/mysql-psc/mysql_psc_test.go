@@ -47,7 +47,7 @@ func TestMySqlPscModule(t *testing.T) {
 			assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 			assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 			assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-			assert.Equal("db-custom-4-15360", op.Get("settings.tier").String(), "Expected db-custom-4-15360 tier")
+			assert.Equal("db-custom-2-7680", op.Get("settings.tier").String(), "Expected db-custom-2-7680 tier")
 
 			// assert database flags
 			assert.JSONEqf(`{"name": "long_query_time", "value": "1"}`, op.Get("settings.databaseFlags").Array()[0].Raw, `Expected {"name": "long_query_time", "value": "1"} databaseFlags`)
