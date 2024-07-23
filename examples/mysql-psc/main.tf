@@ -27,7 +27,7 @@ locals {
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 20.0"
+  version = "~> 21.0"
 
   name                 = var.mysql_ha_name
   random_instance_name = true
@@ -38,7 +38,7 @@ module "mysql" {
   deletion_protection = false
 
   // Master configurations
-  tier                            = "db-custom-4-15360"
+  tier                            = "db-custom-2-7680"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
@@ -82,7 +82,7 @@ module "mysql" {
       name              = "0"
       zone              = "us-central1-a"
       availability_type = "REGIONAL"
-      tier              = "db-custom-4-15360"
+      tier              = "db-custom-2-7680"
       ip_configuration  = local.read_replica_ip_configuration
       database_flags    = [{ name = "long_query_time", value = 1 }]
       disk_type         = "PD_SSD"

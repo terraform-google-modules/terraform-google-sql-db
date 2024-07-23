@@ -24,7 +24,6 @@ data "google_compute_network" "main" {
 // have a private IP within the provided range.
 // https://cloud.google.com/vpc/docs/configure-private-services-access
 resource "google_compute_global_address" "google-managed-services-range" {
-  provider      = google-beta
   project       = var.project_id
   name          = "google-managed-services-${var.vpc_network}"
   description   = var.description
@@ -39,10 +38,10 @@ resource "google_compute_global_address" "google-managed-services-range" {
 
 # Creates the peering with the producer network.
 resource "google_service_networking_connection" "private_service_access" {
-  provider                = google-beta
   network                 = data.google_compute_network.main.self_link
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.google-managed-services-range.name]
+  deletion_policy         = var.deletion_policy
 }
 
 resource "null_resource" "dependency_setter" {

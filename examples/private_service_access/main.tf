@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-module "mssql" {
-  source  = "terraform-google-modules/sql-db/google//modules/mssql"
+resource "google_compute_network" "default" {
+  name                    = "test-psa-network"
+  project                 = var.project_id
+  auto_create_subnetworks = false
+  description             = "test network"
+}
+
+module "test_psa" {
+  source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
   version = "~> 21.0"
 
-  name                 = var.name
-  random_instance_name = true
-  project_id           = var.project_id
-  user_name            = "simpleuser"
-  user_password        = "foobar"
-
-  deletion_protection = false
-
-  sql_server_audit_config = var.sql_server_audit_config
+  project_id      = var.project_id
+  vpc_network     = google_compute_network.default.name
+  address         = "10.220.0.0"
+  deletion_policy = "ABANDON"
+  depends_on      = [google_compute_network.default]
 }

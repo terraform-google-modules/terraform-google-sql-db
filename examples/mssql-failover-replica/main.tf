@@ -24,7 +24,7 @@ locals {
 
 module "mssql1" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 20.0"
+  version = "~> 21.0"
 
   region = local.region_1
 
@@ -36,7 +36,7 @@ module "mssql1" {
 
   deletion_protection = false
 
-  tier = "db-custom-10-65536"
+  tier = "db-custom-4-15360"
 
   ip_configuration = {
     ipv4_enabled    = false
@@ -56,7 +56,7 @@ module "mssql1" {
 
 module "mssql2" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 20.0"
+  version = "~> 21.0"
 
   master_instance_name = module.mssql1.instance_name
 
@@ -70,7 +70,7 @@ module "mssql2" {
 
   deletion_protection = false
 
-  tier = "db-custom-10-65536"
+  tier = "db-custom-4-15360"
 
   ip_configuration = {
     ipv4_enabled    = false
