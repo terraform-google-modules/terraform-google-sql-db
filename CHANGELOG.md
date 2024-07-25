@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [21.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.2.0...v21.0.0) (2024-07-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>5.38:** added deletion_policy to private service access sub-module and promoted to GA provider ([#620](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/620))
+* Cleanup of old instance backups. Change role roles/cloudsql.editor to roles/cloudsql.admin ([#618](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/618))
+* Add enable_google_ml_integration setting for database instance and configurable project roles for default database service account ([#615](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/615))
+
+### Features
+
+* Add enable_google_ml_integration setting for database instance and configurable project roles for default database service account ([#615](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/615)) ([83bbaa3](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/83bbaa3df5165fa07338c485fda3bcbb2db6a012))
+* Add new output called env_vars for postgresql ([#612](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/612)) ([f02e3fd](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f02e3fdf69d0d0b238ff201ac45ff7d192935050))
+* enable data_cache_config for postgresql read replicas ([#619](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/619)) ([d7280da](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/d7280da309bb338a8058a3073c992592bd9162d6))
+* **TPG>5.38:** added deletion_policy to private service access sub-module and promoted to GA provider ([#620](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/620)) ([cf5f184](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/cf5f184df0be46d37d9eabfab53c81bb621f1881))
+
+
+### Bug Fixes
+
+* Backup - set IAM conditions conditionally ([#616](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/616)) ([8780714](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/87807148a282136fbd8b8f74652e9cc89bf8f7d4))
+* Cleanup of old instance backups. Change role roles/cloudsql.editor to roles/cloudsql.admin ([#618](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/618)) ([7310051](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/731005118667ae86fba7b7f978c3175fbf0a8d6d))
+
 ## [20.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v20.1.0...v20.2.0) (2024-06-06)
 
 
