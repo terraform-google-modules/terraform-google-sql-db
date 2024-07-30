@@ -441,6 +441,25 @@ variable "data_cache_enabled" {
   default     = false
 }
 
+
+variable "psc_consumer" {
+  description = "The psc consumer to be created on the same project as the SQL instance(s). Remember to add the project under psc_allowed_consumer_projects in the ip_configuration block."
+  type = object({
+    subnet_id               = optional(string, "")
+    network_id              = optional(string, "")
+    enabled                 = optional(bool, false)
+    allow_psc_global_access = optional(bool, false)
+  })
+
+  default = {}
+
+  validation {
+    condition     = (!var.psc_consumer.enabled || (var.psc_consumer.network_id != "" && var.psc_consumer.subnet_id != ""))
+    error_message = "In order to use the psc_consumer submodule you must specify both network and subnet id"
+  }
+}
+
+
 variable "enable_google_ml_integration" {
   description = "Enable database ML integration"
   type        = bool
@@ -452,3 +471,4 @@ variable "database_integration_roles" {
   type        = list(string)
   default     = []
 }
+
