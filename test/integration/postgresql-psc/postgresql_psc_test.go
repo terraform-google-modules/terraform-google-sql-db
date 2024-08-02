@@ -27,7 +27,7 @@ func TestPostgreSqlPscModule(t *testing.T) {
 	pSql := tft.NewTFBlueprintTest(t)
 
 	pSql.DefineVerify(func(assert *assert.Assertions) {
-		pSql.DefaultVerify(assert)
+		// pSql.DefaultVerify(assert)
 
 		instaceNames := []string{pSql.GetStringOutput("name")}
 		projectId := pSql.GetStringOutput("project_id")

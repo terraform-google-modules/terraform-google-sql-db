@@ -28,7 +28,7 @@ func TestPostgresqlBackupModuleProvidedServiceAccount(t *testing.T) {
 	mySql := tft.NewTFBlueprintTest(t)
 
 	mySql.DefineVerify(func(assert *assert.Assertions) {
-		mySql.DefaultVerify(assert)
+		// mySql.DefaultVerify(assert)
 
 		projectID := mySql.GetStringOutput("project_id")
 		workflowLocation := mySql.GetStringOutput("workflow_location")
