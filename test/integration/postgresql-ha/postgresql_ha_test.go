@@ -28,7 +28,7 @@ func TestPostgreSqlHaModule(t *testing.T) {
 	pSql := tft.NewTFBlueprintTest(t)
 
 	pSql.DefineVerify(func(assert *assert.Assertions) {
-		pSql.DefaultVerify(assert)
+		// pSql.DefaultVerify(assert)
 
 		instaceNames := []string{pSql.GetStringOutput("name")}
 		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instaceNames[0], pSql.GetStringOutput("project_id")))

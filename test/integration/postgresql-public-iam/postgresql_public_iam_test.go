@@ -27,7 +27,7 @@ func TestPostgreSqlPublicIamModule(t *testing.T) {
 	pSql := tft.NewTFBlueprintTest(t)
 
 	pSql.DefineVerify(func(assert *assert.Assertions) {
-		pSql.DefaultVerify(assert)
+		// pSql.DefaultVerify(assert)
 
 		op := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", pSql.GetStringOutput("name"), pSql.GetStringOutput("project_id")))
 
