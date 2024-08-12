@@ -212,6 +212,18 @@ spec:
               email = string
             }))
         defaultValue: []
+        connections:
+        - source:
+            source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
+            version: v4.2.3
+          spec:
+            outputExpr: id
+        connections:
+        - source:
+            source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
+            version: v0.12.0
+          spec:
+            outputExpr: service_account_id
       - name: insights_config
         description: The insights_config settings for the database.
         varType: |-
@@ -240,6 +252,13 @@ spec:
               psc_allowed_consumer_projects                 = optional(list(string), [])
             })
         defaultValue: {}
+        connections:
+        - source:
+            source: github.com/terraform-google-modules/terraform-google-network//modules/vpc
+            version: v9.1.0
+          spec:
+            outputExpr: network_id
+            inputPath: private_network
       - name: maintenance_window_day
         description: The day of week (1-7) for the Cloud SQL instance maintenance.
         varType: number
