@@ -215,13 +215,13 @@ spec:
         connections:
         - source:
             source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
-            version: v4.2.3
+            version: v4.3.0
           spec:
             outputExpr: id
         connections:
         - source:
             source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
-            version: v0.12.0
+            version: v0.13.0
           spec:
             outputExpr: service_account_id
       - name: insights_config
