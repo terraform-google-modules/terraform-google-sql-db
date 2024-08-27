@@ -218,7 +218,6 @@ spec:
             version: v4.3.0
           spec:
             outputExpr: id
-        connections:
         - source:
             source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
             version: v0.13.0
