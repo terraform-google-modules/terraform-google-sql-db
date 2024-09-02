@@ -449,3 +449,15 @@ variable "user_deletion_policy" {
   type        = string
   default     = null
 }
+
+variable "enable_google_ml_integration" {
+  description = "Enable database ML integration"
+  type        = bool
+  default     = false
+}
+
+variable "database_integration_roles" {
+  description = "The roles required by default database instance service account for integration with GCP services"
+  type        = list(string)
+  default     = []
+}

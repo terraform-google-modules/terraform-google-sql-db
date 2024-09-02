@@ -79,6 +79,12 @@ func TestMySqlPublicModule(t *testing.T) {
 		dbFlagMap := dbFlags[0].Map()
 		assert.Equal(dbFlagMap["name"].String(), dbFlagName, "found one valid DB Flag with the right name")
 		assert.Equal(dbFlagMap["value"].String(), dbFlagValue, "found one valid DB Flag with the right value")
+
+		// assert env_vars output
+		envVars := mySqlT.GetStringOutput("env_vars")
+		assert.Contains(envVars, "CLOUD_SQL_DATABASE_HOST")
+		assert.Contains(envVars, "CLOUD_SQL_DATABASE_CONNECTION_NAME")
+		assert.Contains(envVars, "CLOUD_SQL_DATABASE_NAME")
 	})
 	// call the test function to execute the integration test
 	mySqlT.Test()

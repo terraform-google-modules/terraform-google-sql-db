@@ -20,7 +20,7 @@ metadata:
     config.kubernetes.io/local-config: "true"
 spec:
   info:
-    title: Submodule for VPC peering Cloud SQL services
+    title: Submodule for Private Service Access
     source:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
@@ -58,12 +58,17 @@ spec:
         location: examples/postgresql-public-iam
       - name: postgresql-with-cross-region-failover
         location: examples/postgresql-with-cross-region-failover
+      - name: private_service_access
+        location: examples/private_service_access
   interfaces:
     variables:
       - name: address
         description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
         varType: string
         defaultValue: ""
+      - name: deletion_policy
+        description: The deletion policy for the service networking connection. Setting to ABANDON allows the resource to be abandoned rather than deleted. This will enable a successful terraform destroy when destroying CloudSQL instances. Use with care as it can lead to dangling resources.
+        varType: string
       - name: description
         description: An optional description of the Global Address resource.
         varType: string
