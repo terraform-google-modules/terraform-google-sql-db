@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [21.0.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v21.0.1...v21.0.2) (2024-09-04)
+
+
+### Bug Fixes
+
+* Missing ssl_mode in variable read_replicas.ip_configuration ([#638](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/638)) ([bbbac23](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/bbbac230de0a375403b4ebd1932ca57ffafd4532))
+
 ## [21.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v21.0.0...v21.0.1) (2024-08-28)
 
 

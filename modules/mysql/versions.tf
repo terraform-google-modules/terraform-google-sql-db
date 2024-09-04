@@ -36,10 +36,10 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v21.0.1"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v21.0.2"
   }
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v21.0.1"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v21.0.2"
   }
 
 }
