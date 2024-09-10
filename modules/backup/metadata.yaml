@@ -57,6 +57,8 @@ spec:
         location: examples/postgresql-public-iam
       - name: postgresql-with-cross-region-failover
         location: examples/postgresql-with-cross-region-failover
+      - name: private_service_access
+        location: examples/private_service_access
   interfaces:
     variables:
       - name: backup_monitoring_frequency

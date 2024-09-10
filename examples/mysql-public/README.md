@@ -31,6 +31,7 @@ terraform destroy
 
 | Name | Description |
 |------|-------------|
+| env\_vars | Exported environment variables |
 | mysql\_conn | The connection name of the master instance to be used in connection strings |
 | mysql\_user\_pass | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. |
 | name | The name for Cloud SQL instance |

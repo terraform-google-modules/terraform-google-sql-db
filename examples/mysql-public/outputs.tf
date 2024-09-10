@@ -45,3 +45,7 @@ output "private_ip_address" {
   value       = module.mysql-db.private_ip_address
 }
 
+output "env_vars" {
+  value       = module.mysql-db.env_vars
+  description = "Exported environment variables"
+}

@@ -16,6 +16,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"30m"` | no |
 | data\_cache\_enabled | Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE\_PLUS tier and supported database\_versions | `bool` | `false` | no |
 | database\_flags | List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| database\_integration\_roles | The roles required by default database instance service account for integration with GCP services | `list(string)` | `[]` | no |
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'utf8\_general\_ci' | `string` | `""` | no |
@@ -31,6 +32,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
+| enable\_google\_ml\_integration | Enable database ML integration | `bool` | `false` | no |
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
@@ -70,6 +72,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
+| env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |

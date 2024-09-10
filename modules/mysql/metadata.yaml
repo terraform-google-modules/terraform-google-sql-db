@@ -58,6 +58,8 @@ spec:
         location: examples/postgresql-public-iam
       - name: postgresql-with-cross-region-failover
         location: examples/postgresql-with-cross-region-failover
+      - name: private_service_access
+        location: examples/private_service_access
   interfaces:
     variables:
       - name: activation_policy
@@ -121,6 +123,10 @@ spec:
               name  = string
               value = string
             }))
+        defaultValue: []
+      - name: database_integration_roles
+        description: The roles required by default database instance service account for integration with GCP services
+        varType: list(string)
         defaultValue: []
       - name: database_version
         description: The database version to use
@@ -186,6 +192,10 @@ spec:
         description: Enable or disable the creation of the default user
         varType: bool
         defaultValue: true
+      - name: enable_google_ml_integration
+        description: Enable database ML integration
+        varType: bool
+        defaultValue: false
       - name: enable_random_password_special
         description: Enable special characters in generated random passwords.
         varType: bool
@@ -204,6 +214,17 @@ spec:
               email = string
             }))
         defaultValue: []
+        connections:
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
+              version: v4.3.0
+            spec:
+              outputExpr: id
+          - source:
+              source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
+              version: v0.13.0
+            spec:
+              outputExpr: service_account_id
       - name: insights_config
         description: The insights_config settings for the database.
         varType: |-
@@ -231,6 +252,13 @@ spec:
               psc_allowed_consumer_projects                 = optional(list(string), [])
             })
         defaultValue: {}
+        connections:
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-network//modules/vpc
+              version: v9.1.0
+            spec:
+              outputExpr: network_id
+              inputPath: private_network
       - name: maintenance_window_day
         description: The day of week (1-7) for the master instance maintenance.
         varType: number
@@ -377,6 +405,8 @@ spec:
     outputs:
       - name: additional_users
         description: List of maps of additional users and passwords
+      - name: env_vars
+        description: Exported environment variables
       - name: generated_user_password
         description: The auto generated default user password if not input password was provided
       - name: iam_users

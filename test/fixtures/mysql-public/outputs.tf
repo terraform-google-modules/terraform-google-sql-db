@@ -44,3 +44,8 @@ output "private_ip_address" {
   description = "The first public (PRIMARY) IPv4 address assigned."
   value       = module.example.private_ip_address
 }
+
+output "env_vars" {
+  value       = module.example.env_vars
+  description = "Exported environment variables"
+}
