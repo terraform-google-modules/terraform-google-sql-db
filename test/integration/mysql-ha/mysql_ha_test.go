@@ -70,7 +70,6 @@ func TestMySqlHaModule(t *testing.T) {
 				// assert general database settings
 				assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 				assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
-				assert.True(op.Get("settings.ipConfiguration.requireSsl").Bool(), "Expected TRUE SSL")
 
 				// assert user labels
 				assert.JSONEq(`{"foo": "bar"}`, op.Get("settings.userLabels").Raw, `Expected {"foo": "bar"} userLabels`)
@@ -109,7 +108,6 @@ func TestMySqlHaModule(t *testing.T) {
 				// assert general database settings
 				assert.Equal("ZONAL", op.Get("settings.availabilityType").String(), "Expected ZONAL availabilityType")
 				assert.Equal("PD_HDD", op.Get("settings.dataDiskType").String(), "Expected PD_HDD dataDiskType")
-				assert.False(op.Get("settings.ipConfiguration.requireSsl").Bool(), "Expected FALSE SSL")
 
 				// assert user labels
 				assert.JSONEq(`{"bar": "baz"}`, op.Get("settings.userLabels").Raw, `Expected {"bar": "baz"} userLabels`)

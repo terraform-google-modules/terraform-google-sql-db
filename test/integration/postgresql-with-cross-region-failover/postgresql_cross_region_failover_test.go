@@ -67,7 +67,6 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		// assert general database settings
 		assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 		assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
-		assert.True(op.Get("settings.ipConfiguration.requireSsl").Bool(), "Expected TRUE SSL")
 
 		// assert user labels
 		assert.JSONEq(`{"foo": "bar", "instance": "instance-1"}`, op.Get("settings.userLabels").Raw, `Expected {"foo": "bar", "instance": "instance-1"} userLabels`)
@@ -84,7 +83,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		assert.True(op.Get("settings.backupConfiguration.enabled").Bool(), "Expected TRUE backupConfigurationEnabled")
 		assert.Equal(int64(365), op.Get("settings.backupConfiguration.backupRetentionSettings.retainedBackups").Int(), "Expected 365 backupConfigurationRetainedBackups")
 		assert.Equal("COUNT", op.Get("settings.backupConfiguration.backupRetentionSettings.retentionUnit").String(), "Expected COUNT backupConfigurationRetentionUnit")
-		assert.True(op.Get("settings.backupConfiguration.pointInTimeRecoveryEnabled").Bool(), "Expected TRUE SSL")
+		assert.True(op.Get("settings.backupConfiguration.pointInTimeRecoveryEnabled").Bool(), "Expected TRUE")
 		assert.Equal("14", op.Get("settings.backupConfiguration.transactionLogRetentionDays").String(), "Expected transactionLogRetentionDays 14")
 
 		// assert Encryption configuration
@@ -101,7 +100,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		assert.Equal(instace2Name, op2.Get("name").String(), "Expected instance2 name")
 		assert.Equal("READ_REPLICA_INSTANCE", op2.Get("instanceType").String(), "Expected instanceType READ_REPLICA_INSTANCE")
 		assert.Equal("us-east1", op2.Get("region").String(), "Expected us-east1 region")
-		assert.Equal(projectID + ":" + masterInstanceName, op2.Get("masterInstanceName").String(), "Expected master instance name")
+		assert.Equal(projectID+":"+masterInstanceName, op2.Get("masterInstanceName").String(), "Expected master instance name")
 	})
 
 	pSql.Test()

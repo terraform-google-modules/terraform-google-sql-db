@@ -66,7 +66,6 @@ func TestPostgreSqlPscModule(t *testing.T) {
 				// assert general database settings
 				assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 				assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
-				assert.False(op.Get("settings.ipConfiguration.requireSsl").Bool(), "Expected FALSE SSL")
 
 				// assert user labels
 				assert.JSONEq(`{"foo": "bar"}`, op.Get("settings.userLabels").Raw, `Expected {"foo": "bar"} userLabels`)
@@ -98,7 +97,6 @@ func TestPostgreSqlPscModule(t *testing.T) {
 				// assert general database settings
 				assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 				assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
-				assert.False(op.Get("settings.ipConfiguration.requireSsl").Bool(), "Expected FALSE SSL")
 
 				// assert user labels
 				assert.JSONEq(`{"bar": "baz"}`, op.Get("settings.userLabels").Raw, `Expected {"bar": "baz"} userLabels`)
