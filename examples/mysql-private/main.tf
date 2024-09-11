@@ -41,8 +41,8 @@ module "private-service-access" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
   version = "~> 22.0"
 
-  project_id  = var.project_id
-  vpc_network = module.network-safer-mysql-simple.network_name
+  project_id      = var.project_id
+  vpc_network     = module.network-safer-mysql-simple.network_name
   deletion_policy = "ABANDON"
 }
 
