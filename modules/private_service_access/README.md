@@ -16,7 +16,7 @@ Basic usage of this module is as follows:
 ```
 module "test_psa" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   project_id      = var.project_id
   vpc_network     = google_compute_network.default.name

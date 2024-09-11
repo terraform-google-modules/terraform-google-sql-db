@@ -12,7 +12,7 @@ Basic usage of this module is as follows:
 ```hcl
 module "mssql" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   name                 = var.name
   random_instance_name = true

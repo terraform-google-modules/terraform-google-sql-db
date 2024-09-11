@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,6 @@ module "safer_mysql" {
     # We never set authorized networks, we need all connections via the
     # public IP to be mediated by Cloud SQL.
     authorized_networks = []
-    require_ssl         = true
     ssl_mode            = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
     private_network     = var.vpc_network
     allocated_ip_range  = var.allocated_ip_range
