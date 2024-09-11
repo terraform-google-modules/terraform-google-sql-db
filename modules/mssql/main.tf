@@ -94,6 +94,7 @@ resource "google_sql_database_instance" "default" {
         ipv4_enabled       = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network    = lookup(ip_configuration.value, "private_network", null)
         allocated_ip_range = lookup(ip_configuration.value, "allocated_ip_range", null)
+        ssl_mode           = lookup(ip_configuration.value, "ssl_mode", null)
 
         dynamic "authorized_networks" {
           for_each = lookup(ip_configuration.value, "authorized_networks", [])

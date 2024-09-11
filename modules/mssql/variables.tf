@@ -196,12 +196,14 @@ variable "ip_configuration" {
     ipv4_enabled        = optional(bool)
     private_network     = optional(string)
     allocated_ip_range  = optional(string)
+    ssl_mode            = optional(string)
   })
   default = {
     authorized_networks = []
     ipv4_enabled        = true
     private_network     = null
     allocated_ip_range  = null
+    ssl_mode            = null
   }
 }
 
