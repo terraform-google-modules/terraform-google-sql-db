@@ -1,0 +1,34 @@
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-sql-db-display
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: GCP CloudSQL Restore
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+      dir: /modules/restore
+  ui:
+    input:
+      variables:
+        import_databases:
+          name: import_databases
+          title: Import Databases
+        import_uri:
+          name: import_uri
+          title: Import Uri
+        project_id:
+          name: project_id
+          title: Project Id
+        region:
+          name: region
+          title: Region
+        service_account:
+          name: service_account
+          title: Service Account
+        sql_instance:
+          name: sql_instance
+          title: Sql Instance

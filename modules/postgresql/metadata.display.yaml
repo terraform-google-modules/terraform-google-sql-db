@@ -1,0 +1,190 @@
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-sql-db-display
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: terraform-google-sql for PostgreSQL
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+      dir: /modules/postgresql
+  ui:
+    input:
+      variables:
+        activation_policy:
+          name: activation_policy
+          title: Activation Policy
+        additional_databases:
+          name: additional_databases
+          title: Additional Databases
+        additional_users:
+          name: additional_users
+          title: Additional Users
+        availability_type:
+          name: availability_type
+          title: Availability Type
+        backup_configuration:
+          name: backup_configuration
+          title: Backup Configuration
+        connector_enforcement:
+          name: connector_enforcement
+          title: Connector Enforcement
+        create_timeout:
+          name: create_timeout
+          title: Create Timeout
+        data_cache_enabled:
+          name: data_cache_enabled
+          title: Data Cache Enabled
+        database_deletion_policy:
+          name: database_deletion_policy
+          title: Database Deletion Policy
+        database_flags:
+          name: database_flags
+          title: Database Flags
+        database_integration_roles:
+          name: database_integration_roles
+          title: Database Integration Roles
+        database_version:
+          name: database_version
+          title: Database Version
+        db_charset:
+          name: db_charset
+          title: Db Charset
+        db_collation:
+          name: db_collation
+          title: Db Collation
+        db_name:
+          name: db_name
+          title: Db Name
+        delete_timeout:
+          name: delete_timeout
+          title: Delete Timeout
+        deletion_protection:
+          name: deletion_protection
+          title: Deletion Protection
+        deletion_protection_enabled:
+          name: deletion_protection_enabled
+          title: Deletion Protection Enabled
+        deny_maintenance_period:
+          name: deny_maintenance_period
+          title: Deny Maintenance Period
+        disk_autoresize:
+          name: disk_autoresize
+          title: Disk Autoresize
+        disk_autoresize_limit:
+          name: disk_autoresize_limit
+          title: Disk Autoresize Limit
+        disk_size:
+          name: disk_size
+          title: Disk Size
+        disk_type:
+          name: disk_type
+          title: Disk Type
+        edition:
+          name: edition
+          title: Edition
+        enable_default_db:
+          name: enable_default_db
+          title: Enable Default Db
+        enable_default_user:
+          name: enable_default_user
+          title: Enable Default User
+        enable_google_ml_integration:
+          name: enable_google_ml_integration
+          title: Enable Google Ml Integration
+        enable_random_password_special:
+          name: enable_random_password_special
+          title: Enable Random Password Special
+        encryption_key_name:
+          name: encryption_key_name
+          title: Encryption Key Name
+        follow_gae_application:
+          name: follow_gae_application
+          title: Follow Gae Application
+        iam_users:
+          name: iam_users
+          title: Iam Users
+        insights_config:
+          name: insights_config
+          title: Insights Config
+        instance_type:
+          name: instance_type
+          title: Instance Type
+        ip_configuration:
+          name: ip_configuration
+          title: Ip Configuration
+        maintenance_window_day:
+          name: maintenance_window_day
+          title: Maintenance Window Day
+        maintenance_window_hour:
+          name: maintenance_window_hour
+          title: Maintenance Window Hour
+        maintenance_window_update_track:
+          name: maintenance_window_update_track
+          title: Maintenance Window Update Track
+        master_instance_name:
+          name: master_instance_name
+          title: Master Instance Name
+        module_depends_on:
+          name: module_depends_on
+          title: Module Depends On
+        name:
+          name: name
+          title: Name
+        password_validation_policy_config:
+          name: password_validation_policy_config
+          title: Password Validation Policy Config
+        pricing_plan:
+          name: pricing_plan
+          title: Pricing Plan
+        project_id:
+          name: project_id
+          title: Project Id
+        random_instance_name:
+          name: random_instance_name
+          title: Random Instance Name
+        read_replica_deletion_protection:
+          name: read_replica_deletion_protection
+          title: Read Replica Deletion Protection
+        read_replica_deletion_protection_enabled:
+          name: read_replica_deletion_protection_enabled
+          title: Read Replica Deletion Protection Enabled
+        read_replica_name_suffix:
+          name: read_replica_name_suffix
+          title: Read Replica Name Suffix
+        read_replicas:
+          name: read_replicas
+          title: Read Replicas
+        region:
+          name: region
+          title: Region
+        root_password:
+          name: root_password
+          title: Root Password
+        secondary_zone:
+          name: secondary_zone
+          title: Secondary Zone
+        tier:
+          name: tier
+          title: Tier
+        update_timeout:
+          name: update_timeout
+          title: Update Timeout
+        user_deletion_policy:
+          name: user_deletion_policy
+          title: User Deletion Policy
+        user_labels:
+          name: user_labels
+          title: User Labels
+        user_name:
+          name: user_name
+          title: User Name
+        user_password:
+          name: user_password
+          title: User Password
+        zone:
+          name: zone
+          title: Zone
