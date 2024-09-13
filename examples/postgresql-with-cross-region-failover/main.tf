@@ -17,7 +17,7 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = false
-    ssl_mode           = "ENCRYPTED_ONLY"
+    ssl_mode           = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
     authorized_networks = [
