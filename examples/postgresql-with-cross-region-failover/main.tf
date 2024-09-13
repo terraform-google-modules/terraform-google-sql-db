@@ -17,7 +17,6 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = false
-    require_ssl        = false
     ssl_mode           = "ENCRYPTED_ONLY"
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
@@ -209,7 +208,6 @@ module "pg2" {
 
   ip_configuration = {
     ipv4_enabled       = false
-    require_ssl        = true
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
     authorized_networks = [

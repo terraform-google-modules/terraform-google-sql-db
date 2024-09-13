@@ -58,6 +58,8 @@ func TestMsSqlHaModule(t *testing.T) {
 		// assert network settings
 		authNetworks := op.Get("settings.ipConfiguration.authorizedNetworks").Array()
 		assert.Equal(1, len(authNetworks), "Expected one auth network")
+		assert.Equal("ALLOW_UNENCRYPTED_AND_ENCRYPTED", "settings.ipConfiguration.ssl_mode", "Expected ssl_mode")
+
 		authNetworkMap := authNetworks[0].Map()
 		assert.Equal(fmt.Sprintf("%s-cidr", msSql.GetStringOutput("project_id")), authNetworkMap["name"].String(), "Expected auth network")
 		assert.Equal(msSql.GetStringOutput("authorized_network"), authNetworkMap["value"].String(), "Expected auth network within cdir range")

@@ -67,6 +67,7 @@ func TestMySqlPscModule(t *testing.T) {
 				// assert general database settings
 				assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 				assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
+				assert.Equal("ALLOW_UNENCRYPTED_AND_ENCRYPTED", "settings.ipConfiguration.ssl_mode", "Expected ssl_mode")
 
 				// assert user labels
 				assert.JSONEq(`{"foo": "bar"}`, op.Get("settings.userLabels").Raw, `Expected {"foo": "bar"} userLabels`)
@@ -105,6 +106,7 @@ func TestMySqlPscModule(t *testing.T) {
 				// assert general database settings
 				assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 				assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
+				assert.Equal("ALLOW_UNENCRYPTED_AND_ENCRYPTED", "settings.ipConfiguration.ssl_mode", "Expected ssl_mode")
 
 				// assert user labels
 				assert.JSONEq(`{"bar": "baz"}`, op.Get("settings.userLabels").Raw, `Expected {"bar": "baz"} userLabels`)

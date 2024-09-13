@@ -35,7 +35,7 @@ module "mysql-db" {
   ip_configuration = {
     ipv4_enabled        = true
     private_network     = null
-    require_ssl         = true
+    ssl_mode            = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     allocated_ip_range  = null
     authorized_networks = var.authorized_networks
   }

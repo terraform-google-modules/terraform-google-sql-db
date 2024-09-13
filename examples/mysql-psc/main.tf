@@ -17,7 +17,7 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled                  = false
-    require_ssl                   = false
+    ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     psc_enabled                   = true
     psc_allowed_consumer_projects = [var.project_id]
   }

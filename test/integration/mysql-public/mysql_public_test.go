@@ -65,6 +65,7 @@ func TestMySqlPublicModule(t *testing.T) {
 		assert.Equal(databaseVersion, op.Get("databaseVersion").String(), "database version is valid and set to "+databaseVersion)
 		assert.Equal(region, op.Get("region").String(), "GCE region is valid")
 		assert.Equal(tier, op.Get("settings.tier").String(), "database tier is valid")
+		assert.Equal("ALLOW_UNENCRYPTED_AND_ENCRYPTED", "settings.ipConfiguration.ssl_mode", "Expected ssl_mode")
 
 		// the gjson struct (op) also allow for easy parsing through arrays and maps
 		authNetworks := op.Get("settings.ipConfiguration.authorizedNetworks").Array()
