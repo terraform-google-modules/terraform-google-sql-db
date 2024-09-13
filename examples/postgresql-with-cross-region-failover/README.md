@@ -26,7 +26,7 @@ Promote instance 2 as primary and change instance 1 as failover replica
 ```diff
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
 -  master_instance_name = module.pg1.instance_name
 
