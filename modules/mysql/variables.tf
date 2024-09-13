@@ -172,7 +172,12 @@ variable "database_flags" {
     name  = string
     value = string
   }))
-  default = []
+  default = [
+    {
+      name  = "cloudsql_iam_authentication"
+      value = "true"
+    }
+  ]
 }
 
 
