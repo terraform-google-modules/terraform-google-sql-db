@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,6 @@ resource "google_sql_database_instance" "replicas" {
       content {
         ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network                               = lookup(ip_configuration.value, "private_network", null)
-        require_ssl                                   = lookup(ip_configuration.value, "require_ssl", null)
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
