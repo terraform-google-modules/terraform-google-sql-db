@@ -19,7 +19,6 @@ locals {
   read_replica_ip_configuration = {
     ipv4_enabled                  = false
     ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
-    ssl_mode                      = "ENCRYPTED_ONLY"
     psc_enabled                   = true
     psc_allowed_consumer_projects = [var.project_id]
   }
@@ -59,6 +58,7 @@ module "pg" {
     ipv4_enabled                  = false
     psc_enabled                   = true
     psc_allowed_consumer_projects = [var.project_id]
+    ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
   }
 
   backup_configuration = {
