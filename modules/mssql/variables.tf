@@ -214,25 +214,17 @@ variable "ip_configuration" {
 }
 
 variable "backup_configuration" {
-  description = "The database backup configuration."
+  description = "The backup_configuration settings subblock for the database settings"
   type = object({
-    binary_log_enabled             = bool
-    enabled                        = bool
-    point_in_time_recovery_enabled = bool
-    start_time                     = string
-    transaction_log_retention_days = string
-    retained_backups               = number
-    retention_unit                 = string
+    binary_log_enabled             = optional(bool, false)
+    enabled                        = optional(bool, false)
+    point_in_time_recovery_enabled = optional(bool, false)
+    start_time                     = optional(string)
+    transaction_log_retention_days = optional(string)
+    retained_backups               = optional(number)
+    retention_unit                 = optional(string)
   })
-  default = {
-    binary_log_enabled             = null
-    enabled                        = false
-    point_in_time_recovery_enabled = null
-    start_time                     = null
-    transaction_log_retention_days = null
-    retained_backups               = null
-    retention_unit                 = null
-  }
+  default = {}
 }
 
 variable "db_name" {

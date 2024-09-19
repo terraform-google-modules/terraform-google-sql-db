@@ -63,10 +63,10 @@ resource "google_sql_database_instance" "default" {
     connector_enforcement       = local.connector_enforcement
 
     dynamic "backup_configuration" {
-      for_each = !local.is_secondary_instance && var.backup_configuration.enabled ? [var.backup_configuration] : []
+      for_each = [var.backup_configuration]
       content {
         binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
-        enabled                        = lookup(backup_configuration.value, "enabled", null)
+        enabled                        = !local.is_secondary_instance && var.backup_configuration.enabled ? true : false
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
