@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -201,15 +201,15 @@ variable "ip_configuration" {
     authorized_networks = optional(list(map(string)), [])
     ipv4_enabled        = optional(bool)
     private_network     = optional(string)
-    require_ssl         = optional(bool)
     allocated_ip_range  = optional(string)
+    ssl_mode            = optional(string)
   })
   default = {
     authorized_networks = []
     ipv4_enabled        = true
     private_network     = null
-    require_ssl         = null
     allocated_ip_range  = null
+    ssl_mode            = null
   }
 }
 

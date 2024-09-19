@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.3"
   required_providers {
     null = {
       source  = "hashicorp/null"
@@ -23,20 +23,20 @@ terraform {
     }
     google = {
       source  = "hashicorp/google"
-      version = ">= 5.38, < 6"
+      version = ">= 5.38, < 7"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = ">= 5.38, < 6"
+      version = ">= 5.38, < 7"
     }
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v21.0.2"
+    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v22.0.0"
   }
 
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v21.0.2"
+    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v22.0.0"
   }
 
 }

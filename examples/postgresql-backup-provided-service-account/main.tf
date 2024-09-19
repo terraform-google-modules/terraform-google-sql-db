@@ -16,7 +16,7 @@
 
 module "postgresql" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   name                 = "example-postgres"
   random_instance_name = true
@@ -31,7 +31,7 @@ module "postgresql" {
   ip_configuration = {
     ipv4_enabled        = true
     private_network     = null
-    require_ssl         = true
+    ssl_mode            = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     allocated_ip_range  = null
     authorized_networks = []
   }
@@ -56,7 +56,7 @@ resource "google_monitoring_notification_channel" "email" {
 
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   region                      = "us-central1"
   project_id                  = var.project_id

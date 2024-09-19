@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ terraform {
 
     google = {
       source  = "hashicorp/google"
-      version = ">= 5.7, < 6"
+      version = ">= 5.7, < 7"
     }
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:safer_mysql/v21.0.2"
+    module_name = "blueprints/terraform/terraform-google-sql-db:safer_mysql/v22.0.0"
   }
 
 }

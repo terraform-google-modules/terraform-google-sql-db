@@ -55,7 +55,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlCrossRegionFailover --stage teardown --verbose']
 
   - id: apply mssql-failover-replica
-    waitFor: ["init-all", "wait for api activation"]
+    waitFor: ["init-all", "wait for api activation", "teardown postgresql-cross-region-failover"]
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMsSqlFailoverReplica --stage apply --verbose']
   - id: verify mssql-failover-replica
@@ -68,6 +68,23 @@ steps:
       - verify mssql-failover-replica
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMsSqlFailoverReplica --stage teardown --verbose']
+
+  - id: apply mysql-private-local
+    waitFor: ["init-all", "wait for api activation", "teardown mssql-failover-replica"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage apply --verbose']
+  - id: verify mysql-private-local
+    waitFor:
+      - apply mysql-private-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage verify --verbose']
+
+  # Disabling due to issue: https://github.com/hashicorp/terraform-provider-google/issues/16275
+  - id: teardown mysql-private-local
+    waitFor:
+      - verify mysql-private-local
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage teardown --verbose']
 
   - id: apply mssql-ha-local
     waitFor: ["init-all", "wait for api activation"]
@@ -129,22 +146,6 @@ steps:
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestMySqlPscModule --stage teardown --verbose']
 
-  - id: apply mysql-private-local
-    waitFor: ["init-all", "wait for api activation"]
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage apply --verbose']
-  - id: verify mysql-private-local
-    waitFor:
-      - apply mysql-private-local
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage verify --verbose']
-
-  # Disabling due to issue: https://github.com/hashicorp/terraform-provider-google/issues/16275
-  # - id: teardown mysql-private-local
-  #   waitFor:
-  #     - verify mysql-private-local
-  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  #   args: ['/bin/bash', '-c', 'cft test run TestMySqlPrivateModule --stage teardown --verbose']
 
   - id: apply mysql-public-local
     waitFor: ["init-all", "wait for api activation"]
@@ -257,4 +258,4 @@ tags:
 substitutions:
   _DOCKER_IMAGE_DEVELOPER_TOOLS: 'cft/developer-tools'
   _DOCKER_TAG_VERSION_DEVELOPER_TOOLS: '1.20'
-  _API_ACTIVATION_SECONDS_WAIT: '900'
+  _API_ACTIVATION_SECONDS_WAIT: '300'

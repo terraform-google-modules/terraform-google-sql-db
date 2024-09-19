@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -230,7 +230,6 @@ variable "ip_configuration" {
     authorized_networks                           = optional(list(map(string)), [])
     ipv4_enabled                                  = optional(bool, true)
     private_network                               = optional(string)
-    require_ssl                                   = optional(bool)
     ssl_mode                                      = optional(string)
     allocated_ip_range                            = optional(string)
     enable_private_path_for_google_cloud_services = optional(bool, false)
@@ -269,7 +268,6 @@ variable "read_replicas" {
       authorized_networks                           = optional(list(map(string)), [])
       ipv4_enabled                                  = optional(bool)
       private_network                               = optional(string, )
-      require_ssl                                   = optional(bool)
       ssl_mode                                      = optional(string)
       allocated_ip_range                            = optional(string)
       enable_private_path_for_google_cloud_services = optional(bool, false)

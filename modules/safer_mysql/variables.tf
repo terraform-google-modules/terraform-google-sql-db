@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -251,7 +251,6 @@ variable "read_replicas" {
       authorized_networks = list(map(string))
       ipv4_enabled        = bool
       private_network     = string
-      require_ssl         = bool
       allocated_ip_range  = string
     })
     encryption_key_name = string

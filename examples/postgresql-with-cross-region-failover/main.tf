@@ -17,8 +17,7 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = false
-    require_ssl        = false
-    ssl_mode           = "ENCRYPTED_ONLY"
+    ssl_mode           = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
     authorized_networks = [
@@ -47,7 +46,7 @@ data "google_compute_zones" "available_region2" {
 
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
 
   name                 = var.pg_name_1
@@ -156,7 +155,7 @@ module "pg1" {
 
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
 
   # Comment this parameter to promot instance 2 as primary instance. This will break replication between instance 1 and 2
@@ -209,7 +208,6 @@ module "pg2" {
 
   ip_configuration = {
     ipv4_enabled       = false
-    require_ssl        = true
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
     authorized_networks = [
