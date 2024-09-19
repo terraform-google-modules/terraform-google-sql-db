@@ -188,7 +188,7 @@ variable "deny_maintenance_period" {
 }
 
 variable "backup_configuration" {
-  description = "The backup_configuration settings subblock for the database setings"
+  description = "The backup_configuration settings subblock for the database settings"
   type = object({
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
