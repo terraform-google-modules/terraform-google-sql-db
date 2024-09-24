@@ -39,16 +39,15 @@ module "network-safer-mysql-simple" {
 
 module "private-service-access" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
-  version = "~> 21.0.0"
+  version = "~> 21.0"
 
-  project_id      = var.project_id
-  vpc_network     = module.network-safer-mysql-simple.network_name
-  deletion_policy = "ABANDON"
+  project_id  = var.project_id
+  vpc_network = module.network-safer-mysql-simple.network_name
 }
 
 module "safer-mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/safer_mysql"
-  version = "~> 21.0.0"
+  version = "~> 21.0"
 
   name                 = var.db_name
   random_instance_name = true

@@ -20,7 +20,7 @@ resource "random_id" "name" {
 
 module "mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 21.0.0"
+  version = "~> 21.0"
 
   name                 = var.db_name
   random_instance_name = true
@@ -35,7 +35,7 @@ module "mysql-db" {
   ip_configuration = {
     ipv4_enabled        = true
     private_network     = null
-    ssl_mode            = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    require_ssl         = true
     allocated_ip_range  = null
     authorized_networks = var.authorized_networks
   }

@@ -18,7 +18,8 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled                  = false
-    ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    require_ssl                   = false
+    ssl_mode                      = "ENCRYPTED_ONLY"
     psc_enabled                   = true
     psc_allowed_consumer_projects = [var.project_id]
   }
@@ -26,7 +27,7 @@ locals {
 
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 21.0.0"
+  version = "~> 21.0"
 
   name                 = var.pg_psc_name
   random_instance_name = true
@@ -58,7 +59,6 @@ module "pg" {
     ipv4_enabled                  = false
     psc_enabled                   = true
     psc_allowed_consumer_projects = [var.project_id]
-    ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
   }
 
   backup_configuration = {

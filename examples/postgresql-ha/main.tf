@@ -18,7 +18,8 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = true
-    ssl_mode           = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    require_ssl        = false
+    ssl_mode           = "ENCRYPTED_ONLY"
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [
@@ -32,7 +33,7 @@ locals {
 
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 21.0.0"
+  version = "~> 21.0"
 
   name                 = var.pg_ha_name
   random_instance_name = true
@@ -58,7 +59,7 @@ module "pg" {
 
   ip_configuration = {
     ipv4_enabled       = true
-    ssl_mode           = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    require_ssl        = true
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [

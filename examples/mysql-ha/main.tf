@@ -17,7 +17,7 @@
 locals {
   read_replica_ip_configuration = {
     ipv4_enabled       = true
-    ssl_mode           = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    require_ssl        = false
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [
@@ -33,7 +33,7 @@ locals {
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 21.0.0"
+  version = "~> 21.0"
 
   name                 = var.mysql_ha_name
   random_instance_name = true
@@ -59,7 +59,7 @@ module "mysql" {
 
   ip_configuration = {
     ipv4_enabled       = true
-    ssl_mode           = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    require_ssl        = true
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [

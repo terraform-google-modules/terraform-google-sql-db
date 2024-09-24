@@ -23,7 +23,7 @@ Promote instance 2 as primary and change instance 1 as failover replica
 ```diff
 module "mssql2" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 22.0.0"
+  version = "~> 21.0"
 
 -  master_instance_name = module.mssql1.instance_name
 
@@ -36,7 +36,7 @@ module "mssql2" {
 ```diff
 - module "mssql1" {
 -   source  = "terraform-google-modules/sql-db/google//modules/mssql"
--   version = "~> 22.0.0"
+-   version = "~> 20.0"
 -   region = local.region_1
 -   name                 = "tf-mssql-public-1"
 -   random_instance_name = true
