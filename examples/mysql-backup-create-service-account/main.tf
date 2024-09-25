@@ -16,7 +16,7 @@
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   name                 = "example-mysql-public"
   database_version     = "MYSQL_8_0"
@@ -29,7 +29,7 @@ module "mysql" {
   ip_configuration = {
     ipv4_enabled        = true
     private_network     = null
-    require_ssl         = true
+    ssl_mode            = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
     allocated_ip_range  = null
     authorized_networks = []
   }
@@ -45,7 +45,7 @@ resource "google_storage_bucket" "backup" {
 
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 21.0"
+  version = "~> 22.0"
 
   region                = "us-central1"
   project_id            = var.project_id
