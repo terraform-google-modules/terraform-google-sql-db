@@ -122,7 +122,7 @@ resource "google_sql_database_instance" "replicas" {
         data_cache_enabled = lookup(each.value, "data_cache_enabled", var.data_cache_enabled)
       }
     }
-    
+
   }
 
   depends_on = [google_sql_database_instance.default]
