@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [22.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v22.0.0...v22.1.0) (2024-10-01)
+
+
+### Features
+
+* Adding flag for enabling data cache in MSSQL module ([#642](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/642)) ([c9f0014](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c9f00146d7f557ed4dd35c3064049d4a5caf5f1a))
+* enable data_cache_config block for mysql ([#652](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/652)) ([2b26a78](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/2b26a781a862011c66147cb15080228aad1a8269))
+
 ## [22.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v21.0.2...v22.0.0) (2024-09-13)
 
 
