@@ -290,6 +290,7 @@ variable "read_replicas" {
       psc_allowed_consumer_projects                 = optional(list(string), [])
     })
     encryption_key_name = optional(string)
+    data_cache_enabled  = optional(bool)
   }))
   default = []
 }
