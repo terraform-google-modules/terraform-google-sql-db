@@ -1,0 +1,117 @@
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-sql-db-display
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: GCP CloudSQL Backup
+    source:
+      repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
+      sourceType: git
+      dir: /modules/backup
+  ui:
+    input:
+      variables:
+        backup_monitoring_frequency:
+          name: backup_monitoring_frequency
+          title: Backup Monitoring Frequency
+        backup_retention_time:
+          name: backup_retention_time
+          title: Backup Retention Time
+        backup_runs_list_max_results:
+          name: backup_runs_list_max_results
+          title: Backup Runs List Max Results
+        backup_schedule:
+          name: backup_schedule
+          title: Backup Schedule
+        compress_export:
+          name: compress_export
+          title: Compress Export
+        connector_params_timeout:
+          name: connector_params_timeout
+          title: Connector Params Timeout
+        create_notification_channel:
+          name: create_notification_channel
+          title: Create Notification Channel
+        enable_backup_monitoring:
+          name: enable_backup_monitoring
+          title: Enable Backup Monitoring
+        enable_connector_params:
+          name: enable_connector_params
+          title: Enable Connector Params
+        enable_export_backup:
+          name: enable_export_backup
+          title: Enable Export Backup
+        enable_export_monitoring:
+          name: enable_export_monitoring
+          title: Enable Export Monitoring
+        enable_internal_backup:
+          name: enable_internal_backup
+          title: Enable Internal Backup
+        export_databases:
+          name: export_databases
+          title: Export Databases
+        export_monitoring_frequency:
+          name: export_monitoring_frequency
+          title: Export Monitoring Frequency
+        export_schedule:
+          name: export_schedule
+          title: Export Schedule
+        export_uri:
+          name: export_uri
+          title: Export Uri
+        log_db_name_to_export:
+          name: log_db_name_to_export
+          title: Log Db Name To Export
+        monitoring_email:
+          name: monitoring_email
+          title: Monitoring Email
+        notification_channel_name:
+          name: notification_channel_name
+          title: Notification Channel Name
+        notification_channels:
+          name: notification_channels
+          title: Notification Channels
+        project_id:
+          name: project_id
+          title: Project Id
+        region:
+          name: region
+          title: Region
+        scheduler_timezone:
+          name: scheduler_timezone
+          title: Scheduler Timezone
+        service_account:
+          name: service_account
+          title: Service Account
+        sql_instance:
+          name: sql_instance
+          title: Sql Instance
+        sql_instance_replica:
+          name: sql_instance_replica
+          title: Sql Instance Replica
+        unique_suffix:
+          name: unique_suffix
+          title: Unique Suffix
+        use_serverless_export:
+          name: use_serverless_export
+          title: Use Serverless Export
+        use_sql_instance_replica_in_exporter:
+          name: use_sql_instance_replica_in_exporter
+          title: Use Sql Instance Replica In Exporter

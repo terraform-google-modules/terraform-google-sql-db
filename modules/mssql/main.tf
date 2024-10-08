@@ -80,6 +80,12 @@ resource "google_sql_database_instance" "default" {
         }
       }
     }
+    dynamic "data_cache_config" {
+      for_each = var.edition == "ENTERPRISE_PLUS" && var.data_cache_enabled ? ["cache_enabled"] : []
+      content {
+        data_cache_enabled = var.data_cache_enabled
+      }
+    }
     dynamic "deny_maintenance_period" {
       for_each = local.is_secondary_instance ? [] : var.deny_maintenance_period
       content {
