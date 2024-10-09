@@ -43,6 +43,9 @@ spec:
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
+          alt_defaults:
+            - type: ALTERNATE_TYPE_UNSPECIFIED
+              value: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -52,6 +55,9 @@ spec:
         data_cache_enabled:
           name: data_cache_enabled
           title: Data Cache Enabled
+          alt_defaults:
+            - type: ALTERNATE_TYPE_UNSPECIFIED
+              value: true
         database_flags:
           name: database_flags
           title: Database Flags
@@ -79,12 +85,18 @@ spec:
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
+          alt_defaults:
+            - type: ALTERNATE_TYPE_UNSPECIFIED
+              value: true
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          alt_defaults:
+            - type: ALTERNATE_TYPE_UNSPECIFIED
+              value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
@@ -97,6 +109,9 @@ spec:
         edition:
           name: edition
           title: Edition
+          alt_defaults:
+            - type: ALTERNATE_TYPE_UNSPECIFIED
+              value: "ENTERPRISE_PLUS"
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
