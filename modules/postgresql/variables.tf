@@ -69,7 +69,7 @@ variable "tier" {
 variable "edition" {
   description = "The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS."
   type        = string
-  default     = "ENTERPRISE_PLUS"
+  default     = null
 }
 
 variable "zone" {
@@ -105,7 +105,7 @@ variable "availability_type" {
 variable "deletion_protection_enabled" {
   description = "Enables protection of an Cloud SQL instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "read_replica_deletion_protection_enabled" {
@@ -168,12 +168,7 @@ variable "database_flags" {
     name  = string
     value = string
   }))
-  default = [
-    {
-      name = "cloudsql.iam_authentication",
-      value = "true"
-    }
-  ]
+  default = []
 }
 
 variable "user_labels" {
@@ -195,10 +190,10 @@ variable "deny_maintenance_period" {
 variable "backup_configuration" {
   description = "The backup_configuration settings subblock for the database setings"
   type = object({
-    enabled                        = optional(bool, true)
+    enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
-    point_in_time_recovery_enabled = optional(bool, true)
+    point_in_time_recovery_enabled = optional(bool, false)
     transaction_log_retention_days = optional(string)
     retained_backups               = optional(number)
     retention_unit                 = optional(string)
@@ -441,7 +436,7 @@ variable "root_password" {
 variable "data_cache_enabled" {
   description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "enable_google_ml_integration" {
