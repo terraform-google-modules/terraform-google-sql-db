@@ -223,7 +223,7 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network//modules/vpc
-              version: v9.1.0
+              version: ">= 9.1.0"
             spec:
               outputExpr: network_id
               inputPath: private_network
@@ -319,12 +319,12 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
-              version: v4.3.0
+              version: ">= 4.3.0"
             spec:
               outputExpr: id
           - source:
               source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
-              version: v0.13.0
+              version: ">= 0.13.0"
             spec:
               outputExpr: service_account_id
       - name: create_timeout
