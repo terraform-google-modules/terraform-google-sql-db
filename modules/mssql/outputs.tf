@@ -79,6 +79,11 @@ output "root_password" {
   sensitive   = true
 }
 
+output "instance_psc_attachment" {
+  value       = google_sql_database_instance.default.psc_service_attachment_link
+  description = "The psc_service_attachment_link created for the master instance"
+}
+
 // Resources
 output "primary" {
   value       = google_sql_database_instance.default
