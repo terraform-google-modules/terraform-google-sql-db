@@ -48,7 +48,11 @@ spec:
           title: Backup Configuration
           alt_defaults:
             - type: ALTERNATE_TYPE_DC
-              value: true
+              value:
+                - name: enabled
+                  value: true
+                - name: point_in_time_recovery_enabled
+                  value: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
