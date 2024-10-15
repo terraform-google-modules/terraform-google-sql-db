@@ -40,11 +40,14 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: REGIONAL
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
           alt_defaults:
-            - type: ALTERNATE_TYPE_UNSPECIFIED
+            - type: ALTERNATE_TYPE_DC
               value: true
         connector_enforcement:
           name: connector_enforcement
@@ -56,11 +59,16 @@ spec:
           name: data_cache_enabled
           title: Data Cache Enabled
           alt_defaults:
-            - type: ALTERNATE_TYPE_UNSPECIFIED
+            - type: ALTERNATE_TYPE_DC
               value: true
         database_flags:
           name: database_flags
           title: Database Flags
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                - name: "cloudsql_iam_authentication",
+                  value: "on"
         database_integration_roles:
           name: database_integration_roles
           title: Database Integration Roles
@@ -86,7 +94,7 @@ spec:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
           alt_defaults:
-            - type: ALTERNATE_TYPE_UNSPECIFIED
+            - type: ALTERNATE_TYPE_DC
               value: true
         deny_maintenance_period:
           name: deny_maintenance_period
@@ -95,7 +103,7 @@ spec:
           name: disk_autoresize
           title: Disk Autoresize
           alt_defaults:
-            - type: ALTERNATE_TYPE_UNSPECIFIED
+            - type: ALTERNATE_TYPE_DC
               value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
@@ -110,7 +118,7 @@ spec:
           name: edition
           title: Edition
           alt_defaults:
-            - type: ALTERNATE_TYPE_UNSPECIFIED
+            - type: ALTERNATE_TYPE_DC
               value: "ENTERPRISE_PLUS"
         enable_default_db:
           name: enable_default_db
