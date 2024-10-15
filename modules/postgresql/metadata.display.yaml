@@ -40,9 +40,15 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: REGIONAL
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -58,6 +64,11 @@ spec:
         database_flags:
           name: database_flags
           title: Database Flags
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                - name: "cloudsql.iam_authentication",
+                  value: "on"
         database_integration_roles:
           name: database_integration_roles
           title: Database Integration Roles
@@ -82,12 +93,18 @@ spec:
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
@@ -100,6 +117,9 @@ spec:
         edition:
           name: edition
           title: Edition
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: ENTERPRISE_PLUS
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db

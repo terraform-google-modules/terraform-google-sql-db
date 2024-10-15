@@ -119,7 +119,7 @@ spec:
           title: Edition
           alt_defaults:
             - type: ALTERNATE_TYPE_DC
-              value: "ENTERPRISE_PLUS"
+              value: ENTERPRISE_PLUS
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
