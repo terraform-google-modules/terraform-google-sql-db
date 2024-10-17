@@ -154,3 +154,11 @@ output "env_vars" {
     "CLOUD_SQL_DATABASE_NAME" : local.database_name
   }
 }
+
+output "apphub_service_uri" {
+  value = {
+    service_uri = google_sql_database_instance.default.self_link
+    service_id  = google_sql_database_instance.default.name
+  }
+  description = "Service URI in CAIS style to be used by Apphub."
+}
