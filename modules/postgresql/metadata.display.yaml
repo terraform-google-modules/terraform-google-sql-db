@@ -49,10 +49,8 @@ spec:
           alt_defaults:
             - type: ALTERNATE_TYPE_DC
               value:
-                - name: enabled
-                  value: true
-                - name: point_in_time_recovery_enabled
-                  value: true
+                enabled: true
+                point_in_time_recovery_enabled: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -62,6 +60,9 @@ spec:
         data_cache_enabled:
           name: data_cache_enabled
           title: Data Cache Enabled
+          alt_defaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         database_deletion_policy:
           name: database_deletion_policy
           title: Database Deletion Policy
@@ -71,7 +72,7 @@ spec:
           alt_defaults:
             - type: ALTERNATE_TYPE_DC
               value:
-                - name: "cloudsql.iam_authentication",
+                - name: "cloudsql.iam_authentication"
                   value: "on"
         database_integration_roles:
           name: database_integration_roles

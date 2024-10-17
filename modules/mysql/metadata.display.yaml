@@ -69,7 +69,7 @@ spec:
           alt_defaults:
             - type: ALTERNATE_TYPE_DC
               value:
-                - name: "cloudsql_iam_authentication",
+                - name: "cloudsql_iam_authentication"
                   value: "on"
         database_integration_roles:
           name: database_integration_roles
