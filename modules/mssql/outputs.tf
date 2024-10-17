@@ -87,7 +87,7 @@ output "primary" {
 }
 
 output "apphub_service_uri" {
-  value       = {
+  value = {
     service_uri = google_sql_database_instance.default.self_link
     service_id  = google_sql_database_instance.default.name
   }

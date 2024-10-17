@@ -72,6 +72,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
+| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |
