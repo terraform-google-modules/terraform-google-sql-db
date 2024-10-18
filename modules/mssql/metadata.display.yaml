@@ -52,6 +52,9 @@ spec:
         create_timeout:
           name: create_timeout
           title: Create Timeout
+        data_cache_enabled:
+          name: data_cache_enabled
+          title: Data Cache Enabled
         database_flags:
           name: database_flags
           title: Database Flags
