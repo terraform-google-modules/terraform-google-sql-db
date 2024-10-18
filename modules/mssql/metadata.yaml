@@ -308,7 +308,7 @@ spec:
         description: Service URI in CAIS style to be used by Apphub.
         type:
           - object
-            service_id: string
+          - service_id: string
             service_uri: string
       - name: generated_user_password
         description: The auto generated default user password if not input password was provided
