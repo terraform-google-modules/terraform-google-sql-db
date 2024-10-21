@@ -40,9 +40,17 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: REGIONAL
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                enabled: true
+                point_in_time_recovery_enabled: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -52,9 +60,17 @@ spec:
         data_cache_enabled:
           name: data_cache_enabled
           title: Data Cache Enabled
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         database_flags:
           name: database_flags
           title: Database Flags
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                - name: "cloudsql_iam_authentication"
+                  value: "on"
         database_integration_roles:
           name: database_integration_roles
           title: Database Integration Roles
@@ -79,12 +95,18 @@ spec:
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
@@ -97,6 +119,9 @@ spec:
         edition:
           name: edition
           title: Edition
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: ENTERPRISE_PLUS
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
