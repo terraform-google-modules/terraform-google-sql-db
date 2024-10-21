@@ -2,6 +2,44 @@
 
 Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen) feature which can cause a [Terraform configuration drift](https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform) due to the value in `disk_size` variable, and hence any updates to this variable is ignored in the [Terraform lifecycle](https://www.terraform.io/docs/configuration/resources.html#ignore_changes).
 
+## Usage
+Functional examples are included in the [examples](../../examples/) directory. Basic usage of this module is as follows:
+
+- Create simple mysql instance
+
+```hcl
+module "mysql-db" {
+  source  = "terraform-google-modules/sql-db/google//modules/mysql"
+  version = "~> 23.0"
+
+  name                 = var.db_name
+  random_instance_name = true
+  database_version     = "MYSQL_5_6"
+  project_id           = var.project_id
+  zone                 = "us-central1-c"
+  region               = "us-central1"
+  tier                 = "db-n1-standard-1"
+
+  deletion_protection = false
+
+  ip_configuration = {
+    ipv4_enabled        = true
+    private_network     = null
+    ssl_mode            = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    allocated_ip_range  = null
+    authorized_networks = var.authorized_networks
+  }
+
+
+  database_flags = [
+    {
+      name  = "log_bin_trust_function_creators"
+      value = "on"
+    },
+  ]
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 

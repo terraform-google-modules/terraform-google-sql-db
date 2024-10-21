@@ -159,6 +159,80 @@ mkdir $HOME/mysql_sockets
 mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 ```
 
+## Usage
+Functional examples are included in the [examples](../../examples/) directory. Basic usage of this module is as follows:
+
+- Create safer mysql instance
+
+```hcl
+module "safer-mysql-db" {
+  source  = "terraform-google-modules/sql-db/google//modules/safer_mysql"
+  version = "~> 23.0"
+
+
+  name                 = var.db_name
+  random_instance_name = true
+  project_id           = var.project_id
+
+  deletion_protection = false
+
+  database_version = "MYSQL_8_0"
+  region           = "us-central1"
+  zone             = "us-central1-c"
+  tier             = "db-n1-standard-1"
+
+  database_flags = [
+    {
+      name  = "cloudsql_iam_authentication"
+      value = "on"
+    },
+  ]
+
+  // By default, all users will be permitted to connect only via the
+  // Cloud SQL proxy.
+  additional_users = [
+    {
+      name            = "app"
+      password        = "PaSsWoRd"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
+    },
+    {
+      name            = "readonly"
+      password        = "PaSsWoRd"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
+    },
+  ]
+
+  # Supports creation of both IAM Users and IAM Service Accounts with provided emails
+  iam_users = [
+    {
+      id    = "cloudsql_mysql_sa",
+      email = var.cloudsql_mysql_sa
+    },
+    {
+      id    = "dbadmin",
+      email = "dbadmin@develop.blueprints.joonix.net"
+    },
+    {
+      id    = "subtest",
+      email = "subtest@develop.blueprints.joonix.net"
+      type  = "CLOUD_IAM_GROUP"
+    }
+  ]
+
+  assign_public_ip   = true
+  vpc_network        = module.network-safer-mysql-simple.network_self_link
+  allocated_ip_range = module.private-service-access.google_compute_global_address_name
+
+  // Optional: used to enforce ordering in the creation of resources.
+  module_depends_on = [module.private-service-access.peering_completed]
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 

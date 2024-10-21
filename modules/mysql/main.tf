@@ -27,7 +27,7 @@ locals {
   users     = { for u in var.additional_users : u.name => u }
   iam_users = {
     for user in var.iam_users : user.id => {
-      email         = trimsuffix(user.email, ".gserviceaccount.com")
+      email         = user.email
       is_account_sa = trimsuffix(user.email, "gserviceaccount.com") == user.email ? false : true
       type          = user.type != null ? user.type : null
     }
