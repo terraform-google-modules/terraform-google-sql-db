@@ -221,7 +221,7 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network//modules/vpc
-              version: "~> 9.1.0"
+              version: ~> 9.1.0
             spec:
               outputExpr: network_id
               inputPath: private_network
@@ -339,12 +339,12 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
-              version: "~> 4.3.0"
+              version: ~> 4.3.0
             spec:
               outputExpr: id
           - source:
               source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
-              version: "~> 0.13.0"
+              version: ~> 0.13.0
             spec:
               outputExpr: service_account_id
       - name: create_timeout
@@ -407,6 +407,12 @@ spec:
         type:
           - tuple
           - []
+      - name: apphub_service_uri
+        description: Service URI in CAIS style to be used by Apphub.
+        type:
+          - object
+          - service_id: string
+            service_uri: string
       - name: env_vars
         description: Exported environment variables
         type:
@@ -914,3 +920,12 @@ spec:
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
       - workflows.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 5.25, < 7"
+      - source: hashicorp/google-beta
+        version: ">= 5.25, < 7"
+      - source: hashicorp/null
+        version: ~> 3.1
+      - source: hashicorp/random
+        version: ~> 3.1
