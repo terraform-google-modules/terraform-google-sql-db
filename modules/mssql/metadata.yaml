@@ -304,6 +304,12 @@ spec:
         type:
           - tuple
           - []
+      - name: apphub_service_uri
+        description: Service URI in CAIS style to be used by Apphub.
+        type:
+          - object
+          - service_id: string
+            service_uri: string
       - name: generated_user_password
         description: The auto generated default user password if not input password was provided
         type: string
@@ -564,3 +570,12 @@ spec:
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
       - workflows.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 5.12, < 7"
+      - source: hashicorp/google-beta
+        version: ">= 5.12, < 7"
+      - source: hashicorp/null
+        version: ~> 3.2
+      - source: hashicorp/random
+        version: ~> 3.4
