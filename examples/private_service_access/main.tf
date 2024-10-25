@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ resource "google_compute_network" "default" {
 
 module "test_psa" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
-  version = "~> 22.0"
+  version = "~> 23.0"
 
   project_id      = var.project_id
   vpc_network     = google_compute_network.default.name

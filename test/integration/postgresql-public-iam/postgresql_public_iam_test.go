@@ -81,6 +81,7 @@ func TestPostgreSqlPublicIamModule(t *testing.T) {
 		cloudIamSa := fmt.Sprintf("cloudsql-pg-sa-01@%s.iam", pSql.GetStringOutput("project_id"))
 		containsIamUser := false
 		containsIamSa := false
+		containsIamGroup := false
 		for _, element := range op.Array() {
 			if element.Get("type").String() == "CLOUD_IAM_USER" && element.Get("name").String() == "dbadmin@develop.blueprints.joonix.net" {
 				containsIamUser = true
@@ -88,8 +89,12 @@ func TestPostgreSqlPublicIamModule(t *testing.T) {
 			if element.Get("type").String() == "CLOUD_IAM_SERVICE_ACCOUNT" && element.Get("name").String() == cloudIamSa {
 				containsIamSa = true
 			}
+			if element.Get("type").String() == "CLOUD_IAM_GROUP" && element.Get("name").String() == "subtest@develop.blueprints.joonix.net" {
+				containsIamGroup = true
+			}
 		}
 		assert.Truef(containsIamUser, "Expected %s cloud iam user", "dbadmin@develop.blueprints.joonix.net")
+		assert.Truef(containsIamGroup, "Expected %s cloud iam group user", "subtest@develop.blueprints.joonix.net")
 		assert.Truef(containsIamSa, "Expected cloud iam sa [%s]", cloudIamSa)
 	})
 

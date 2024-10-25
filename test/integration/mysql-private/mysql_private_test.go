@@ -74,6 +74,7 @@ func TestMySqlPrivateModule(t *testing.T) {
 		op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", mySql.GetStringOutput("name"), mySql.GetStringOutput("project_id")))
 		containsIamUser := false
 		containsIamSa := false
+		containsIamGroup := false
 		for _, element := range op.Array() {
 			if element.Get("type").String() == "CLOUD_IAM_USER" && element.Get("name").String() == "dbadmin" {
 				containsIamUser = true
@@ -81,8 +82,12 @@ func TestMySqlPrivateModule(t *testing.T) {
 			if element.Get("type").String() == "CLOUD_IAM_SERVICE_ACCOUNT" && element.Get("name").String() == "cloudsql-mysql-sa-01" {
 				containsIamSa = true
 			}
+			if element.Get("type").String() == "CLOUD_IAM_GROUP" && element.Get("name").String() == "subtest@develop.blueprints.joonix.net" {
+				containsIamGroup = true
+			}
 		}
 		assert.Truef(containsIamUser, "Expected %s cloud iam user", "dbadmin")
+		assert.Truef(containsIamGroup, "Expected %s cloud iam group user", "subtest@develop.blueprints.joonix.net")
 		assert.Truef(containsIamSa, "Expected cloud iam sa [%s]", "cloudsql-mysql-sa-01")
 	})
 
