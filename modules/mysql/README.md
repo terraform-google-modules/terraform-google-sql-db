@@ -2,6 +2,44 @@
 
 Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen) feature which can cause a [Terraform configuration drift](https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform) due to the value in `disk_size` variable, and hence any updates to this variable is ignored in the [Terraform lifecycle](https://www.terraform.io/docs/configuration/resources.html#ignore_changes).
 
+## Usage
+Functional examples are included in the [examples](../../examples/) directory. Basic usage of this module is as follows:
+
+- Create simple mysql instance
+
+```hcl
+module "mysql-db" {
+  source  = "terraform-google-modules/sql-db/google//modules/mysql"
+  version = "~> 23.0"
+
+  name                 = var.db_name
+  random_instance_name = true
+  database_version     = "MYSQL_5_6"
+  project_id           = var.project_id
+  zone                 = "us-central1-c"
+  region               = "us-central1"
+  tier                 = "db-n1-standard-1"
+
+  deletion_protection = false
+
+  ip_configuration = {
+    ipv4_enabled        = true
+    private_network     = null
+    ssl_mode            = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    allocated_ip_range  = null
+    authorized_networks = var.authorized_networks
+  }
+
+
+  database_flags = [
+    {
+      name  = "log_bin_trust_function_creators"
+      value = "on"
+    },
+  ]
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
@@ -36,7 +74,7 @@ Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysq
 | enable\_random\_password\_special | Enable special characters in generated random passwords. | `bool` | `false` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
-| iam\_users | A list of IAM users to be created in your CloudSQL instance | <pre>list(object({<br>    id    = string,<br>    email = string<br>  }))</pre> | `[]` | no |
+| iam\_users | A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD\_IAM\_USER, CLOUD\_IAM\_SERVICE\_ACCOUNT, CLOUD\_IAM\_GROUP and is required for type CLOUD\_IAM\_GROUP (IAM groups) | <pre>list(object({<br>    id    = string,<br>    email = string,<br>    type  = optional(string)<br>  }))</pre> | `[]` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = number<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | instance\_type | Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance\_type. To promote, users have to set the instance\_type property as CLOUD\_SQL\_INSTANCE and remove/unset master\_instance\_name and replica\_configuration from instance configuration. This operation might cause your instance to restart. | `string` | `null` | no |
 | ip\_configuration | The ip\_configuration settings subblock | <pre>object({<br>    authorized_networks                           = optional(list(map(string)), [])<br>    ipv4_enabled                                  = optional(bool, true)<br>    private_network                               = optional(string)<br>    ssl_mode                                      = optional(string)<br>    allocated_ip_range                            = optional(string)<br>    enable_private_path_for_google_cloud_services = optional(bool, false)<br>    psc_enabled                                   = optional(bool, false)<br>    psc_allowed_consumer_projects                 = optional(list(string), [])<br>  })</pre> | `{}` | no |

@@ -159,6 +159,80 @@ mkdir $HOME/mysql_sockets
 mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 ```
 
+## Usage
+Functional examples are included in the [examples](../../examples/) directory. Basic usage of this module is as follows:
+
+- Create safer mysql instance
+
+```hcl
+module "safer-mysql-db" {
+  source  = "terraform-google-modules/sql-db/google//modules/safer_mysql"
+  version = "~> 23.0"
+
+
+  name                 = var.db_name
+  random_instance_name = true
+  project_id           = var.project_id
+
+  deletion_protection = false
+
+  database_version = "MYSQL_8_0"
+  region           = "us-central1"
+  zone             = "us-central1-c"
+  tier             = "db-n1-standard-1"
+
+  database_flags = [
+    {
+      name  = "cloudsql_iam_authentication"
+      value = "on"
+    },
+  ]
+
+  // By default, all users will be permitted to connect only via the
+  // Cloud SQL proxy.
+  additional_users = [
+    {
+      name            = "app"
+      password        = "PaSsWoRd"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
+    },
+    {
+      name            = "readonly"
+      password        = "PaSsWoRd"
+      host            = "localhost"
+      type            = "BUILT_IN"
+      random_password = false
+    },
+  ]
+
+  # Supports creation of both IAM Users and IAM Service Accounts with provided emails
+  iam_users = [
+    {
+      id    = "cloudsql_mysql_sa",
+      email = var.cloudsql_mysql_sa
+    },
+    {
+      id    = "dbadmin",
+      email = "dbadmin@develop.blueprints.joonix.net"
+    },
+    {
+      id    = "subtest",
+      email = "subtest@develop.blueprints.joonix.net"
+      type  = "CLOUD_IAM_GROUP"
+    }
+  ]
+
+  assign_public_ip   = true
+  vpc_network        = module.network-safer-mysql-simple.network_self_link
+  allocated_ip_range = module.private-service-access.google_compute_global_address_name
+
+  // Optional: used to enforce ordering in the creation of resources.
+  module_depends_on = [module.private-service-access.peering_completed]
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
@@ -189,7 +263,7 @@ mysql -S $HOME/mysql_sockets/myproject:region:instance -u user -p
 | edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
-| iam\_users | A list of IAM users to be created in your CloudSQL instance | <pre>list(object({<br>    id    = string,<br>    email = string<br>  }))</pre> | `[]` | no |
+| iam\_users | A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD\_IAM\_USER, CLOUD\_IAM\_SERVICE\_ACCOUNT, CLOUD\_IAM\_GROUP and is required for type CLOUD\_IAM\_GROUP (IAM groups) | <pre>list(object({<br>    id    = string,<br>    email = string,<br>    type  = optional(string)<br>  }))</pre> | `[]` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = number<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |

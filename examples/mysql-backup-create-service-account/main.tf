@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 22.0"
+  version = "~> 23.0"
 
   name                 = "example-mysql-public"
   database_version     = "MYSQL_8_0"
@@ -45,7 +45,7 @@ resource "google_storage_bucket" "backup" {
 
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 22.0"
+  version = "~> 23.0"
 
   region                = "us-central1"
   project_id            = var.project_id

@@ -27,8 +27,8 @@ locals {
   users     = { for u in var.additional_users : u.name => u }
   iam_users = {
     for user in var.iam_users : user.id => {
-      email         = user.email,
-      is_account_sa = trimsuffix(user.email, "gserviceaccount.com") == user.email ? false : true
+      email = user.email
+      type  = trimsuffix(user.email, "gserviceaccount.com") == user.email ? (user.type != null ? user.type : "CLOUD_IAM_USER") : "CLOUD_IAM_SERVICE_ACCOUNT"
     }
   }
 
@@ -302,7 +302,7 @@ resource "google_sql_user" "iam_account" {
   project  = var.project_id
   name     = each.value.email
   instance = google_sql_database_instance.default.name
-  type     = each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : "CLOUD_IAM_USER"
+  type     = each.value.type #each.value.is_account_sa ? "CLOUD_IAM_SERVICE_ACCOUNT" : each.value.type == null ? "CLOUD_IAM_USER" : each.value.type
 
   depends_on = [
     null_resource.module_depends_on,

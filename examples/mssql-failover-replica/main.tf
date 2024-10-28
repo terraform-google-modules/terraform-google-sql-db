@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ locals {
 
 module "mssql1" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 22.0"
+  version = "~> 23.0"
 
   region = local.region_1
 
@@ -56,7 +56,7 @@ module "mssql1" {
 
 module "mssql2" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 22.0"
+  version = "~> 23.0"
 
   master_instance_name = module.mssql1.instance_name
 

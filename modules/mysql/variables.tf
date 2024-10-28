@@ -368,12 +368,12 @@ variable "additional_users" {
     error_message = "You cannot set both password and random_password, choose one of them."
   }
 }
-
 variable "iam_users" {
-  description = "A list of IAM users to be created in your CloudSQL instance"
+  description = "A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP and is required for type CLOUD_IAM_GROUP (IAM groups)"
   type = list(object({
     id    = string,
-    email = string
+    email = string,
+    type  = optional(string)
   }))
   default = []
 }
