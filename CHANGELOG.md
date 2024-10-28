@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [23.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v22.1.0...v23.0.0) (2024-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>=6.1:** add support for IAM groups ([#661](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/661))
+* Change export service account permission for external backups - roles/storage.objectAdmin ([#656](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/656))
+
+### Features
+
+* **TPG>=6.1:** add support for IAM groups ([#661](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/661)) ([744870a](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/744870a18f692bf78bc8b0afacde6b659cf65732))
+
+
+### Bug Fixes
+
+* Change export service account permission for external backups - roles/storage.objectAdmin ([#656](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/656)) ([003237e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/003237e1d007dca76f77723f21106b077f7b8801))
+* lint issue in metadata.display.yaml ([#659](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/659)) ([c414276](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c414276020f5a7fd1e779d484e5c84855aea6ed4))
+
 ## [22.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v22.0.0...v22.1.0) (2024-10-01)
 
 
