@@ -144,6 +144,15 @@ output "dns_name" {
   description = "DNS name of the instance endpoint"
 }
 
+output "database_names" {
+  value = concat([
+    for db in google_sql_database.default : db.name
+    ], [
+    for db in google_sql_database.additional_databases : db.name
+  ])
+  description = "List of all database names created."
+}
+
 output "env_vars" {
   description = "Exported environment variables"
   value = {

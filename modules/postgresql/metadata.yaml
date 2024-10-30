@@ -309,11 +309,12 @@ spec:
             }))
         defaultValue: []
       - name: iam_users
-        description: A list of IAM users to be created in your CloudSQL instance
+        description: A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP and is required for type CLOUD_IAM_GROUP (IAM groups)
         varType: |-
           list(object({
               id    = string,
-              email = string
+              email = string,
+              type  = optional(string)
             }))
         defaultValue: []
         connections:
@@ -321,12 +322,12 @@ spec:
               source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
               version: ~> 4.4
             spec:
-              outputExpr: account_details
+              outputExpr: '{"id": account_details.id, "email": account_details.email, "type": "CLOUD_IAM_SERVICE_ACCOUNT"}'
           - source:
               source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
               version: ~> 0.13
             spec:
-              outputExpr: service_account_id
+              outputExpr: '{"id": service_account_id.id, "email": service_account_id.email, "type": "CLOUD_IAM_SERVICE_ACCOUNT"}'
       - name: create_timeout
         description: The optional timout that is applied to limit long database creates.
         varType: string
@@ -403,6 +404,11 @@ spec:
           - object
           - service_id: string
             service_uri: string
+      - name: database_names
+        description: List of all database names created.
+        type:
+          - list
+          - - string
       - name: dns_name
         description: DNS name of the instance endpoint
         type: string
@@ -912,9 +918,9 @@ spec:
       - workflows.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 5.25, < 7"
+        version: ">= 6.1, < 7"
       - source: hashicorp/google-beta
-        version: ">= 5.25, < 7"
+        version: ">= 6.1, < 7"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random
