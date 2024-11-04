@@ -44,12 +44,12 @@ variable "random_instance_name" {
 
 // required
 variable "database_version" {
-  description = "The database version to use"
+  description = "The database version to use. Can be 9_6, 14, 15, 16, 17."
   type        = string
 
   validation {
     condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
-    error_message = "The specified database version is not a valid representation of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"POSTGRES_14\", \"POSTGRES_15\", \"POSTGRES_17\" or \"POSTGRES_17\""
+    error_message = "The specified database version is not a valid representation of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"14\", \"POSTGRES_14\", \"15\", \"POSTGRES_15\", \"16\", \"POSTGRES_16\" or \"17\", \"POSTGRES_17\""
   }
 }
 
