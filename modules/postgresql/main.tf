@@ -44,8 +44,7 @@ locals {
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 
-  database_name   = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
-  insights_config = var.insights_config != null ? merge({ query_insights_enabled = true }, var.insights_config) : { query_insights_enabled = false }
+  database_name = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
 }
 
 resource "random_id" "suffix" {
@@ -138,8 +137,7 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "insights_config" {
-      # for_each = var.insights_config != null ? [var.insights_config] : ["1"]
-      for_each = [local.insights_config]
+      for_each = [var.insights_config]
 
       content {
         query_insights_enabled  = lookup(insights_config.value, "query_insights_enabled", false)

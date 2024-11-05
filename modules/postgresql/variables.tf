@@ -210,12 +210,19 @@ variable "backup_configuration" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
+    query_insights_enabled  = optional(bool, false)
     query_plans_per_minute  = optional(number, 5)
     query_string_length     = optional(number, 1024)
     record_application_tags = optional(bool, false)
     record_client_address   = optional(bool, false)
   })
-  default = null
+  default = {
+    query_insights_enabled  = false
+    query_plans_per_minute  = 5
+    query_string_length     = 1024
+    record_application_tags = false
+    record_client_address   = false
+  }
 }
 
 variable "password_validation_policy_config" {
@@ -265,6 +272,7 @@ variable "read_replicas" {
       value = string
     })), [])
     insights_config = optional(object({
+      query_insights_enabled  = optional(bool, false)
       query_plans_per_minute  = optional(number, 5)
       query_string_length     = optional(number, 1024)
       record_application_tags = optional(bool, false)
