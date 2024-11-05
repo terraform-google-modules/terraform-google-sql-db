@@ -44,7 +44,8 @@ locals {
   // Force the usage of connector_enforcement
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 
-  database_name = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
+  database_name   = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
+  insights_config = var.insights_config != null ? merge({ query_insights_enabled = true }, var.insights_config) : { query_insights_enabled = false }
 }
 
 resource "random_id" "suffix" {
@@ -137,14 +138,15 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "insights_config" {
-      for_each = var.insights_config != null ? [var.insights_config] : ["1"]
+      # for_each = var.insights_config != null ? [var.insights_config] : ["1"]
+      for_each = [local.insights_config]
 
       content {
-        query_insights_enabled  = var.insights_config != null ? true : false
-        query_plans_per_minute  = var.insights_config != null ? lookup(insights_config.value, "query_plans_per_minute", 5) : null
-        query_string_length     = var.insights_config != null ? lookup(insights_config.value, "query_string_length", 1024) : null
-        record_application_tags = var.insights_config != null ? lookup(insights_config.value, "record_application_tags", false) : null
-        record_client_address   = var.insights_config != null ? lookup(insights_config.value, "record_client_address", false) : null
+        query_insights_enabled  = lookup(insights_config.value, "query_insights_enabled", false)
+        query_plans_per_minute  = lookup(insights_config.value, "query_plans_per_minute", 5)
+        query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
+        record_application_tags = lookup(insights_config.value, "record_application_tags", false)
+        record_client_address   = lookup(insights_config.value, "record_client_address", false)
       }
     }
 
