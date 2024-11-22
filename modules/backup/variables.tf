@@ -192,3 +192,9 @@ variable "notification_channels" {
   type        = list(string)
   default     = []
 }
+
+variable "deletion_protection" {
+  description = "Whether Terraform will be prevented from destroying the workflow."
+  type        = bool
+  default     = true
+}

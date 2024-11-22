@@ -56,4 +56,5 @@ module "backup" {
   backup_schedule       = "5 * * * *"
   export_schedule       = "10 * * * *"
   compress_export       = false
+  deletion_protection   = false
 }

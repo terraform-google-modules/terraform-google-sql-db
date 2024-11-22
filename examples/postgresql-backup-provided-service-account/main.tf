@@ -70,6 +70,7 @@ module "backup" {
   service_account             = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
   create_notification_channel = false
   notification_channels       = [google_monitoring_notification_channel.email.id]
+  deletion_protection         = false
 }
 
 data "google_project" "test_project" {

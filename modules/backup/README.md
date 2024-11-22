@@ -60,6 +60,7 @@ fetch workflows.googleapis.com/Workflow
 | compress\_export | Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL | `bool` | `true` | no |
 | connector\_params\_timeout | The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year). | `number` | `1800` | no |
 | create\_notification\_channel | If set to true it will create email notification channel | `bool` | `false` | no |
+| deletion\_protection | Whether Terraform will be prevented from destroying the workflow. | `bool` | `true` | no |
 | enable\_backup\_monitoring | Whether to monitor backup workflows or not | `bool` | `false` | no |
 | enable\_connector\_params | Whether to enable connector-specific parameters for Google Workflow SQL Export. | `bool` | `false` | no |
 | enable\_export\_backup | Weather to create exports to GCS Buckets with this module | `bool` | `true` | no |

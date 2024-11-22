@@ -99,6 +99,7 @@ resource "google_workflows_workflow" "sql_backup" {
     backupRetentionTime      = var.backup_retention_time
     backupRunsListMaxResults = var.backup_runs_list_max_results
   })
+  deletion_protection = var.deletion_protection
 }
 
 resource "google_cloud_scheduler_job" "sql_backup" {
@@ -171,6 +172,7 @@ resource "google_workflows_workflow" "sql_export" {
     logDbName              = var.log_db_name_to_export
     serverlessExport       = var.use_serverless_export
   })
+  deletion_protection = var.deletion_protection
 }
 
 resource "google_cloud_scheduler_job" "sql_export" {

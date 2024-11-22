@@ -27,7 +27,7 @@ spec:
       dir: /modules/backup
     actuationTool:
       flavor: Terraform
-      version: ">= 0.13"
+      version: ">= 1.3"
     description: {}
   content:
     examples:
@@ -89,6 +89,10 @@ spec:
         description: If set to true it will create email notification channel
         varType: bool
         defaultValue: false
+      - name: deletion_protection
+        description: Whether Terraform will be prevented from destroying the workflow.
+        varType: bool
+        defaultValue: true
       - name: enable_backup_monitoring
         description: Whether to monitor backup workflows or not
         varType: bool
