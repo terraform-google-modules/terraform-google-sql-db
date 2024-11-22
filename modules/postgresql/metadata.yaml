@@ -324,7 +324,7 @@ spec:
               outputExpr: account_details
           - source:
               source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
-              version: ~> 0.13
+              version: ">= 0.14"
             spec:
               outputExpr: service_account_id
       - name: create_timeout
