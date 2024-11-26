@@ -58,6 +58,7 @@ resource "google_sql_database_instance" "default" {
   project             = var.project_id
   name                = local.instance_name
   database_version    = can(regex("\\d", substr(var.database_version, 0, 1))) ? format("POSTGRES_%s", var.database_version) : replace(var.database_version, substr(var.database_version, 0, 8), "POSTGRES")
+  maintenance_version = var.maintenance_version
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection
@@ -136,10 +137,10 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "insights_config" {
-      for_each = var.insights_config != null ? [var.insights_config] : []
+      for_each = [var.insights_config]
 
       content {
-        query_insights_enabled  = true
+        query_insights_enabled  = lookup(insights_config.value, "query_insights_enabled", false)
         query_plans_per_minute  = lookup(insights_config.value, "query_plans_per_minute", 5)
         query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
         record_application_tags = lookup(insights_config.value, "record_application_tags", false)

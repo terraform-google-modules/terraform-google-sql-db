@@ -36,6 +36,12 @@ variable "database_version" {
   type        = string
 }
 
+variable "maintenance_version" {
+  description = "The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored"
+  type        = string
+  default     = null
+}
+
 // required
 variable "region" {
   description = "The region of the Cloud SQL resources"

@@ -44,13 +44,19 @@ variable "random_instance_name" {
 
 // required
 variable "database_version" {
-  description = "The database version to use"
+  description = "The database version to use. Can be 9_6, 14, 15, 16, 17."
   type        = string
 
   validation {
     condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
-    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"POSTGRES_14\" or \"POSTGRES_15\""
+    error_message = "The specified database version is not a valid representation of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"14\", \"POSTGRES_14\", \"15\", \"POSTGRES_15\", \"16\", \"POSTGRES_16\" or \"17\", \"POSTGRES_17\""
   }
+}
+
+variable "maintenance_version" {
+  description = "The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored"
+  type        = string
+  default     = null
 }
 
 // required
@@ -204,12 +210,19 @@ variable "backup_configuration" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
+    query_insights_enabled  = optional(bool, false)
     query_plans_per_minute  = optional(number, 5)
     query_string_length     = optional(number, 1024)
     record_application_tags = optional(bool, false)
     record_client_address   = optional(bool, false)
   })
-  default = null
+  default = {
+    query_insights_enabled  = false
+    query_plans_per_minute  = 5
+    query_string_length     = 1024
+    record_application_tags = false
+    record_client_address   = false
+  }
 }
 
 variable "password_validation_policy_config" {
@@ -259,6 +272,7 @@ variable "read_replicas" {
       value = string
     })), [])
     insights_config = optional(object({
+      query_insights_enabled  = optional(bool, false)
       query_plans_per_minute  = optional(number, 5)
       query_string_length     = optional(number, 1024)
       record_application_tags = optional(bool, false)
