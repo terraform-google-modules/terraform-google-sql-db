@@ -66,10 +66,85 @@ spec:
         description: The project ID to manage the Cloud SQL resources
         varType: string
         required: true
+      - name: region
+        description: The region of the Cloud SQL resources
+        varType: string
+        defaultValue: us-central1
       - name: name
         description: The name of the Cloud SQL instance
         varType: string
         required: true
+      - name: edition
+        description: The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS.
+        varType: string
+      - name: database_version
+        description: The database version to use
+        varType: string
+        required: true
+      - name: availability_type
+        description: The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.
+        varType: string
+        defaultValue: ZONAL
+      - name: enable_default_db
+        description: Enable or disable the creation of the default database
+        varType: bool
+        defaultValue: true
+      - name: db_name
+        description: The name of the default database to create
+        varType: string
+        defaultValue: default
+      - name: enable_default_user
+        description: Enable or disable the creation of the default user
+        varType: bool
+        defaultValue: true
+      - name: user_name
+        description: The name of the default user
+        varType: string
+        defaultValue: default
+      - name: user_password
+        description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
+        varType: string
+        defaultValue: ""
+      - name: deletion_protection
+        description: Used to block Terraform from deleting a SQL Instance.
+        varType: bool
+        defaultValue: true
+      - name: database_flags
+        description: The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)
+        varType: |-
+          list(object({
+              name  = string
+              value = string
+            }))
+        defaultValue: []
+      - name: database_deletion_policy
+        description: "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
+        varType: string
+      - name: user_deletion_policy
+        description: "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+        varType: string
+      - name: data_cache_enabled
+        description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
+        varType: bool
+        defaultValue: false
+      - name: additional_users
+        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
+        varType: |-
+          list(object({
+              name            = string
+              password        = string
+              random_password = bool
+            }))
+        defaultValue: []
+      - name: additional_databases
+        description: A list of databases to be created in your cluster
+        varType: |-
+          list(object({
+              name      = string
+              charset   = string
+              collation = string
+            }))
+        defaultValue: []
       - name: master_instance_name
         description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
         varType: string
@@ -81,21 +156,10 @@ spec:
         description: Sets random suffix at the end of the Cloud SQL resource name
         varType: bool
         defaultValue: false
-      - name: database_version
-        description: The database version to use
-        varType: string
-        required: true
-      - name: region
-        description: The region of the Cloud SQL resources
-        varType: string
-        defaultValue: us-central1
       - name: tier
         description: The tier for the Cloud SQL instance.
         varType: string
         defaultValue: db-f1-micro
-      - name: edition
-        description: The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS.
-        varType: string
       - name: zone
         description: "The zone for the Cloud SQL instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
@@ -109,10 +173,6 @@ spec:
         description: The activation policy for the Cloud SQL instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
         varType: string
         defaultValue: ALWAYS
-      - name: availability_type
-        description: The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.
-        varType: string
-        defaultValue: ZONAL
       - name: deletion_protection_enabled
         description: Enables protection of an Cloud SQL instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
         varType: bool
@@ -153,14 +213,6 @@ spec:
         description: The update track of maintenance window for the Cloud SQL instance maintenance.Can be either `canary` or `stable`.
         varType: string
         defaultValue: canary
-      - name: database_flags
-        description: The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)
-        varType: |-
-          list(object({
-              name  = string
-              value = string
-            }))
-        defaultValue: []
       - name: user_labels
         description: The key/value labels for the Cloud SQL instances.
         varType: map(string)
@@ -223,7 +275,7 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network//modules/vpc
-              version: ~> 9.1
+              version: ">= 9.1"
             spec:
               outputExpr: network_id
               inputPath: private_network
@@ -270,10 +322,6 @@ spec:
         description: The optional suffix to add to the read instance name
         varType: string
         defaultValue: ""
-      - name: db_name
-        description: The name of the default database to create
-        varType: string
-        defaultValue: default
       - name: db_charset
         description: The charset for the default database
         varType: string
@@ -282,51 +330,26 @@ spec:
         description: "The collation for the default database. Example: 'en_US.UTF8'"
         varType: string
         defaultValue: ""
-      - name: additional_databases
-        description: A list of databases to be created in your cluster
-        varType: |-
-          list(object({
-              name      = string
-              charset   = string
-              collation = string
-            }))
-        defaultValue: []
-      - name: user_name
-        description: The name of the default user
-        varType: string
-        defaultValue: default
-      - name: user_password
-        description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
-        varType: string
-        defaultValue: ""
-      - name: additional_users
-        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
-        varType: |-
-          list(object({
-              name            = string
-              password        = string
-              random_password = bool
-            }))
-        defaultValue: []
       - name: iam_users
-        description: A list of IAM users to be created in your CloudSQL instance
+        description: A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP and is required for type CLOUD_IAM_GROUP (IAM groups)
         varType: |-
           list(object({
               id    = string,
-              email = string
+              email = string,
+              type  = optional(string)
             }))
         defaultValue: []
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-service-accounts//modules/simple-sa
-              version: ~> 4.4
+              version: ">= 4.4"
             spec:
-              outputExpr: account_details
+              outputExpr: "{\"id\": account_details.id, \"email\": account_details.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
           - source:
               source: github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2
               version: ">= 0.14"
             spec:
-              outputExpr: service_account_id
+              outputExpr: "{\"id\": service_account_id.id, \"email\": service_account_id.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
       - name: create_timeout
         description: The optional timout that is applied to limit long database creates.
         varType: string
@@ -346,28 +369,10 @@ spec:
         description: List of modules or resources this module depends on.
         varType: list(any)
         defaultValue: []
-      - name: deletion_protection
-        description: Used to block Terraform from deleting a SQL Instance.
-        varType: bool
-        defaultValue: true
       - name: read_replica_deletion_protection
         description: Used to block Terraform from deleting replica SQL Instances.
         varType: bool
         defaultValue: false
-      - name: enable_default_db
-        description: Enable or disable the creation of the default database
-        varType: bool
-        defaultValue: true
-      - name: enable_default_user
-        description: Enable or disable the creation of the default user
-        varType: bool
-        defaultValue: true
-      - name: database_deletion_policy
-        description: "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
-        varType: string
-      - name: user_deletion_policy
-        description: "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
-        varType: string
       - name: enable_random_password_special
         description: Enable special characters in generated random passwords.
         varType: bool
@@ -379,10 +384,6 @@ spec:
       - name: root_password
         description: Initial root password during creation
         varType: string
-      - name: data_cache_enabled
-        description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
-        varType: bool
-        defaultValue: false
       - name: enable_google_ml_integration
         description: Enable database ML integration
         varType: bool
@@ -912,9 +913,9 @@ spec:
       - workflows.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 5.25, < 7"
+        version: ">= 6.1, < 7"
       - source: hashicorp/google-beta
-        version: ">= 5.25, < 7"
+        version: ">= 6.1, < 7"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random
