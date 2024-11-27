@@ -40,6 +40,12 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
+          invisible: false
+          enumValueLabels:
+            - label: REGIONAL
+              value: REGIONAL
+            - label: ZONAL
+              value: ZONAL
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: REGIONAL
@@ -77,6 +83,11 @@ spec:
         database_version:
           name: database_version
           title: Database Version
+          enumValueLabels:
+            - label: MYSQL_8_4
+              value: MYSQL_8_4
+            - label: MYSQL_8_0
+              value: MYSQL_8_0
         db_charset:
           name: db_charset
           title: Db Charset
@@ -86,6 +97,7 @@ spec:
         db_name:
           name: db_name
           title: Db Name
+          invisible: false
         delete_timeout:
           name: delete_timeout
           title: Delete Timeout
@@ -119,15 +131,23 @@ spec:
         edition:
           name: edition
           title: Edition
+          invisible: false
+          enumValueLabels:
+            - label: ENTERPRISE_PLUS
+              value: ENTERPRISE_PLUS
+            - label: ENTERPRISE
+              value: ENTERPRISE
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: ENTERPRISE_PLUS
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
+          invisible: false
         enable_default_user:
           name: enable_default_user
           title: Enable Default User
+          invisible: false
         enable_google_ml_integration:
           name: enable_google_ml_integration
           title: Enable Google Ml Integration
@@ -170,6 +190,8 @@ spec:
         name:
           name: name
           title: Name
+          regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
+          validation: Use lowercase letters, numbers, and hyphens. Start with a letter and end with letter/number. Must be 97 characters or fewer.
         password_validation_policy_config:
           name: password_validation_policy_config
           title: Password Validation Policy Config
@@ -197,6 +219,7 @@ spec:
         region:
           name: region
           title: Region
+          invisible: false
         replica_database_version:
           name: replica_database_version
           title: Replica Database Version

@@ -19,9 +19,125 @@ variable "project_id" {
   description = "The project ID to manage the Cloud SQL resources"
 }
 
+variable "region" {
+  type        = string
+  description = "The region of the Cloud SQL resources"
+  default     = "us-central1"
+}
+
 variable "name" {
   type        = string
   description = "The name of the Cloud SQL instance"
+}
+
+variable "edition" {
+  description = "The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
+// required
+variable "database_version" {
+  description = "The database version to use"
+  type        = string
+
+  validation {
+    condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
+    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"POSTGRES_14\" or \"POSTGRES_15\""
+  }
+}
+
+variable "availability_type" {
+  description = "The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`."
+  type        = string
+  default     = "ZONAL"
+}
+
+variable "enable_default_db" {
+  description = "Enable or disable the creation of the default database"
+  type        = bool
+  default     = true
+}
+
+variable "db_name" {
+  description = "The name of the default database to create"
+  type        = string
+  default     = "default"
+}
+
+variable "enable_default_user" {
+  description = "Enable or disable the creation of the default user"
+  type        = bool
+  default     = true
+}
+
+variable "user_name" {
+  description = "The name of the default user"
+  type        = string
+  default     = "default"
+}
+
+variable "user_password" {
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  type        = string
+  default     = ""
+}
+
+variable "deletion_protection" {
+  description = "Used to block Terraform from deleting a SQL Instance."
+  type        = bool
+  default     = true
+}
+
+variable "database_flags" {
+  description = "The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)"
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  default = []
+}
+
+variable "database_deletion_policy" {
+  description = "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}
+
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
+}
+
+variable "additional_users" {
+  description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
+  type = list(object({
+    name            = string
+    password        = string
+    random_password = bool
+  }))
+  default = []
+  validation {
+    condition     = length([for user in var.additional_users : false if(user.random_password == false && (user.password == null || user.password == "")) || (user.random_password == true && (user.password != null && user.password != ""))]) == 0
+    error_message = "Password is a requird field for built_in Postgres users and you cannot set both password and random_password, choose one of them."
+  }
+}
+
+variable "additional_databases" {
+  description = "A list of databases to be created in your cluster"
+  type = list(object({
+    name      = string
+    charset   = string
+    collation = string
+  }))
+  default = []
 }
 
 variable "master_instance_name" {
@@ -42,34 +158,10 @@ variable "random_instance_name" {
   default     = false
 }
 
-// required
-variable "database_version" {
-  description = "The database version to use"
-  type        = string
-
-  validation {
-    condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
-    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"POSTGRES_14\" or \"POSTGRES_15\""
-  }
-}
-
-// required
-variable "region" {
-  type        = string
-  description = "The region of the Cloud SQL resources"
-  default     = "us-central1"
-}
-
 variable "tier" {
   description = "The tier for the Cloud SQL instance."
   type        = string
   default     = "db-f1-micro"
-}
-
-variable "edition" {
-  description = "The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS."
-  type        = string
-  default     = null
 }
 
 variable "zone" {
@@ -94,12 +186,6 @@ variable "activation_policy" {
   description = "The activation policy for the Cloud SQL instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   type        = string
   default     = "ALWAYS"
-}
-
-variable "availability_type" {
-  description = "The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`."
-  type        = string
-  default     = "ZONAL"
 }
 
 variable "deletion_protection_enabled" {
@@ -160,15 +246,6 @@ variable "maintenance_window_update_track" {
   description = "The update track of maintenance window for the Cloud SQL instance maintenance.Can be either `canary` or `stable`."
   type        = string
   default     = "canary"
-}
-
-variable "database_flags" {
-  description = "The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)"
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  default = []
 }
 
 variable "user_labels" {
@@ -286,12 +363,6 @@ variable "read_replica_name_suffix" {
   default     = ""
 }
 
-variable "db_name" {
-  description = "The name of the default database to create"
-  type        = string
-  default     = "default"
-}
-
 variable "db_charset" {
   description = "The charset for the default database"
   type        = string
@@ -302,42 +373,6 @@ variable "db_collation" {
   description = "The collation for the default database. Example: 'en_US.UTF8'"
   type        = string
   default     = ""
-}
-
-variable "additional_databases" {
-  description = "A list of databases to be created in your cluster"
-  type = list(object({
-    name      = string
-    charset   = string
-    collation = string
-  }))
-  default = []
-}
-
-variable "user_name" {
-  description = "The name of the default user"
-  type        = string
-  default     = "default"
-}
-
-variable "user_password" {
-  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
-  type        = string
-  default     = ""
-}
-
-variable "additional_users" {
-  description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
-  type = list(object({
-    name            = string
-    password        = string
-    random_password = bool
-  }))
-  default = []
-  validation {
-    condition     = length([for user in var.additional_users : false if(user.random_password == false && (user.password == null || user.password == "")) || (user.random_password == true && (user.password != null && user.password != ""))]) == 0
-    error_message = "Password is a requird field for built_in Postgres users and you cannot set both password and random_password, choose one of them."
-  }
 }
 
 variable "iam_users" {
@@ -380,40 +415,10 @@ variable "module_depends_on" {
   default     = []
 }
 
-variable "deletion_protection" {
-  description = "Used to block Terraform from deleting a SQL Instance."
-  type        = bool
-  default     = true
-}
-
 variable "read_replica_deletion_protection" {
   description = "Used to block Terraform from deleting replica SQL Instances."
   type        = bool
   default     = false
-}
-
-variable "enable_default_db" {
-  description = "Enable or disable the creation of the default database"
-  type        = bool
-  default     = true
-}
-
-variable "enable_default_user" {
-  description = "Enable or disable the creation of the default user"
-  type        = bool
-  default     = true
-}
-
-variable "database_deletion_policy" {
-  description = "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
-  type        = string
-  default     = null
-}
-
-variable "user_deletion_policy" {
-  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
-  type        = string
-  default     = null
 }
 
 variable "enable_random_password_special" {
@@ -432,12 +437,6 @@ variable "root_password" {
   description = "Initial root password during creation"
   type        = string
   default     = null
-}
-
-variable "data_cache_enabled" {
-  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
-  type        = bool
-  default     = false
 }
 
 variable "enable_google_ml_integration" {

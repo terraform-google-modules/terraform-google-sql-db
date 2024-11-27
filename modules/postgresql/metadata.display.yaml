@@ -40,6 +40,7 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
+          invisible: false
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: REGIONAL
@@ -80,6 +81,19 @@ spec:
         database_version:
           name: database_version
           title: Database Version
+          enumValueLabels:
+            - label: POSTGRES_12
+              value: POSTGRES_12
+            - label: POSTGRES_13
+              value: POSTGRES_13
+            - label: POSTGRES_14
+              value: POSTGRES_14
+            - label: POSTGRES_15
+              value: POSTGRES_15
+            - label: POSTGRES_16
+              value: POSTGRES_16
+            - label: POSTGRES_17
+              value: POSTGRES_17
         db_charset:
           name: db_charset
           title: Db Charset
@@ -89,6 +103,7 @@ spec:
         db_name:
           name: db_name
           title: Db Name
+          invisible: false
         delete_timeout:
           name: delete_timeout
           title: Delete Timeout
@@ -122,15 +137,23 @@ spec:
         edition:
           name: edition
           title: Edition
+          invisible: false
+          enumValueLabels:
+            - label: ENTERPRISE_PLUS
+              value: ENTERPRISE_PLUS
+            - label: ENTERPRISE
+              value: ENTERPRISE
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: ENTERPRISE_PLUS
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
+          invisible: false
         enable_default_user:
           name: enable_default_user
           title: Enable Default User
+          invisible: false
         enable_google_ml_integration:
           name: enable_google_ml_integration
           title: Enable Google Ml Integration
@@ -173,6 +196,8 @@ spec:
         name:
           name: name
           title: Name
+          regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
+          validation: Use lowercase letters, numbers, and hyphens. Start with a letter and end with letter/number. Must be 97 characters or fewer.
         password_validation_policy_config:
           name: password_validation_policy_config
           title: Password Validation Policy Config
@@ -200,6 +225,7 @@ spec:
         region:
           name: region
           title: Region
+          invisible: false
         root_password:
           name: root_password
           title: Root Password
