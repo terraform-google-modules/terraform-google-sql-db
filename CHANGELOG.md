@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [24.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v23.0.0...v24.0.0) (2024-11-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* add deletion_protection to backup module and set it to false in … ([#670](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/670))
+
+### Bug Fixes
+
+* add deletion_protection to backup module and set it to false in … ([#670](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/670)) ([5e39538](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5e3953877fa8de275903010d123a6d15472dc9ba))
+* update connection metadata ([#668](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/668)) ([8cb3a03](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8cb3a03acaffef72e8a924c6ff0d11a0f645c1ef))
+
 ## [23.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v22.1.0...v23.0.0) (2024-10-28)
 
 
