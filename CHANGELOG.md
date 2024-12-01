@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [24.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.0...v24.0.1) (2024-12-01)
+
+
+### Bug Fixes
+
+* add alternate default for tier for postgresql ([#674](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/674)) ([fba7921](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/fba7921c09ffa54afee77142f3321ba60e701f8f))
+
 ## [24.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v23.0.0...v24.0.0) (2024-11-27)
 
 
