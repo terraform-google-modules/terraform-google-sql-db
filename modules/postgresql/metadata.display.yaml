@@ -235,6 +235,9 @@ spec:
         tier:
           name: tier
           title: Tier
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: db-perf-optimized-N-8
         update_timeout:
           name: update_timeout
           title: Update Timeout
