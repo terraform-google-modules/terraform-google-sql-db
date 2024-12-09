@@ -190,7 +190,7 @@ spec:
         varType: number
         defaultValue: 0
       - name: disk_size
-        description: The disk size for the Cloud SQL instance.
+        description: The disk size (in GB) for the Cloud SQL instance.
         varType: number
         defaultValue: 10
       - name: disk_type
@@ -398,12 +398,6 @@ spec:
         type:
           - tuple
           - []
-      - name: apphub_service_uri
-        description: Service URI in CAIS style to be used by Apphub.
-        type:
-          - object
-          - service_id: string
-            service_uri: string
       - name: dns_name
         description: DNS name of the instance endpoint
         type: string

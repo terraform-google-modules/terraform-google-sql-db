@@ -65,7 +65,7 @@ module "mysql-db" {
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
-| disk\_size | The disk size for the master instance | `number` | `10` | no |
+| disk\_size | The disk size (in GB) for the master instance | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
@@ -110,7 +110,6 @@ module "mysql-db" {
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
-| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |

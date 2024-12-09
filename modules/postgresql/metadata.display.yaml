@@ -40,13 +40,14 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
-          invisible: false
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: REGIONAL
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value:
@@ -103,7 +104,7 @@ spec:
         db_name:
           name: db_name
           title: Db Name
-          invisible: false
+          level: 1
         delete_timeout:
           name: delete_timeout
           title: Delete Timeout
@@ -131,13 +132,15 @@ spec:
         disk_size:
           name: disk_size
           title: Disk Size
+          level: 1
         disk_type:
           name: disk_type
           title: Disk Type
+          level: 1
         edition:
           name: edition
           title: Edition
-          invisible: false
+          level: 1
           enumValueLabels:
             - label: ENTERPRISE_PLUS
               value: ENTERPRISE_PLUS
@@ -149,11 +152,11 @@ spec:
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
-          invisible: false
+          level: 1
         enable_default_user:
           name: enable_default_user
           title: Enable Default User
-          invisible: false
+          level: 1
         enable_google_ml_integration:
           name: enable_google_ml_integration
           title: Enable Google Ml Integration
@@ -225,7 +228,7 @@ spec:
         region:
           name: region
           title: Region
-          invisible: false
+          level: 1
         root_password:
           name: root_password
           title: Root Password
@@ -235,6 +238,7 @@ spec:
         tier:
           name: tier
           title: Tier
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: db-perf-optimized-N-8
