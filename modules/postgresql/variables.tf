@@ -213,7 +213,7 @@ variable "disk_autoresize_limit" {
 }
 
 variable "disk_size" {
-  description = "The disk size for the Cloud SQL instance."
+  description = "The disk size (in GB) for the Cloud SQL instance."
   type        = number
   default     = 10
 }

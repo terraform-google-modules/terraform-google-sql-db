@@ -227,7 +227,7 @@ variable "disk_autoresize_limit" {
 }
 
 variable "disk_size" {
-  description = "The disk size for the master instance"
+  description = "The disk size (in GB) for the master instance"
   type        = number
   default     = 10
 }

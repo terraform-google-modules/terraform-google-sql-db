@@ -211,7 +211,7 @@ spec:
         varType: number
         defaultValue: 0
       - name: disk_size
-        description: The disk size for the master instance
+        description: The disk size (in GB) for the master instance
         varType: number
         defaultValue: 10
       - name: disk_type
@@ -408,12 +408,6 @@ spec:
         type:
           - tuple
           - []
-      - name: apphub_service_uri
-        description: Service URI in CAIS style to be used by Apphub.
-        type:
-          - object
-          - service_id: string
-            service_uri: string
       - name: env_vars
         description: Exported environment variables
         type:
