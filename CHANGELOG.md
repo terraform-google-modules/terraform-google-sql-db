@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.1...v25.0.0) (2024-12-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove output variable apphub_service_uri from postgersql/mysql module as it is not supported ([#676](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/676))
+
+### Bug Fixes
+
+* remove output variable apphub_service_uri from postgersql/mysql module as it is not supported ([#676](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/676)) ([de13aa9](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/de13aa975f9bcdfd642bff94884a70aa1b43ce14))
+
 ## [24.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.0...v24.0.1) (2024-12-01)
 
 
