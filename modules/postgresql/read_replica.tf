@@ -19,11 +19,10 @@ locals {
     for x in var.read_replicas : "${var.name}-replica${var.read_replica_name_suffix}${x.name}" => x
   }
   // Zone for replica instances
-  zone = var.zone == null ? data.google_compute_zones.available[0].names[0] : var.zone
+  zone = var.zone == null ? data.google_compute_zones.available.names[0] : var.zone
 }
 
 data "google_compute_zones" "available" {
-  count   = var.zone == null ? 1 : 0
   project = var.project_id
   region  = var.region
 }
