@@ -56,6 +56,7 @@ resource "google_sql_database_instance" "default" {
   project              = var.project_id
   name                 = local.master_instance_name
   database_version     = var.database_version
+  maintenance_version  = var.maintenance_version
   region               = var.region
   master_instance_name = var.master_instance_name
   instance_type        = var.instance_type
