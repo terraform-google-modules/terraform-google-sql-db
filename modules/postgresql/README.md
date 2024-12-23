@@ -39,7 +39,7 @@ module "pg" {
 
   ip_configuration = {
     ipv4_enabled       = true
-    require_ssl        = true
+    ssl_mode           = "ENCRYPTED_ONLY" // can also be ALLOW_UNENCRYPTED_AND_ENCRYPTED
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [
