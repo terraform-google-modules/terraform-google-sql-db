@@ -60,7 +60,7 @@ variable "enable_default_db" {
 }
 
 variable "db_name" {
-  description = "The name of the default database to create"
+  description = "The name of the default database to create. This should be unique per Cloud SQL instance."
   type        = string
   default     = "default"
 }

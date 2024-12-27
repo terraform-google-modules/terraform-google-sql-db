@@ -57,7 +57,7 @@ spec:
             - type: ALTERNATE_TYPE_DC
               value:
                 enabled: true
-                point_in_time_recovery_enabled: true
+                binary_log_enabled: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement

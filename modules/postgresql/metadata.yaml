@@ -90,7 +90,7 @@ spec:
         varType: bool
         defaultValue: true
       - name: db_name
-        description: The name of the default database to create
+        description: The name of the default database to create. This should be unique per Cloud SQL instance.
         varType: string
         defaultValue: default
       - name: enable_default_user
