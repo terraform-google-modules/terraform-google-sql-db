@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.0...v25.0.1) (2024-12-28)
+
+
+### Bug Fixes
+
+* remove point_in_time_recorvery_enabled from MySQL instance as it… ([#689](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/689)) ([a86d2b8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a86d2b826350e633be6b89876244039f9dcd43ad))
+
 ## [25.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.1...v25.0.0) (2024-12-10)
 
 
