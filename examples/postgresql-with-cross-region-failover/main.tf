@@ -158,7 +158,7 @@ module "pg2" {
   version = "~> 24.0"
 
 
-  # Comment this parameter to promot instance 2 as primary instance. This will break replication between instance 1 and 2
+  # Comment this parameter to promote instance 2 as primary instance.
   master_instance_name = module.pg1.instance_name
 
   name                 = var.pg_name_2
