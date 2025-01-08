@@ -62,7 +62,7 @@ variable "enable_default_db" {
 }
 
 variable "db_name" {
-  description = "The name of the default database to create"
+  description = "The name of the default database to create. This should be unique per Cloud SQL instance."
   type        = string
   default     = "default"
 }
@@ -301,7 +301,6 @@ variable "backup_configuration" {
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
-    point_in_time_recovery_enabled = optional(bool, false)
     transaction_log_retention_days = optional(string)
     retained_backups               = optional(number)
     retention_unit                 = optional(string)

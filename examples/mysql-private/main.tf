@@ -29,7 +29,7 @@ locals {
 
 module "network-safer-mysql-simple" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 9.0"
+  version = "~> 10.0"
 
   project_id   = var.project_id
   network_name = local.network_name
@@ -39,7 +39,7 @@ module "network-safer-mysql-simple" {
 
 module "private-service-access" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
-  version = "~> 23.0"
+  version = "~> 24.0"
 
   project_id      = var.project_id
   vpc_network     = module.network-safer-mysql-simple.network_name
@@ -48,7 +48,7 @@ module "private-service-access" {
 
 module "safer-mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/safer_mysql"
-  version = "~> 23.0"
+  version = "~> 24.0"
 
 
   name                 = var.db_name
