@@ -62,12 +62,14 @@ spec:
         data_cache_enabled:
           name: data_cache_enabled
           title: Data Cache Enabled
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: true
         database_deletion_policy:
           name: database_deletion_policy
           title: Database Deletion Policy
+          level: 1
         database_flags:
           name: database_flags
           title: Database Flags
@@ -83,18 +85,21 @@ spec:
           name: database_version
           title: Database Version
           enumValueLabels:
-            - label: POSTGRES_12
-              value: POSTGRES_12
-            - label: POSTGRES_13
-              value: POSTGRES_13
-            - label: POSTGRES_14
-              value: POSTGRES_14
-            - label: POSTGRES_15
-              value: POSTGRES_15
-            - label: POSTGRES_16
-              value: POSTGRES_16
             - label: POSTGRES_17
               value: POSTGRES_17
+            - label: POSTGRES_16
+              value: POSTGRES_16
+            - label: POSTGRES_15
+              value: POSTGRES_15
+            - label: POSTGRES_14
+              value: POSTGRES_14
+            - label: POSTGRES_13
+              value: POSTGRES_13
+            - label: POSTGRES_12
+              value: POSTGRES_12
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: POSTGRES_15
         db_charset:
           name: db_charset
           title: Db Charset
@@ -111,24 +116,29 @@ spec:
         deletion_protection:
           name: deletion_protection
           title: Deletion Protection
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: false
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
           altDefaults:
             - type: ALTERNATE_TYPE_DC
-              value: true
+              value: false
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
+          level: 1
         disk_size:
           name: disk_size
           title: Disk Size
@@ -207,6 +217,7 @@ spec:
         pricing_plan:
           name: pricing_plan
           title: Pricing Plan
+          level: 1
         project_id:
           name: project_id
           title: Project Id
@@ -232,6 +243,7 @@ spec:
         root_password:
           name: root_password
           title: Root Password
+          level: 1
         secondary_zone:
           name: secondary_zone
           title: Secondary Zone
@@ -254,9 +266,12 @@ spec:
         user_name:
           name: user_name
           title: User Name
+          level: 1
         user_password:
           name: user_password
           title: User Password
+          level: 1
         zone:
           name: zone
           title: Zone
+          level: 1

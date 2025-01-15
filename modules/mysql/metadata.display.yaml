@@ -89,6 +89,9 @@ spec:
               value: MYSQL_8_4
             - label: MYSQL_8_0
               value: MYSQL_8_0
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: MYSQL_8_0
         db_charset:
           name: db_charset
           title: Db Charset
@@ -105,24 +108,29 @@ spec:
         deletion_protection:
           name: deletion_protection
           title: Deletion Protection
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: false
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
           altDefaults:
             - type: ALTERNATE_TYPE_DC
-              value: true
+              value: false
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
+          level: 1
         disk_size:
           name: disk_size
           title: Disk Size
@@ -201,6 +209,7 @@ spec:
         pricing_plan:
           name: pricing_plan
           title: Pricing Plan
+          level: 1
         project_id:
           name: project_id
           title: Project Id
@@ -229,6 +238,7 @@ spec:
         root_password:
           name: root_password
           title: Root Password
+          level: 1
         secondary_zone:
           name: secondary_zone
           title: Secondary Zone
@@ -254,9 +264,12 @@ spec:
         user_name:
           name: user_name
           title: User Name
+          level: 1
         user_password:
           name: user_password
           title: User Password
+          level: 1
         zone:
           name: zone
           title: Zone
+          level: 1

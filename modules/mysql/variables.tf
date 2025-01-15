@@ -67,11 +67,16 @@ variable "enable_default_user" {
   default     = true
 }
 
-
 variable "user_name" {
   description = "The name of the default user"
   type        = string
   default     = "default"
+}
+
+variable "user_password" {
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  type        = string
+  default     = ""
 }
 
 variable "user_host" {
@@ -84,12 +89,6 @@ variable "root_password" {
   description = "MySQL password for the root user."
   type        = string
   default     = null
-}
-
-variable "user_password" {
-  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
-  type        = string
-  default     = ""
 }
 
 variable "deletion_protection" {
