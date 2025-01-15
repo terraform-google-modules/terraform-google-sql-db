@@ -243,7 +243,7 @@ resource "random_password" "user-password" {
 
   lifecycle {
     ignore_changes = [
-      min_lower, min_upper, min_numeric
+      min_lower, min_upper, min_numeric, special, min_special, length
     ]
   }
 }
@@ -263,7 +263,7 @@ resource "random_password" "additional_passwords" {
 
   lifecycle {
     ignore_changes = [
-      min_lower, min_upper, min_numeric
+      min_lower, min_upper, min_numeric, special, min_special, length
     ]
   }
 }
