@@ -83,6 +83,12 @@ variable "user_password" {
   default     = ""
 }
 
+variable "root_password" {
+  description = "Initial root password during creation"
+  type        = string
+  default     = null
+}
+
 variable "deletion_protection" {
   description = "Used to block Terraform from deleting a SQL Instance."
   type        = bool
@@ -431,12 +437,6 @@ variable "connector_enforcement" {
   description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
-}
-
-variable "root_password" {
-  description = "Initial root password during creation"
-  type        = string
-  default     = null
 }
 
 variable "enable_google_ml_integration" {
