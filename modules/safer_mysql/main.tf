@@ -60,11 +60,13 @@ module "safer_mysql" {
     allocated_ip_range  = var.allocated_ip_range
   }
 
-  db_name      = var.db_name
-  db_charset   = var.db_charset
-  db_collation = var.db_collation
+  enable_default_db = var.enable_default_db
+  db_name           = var.db_name
+  db_charset        = var.db_charset
+  db_collation      = var.db_collation
 
   additional_databases = var.additional_databases
+  enable_default_user  = var.enable_default_user
   user_name            = var.user_name
 
   // All MySQL users can connect only via the Cloud SQL Proxy.
