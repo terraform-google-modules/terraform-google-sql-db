@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,15 +60,22 @@ resource "google_project_service_identity" "cloudsql_sa" {
   service = "sqladmin.googleapis.com"
 }
 
+resource "time_sleep" "wait_10m" {
+  depends_on      = [google_project_service_identity.cloudsql_sa]
+  create_duration = "10m"
+}
+
 resource "google_kms_crypto_key_iam_member" "crypto_key_region1" {
   crypto_key_id = google_kms_crypto_key.cloudsql_region1_key.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  member        = "serviceAccount:${google_project_service_identity.cloudsql_sa.email}"
+  member        = google_project_service_identity.cloudsql_sa.member
+  depends_on    = [time_sleep.wait_10m]
 }
 
 resource "google_kms_crypto_key_iam_member" "crypto_key_region2" {
   crypto_key_id = google_kms_crypto_key.cloudsql_region2_key.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  member        = "serviceAccount:${google_project_service_identity.cloudsql_sa.email}"
+  member        = google_project_service_identity.cloudsql_sa.member
+  depends_on    = [time_sleep.wait_10m]
 }
 

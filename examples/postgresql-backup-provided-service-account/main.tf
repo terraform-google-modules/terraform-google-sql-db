@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 module "postgresql" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 22.0"
+  version = "~> 25.0"
 
   name                 = "example-postgres"
   random_instance_name = true
@@ -56,7 +56,7 @@ resource "google_monitoring_notification_channel" "email" {
 
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 22.0"
+  version = "~> 25.0"
 
   region                      = "us-central1"
   project_id                  = var.project_id
@@ -70,6 +70,7 @@ module "backup" {
   service_account             = "${data.google_project.test_project.number}-compute@developer.gserviceaccount.com"
   create_notification_channel = false
   notification_channels       = [google_monitoring_notification_channel.email.id]
+  deletion_protection         = false
 }
 
 data "google_project" "test_project" {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ locals {
 
 module "network-safer-mysql-simple" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 9.0"
+  version = "~> 10.0"
 
   project_id   = var.project_id
   network_name = local.network_name
@@ -39,7 +39,7 @@ module "network-safer-mysql-simple" {
 
 module "private-service-access" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
-  version = "~> 22.0"
+  version = "~> 25.0"
 
   project_id      = var.project_id
   vpc_network     = module.network-safer-mysql-simple.network_name
@@ -48,7 +48,8 @@ module "private-service-access" {
 
 module "safer-mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/safer_mysql"
-  version = "~> 22.0"
+  version = "~> 25.0"
+
 
   name                 = var.db_name
   random_instance_name = true
@@ -96,6 +97,11 @@ module "safer-mysql-db" {
     {
       id    = "dbadmin",
       email = "dbadmin@develop.blueprints.joonix.net"
+    },
+    {
+      id    = "subtest",
+      email = "subtest@develop.blueprints.joonix.net"
+      type  = "CLOUD_IAM_GROUP"
     }
   ]
 

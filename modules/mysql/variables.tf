@@ -19,9 +19,129 @@ variable "project_id" {
   type        = string
 }
 
+// required
+variable "region" {
+  description = "The region of the Cloud SQL resources"
+  type        = string
+  default     = "us-central1"
+}
+
 variable "name" {
   type        = string
   description = "The name of the Cloud SQL resources"
+}
+
+variable "edition" {
+  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
+  type        = string
+  default     = null
+}
+
+// required
+variable "database_version" {
+  description = "The database version to use"
+  type        = string
+}
+
+variable "availability_type" {
+  description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
+  type        = string
+  default     = "REGIONAL"
+}
+
+variable "enable_default_db" {
+  description = "Enable or disable the creation of the default database"
+  type        = bool
+  default     = true
+}
+
+variable "db_name" {
+  description = "The name of the default database to create. This should be unique per Cloud SQL instance."
+  type        = string
+  default     = "default"
+}
+
+variable "enable_default_user" {
+  description = "Enable or disable the creation of the default user"
+  type        = bool
+  default     = true
+}
+
+variable "user_name" {
+  description = "The name of the default user"
+  type        = string
+  default     = "default"
+}
+
+variable "user_password" {
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  type        = string
+  default     = ""
+}
+
+variable "user_host" {
+  description = "The host for the default user"
+  type        = string
+  default     = "%"
+}
+
+variable "root_password" {
+  description = "MySQL password for the root user."
+  type        = string
+  default     = null
+}
+
+variable "deletion_protection" {
+  description = "Used to block Terraform from deleting a SQL Instance."
+  type        = bool
+  default     = true
+}
+
+variable "user_deletion_policy" {
+  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
+  type        = string
+  default     = null
+}
+
+variable "data_cache_enabled" {
+  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
+  type        = bool
+  default     = false
+}
+
+variable "additional_databases" {
+  description = "A list of databases to be created in your cluster"
+  type = list(object({
+    name      = string
+    charset   = string
+    collation = string
+  }))
+  default = []
+}
+
+variable "additional_users" {
+  description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
+  type = list(object({
+    name            = string
+    password        = string
+    random_password = bool
+    type            = string
+    host            = string
+  }))
+  default = []
+  validation {
+    condition     = length([for user in var.additional_users : false if user.random_password == true && (user.password != null && user.password != "")]) == 0
+    error_message = "You cannot set both password and random_password, choose one of them."
+  }
+}
+variable "iam_users" {
+  description = "A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP and is required for type CLOUD_IAM_GROUP (IAM groups)"
+  type = list(object({
+    id    = string,
+    email = string,
+    type  = optional(string)
+  }))
+  default = []
 }
 
 variable "random_instance_name" {
@@ -34,19 +154,6 @@ variable "replica_database_version" {
   description = "The read replica database version to use. This var should only be used during a database update. The update sequence 1. read-replica 2. master, setting this to an updated version will cause the replica to update, then you may update the master with the var database_version and remove this field after update is complete"
   type        = string
   default     = ""
-}
-
-// required
-variable "database_version" {
-  description = "The database version to use"
-  type        = string
-}
-
-// required
-variable "region" {
-  description = "The region of the Cloud SQL resources"
-  type        = string
-  default     = "us-central1"
 }
 
 // optional
@@ -68,12 +175,6 @@ variable "tier" {
   description = "The tier for the master instance."
   type        = string
   default     = "db-n1-standard-1"
-}
-
-variable "edition" {
-  description = "The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS."
-  type        = string
-  default     = null
 }
 
 variable "zone" {
@@ -98,12 +199,6 @@ variable "activation_policy" {
   description = "The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`."
   type        = string
   default     = "ALWAYS"
-}
-
-variable "availability_type" {
-  description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
-  type        = string
-  default     = "REGIONAL"
 }
 
 variable "deletion_protection_enabled" {
@@ -131,7 +226,7 @@ variable "disk_autoresize_limit" {
 }
 
 variable "disk_size" {
-  description = "The disk size for the master instance"
+  description = "The disk size (in GB) for the master instance"
   type        = number
   default     = 10
 }
@@ -182,12 +277,6 @@ variable "user_labels" {
   description = "The key/value labels for the master instances."
 }
 
-variable "data_cache_enabled" {
-  description = "Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions"
-  type        = bool
-  default     = false
-}
-
 variable "deny_maintenance_period" {
   description = "The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)"
   type = list(object({
@@ -205,7 +294,6 @@ variable "backup_configuration" {
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
-    point_in_time_recovery_enabled = optional(bool, false)
     transaction_log_retention_days = optional(string)
     retained_backups               = optional(number)
     retention_unit                 = optional(string)
@@ -290,6 +378,7 @@ variable "read_replicas" {
       psc_allowed_consumer_projects                 = optional(list(string), [])
     })
     encryption_key_name = optional(string)
+    data_cache_enabled  = optional(bool)
   }))
   default = []
 }
@@ -298,12 +387,6 @@ variable "read_replica_name_suffix" {
   description = "The optional suffix to add to the read instance name"
   type        = string
   default     = ""
-}
-
-variable "db_name" {
-  description = "The name of the default database to create"
-  type        = string
-  default     = "default"
 }
 
 variable "db_charset" {
@@ -316,65 +399,6 @@ variable "db_collation" {
   description = "The collation for the default database. Example: 'utf8_general_ci'"
   type        = string
   default     = ""
-}
-
-variable "additional_databases" {
-  description = "A list of databases to be created in your cluster"
-  type = list(object({
-    name      = string
-    charset   = string
-    collation = string
-  }))
-  default = []
-}
-
-variable "user_name" {
-  description = "The name of the default user"
-  type        = string
-  default     = "default"
-}
-
-variable "user_host" {
-  description = "The host for the default user"
-  type        = string
-  default     = "%"
-}
-
-variable "root_password" {
-  description = "MySQL password for the root user."
-  type        = string
-  default     = null
-}
-
-variable "user_password" {
-  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
-  type        = string
-  default     = ""
-}
-
-variable "additional_users" {
-  description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
-  type = list(object({
-    name            = string
-    password        = string
-    random_password = bool
-    type            = string
-    host            = string
-  }))
-  default = []
-  validation {
-    condition     = length([for user in var.additional_users : false if user.random_password == true && (user.password != null && user.password != "")]) == 0
-    error_message = "You cannot set both password and random_password, choose one of them."
-  }
-}
-
-variable "iam_users" {
-  description = "A list of IAM users to be created in your CloudSQL instance"
-  type = list(object({
-    id    = string,
-    email = string
-  }))
-  default = []
 }
 
 variable "create_timeout" {
@@ -407,28 +431,10 @@ variable "module_depends_on" {
   default     = []
 }
 
-variable "deletion_protection" {
-  description = "Used to block Terraform from deleting a SQL Instance."
-  type        = bool
-  default     = true
-}
-
 variable "read_replica_deletion_protection" {
   description = "Used to block Terraform from deleting replica SQL Instances."
   type        = bool
   default     = false
-}
-
-variable "enable_default_db" {
-  description = "Enable or disable the creation of the default database"
-  type        = bool
-  default     = true
-}
-
-variable "enable_default_user" {
-  description = "Enable or disable the creation of the default user"
-  type        = bool
-  default     = true
 }
 
 variable "enable_random_password_special" {
@@ -441,12 +447,6 @@ variable "connector_enforcement" {
   description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
-}
-
-variable "user_deletion_policy" {
-  description = "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
-  type        = string
-  default     = null
 }
 
 variable "enable_google_ml_integration" {

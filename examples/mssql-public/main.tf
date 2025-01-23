@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 module "mssql" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 22.0"
+  version = "~> 25.0"
 
   name                 = var.name
   random_instance_name = true

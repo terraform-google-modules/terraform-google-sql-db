@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 module "postgresql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 22.0"
+  version = "~> 25.0"
 
   name                 = var.db_name
   random_instance_name = true
@@ -79,6 +79,11 @@ module "postgresql-db" {
     {
       id    = "dbadmin",
       email = "dbadmin@develop.blueprints.joonix.net"
+    },
+    {
+      id    = "subtest",
+      email = "subtest@develop.blueprints.joonix.net"
+      type  = "CLOUD_IAM_GROUP"
     }
   ]
 }

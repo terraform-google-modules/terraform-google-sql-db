@@ -5,6 +5,76 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.0.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.1...v25.0.2) (2025-01-16)
+
+
+### Bug Fixes
+
+* to avoid password reset for existing additional users for MySQL module ([#692](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/692)) ([3352a8b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3352a8bdb2a2f0e6d60153a78bd86ef8d98faf45))
+
+## [25.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.0...v25.0.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* remove point_in_time_recorvery_enabled from MySQL instance as it… ([#689](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/689)) ([a86d2b8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a86d2b826350e633be6b89876244039f9dcd43ad))
+
+## [25.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.1...v25.0.0) (2024-12-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove output variable apphub_service_uri from postgersql/mysql module as it is not supported ([#676](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/676))
+
+### Bug Fixes
+
+* remove output variable apphub_service_uri from postgersql/mysql module as it is not supported ([#676](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/676)) ([de13aa9](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/de13aa975f9bcdfd642bff94884a70aa1b43ce14))
+
+## [24.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.0...v24.0.1) (2024-12-01)
+
+
+### Bug Fixes
+
+* add alternate default for tier for postgresql ([#674](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/674)) ([fba7921](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/fba7921c09ffa54afee77142f3321ba60e701f8f))
+
+## [24.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v23.0.0...v24.0.0) (2024-11-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* add deletion_protection to backup module and set it to false in … ([#670](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/670))
+
+### Bug Fixes
+
+* add deletion_protection to backup module and set it to false in … ([#670](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/670)) ([5e39538](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5e3953877fa8de275903010d123a6d15472dc9ba))
+* update connection metadata ([#668](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/668)) ([8cb3a03](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8cb3a03acaffef72e8a924c6ff0d11a0f645c1ef))
+
+## [23.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v22.1.0...v23.0.0) (2024-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>=6.1:** add support for IAM groups ([#661](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/661))
+* Change export service account permission for external backups - roles/storage.objectAdmin ([#656](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/656))
+
+### Features
+
+* **TPG>=6.1:** add support for IAM groups ([#661](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/661)) ([744870a](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/744870a18f692bf78bc8b0afacde6b659cf65732))
+
+
+### Bug Fixes
+
+* Change export service account permission for external backups - roles/storage.objectAdmin ([#656](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/656)) ([003237e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/003237e1d007dca76f77723f21106b077f7b8801))
+* lint issue in metadata.display.yaml ([#659](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/659)) ([c414276](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c414276020f5a7fd1e779d484e5c84855aea6ed4))
+
+## [22.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v22.0.0...v22.1.0) (2024-10-01)
+
+
+### Features
+
+* Adding flag for enabling data cache in MSSQL module ([#642](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/642)) ([c9f0014](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c9f00146d7f557ed4dd35c3064049d4a5caf5f1a))
+* enable data_cache_config block for mysql ([#652](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/652)) ([2b26a78](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/2b26a781a862011c66147cb15080228aad1a8269))
+
 ## [22.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v21.0.2...v22.0.0) (2024-09-13)
 
 

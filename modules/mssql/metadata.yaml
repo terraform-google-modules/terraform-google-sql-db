@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/mssql
-    version: 22.0.0
+    version: 25.0.2
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -62,36 +62,142 @@ spec:
         location: examples/private_service_access
   interfaces:
     variables:
+      - name: project_id
+        description: The project ID to manage the Cloud SQL resources
+        varType: string
+        required: true
+      - name: name
+        description: The name of the Cloud SQL instance
+        varType: string
+        required: true
+      - name: master_instance_name
+        description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
+        varType: string
+      - name: instance_type
+        description: The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE when primary_instance_name is provided
+        varType: string
+        defaultValue: CLOUD_SQL_INSTANCE
+      - name: random_instance_name
+        description: Sets random suffix at the end of the Cloud SQL resource name
+        varType: bool
+        defaultValue: false
+      - name: database_version
+        description: "The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB"
+        varType: string
+        defaultValue: SQLSERVER_2017_STANDARD
+      - name: region
+        description: The region of the Cloud SQL resources
+        varType: string
+        defaultValue: us-central1
+      - name: tier
+        description: The tier for the Cloud SQL instance.
+        varType: string
+        defaultValue: db-custom-2-3840
+      - name: edition
+        description: The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS.
+        varType: string
+      - name: zone
+        description: The zone for the Cloud SQL instance.
+        varType: string
+      - name: secondary_zone
+        description: "The preferred zone for the read replica instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        varType: string
+      - name: follow_gae_application
+        description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
+        varType: string
       - name: activation_policy
         description: The activation policy for the Cloud SQL instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
         varType: string
         defaultValue: ALWAYS
-      - name: active_directory_config
-        description: Active domain that the SQL instance will join.
-        varType: map(string)
-        defaultValue: {}
-      - name: additional_databases
-        description: A list of databases to be created in your cluster
-        varType: |-
-          list(object({
-              name      = string
-              charset   = string
-              collation = string
-            }))
-        defaultValue: []
-      - name: additional_users
-        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
-        varType: |-
-          list(object({
-              name            = string
-              password        = string
-              random_password = bool
-            }))
-        defaultValue: []
       - name: availability_type
         description: The availability type for the Cloud SQL instance.This is only used to set up high availability for the MSSQL instance. Can be either `ZONAL` or `REGIONAL`.
         varType: string
         defaultValue: ZONAL
+      - name: deletion_protection_enabled
+        description: Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform).
+        varType: bool
+        defaultValue: false
+      - name: disk_autoresize
+        description: Configuration to increase storage size.
+        varType: bool
+        defaultValue: true
+      - name: disk_autoresize_limit
+        description: The maximum size to which storage can be auto increased.
+        varType: number
+        defaultValue: 0
+      - name: disk_size
+        description: The disk size for the Cloud SQL instance.
+        varType: number
+        defaultValue: 10
+      - name: disk_type
+        description: The disk type for the Cloud SQL instance.
+        varType: string
+        defaultValue: PD_SSD
+      - name: pricing_plan
+        description: The pricing plan for the Cloud SQL instance.
+        varType: string
+        defaultValue: PER_USE
+      - name: maintenance_window_day
+        description: The day of week (1-7) for the Cloud SQL maintenance.
+        varType: number
+        defaultValue: 1
+      - name: maintenance_window_hour
+        description: The hour of day (0-23) maintenance window for the Cloud SQL maintenance.
+        varType: number
+        defaultValue: 23
+      - name: maintenance_window_update_track
+        description: The update track of maintenance window for the Cloud SQL maintenance.Can be either `canary` or `stable`.
+        varType: string
+        defaultValue: canary
+      - name: deny_maintenance_period
+        description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance)
+        varType: |-
+          list(object({
+              end_date   = string
+              start_date = string
+              time       = string
+            }))
+        defaultValue: []
+      - name: database_flags
+        description: The database flags for the Cloud SQL. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags)
+        varType: |-
+          list(object({
+              name  = string
+              value = string
+            }))
+        defaultValue: []
+      - name: data_cache_enabled
+        description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
+        varType: bool
+        defaultValue: false
+      - name: active_directory_config
+        description: Active domain that the SQL instance will join.
+        varType: map(string)
+        defaultValue: {}
+      - name: sql_server_audit_config
+        description: SQL server audit config settings.
+        varType: map(string)
+        defaultValue: {}
+      - name: user_labels
+        description: The key/value labels for the Cloud SQL instances.
+        varType: map(string)
+        defaultValue: {}
+      - name: ip_configuration
+        description: The ip configuration for the Cloud SQL instances.
+        varType: |-
+          object({
+              authorized_networks = optional(list(map(string)), [])
+              ipv4_enabled        = optional(bool)
+              private_network     = optional(string)
+              allocated_ip_range  = optional(string)
+              ssl_mode            = optional(string)
+            })
+        defaultValue:
+          allocated_ip_range: null
+          authorized_networks: []
+          ipv4_enabled: true
+          private_network: null
+          ssl_mode: null
       - name: backup_configuration
         description: The database backup configuration.
         varType: |-
@@ -112,26 +218,10 @@ spec:
           retention_unit: null
           start_time: null
           transaction_log_retention_days: null
-      - name: connector_enforcement
-        description: Enforce that clients use the connector library
-        varType: bool
-        defaultValue: false
-      - name: create_timeout
-        description: The optional timeout that is applied to limit long database creates.
+      - name: db_name
+        description: The name of the default database to create
         varType: string
-        defaultValue: 30m
-      - name: database_flags
-        description: The database flags for the Cloud SQL. See [more details](https://cloud.google.com/sql/docs/sqlserver/flags)
-        varType: |-
-          list(object({
-              name  = string
-              value = string
-            }))
-        defaultValue: []
-      - name: database_version
-        description: "The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB"
-        varType: string
-        defaultValue: SQLSERVER_2017_STANDARD
+        defaultValue: default
       - name: db_charset
         description: The charset for the default database
         varType: string
@@ -140,49 +230,65 @@ spec:
         description: "The collation for the default database. Example: 'en_US.UTF8'"
         varType: string
         defaultValue: ""
-      - name: db_name
-        description: The name of the default database to create
+      - name: additional_databases
+        description: A list of databases to be created in your cluster
+        varType: |-
+          list(object({
+              name      = string
+              charset   = string
+              collation = string
+            }))
+        defaultValue: []
+      - name: user_name
+        description: The name of the default user
         varType: string
         defaultValue: default
+      - name: user_password
+        description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
+        varType: string
+        defaultValue: ""
+      - name: additional_users
+        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
+        varType: |-
+          list(object({
+              name            = string
+              password        = string
+              random_password = bool
+            }))
+        defaultValue: []
+      - name: root_password
+        description: MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable.
+        varType: string
+        defaultValue: ""
+      - name: create_timeout
+        description: The optional timeout that is applied to limit long database creates.
+        varType: string
+        defaultValue: 30m
+      - name: update_timeout
+        description: The optional timeout that is applied to limit long database updates.
+        varType: string
+        defaultValue: 30m
       - name: delete_timeout
         description: The optional timeout that is applied to limit long database deletes.
         varType: string
         defaultValue: 30m
+      - name: module_depends_on
+        description: List of modules or resources this module depends on.
+        varType: list(any)
+        defaultValue: []
+      - name: encryption_key_name
+        description: The full path to the encryption key used for the CMEK disk encryption
+        varType: string
       - name: deletion_protection
         description: Used to block Terraform from deleting a SQL Instance.
         varType: bool
         defaultValue: true
-      - name: deletion_protection_enabled
-        description: Enables protection of an instance from accidental deletion protection across all surfaces (API, gcloud, Cloud Console and Terraform).
+      - name: connector_enforcement
+        description: Enforce that clients use the connector library
         varType: bool
         defaultValue: false
-      - name: deny_maintenance_period
-        description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/sqlserver/maintenance)
-        varType: |-
-          list(object({
-              end_date   = string
-              start_date = string
-              time       = string
-            }))
-        defaultValue: []
-      - name: disk_autoresize
-        description: Configuration to increase storage size.
-        varType: bool
-        defaultValue: true
-      - name: disk_autoresize_limit
-        description: The maximum size to which storage can be auto increased.
-        varType: number
-        defaultValue: 0
-      - name: disk_size
-        description: The disk size for the Cloud SQL instance.
-        varType: number
-        defaultValue: 10
-      - name: disk_type
-        description: The disk type for the Cloud SQL instance.
-        varType: string
-        defaultValue: PD_SSD
-      - name: edition
-        description: The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS.
+      - name: time_zone
+        description: The time zone for Cloud SQL instance.
         varType: string
       - name: enable_default_db
         description: Enable or disable the creation of the default database
@@ -192,133 +298,251 @@ spec:
         description: Enable or disable the creation of the default user
         varType: bool
         defaultValue: true
-      - name: encryption_key_name
-        description: The full path to the encryption key used for the CMEK disk encryption
-        varType: string
-      - name: follow_gae_application
-        description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
-        varType: string
-      - name: instance_type
-        description: The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE when primary_instance_name is provided
-        varType: string
-        defaultValue: CLOUD_SQL_INSTANCE
-      - name: ip_configuration
-        description: The ip configuration for the Cloud SQL instances.
-        varType: |-
-          object({
-              authorized_networks = optional(list(map(string)), [])
-              ipv4_enabled        = optional(bool)
-              private_network     = optional(string)
-              require_ssl         = optional(bool)
-              allocated_ip_range  = optional(string)
-            })
-        defaultValue:
-          allocated_ip_range: null
-          authorized_networks: []
-          ipv4_enabled: true
-          private_network: null
-          require_ssl: null
-      - name: maintenance_window_day
-        description: The day of week (1-7) for the Cloud SQL maintenance.
-        varType: number
-        defaultValue: 1
-      - name: maintenance_window_hour
-        description: The hour of day (0-23) maintenance window for the Cloud SQL maintenance.
-        varType: number
-        defaultValue: 23
-      - name: maintenance_window_update_track
-        description: The update track of maintenance window for the Cloud SQL maintenance.Can be either `canary` or `stable`.
-        varType: string
-        defaultValue: canary
-      - name: master_instance_name
-        description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
-        varType: string
-      - name: module_depends_on
-        description: List of modules or resources this module depends on.
-        varType: list(any)
-        defaultValue: []
-      - name: name
-        description: The name of the Cloud SQL instance
-        varType: string
-        required: true
-      - name: pricing_plan
-        description: The pricing plan for the Cloud SQL instance.
-        varType: string
-        defaultValue: PER_USE
-      - name: project_id
-        description: The project ID to manage the Cloud SQL resources
-        varType: string
-        required: true
-      - name: random_instance_name
-        description: Sets random suffix at the end of the Cloud SQL resource name
-        varType: bool
-        defaultValue: false
-      - name: region
-        description: The region of the Cloud SQL resources
-        varType: string
-        defaultValue: us-central1
-      - name: root_password
-        description: MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable.
-        varType: string
-        defaultValue: ""
-      - name: secondary_zone
-        description: "The preferred zone for the read replica instance, it should be something like: `us-central1-a`, `us-east1-c`."
-        varType: string
-      - name: sql_server_audit_config
-        description: SQL server audit config settings.
-        varType: map(string)
-        defaultValue: {}
-      - name: tier
-        description: The tier for the Cloud SQL instance.
-        varType: string
-        defaultValue: db-custom-2-3840
-      - name: time_zone
-        description: The time zone for Cloud SQL instance.
-        varType: string
-      - name: update_timeout
-        description: The optional timeout that is applied to limit long database updates.
-        varType: string
-        defaultValue: 30m
-      - name: user_labels
-        description: The key/value labels for the Cloud SQL instances.
-        varType: map(string)
-        defaultValue: {}
-      - name: user_name
-        description: The name of the default user
-        varType: string
-        defaultValue: default
-      - name: user_password
-        description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
-        varType: string
-        defaultValue: ""
-      - name: zone
-        description: The zone for the Cloud SQL instance.
-        varType: string
     outputs:
       - name: additional_users
         description: List of maps of additional users and passwords
+        type:
+          - tuple
+          - []
+      - name: apphub_service_uri
+        description: Service URI in CAIS style to be used by Apphub.
+        type:
+          - object
+          - service_id: string
+            service_uri: string
       - name: generated_user_password
         description: The auto generated default user password if not input password was provided
+        type: string
       - name: instance_address
         description: The IPv4 addesses assigned for the master instance
+        type:
+          - list
+          - - object
+            - ip_address: string
+              time_to_retire: string
+              type: string
       - name: instance_connection_name
         description: The connection name of the master instance to be used in connection strings
+        type: string
       - name: instance_first_ip_address
         description: The first IPv4 address of the addresses assigned.
+        type: string
       - name: instance_name
         description: The instance name for the master instance
+        type: string
       - name: instance_self_link
         description: The URI of the master instance
+        type: string
       - name: instance_server_ca_cert
         description: The CA certificate information used to connect to the SQL instance via SSL
+        type:
+          - list
+          - - object
+            - cert: string
+              common_name: string
+              create_time: string
+              expiration_time: string
+              sha1_fingerprint: string
       - name: instance_service_account_email_address
         description: The service account email address assigned to the master instance
+        type: string
       - name: primary
         description: The `google_sql_database_instance` resource representing the primary instance
+        type:
+          - object
+          - available_maintenance_versions:
+              - list
+              - string
+            clone:
+              - list
+              - - object
+                - allocated_ip_range: string
+                  database_names:
+                    - list
+                    - string
+                  point_in_time: string
+                  preferred_zone: string
+                  source_instance_name: string
+            connection_name: string
+            database_version: string
+            deletion_protection: bool
+            dns_name: string
+            encryption_key_name: string
+            first_ip_address: string
+            id: string
+            instance_type: string
+            ip_address:
+              - list
+              - - object
+                - ip_address: string
+                  time_to_retire: string
+                  type: string
+            maintenance_version: string
+            master_instance_name: string
+            name: string
+            private_ip_address: string
+            project: string
+            psc_service_attachment_link: string
+            public_ip_address: string
+            region: string
+            replica_configuration:
+              - list
+              - - object
+                - ca_certificate: string
+                  client_certificate: string
+                  client_key: string
+                  connect_retry_interval: number
+                  dump_file_path: string
+                  failover_target: bool
+                  master_heartbeat_period: number
+                  password: string
+                  ssl_cipher: string
+                  username: string
+                  verify_server_certificate: bool
+            restore_backup_context:
+              - list
+              - - object
+                - backup_run_id: number
+                  instance_id: string
+                  project: string
+            root_password: string
+            self_link: string
+            server_ca_cert:
+              - list
+              - - object
+                - cert: string
+                  common_name: string
+                  create_time: string
+                  expiration_time: string
+                  sha1_fingerprint: string
+            service_account_email_address: string
+            settings:
+              - list
+              - - object
+                - activation_policy: string
+                  active_directory_config:
+                    - list
+                    - - object
+                      - domain: string
+                  advanced_machine_features:
+                    - list
+                    - - object
+                      - threads_per_core: number
+                  availability_type: string
+                  backup_configuration:
+                    - list
+                    - - object
+                      - backup_retention_settings:
+                          - list
+                          - - object
+                            - retained_backups: number
+                              retention_unit: string
+                        binary_log_enabled: bool
+                        enabled: bool
+                        location: string
+                        point_in_time_recovery_enabled: bool
+                        start_time: string
+                        transaction_log_retention_days: number
+                  collation: string
+                  connector_enforcement: string
+                  data_cache_config:
+                    - list
+                    - - object
+                      - data_cache_enabled: bool
+                  database_flags:
+                    - set
+                    - - object
+                      - name: string
+                        value: string
+                  deletion_protection_enabled: bool
+                  deny_maintenance_period:
+                    - list
+                    - - object
+                      - end_date: string
+                        start_date: string
+                        time: string
+                  disk_autoresize: bool
+                  disk_autoresize_limit: number
+                  disk_size: number
+                  disk_type: string
+                  edition: string
+                  enable_dataplex_integration: bool
+                  enable_google_ml_integration: bool
+                  insights_config:
+                    - list
+                    - - object
+                      - query_insights_enabled: bool
+                        query_plans_per_minute: number
+                        query_string_length: number
+                        record_application_tags: bool
+                        record_client_address: bool
+                  ip_configuration:
+                    - list
+                    - - object
+                      - allocated_ip_range: string
+                        authorized_networks:
+                          - set
+                          - - object
+                            - expiration_time: string
+                              name: string
+                              value: string
+                        enable_private_path_for_google_cloud_services: bool
+                        ipv4_enabled: bool
+                        private_network: string
+                        psc_config:
+                          - set
+                          - - object
+                            - allowed_consumer_projects:
+                                - set
+                                - string
+                              psc_enabled: bool
+                        server_ca_mode: string
+                        ssl_mode: string
+                  location_preference:
+                    - list
+                    - - object
+                      - follow_gae_application: string
+                        secondary_zone: string
+                        zone: string
+                  maintenance_window:
+                    - list
+                    - - object
+                      - day: number
+                        hour: number
+                        update_track: string
+                  password_validation_policy:
+                    - list
+                    - - object
+                      - complexity: string
+                        disallow_username_substring: bool
+                        enable_password_policy: bool
+                        min_length: number
+                        password_change_interval: string
+                        reuse_interval: number
+                  pricing_plan: string
+                  sql_server_audit_config:
+                    - list
+                    - - object
+                      - bucket: string
+                        retention_interval: string
+                        upload_interval: string
+                  tier: string
+                  time_zone: string
+                  user_labels:
+                    - map
+                    - string
+                  version: number
+            timeouts:
+              - object
+              - create: string
+                delete: string
+                update: string
       - name: private_address
         description: The private IP address assigned for the master instance
+        type: string
       - name: root_password
         description: MSSERVER password for the root user. If not set, a random one will be generated and available in the root_password output variable.
+        type: string
   requirements:
     roles:
       - level: Project
@@ -346,3 +570,12 @@ spec:
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
       - workflows.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 5.12, < 7"
+      - source: hashicorp/google-beta
+        version: ">= 5.12, < 7"
+      - source: hashicorp/null
+        version: ~> 3.2
+      - source: hashicorp/random
+        version: ~> 3.4

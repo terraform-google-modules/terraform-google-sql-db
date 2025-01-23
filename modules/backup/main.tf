@@ -99,6 +99,7 @@ resource "google_workflows_workflow" "sql_backup" {
     backupRetentionTime      = var.backup_retention_time
     backupRunsListMaxResults = var.backup_runs_list_max_results
   })
+  deletion_protection = var.deletion_protection
 }
 
 resource "google_cloud_scheduler_job" "sql_backup" {
@@ -171,6 +172,7 @@ resource "google_workflows_workflow" "sql_export" {
     logDbName              = var.log_db_name_to_export
     serverlessExport       = var.use_serverless_export
   })
+  deletion_protection = var.deletion_protection
 }
 
 resource "google_cloud_scheduler_job" "sql_export" {
@@ -196,7 +198,7 @@ resource "google_storage_bucket_iam_member" "sql_instance_account" {
   count  = var.enable_export_backup ? 1 : 0
   bucket = split("/", var.export_uri)[2] #Get the name of the bucket out of the URI
   member = "serviceAccount:${data.google_sql_database_instance.backup_instance.service_account_email_address}"
-  role   = "roles/storage.objectCreator"
+  role   = "roles/storage.objectAdmin"
 }
 
 # We want to get notified if there hasn't been at least one successful backup in a day
