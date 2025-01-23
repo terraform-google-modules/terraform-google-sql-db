@@ -40,7 +40,7 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
-          invisible: false
+          level: 1
           enumValueLabels:
             - label: REGIONAL
               value: REGIONAL
@@ -52,11 +52,12 @@ spec:
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value:
                 enabled: true
-                point_in_time_recovery_enabled: true
+                binary_log_enabled: true
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -88,6 +89,9 @@ spec:
               value: MYSQL_8_4
             - label: MYSQL_8_0
               value: MYSQL_8_0
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: MYSQL_8_0
         db_charset:
           name: db_charset
           title: Db Charset
@@ -97,41 +101,48 @@ spec:
         db_name:
           name: db_name
           title: Db Name
-          invisible: false
+          level: 1
         delete_timeout:
           name: delete_timeout
           title: Delete Timeout
         deletion_protection:
           name: deletion_protection
           title: Deletion Protection
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: false
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
           altDefaults:
             - type: ALTERNATE_TYPE_DC
-              value: true
+              value: false
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
+          level: 1
         disk_size:
           name: disk_size
           title: Disk Size
+          level: 1
         disk_type:
           name: disk_type
           title: Disk Type
+          level: 1
         edition:
           name: edition
           title: Edition
-          invisible: false
+          level: 1
           enumValueLabels:
             - label: ENTERPRISE_PLUS
               value: ENTERPRISE_PLUS
@@ -143,11 +154,11 @@ spec:
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
-          invisible: false
+          level: 1
         enable_default_user:
           name: enable_default_user
           title: Enable Default User
-          invisible: false
+          level: 1
         enable_google_ml_integration:
           name: enable_google_ml_integration
           title: Enable Google Ml Integration
@@ -198,6 +209,7 @@ spec:
         pricing_plan:
           name: pricing_plan
           title: Pricing Plan
+          level: 1
         project_id:
           name: project_id
           title: Project Id
@@ -219,19 +231,24 @@ spec:
         region:
           name: region
           title: Region
-          invisible: false
+          level: 1
         replica_database_version:
           name: replica_database_version
           title: Replica Database Version
         root_password:
           name: root_password
           title: Root Password
+          level: 1
         secondary_zone:
           name: secondary_zone
           title: Secondary Zone
         tier:
           name: tier
           title: Tier
+          level: 1
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: db-perf-optimized-N-8
         update_timeout:
           name: update_timeout
           title: Update Timeout
@@ -247,9 +264,12 @@ spec:
         user_name:
           name: user_name
           title: User Name
+          level: 1
         user_password:
           name: user_password
           title: User Password
+          level: 1
         zone:
           name: zone
           title: Zone
+          level: 1

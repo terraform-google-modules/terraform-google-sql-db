@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.0.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.1...v25.0.2) (2025-01-16)
+
+
+### Bug Fixes
+
+* to avoid password reset for existing additional users for MySQL module ([#692](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/692)) ([3352a8b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3352a8bdb2a2f0e6d60153a78bd86ef8d98faf45))
+
+## [25.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.0...v25.0.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* remove point_in_time_recorvery_enabled from MySQL instance as it… ([#689](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/689)) ([a86d2b8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a86d2b826350e633be6b89876244039f9dcd43ad))
+
+## [25.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.1...v25.0.0) (2024-12-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove output variable apphub_service_uri from postgersql/mysql module as it is not supported ([#676](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/676))
+
+### Bug Fixes
+
+* remove output variable apphub_service_uri from postgersql/mysql module as it is not supported ([#676](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/676)) ([de13aa9](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/de13aa975f9bcdfd642bff94884a70aa1b43ce14))
+
+## [24.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.0...v24.0.1) (2024-12-01)
+
+
+### Bug Fixes
+
+* add alternate default for tier for postgresql ([#674](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/674)) ([fba7921](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/fba7921c09ffa54afee77142f3321ba60e701f8f))
+
 ## [24.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v23.0.0...v24.0.0) (2024-11-27)
 
 

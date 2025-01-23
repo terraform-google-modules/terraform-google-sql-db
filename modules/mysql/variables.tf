@@ -56,7 +56,7 @@ variable "enable_default_db" {
 }
 
 variable "db_name" {
-  description = "The name of the default database to create"
+  description = "The name of the default database to create. This should be unique per Cloud SQL instance."
   type        = string
   default     = "default"
 }
@@ -67,11 +67,16 @@ variable "enable_default_user" {
   default     = true
 }
 
-
 variable "user_name" {
   description = "The name of the default user"
   type        = string
   default     = "default"
+}
+
+variable "user_password" {
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  type        = string
+  default     = ""
 }
 
 variable "user_host" {
@@ -84,12 +89,6 @@ variable "root_password" {
   description = "MySQL password for the root user."
   type        = string
   default     = null
-}
-
-variable "user_password" {
-  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
-  type        = string
-  default     = ""
 }
 
 variable "deletion_protection" {
@@ -227,7 +226,7 @@ variable "disk_autoresize_limit" {
 }
 
 variable "disk_size" {
-  description = "The disk size for the master instance"
+  description = "The disk size (in GB) for the master instance"
   type        = number
   default     = 10
 }
@@ -295,7 +294,6 @@ variable "backup_configuration" {
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
-    point_in_time_recovery_enabled = optional(bool, false)
     transaction_log_retention_days = optional(string)
     retained_backups               = optional(number)
     retention_unit                 = optional(string)

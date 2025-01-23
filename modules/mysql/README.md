@@ -10,7 +10,7 @@ Functional examples are included in the [examples](../../examples/) directory. B
 ```hcl
 module "mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 24.0"
+  version = "~> 25.0"
 
   name                 = var.db_name
   random_instance_name = true
@@ -49,7 +49,7 @@ module "mysql-db" {
 | additional\_databases | A list of databases to be created in your cluster | <pre>list(object({<br>    name      = string<br>    charset   = string<br>    collation = string<br>  }))</pre> | `[]` | no |
 | additional\_users | A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set. | <pre>list(object({<br>    name            = string<br>    password        = string<br>    random_password = bool<br>    type            = string<br>    host            = string<br>  }))</pre> | `[]` | no |
 | availability\_type | The availability type for the master instance. Can be either `REGIONAL` or `null`. | `string` | `"REGIONAL"` | no |
-| backup\_configuration | The backup\_configuration settings subblock for the database setings | <pre>object({<br>    binary_log_enabled             = optional(bool, false)<br>    enabled                        = optional(bool, false)<br>    start_time                     = optional(string)<br>    location                       = optional(string)<br>    point_in_time_recovery_enabled = optional(bool, false)<br>    transaction_log_retention_days = optional(string)<br>    retained_backups               = optional(number)<br>    retention_unit                 = optional(string)<br>  })</pre> | `{}` | no |
+| backup\_configuration | The backup\_configuration settings subblock for the database setings | <pre>object({<br>    binary_log_enabled             = optional(bool, false)<br>    enabled                        = optional(bool, false)<br>    start_time                     = optional(string)<br>    location                       = optional(string)<br>    transaction_log_retention_days = optional(string)<br>    retained_backups               = optional(number)<br>    retention_unit                 = optional(string)<br>  })</pre> | `{}` | no |
 | connector\_enforcement | Enforce that clients use the connector library | `bool` | `false` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"30m"` | no |
 | data\_cache\_enabled | Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE\_PLUS tier and supported database\_versions | `bool` | `false` | no |
@@ -58,14 +58,14 @@ module "mysql-db" {
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'utf8\_general\_ci' | `string` | `""` | no |
-| db\_name | The name of the default database to create | `string` | `"default"` | no |
+| db\_name | The name of the default database to create. This should be unique per Cloud SQL instance. | `string` | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | deletion\_protection\_enabled | Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
-| disk\_size | The disk size for the master instance | `number` | `10` | no |
+| disk\_size | The disk size (in GB) for the master instance | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
@@ -110,7 +110,6 @@ module "mysql-db" {
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
-| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |

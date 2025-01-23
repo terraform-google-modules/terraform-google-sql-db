@@ -13,7 +13,7 @@ Basic usage of this module is as follows:
 ```hcl
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 24.0"
+  version = "~> 25.0"
 
   name                 = var.pg_ha_name
   random_instance_name = true
@@ -130,14 +130,14 @@ module "pg" {
 | database\_version | The database version to use | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en\_US.UTF8' | `string` | `""` | no |
-| db\_name | The name of the default database to create | `string` | `"default"` | no |
+| db\_name | The name of the default database to create. This should be unique per Cloud SQL instance. | `string` | `"default"` | no |
 | delete\_timeout | The optional timout that is applied to limit long database deletes. | `string` | `"30m"` | no |
 | deletion\_protection | Used to block Terraform from deleting a SQL Instance. | `bool` | `true` | no |
 | deletion\_protection\_enabled | Enables protection of an Cloud SQL instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform). | `bool` | `false` | no |
 | deny\_maintenance\_period | The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/postgres/maintenance) | <pre>list(object({<br>    end_date   = string<br>    start_date = string<br>    time       = string<br>  }))</pre> | `[]` | no |
 | disk\_autoresize | Configuration to increase storage size. | `bool` | `true` | no |
 | disk\_autoresize\_limit | The maximum size to which storage can be auto increased. | `number` | `0` | no |
-| disk\_size | The disk size for the Cloud SQL instance. | `number` | `10` | no |
+| disk\_size | The disk size (in GB) for the Cloud SQL instance. | `number` | `10` | no |
 | disk\_type | The disk type for the Cloud SQL instance. | `string` | `"PD_SSD"` | no |
 | edition | The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
@@ -180,7 +180,6 @@ module "pg" {
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
-| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | dns\_name | DNS name of the instance endpoint |
 | env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |

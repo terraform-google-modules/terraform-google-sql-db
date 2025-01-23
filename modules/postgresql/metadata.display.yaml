@@ -40,13 +40,14 @@ spec:
         availability_type:
           name: availability_type
           title: Availability Type
-          invisible: false
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: REGIONAL
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value:
@@ -61,12 +62,14 @@ spec:
         data_cache_enabled:
           name: data_cache_enabled
           title: Data Cache Enabled
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: true
         database_deletion_policy:
           name: database_deletion_policy
           title: Database Deletion Policy
+          level: 1
         database_flags:
           name: database_flags
           title: Database Flags
@@ -82,18 +85,21 @@ spec:
           name: database_version
           title: Database Version
           enumValueLabels:
-            - label: POSTGRES_12
-              value: POSTGRES_12
-            - label: POSTGRES_13
-              value: POSTGRES_13
-            - label: POSTGRES_14
-              value: POSTGRES_14
-            - label: POSTGRES_15
-              value: POSTGRES_15
-            - label: POSTGRES_16
-              value: POSTGRES_16
             - label: POSTGRES_17
               value: POSTGRES_17
+            - label: POSTGRES_16
+              value: POSTGRES_16
+            - label: POSTGRES_15
+              value: POSTGRES_15
+            - label: POSTGRES_14
+              value: POSTGRES_14
+            - label: POSTGRES_13
+              value: POSTGRES_13
+            - label: POSTGRES_12
+              value: POSTGRES_12
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: POSTGRES_15
         db_charset:
           name: db_charset
           title: Db Charset
@@ -103,41 +109,48 @@ spec:
         db_name:
           name: db_name
           title: Db Name
-          invisible: false
+          level: 1
         delete_timeout:
           name: delete_timeout
           title: Delete Timeout
         deletion_protection:
           name: deletion_protection
           title: Deletion Protection
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: false
         deletion_protection_enabled:
           name: deletion_protection_enabled
           title: Deletion Protection Enabled
           altDefaults:
             - type: ALTERNATE_TYPE_DC
-              value: true
+              value: false
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
+          level: 1
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: true
         disk_autoresize_limit:
           name: disk_autoresize_limit
           title: Disk Autoresize Limit
+          level: 1
         disk_size:
           name: disk_size
           title: Disk Size
+          level: 1
         disk_type:
           name: disk_type
           title: Disk Type
+          level: 1
         edition:
           name: edition
           title: Edition
-          invisible: false
+          level: 1
           enumValueLabels:
             - label: ENTERPRISE_PLUS
               value: ENTERPRISE_PLUS
@@ -149,11 +162,11 @@ spec:
         enable_default_db:
           name: enable_default_db
           title: Enable Default Db
-          invisible: false
+          level: 1
         enable_default_user:
           name: enable_default_user
           title: Enable Default User
-          invisible: false
+          level: 1
         enable_google_ml_integration:
           name: enable_google_ml_integration
           title: Enable Google Ml Integration
@@ -204,6 +217,7 @@ spec:
         pricing_plan:
           name: pricing_plan
           title: Pricing Plan
+          level: 1
         project_id:
           name: project_id
           title: Project Id
@@ -225,16 +239,21 @@ spec:
         region:
           name: region
           title: Region
-          invisible: false
+          level: 1
         root_password:
           name: root_password
           title: Root Password
+          level: 1
         secondary_zone:
           name: secondary_zone
           title: Secondary Zone
         tier:
           name: tier
           title: Tier
+          level: 1
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: db-perf-optimized-N-8
         update_timeout:
           name: update_timeout
           title: Update Timeout
@@ -247,9 +266,12 @@ spec:
         user_name:
           name: user_name
           title: User Name
+          level: 1
         user_password:
           name: user_password
           title: User Password
+          level: 1
         zone:
           name: zone
           title: Zone
+          level: 1

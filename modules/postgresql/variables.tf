@@ -60,7 +60,7 @@ variable "enable_default_db" {
 }
 
 variable "db_name" {
-  description = "The name of the default database to create"
+  description = "The name of the default database to create. This should be unique per Cloud SQL instance."
   type        = string
   default     = "default"
 }
@@ -81,6 +81,12 @@ variable "user_password" {
   description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
   type        = string
   default     = ""
+}
+
+variable "root_password" {
+  description = "Initial root password during creation"
+  type        = string
+  default     = null
 }
 
 variable "deletion_protection" {
@@ -213,7 +219,7 @@ variable "disk_autoresize_limit" {
 }
 
 variable "disk_size" {
-  description = "The disk size for the Cloud SQL instance."
+  description = "The disk size (in GB) for the Cloud SQL instance."
   type        = number
   default     = 10
 }
@@ -431,12 +437,6 @@ variable "connector_enforcement" {
   description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
-}
-
-variable "root_password" {
-  description = "Initial root password during creation"
-  type        = string
-  default     = null
 }
 
 variable "enable_google_ml_integration" {
