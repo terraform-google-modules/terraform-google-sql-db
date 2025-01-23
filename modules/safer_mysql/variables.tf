@@ -258,6 +258,12 @@ variable "read_replicas" {
   default = []
 }
 
+variable "enable_default_db" {
+  description = "Enable or disable the creation of the default database"
+  type        = bool
+  default     = true
+}
+
 variable "db_name" {
   description = "The name of the default database to create"
   type        = string
@@ -284,6 +290,12 @@ variable "additional_databases" {
     collation = string
   }))
   default = []
+}
+
+variable "enable_default_user" {
+  description = "Enable or disable the creation of the default user"
+  type        = bool
+  default     = true
 }
 
 variable "user_name" {
