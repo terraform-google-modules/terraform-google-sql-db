@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.0.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.1...v25.0.2) (2025-01-16)
+
+
+### Bug Fixes
+
+* to avoid password reset for existing additional users for MySQL module ([#692](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/692)) ([3352a8b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3352a8bdb2a2f0e6d60153a78bd86ef8d98faf45))
+
 ## [25.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.0...v25.0.1) (2025-01-04)
 
 
