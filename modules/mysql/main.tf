@@ -125,6 +125,7 @@ resource "google_sql_database_instance" "default" {
         min_length                  = lookup(password_validation_policy.value, "min_length", null)
         complexity                  = lookup(password_validation_policy.value, "complexity", null)
         disallow_username_substring = lookup(password_validation_policy.value, "disallow_username_substring", null)
+        reuse_interval              = lookup(password_validation_policy.value, "reuse_interval", null)
       }
     }
     dynamic "ip_configuration" {
