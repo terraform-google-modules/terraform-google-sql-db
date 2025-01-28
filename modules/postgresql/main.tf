@@ -58,6 +58,7 @@ resource "google_sql_database_instance" "default" {
   project             = var.project_id
   name                = local.instance_name
   database_version    = can(regex("\\d", substr(var.database_version, 0, 1))) ? format("POSTGRES_%s", var.database_version) : replace(var.database_version, substr(var.database_version, 0, 8), "POSTGRES")
+  maintenance_version = var.maintenance_version
   region              = var.region
   encryption_key_name = var.encryption_key_name
   deletion_protection = var.deletion_protection

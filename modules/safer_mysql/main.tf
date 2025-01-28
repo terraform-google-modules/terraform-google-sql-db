@@ -20,6 +20,7 @@ module "safer_mysql" {
   name                            = var.name
   random_instance_name            = var.random_instance_name
   database_version                = var.database_version
+  maintenance_version             = var.maintenance_version
   region                          = var.region
   zone                            = var.zone
   secondary_zone                  = var.secondary_zone
