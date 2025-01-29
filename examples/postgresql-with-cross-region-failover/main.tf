@@ -94,7 +94,7 @@ module "pg1" {
 
   ip_configuration = {
     ipv4_enabled       = false
-    require_ssl        = true
+    ssl_mode           = "ENCRYPTED_ONLY"
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
     authorized_networks = [
