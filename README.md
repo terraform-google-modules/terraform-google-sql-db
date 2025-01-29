@@ -80,7 +80,7 @@ For MySQL :
 ```
 module "sql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version = "~> 25.0"
+  version = "~> 25.1"
 }
 ```
 
