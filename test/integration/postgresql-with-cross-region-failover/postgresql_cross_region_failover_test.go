@@ -59,7 +59,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		assert.Equal(1, len(authNetworks), "Expected one auth network")
 
 		/// assert standard database settings
-		assert.Equal("POSTGRES_14", op.Get("databaseVersion").String(), "Expected POSTGRES_14 databaseVersion")
+		assert.Equal("POSTGRES_17", op.Get("databaseVersion").String(), "Expected POSTGRES_17 databaseVersion")
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
@@ -67,7 +67,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		// assert general database settings
 		assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
 		assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
-		assert.Equal("ALLOW_UNENCRYPTED_AND_ENCRYPTED", op.Get("settings.ipConfiguration.sslMode").String(), "Expected ssl_mode")
+		assert.Equal("ENCRYPTED_ONLY", op.Get("settings.ipConfiguration.sslMode").String(), "Expected ssl_mode")
 
 		// assert user labels
 		assert.JSONEq(`{"foo": "bar", "instance": "instance-1"}`, op.Get("settings.userLabels").Raw, `Expected {"foo": "bar", "instance": "instance-1"} userLabels`)
@@ -85,7 +85,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		assert.Equal(int64(365), op.Get("settings.backupConfiguration.backupRetentionSettings.retainedBackups").Int(), "Expected 365 backupConfigurationRetainedBackups")
 		assert.Equal("COUNT", op.Get("settings.backupConfiguration.backupRetentionSettings.retentionUnit").String(), "Expected COUNT backupConfigurationRetentionUnit")
 		assert.True(op.Get("settings.backupConfiguration.pointInTimeRecoveryEnabled").Bool(), "Expected TRUE")
-		assert.Equal("ALLOW_UNENCRYPTED_AND_ENCRYPTED", op.Get("settings.ipConfiguration.sslMode").String(), "Expected ssl_mode")
+		assert.Equal("ENCRYPTED_ONLY", op.Get("settings.ipConfiguration.sslMode").String(), "Expected ssl_mode")
 		assert.Equal("14", op.Get("settings.backupConfiguration.transactionLogRetentionDays").String(), "Expected transactionLogRetentionDays 14")
 
 		// assert Encryption configuration

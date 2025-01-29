@@ -163,6 +163,11 @@ spec:
               version: ">= 0.14"
             spec:
               outputExpr: "{\"id\": service_account_id.id, \"email\": service_account_id.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-vm//modules/instance_template
+              version: ">= 13.2.0"
+            spec:
+              outputExpr: "{\"id\": service_account_info.id, \"email\": service_account_info.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
       - name: random_instance_name
         description: Sets random suffix at the end of the Cloud SQL resource name
         varType: bool

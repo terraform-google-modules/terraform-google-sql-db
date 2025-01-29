@@ -39,7 +39,7 @@ module "pg" {
 
   ip_configuration = {
     ipv4_enabled       = true
-    require_ssl        = true
+    ssl_mode           = "ENCRYPTED_ONLY" // can also be ALLOW_UNENCRYPTED_AND_ENCRYPTED
     private_network    = null
     allocated_ip_range = null
     authorized_networks = [
@@ -127,7 +127,7 @@ module "pg" {
 | database\_deletion\_policy | The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: "ABANDON". | `string` | `null` | no |
 | database\_flags | The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | database\_integration\_roles | The roles required by default database instance service account for integration with GCP services | `list(string)` | `[]` | no |
-| database\_version | The database version to use | `string` | n/a | yes |
+| database\_version | The database version to use. Can be 9\_6, 14, 15, 16, 17. | `string` | n/a | yes |
 | db\_charset | The charset for the default database | `string` | `""` | no |
 | db\_collation | The collation for the default database. Example: 'en\_US.UTF8' | `string` | `""` | no |
 | db\_name | The name of the default database to create. This should be unique per Cloud SQL instance. | `string` | `"default"` | no |
@@ -150,6 +150,7 @@ module "pg" {
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = optional(number, 5)<br>    query_string_length     = optional(number, 1024)<br>    record_application_tags = optional(bool, false)<br>    record_client_address   = optional(bool, false)<br>  })</pre> | `null` | no |
 | instance\_type | The type of the instance. The supported values are SQL\_INSTANCE\_TYPE\_UNSPECIFIED, CLOUD\_SQL\_INSTANCE, ON\_PREMISES\_INSTANCE and READ\_REPLICA\_INSTANCE. Set to READ\_REPLICA\_INSTANCE if master\_instance\_name value is provided | `string` | `"CLOUD_SQL_INSTANCE"` | no |
 | ip\_configuration | The ip configuration for the Cloud SQL instances. | <pre>object({<br>    authorized_networks                           = optional(list(map(string)), [])<br>    ipv4_enabled                                  = optional(bool, true)<br>    private_network                               = optional(string)<br>    ssl_mode                                      = optional(string)<br>    allocated_ip_range                            = optional(string)<br>    enable_private_path_for_google_cloud_services = optional(bool, false)<br>    psc_enabled                                   = optional(bool, false)<br>    psc_allowed_consumer_projects                 = optional(list(string), [])<br>  })</pre> | `{}` | no |
+| maintenance\_version | The current software version on the instance. This attribute can not be set during creation. Refer to available\_maintenance\_versions attribute to see what maintenance\_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance\_version value that is older than the current one on the instance will be ignored | `string` | `null` | no |
 | maintenance\_window\_day | The day of week (1-7) for the Cloud SQL instance maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the Cloud SQL instance maintenance. | `number` | `23` | no |
 | maintenance\_window\_update\_track | The update track of maintenance window for the Cloud SQL instance maintenance.Can be either `canary` or `stable`. | `string` | `"canary"` | no |

@@ -36,6 +36,12 @@ variable "database_version" {
   type        = string
 }
 
+variable "maintenance_version" {
+  description = "The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored"
+  type        = string
+  default     = null
+}
+
 // required
 variable "region" {
   description = "The region of the Cloud SQL resources"
@@ -258,6 +264,12 @@ variable "read_replicas" {
   default = []
 }
 
+variable "enable_default_db" {
+  description = "Enable or disable the creation of the default database"
+  type        = bool
+  default     = true
+}
+
 variable "db_name" {
   description = "The name of the default database to create"
   type        = string
@@ -284,6 +296,12 @@ variable "additional_databases" {
     collation = string
   }))
   default = []
+}
+
+variable "enable_default_user" {
+  description = "Enable or disable the creation of the default user"
+  type        = bool
+  default     = true
 }
 
 variable "user_name" {
