@@ -353,6 +353,11 @@ spec:
               version: ">= 0.14"
             spec:
               outputExpr: "{\"id\": service_account_id.id, \"email\": service_account_id.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-vm//modules/instance_template
+              version: ">= 13.2.0"
+            spec:
+              outputExpr: "{\"id\": service_account_info.id, \"email\": service_account_info.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
       - name: create_timeout
         description: The optional timout that is applied to limit long database creates.
         varType: string
