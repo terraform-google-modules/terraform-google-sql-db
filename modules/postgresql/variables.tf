@@ -38,13 +38,19 @@ variable "edition" {
 
 // required
 variable "database_version" {
-  description = "The database version to use"
+  description = "The database version to use. Can be 9_6, 14, 15, 16, 17."
   type        = string
 
   validation {
     condition     = (length(var.database_version) >= 9 && ((upper(substr(var.database_version, 0, 9)) == "POSTGRES_") && can(regex("^\\d+(?:_?\\d)*$", substr(var.database_version, 9, -1))))) || can(regex("^\\d+(?:_?\\d)*$", var.database_version))
-    error_message = "The specified database version is not a valid representaion of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"POSTGRES_14\" or \"POSTGRES_15\""
+    error_message = "The specified database version is not a valid representation of database version. Valid database versions should be like the following patterns:- \"9_6\", \"postgres_9_6\", \"14\", \"POSTGRES_14\", \"15\", \"POSTGRES_15\", \"16\", \"POSTGRES_16\" or \"17\", \"POSTGRES_17\""
   }
+}
+
+variable "maintenance_version" {
+  description = "The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored"
+  type        = string
+  default     = null
 }
 
 variable "availability_type" {
@@ -60,7 +66,7 @@ variable "enable_default_db" {
 }
 
 variable "db_name" {
-  description = "The name of the default database to create"
+  description = "The name of the default database to create. This should be unique per Cloud SQL instance."
   type        = string
   default     = "default"
 }
@@ -81,6 +87,12 @@ variable "user_password" {
   description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
   type        = string
   default     = ""
+}
+
+variable "root_password" {
+  description = "Initial root password during creation"
+  type        = string
+  default     = null
 }
 
 variable "deletion_protection" {
@@ -431,12 +443,6 @@ variable "connector_enforcement" {
   description = "Enforce that clients use the connector library"
   type        = bool
   default     = false
-}
-
-variable "root_password" {
-  description = "Initial root password during creation"
-  type        = string
-  default     = null
 }
 
 variable "enable_google_ml_integration" {

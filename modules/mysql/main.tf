@@ -56,6 +56,7 @@ resource "google_sql_database_instance" "default" {
   project              = var.project_id
   name                 = local.master_instance_name
   database_version     = var.database_version
+  maintenance_version  = var.maintenance_version
   region               = var.region
   master_instance_name = var.master_instance_name
   instance_type        = var.instance_type
@@ -243,7 +244,7 @@ resource "random_password" "user-password" {
 
   lifecycle {
     ignore_changes = [
-      min_lower, min_upper, min_numeric
+      min_lower, min_upper, min_numeric, special, min_special, length
     ]
   }
 }
@@ -263,7 +264,7 @@ resource "random_password" "additional_passwords" {
 
   lifecycle {
     ignore_changes = [
-      min_lower, min_upper, min_numeric
+      min_lower, min_upper, min_numeric, special, min_special, length
     ]
   }
 }

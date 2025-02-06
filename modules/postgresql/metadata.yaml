@@ -1,4 +1,4 @@
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/postgresql
-    version: 25.0.0
+    version: 25.1.0
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -90,7 +90,7 @@ spec:
         varType: bool
         defaultValue: true
       - name: db_name
-        description: The name of the default database to create
+        description: The name of the default database to create. This should be unique per Cloud SQL instance.
         varType: string
         defaultValue: default
       - name: enable_default_user
@@ -105,6 +105,9 @@ spec:
         description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
         varType: string
         defaultValue: ""
+      - name: root_password
+        description: Initial root password during creation
+        varType: string
       - name: deletion_protection
         description: Used to block Terraform from deleting a SQL Instance.
         varType: bool
@@ -350,6 +353,11 @@ spec:
               version: ">= 0.14"
             spec:
               outputExpr: "{\"id\": service_account_id.id, \"email\": service_account_id.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-vm//modules/instance_template
+              version: ">= 13.2.0"
+            spec:
+              outputExpr: "{\"id\": service_account_info.id, \"email\": service_account_info.email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
       - name: create_timeout
         description: The optional timout that is applied to limit long database creates.
         varType: string
@@ -381,9 +389,6 @@ spec:
         description: Enforce that clients use the connector library
         varType: bool
         defaultValue: false
-      - name: root_password
-        description: Initial root password during creation
-        varType: string
       - name: enable_google_ml_integration
         description: Enable database ML integration
         varType: bool

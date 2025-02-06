@@ -23,7 +23,10 @@ The current version is 20.X. The following guides are available to assist with u
 - [10.X -> 11.0](./docs/upgrading_to_sql_db_11.0.0.md)
 - [11.X -> 12.0](./docs/upgrading_to_sql_db_12.0.0.md)
 - [19.X -> 20.0](./docs/upgrading_to_sql_db_20.0.0.md)
-- [20.X -> 21.0](./docs/upgrading_to_sql_db_21.0.0.md)
+- [20.X -> 21.0](./docs/upgrading_to_sql_db_21.0.md)
+- [21.X -> 22.0](./docs/upgrading_to_sql_db_22.0.md)
+- [22.X -> 23.0](./docs/upgrading_to_sql_db_23.0.md)
+- [23.X -> 24.0](./docs/upgrading_to_sql_db_24.0.md)
 
 ## Root module
 
@@ -80,7 +83,7 @@ For MySQL :
 ```
 module "sql-db" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/mysql"
-  version = "~> 25.0"
+  version = "~> 25.1"
 }
 ```
 

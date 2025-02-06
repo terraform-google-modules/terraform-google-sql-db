@@ -46,13 +46,13 @@ data "google_compute_zones" "available_region2" {
 
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 24.0"
+  version = "~> 25.0"
 
 
   name                 = var.pg_name_1
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "POSTGRES_14"
+  database_version     = "POSTGRES_17"
   region               = local.region_1
 
   edition            = local.edition
@@ -94,7 +94,7 @@ module "pg1" {
 
   ip_configuration = {
     ipv4_enabled       = false
-    require_ssl        = true
+    ssl_mode           = "ENCRYPTED_ONLY"
     private_network    = google_compute_network.default.self_link
     allocated_ip_range = null
     authorized_networks = [
@@ -155,16 +155,16 @@ module "pg1" {
 
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 24.0"
+  version = "~> 25.0"
 
 
-  # Comment this parameter to promot instance 2 as primary instance. This will break replication between instance 1 and 2
+  # Comment this parameter to promote instance 2 as primary instance.
   master_instance_name = module.pg1.instance_name
 
   name                 = var.pg_name_2
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "POSTGRES_14"
+  database_version     = "POSTGRES_17"
   region               = local.region_2
 
   edition            = local.edition
