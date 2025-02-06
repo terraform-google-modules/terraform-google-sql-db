@@ -336,7 +336,7 @@ variable "password_validation_policy_config" {
     min_length                  = number
     complexity                  = string
     disallow_username_substring = bool
-    reuse_interval              = number
+    reuse_interval              = optional(number)
   })
   default = null
 }
