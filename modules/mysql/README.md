@@ -85,7 +85,7 @@ module "mysql-db" {
 | master\_instance\_name | The name of the existing instance that will act as the master in the replication setup. | `string` | `null` | no |
 | module\_depends\_on | List of modules or resources this module depends on. | `list(any)` | `[]` | no |
 | name | The name of the Cloud SQL resources | `string` | n/a | yes |
-| password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    enable_password_policy      = bool<br>    min_length                  = number<br>    complexity                  = string<br>    disallow_username_substring = bool<br>  })</pre> | `null` | no |
+| password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    enable_password_policy      = bool<br>    min_length                  = optional(number)<br>    complexity                  = optional(string)<br>    disallow_username_substring = optional(bool)<br>    reuse_interval              = optional(number)<br>  })</pre> | `null` | no |
 | pricing\_plan | The pricing plan for the master instance. | `string` | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
