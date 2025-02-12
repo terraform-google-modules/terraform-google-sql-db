@@ -410,8 +410,7 @@ spec:
         description: Service URI in CAIS style to be used by Apphub.
         type:
           - object
-          - location: string
-            service_id: string
+          - service_id: string
             service_uri: string
       - name: dns_name
         description: DNS name of the instance endpoint
