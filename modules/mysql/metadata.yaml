@@ -420,7 +420,8 @@ spec:
         description: Service URI in CAIS style to be used by Apphub.
         type:
           - object
-          - service_id: string
+          - location: string
+            service_id: string
             service_uri: string
       - name: env_vars
         description: Exported environment variables
