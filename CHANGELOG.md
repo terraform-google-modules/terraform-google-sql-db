@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.1.0...v25.2.0) (2025-02-13)
+
+
+### Features
+
+* add output required for apphub registration for mysql/postgresql module ([#704](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/704)) ([a33434f](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a33434ff7d7f9950334c61ce78cdf5f7943e82e4))
+* Add reuse_interval to password validation policy configuration ([#687](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/687)) ([c3885a5](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c3885a5cab96f97072b7c2ee5c744adbb637de15))
+
 ## [25.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.2...v25.1.0) (2025-01-29)
 
 
