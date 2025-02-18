@@ -10,7 +10,7 @@ Functional examples are included in the [examples](../../examples/) directory. B
 ```hcl
 module "mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 25.1"
+  version = "~> 25.2"
 
   name                 = var.db_name
   random_instance_name = true
