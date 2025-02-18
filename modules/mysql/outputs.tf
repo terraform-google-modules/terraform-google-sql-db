@@ -157,7 +157,7 @@ output "env_vars" {
 
 output "apphub_service_uri" {
   value = {
-    service_uri = "//cloudsql.googleapis.com/projects${element(split("/projects", google_sql_database_instance.default.self_link), 1)}"
+    service_uri = "//sqladmin.googleapis.com/projects${element(split("/projects", google_sql_database_instance.default.self_link), 1)}"
     service_id  = substr("${var.name}-${md5("${var.region}-${var.project_id}")}", 0, 63)
     location    = var.region
   }
