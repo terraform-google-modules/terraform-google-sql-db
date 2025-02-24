@@ -10,7 +10,7 @@ Functional examples are included in the [examples](../../examples/) directory. B
 ```hcl
 module "mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 25.0"
+  version = "~> 25.2"
 
   name                 = var.db_name
   random_instance_name = true
@@ -78,13 +78,14 @@ module "mysql-db" {
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = number<br>    query_string_length     = number<br>    record_application_tags = bool<br>    record_client_address   = bool<br>  })</pre> | `null` | no |
 | instance\_type | Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance\_type. To promote, users have to set the instance\_type property as CLOUD\_SQL\_INSTANCE and remove/unset master\_instance\_name and replica\_configuration from instance configuration. This operation might cause your instance to restart. | `string` | `null` | no |
 | ip\_configuration | The ip\_configuration settings subblock | <pre>object({<br>    authorized_networks                           = optional(list(map(string)), [])<br>    ipv4_enabled                                  = optional(bool, true)<br>    private_network                               = optional(string)<br>    ssl_mode                                      = optional(string)<br>    allocated_ip_range                            = optional(string)<br>    enable_private_path_for_google_cloud_services = optional(bool, false)<br>    psc_enabled                                   = optional(bool, false)<br>    psc_allowed_consumer_projects                 = optional(list(string), [])<br>  })</pre> | `{}` | no |
+| maintenance\_version | The current software version on the instance. This attribute can not be set during creation. Refer to available\_maintenance\_versions attribute to see what maintenance\_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance\_version value that is older than the current one on the instance will be ignored | `string` | `null` | no |
 | maintenance\_window\_day | The day of week (1-7) for the master instance maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the master instance maintenance. | `number` | `23` | no |
 | maintenance\_window\_update\_track | The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`. | `string` | `"canary"` | no |
 | master\_instance\_name | The name of the existing instance that will act as the master in the replication setup. | `string` | `null` | no |
 | module\_depends\_on | List of modules or resources this module depends on. | `list(any)` | `[]` | no |
 | name | The name of the Cloud SQL resources | `string` | n/a | yes |
-| password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    enable_password_policy      = bool<br>    min_length                  = number<br>    complexity                  = string<br>    disallow_username_substring = bool<br>  })</pre> | `null` | no |
+| password\_validation\_policy\_config | The password validation policy settings for the database instance. | <pre>object({<br>    enable_password_policy      = bool<br>    min_length                  = optional(number)<br>    complexity                  = optional(string)<br>    disallow_username_substring = optional(bool)<br>    reuse_interval              = optional(number)<br>  })</pre> | `null` | no |
 | pricing\_plan | The pricing plan for the master instance. | `string` | `"PER_USE"` | no |
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
@@ -110,6 +111,7 @@ module "mysql-db" {
 | Name | Description |
 |------|-------------|
 | additional\_users | List of maps of additional users and passwords |
+| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |

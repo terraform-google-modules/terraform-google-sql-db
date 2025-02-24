@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.2.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.0...v25.2.1) (2025-02-18)
+
+
+### Bug Fixes
+
+* update service_uri for postgresql and mysql ([#705](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/705)) ([fa37bbd](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/fa37bbde7aef043c641b3ff0802fb92884033934))
+
+## [25.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.1.0...v25.2.0) (2025-02-13)
+
+
+### Features
+
+* add output required for apphub registration for mysql/postgresql module ([#704](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/704)) ([a33434f](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a33434ff7d7f9950334c61ce78cdf5f7943e82e4))
+* Add reuse_interval to password validation policy configuration ([#687](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/687)) ([c3885a5](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c3885a5cab96f97072b7c2ee5c744adbb637de15))
+
+## [25.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.2...v25.1.0) (2025-01-29)
+
+
+### Features
+
+* Add variables "enable_default_db", "enable_default_user" to module "safer_mysql" ([#698](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/698)) ([1925f03](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/1925f0346c314ab05fd5f1e36c156c5b449a7d5b))
+* added support for maintenance version ([#679](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/679)) ([49b478a](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/49b478ab02388effb06b27a8a45dd26451cb867a))
+
+## [25.0.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.1...v25.0.2) (2025-01-16)
+
+
+### Bug Fixes
+
+* to avoid password reset for existing additional users for MySQL module ([#692](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/692)) ([3352a8b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3352a8bdb2a2f0e6d60153a78bd86ef8d98faf45))
+
+## [25.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.0.0...v25.0.1) (2025-01-04)
+
+
+### Bug Fixes
+
+* remove point_in_time_recorvery_enabled from MySQL instance as it… ([#689](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/689)) ([a86d2b8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a86d2b826350e633be6b89876244039f9dcd43ad))
+
 ## [25.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v24.0.1...v25.0.0) (2024-12-10)
 
 

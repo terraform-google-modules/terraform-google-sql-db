@@ -43,6 +43,12 @@ variable "database_version" {
   type        = string
 }
 
+variable "maintenance_version" {
+  description = "The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored"
+  type        = string
+  default     = null
+}
+
 variable "availability_type" {
   description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
   type        = string
@@ -67,11 +73,16 @@ variable "enable_default_user" {
   default     = true
 }
 
-
 variable "user_name" {
   description = "The name of the default user"
   type        = string
   default     = "default"
+}
+
+variable "user_password" {
+  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
+  type        = string
+  default     = ""
 }
 
 variable "user_host" {
@@ -84,12 +95,6 @@ variable "root_password" {
   description = "MySQL password for the root user."
   type        = string
   default     = null
-}
-
-variable "user_password" {
-  description = "The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable."
-  type        = string
-  default     = ""
 }
 
 variable "deletion_protection" {
@@ -332,9 +337,10 @@ variable "password_validation_policy_config" {
   description = "The password validation policy settings for the database instance."
   type = object({
     enable_password_policy      = bool
-    min_length                  = number
-    complexity                  = string
-    disallow_username_substring = bool
+    min_length                  = optional(number)
+    complexity                  = optional(string)
+    disallow_username_substring = optional(bool)
+    reuse_interval              = optional(number)
   })
   default = null
 }
