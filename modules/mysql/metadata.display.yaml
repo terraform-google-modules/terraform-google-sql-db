@@ -183,6 +183,7 @@ spec:
         ip_configuration:
           name: ip_configuration
           title: Ip Configuration
+          level: 1
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
