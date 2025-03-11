@@ -288,7 +288,7 @@ module "safer-mysql-db" {
 | user\_name | The name of the default user | `string` | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. | `string` | `""` | no |
 | vpc\_network | Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access. | `string` | n/a | yes |
-| zone | The zone for the master instance, it should be something like: `a`, `c`. | `string` | `null` | no |
+| zone | The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 
 ## Outputs
 
