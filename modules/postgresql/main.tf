@@ -218,7 +218,7 @@ resource "google_kms_key_handle" "default" {
   provider               = google-beta
   project                = var.project_id
   name                   = local.instance_name
-  location               = coalesce(var.region, provider::google::region_from_zone(var.zone))
+  location               = coalesce(var.region, join("-", slice(split("-", var.zone), 0, 2)))
   resource_type_selector = "sqladmin.googleapis.com/Instance"
 }
 
