@@ -323,7 +323,7 @@ spec:
         varType: string
         required: true
       - name: zone
-        description: "The zone for the master instance, it should be something like: `a`, `c`."
+        description: "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
     outputs:
       - name: generated_user_password
