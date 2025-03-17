@@ -54,3 +54,20 @@ resource "google_project_service_identity" "workflos_sa" {
   project  = module.project.project_id
   service  = "workflows.googleapis.com"
 }
+
+# Using same project for autokey, not ideal but should be fine for testing
+module "autokey" {
+  source                         = "GoogleCloudPlatform/autokey/google"
+  version                        = "1.1.1"
+  billing_account                = var.billing_account
+  organization_id                = var.org_id
+  create_new_folder              = false
+  folder_id                      = var.folder_id
+  create_new_autokey_key_project = false
+  autokey_key_project_name       = module.project.project_name
+  autokey_key_project_id         = module.project.project_id
+  parent_folder_id               = ""
+  autokey_folder_users           = [google_service_account.int_test.member]
+  autokey_project_kms_admins     = [google_service_account.int_test.member]
+  autokey_folder_admins          = []
+}

@@ -48,6 +48,7 @@ module "pg" {
   maintenance_window_hour         = 12
   maintenance_window_update_track = "stable"
 
+  use_autokey         = true
   deletion_protection = false
 
   database_flags = [{ name = "autovacuum", value = "off" }]
