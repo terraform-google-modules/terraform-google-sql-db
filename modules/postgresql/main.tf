@@ -46,7 +46,7 @@ locals {
 
   database_name = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
 
-  encryption_key = (var.encryption_key_name != null && var.use_autokey) ? google_kms_key_handle.default[0].kms_key : null
+  encryption_key = var.encryption_key_name != null ? var.encryption_key_name : var.use_autokey ? google_kms_key_handle.default[0].kms_key : null
 }
 
 resource "random_id" "suffix" {
