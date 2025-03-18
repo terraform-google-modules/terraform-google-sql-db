@@ -21,7 +21,7 @@ module "project" {
   name              = "ci-sql-db"
   random_project_id = "true"
   org_id            = var.org_id
-  folder_id         = var.folder_id
+  folder_id         = google_folder.autokey_folder.folder_id
   billing_account   = var.billing_account
   deletion_policy   = "DELETE"
 
@@ -55,6 +55,13 @@ resource "google_project_service_identity" "workflos_sa" {
   service  = "workflows.googleapis.com"
 }
 
+resource "google_folder" "autokey_folder" {
+  provider     = google-beta
+  display_name = "ci-sql-db-folder"
+  parent       = "folders/${var.folder_id}"
+  deletion_protection = false
+}
+
 # Using same project for autokey, not ideal but should be fine for testing
 module "autokey" {
   source                         = "GoogleCloudPlatform/autokey/google"
@@ -62,12 +69,12 @@ module "autokey" {
   billing_account                = var.billing_account
   organization_id                = var.org_id
   create_new_folder              = false
-  folder_id                      = var.folder_id
-  create_new_autokey_key_project = false
-  autokey_key_project_name       = module.project.project_name
-  autokey_key_project_id         = module.project.project_id
+  folder_id                      = google_folder.autokey_folder.folder_id
+  create_new_autokey_key_project = true
+  autokey_key_project_name       = "ci-sql-db-autokey"
+  autokey_key_project_id         = ""
   parent_folder_id               = ""
   autokey_folder_users           = [google_service_account.int_test.member]
   autokey_project_kms_admins     = [google_service_account.int_test.member]
-  autokey_folder_admins          = []
+  autokey_folder_admins          = [google_service_account.int_test.member]
 }
