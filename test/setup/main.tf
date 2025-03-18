@@ -56,9 +56,9 @@ resource "google_project_service_identity" "workflos_sa" {
 }
 
 resource "google_folder" "autokey_folder" {
-  provider     = google-beta
-  display_name = "ci-sql-db-folder"
-  parent       = "folders/${var.folder_id}"
+  provider            = google-beta
+  display_name        = "ci-sql-db-folder"
+  parent              = "folders/${var.folder_id}"
   deletion_protection = false
 }
 
