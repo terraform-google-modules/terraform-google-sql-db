@@ -62,34 +62,31 @@ resource "google_folder" "autokey_folder" {
   deletion_protection = false
 }
 
-resource "google_project" "key_project" {
-  provider        = google-beta
-  project_id      = "ci-sql-db-autokey"
-  name            = "ci-sql-db-autokey"
-  folder_id       = google_folder.autokey_folder.folder_id
-  billing_account = var.billing_account
-  depends_on      = [google_folder.autokey_folder]
-  deletion_policy = "DELETE"
-}
+module "autokey-project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 18.0"
 
-resource "google_project_service" "kms_api_service" {
-  provider                   = google-beta
-  service                    = "cloudkms.googleapis.com"
-  project                    = google_project.key_project.project_id
-  disable_on_destroy         = false
-  disable_dependent_services = true
-  depends_on                 = [google_project.key_project]
+  name              = "ci-sql-db-autokey"
+  random_project_id = "true"
+  org_id            = var.org_id
+  folder_id         = google_folder.autokey_folder.folder_id
+  billing_account   = var.billing_account
+  deletion_policy   = "DELETE"
+
+  activate_apis = [
+    "cloudkms.googleapis.com",
+  ]
 }
 
 resource "time_sleep" "wait_enable_service_api" {
-  depends_on      = [google_project_service.kms_api_service]
+  depends_on      = [module.autokey-project]
   create_duration = "30s"
 }
 
 resource "google_project_service_identity" "kms_service_agent" {
   provider   = google-beta
   service    = "cloudkms.googleapis.com"
-  project    = google_project.key_project.number
+  project    = module.autokey-project.project_id
   depends_on = [time_sleep.wait_enable_service_api]
 }
 
@@ -100,9 +97,9 @@ resource "time_sleep" "wait_service_agent" {
 
 resource "google_project_iam_member" "autokey_project_admin" {
   provider   = google-beta
-  project    = google_project.key_project.project_id
+  project    = module.autokey-project.project_id
   role       = "roles/cloudkms.admin"
-  member     = "serviceAccount:service-${google_project.key_project.number}@gcp-sa-cloudkms.iam.gserviceaccount.com"
+  member     = "serviceAccount:service-${module.autokey-project.project_number}@gcp-sa-cloudkms.iam.gserviceaccount.com"
   depends_on = [time_sleep.wait_service_agent]
 }
 
@@ -114,7 +111,7 @@ resource "time_sleep" "wait_srv_acc_permissions" {
 resource "google_kms_autokey_config" "autokey_config" {
   provider    = google-beta
   folder      = google_folder.autokey_folder.folder_id
-  key_project = "projects/${google_project.key_project.project_id}"
+  key_project = "projects/${module.autokey-project.project_id}"
   depends_on  = [time_sleep.wait_srv_acc_permissions]
 }
 
