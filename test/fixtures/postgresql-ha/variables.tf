@@ -30,13 +30,3 @@ variable "pg_ha_external_ip_range" {
   description = "The ip range to allow connecting from/to Cloud SQL"
   default     = "192.10.10.10/32"
 }
-
-variable "key_project_id" {
-  type        = string
-  description = "The project where autokey is setup"
-}
-
-variable "folder_id" {
-  type        = string
-  description = "The folder where project is created"
-}
