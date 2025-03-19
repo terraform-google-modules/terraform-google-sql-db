@@ -107,15 +107,3 @@ resource "time_sleep" "wait_srv_acc_permissions" {
   create_duration = "10s"
   depends_on      = [google_project_iam_member.autokey_project_admin]
 }
-
-resource "google_kms_autokey_config" "autokey_config" {
-  provider    = google-beta
-  folder      = google_folder.autokey_folder.folder_id
-  key_project = "projects/${module.autokey-project.project_id}"
-  depends_on  = [time_sleep.wait_srv_acc_permissions]
-}
-
-resource "time_sleep" "wait_autokey_config" {
-  create_duration = "10s"
-  depends_on      = [google_kms_autokey_config.autokey_config]
-}
