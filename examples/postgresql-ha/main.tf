@@ -128,7 +128,7 @@ module "pg" {
       random_password = false
     },
   ]
-  depends_on      = [time_sleep.wait_autokey_config]
+  depends_on = [time_sleep.wait_autokey_config]
 }
 
 resource "google_kms_autokey_config" "autokey_config" {
