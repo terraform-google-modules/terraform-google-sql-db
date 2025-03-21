@@ -45,6 +45,8 @@ locals {
   connector_enforcement = var.connector_enforcement ? "REQUIRED" : "NOT_REQUIRED"
 
   database_name = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
+
+  encryption_key = var.encryption_key_name != null ? var.encryption_key_name : var.use_autokey ? google_kms_key_handle.default[0].kms_key : null
 }
 
 resource "random_id" "suffix" {
@@ -60,7 +62,7 @@ resource "google_sql_database_instance" "default" {
   database_version    = can(regex("\\d", substr(var.database_version, 0, 1))) ? format("POSTGRES_%s", var.database_version) : replace(var.database_version, substr(var.database_version, 0, 8), "POSTGRES")
   maintenance_version = var.maintenance_version
   region              = var.region
-  encryption_key_name = var.encryption_key_name
+  encryption_key_name = local.encryption_key
   deletion_protection = var.deletion_protection
   root_password       = var.root_password
 
@@ -209,6 +211,15 @@ resource "google_sql_database_instance" "default" {
   }
 
   depends_on = [null_resource.module_depends_on]
+}
+
+resource "google_kms_key_handle" "default" {
+  count                  = var.use_autokey ? 1 : 0
+  provider               = google-beta
+  project                = var.project_id
+  name                   = local.instance_name
+  location               = coalesce(var.region, join("-", slice(split("-", var.zone), 0, 2)))
+  resource_type_selector = "sqladmin.googleapis.com/Instance"
 }
 
 resource "google_sql_database" "default" {
