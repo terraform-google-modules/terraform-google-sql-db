@@ -55,6 +55,7 @@ module "mssql" {
 | disk\_size | The disk size for the Cloud SQL instance. | `number` | `10` | no |
 | disk\_type | The disk type for the Cloud SQL instance. | `string` | `"PD_SSD"` | no |
 | edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
+| enable\_dataplex\_integration | Enable database Dataplex integration | `bool` | `false` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
