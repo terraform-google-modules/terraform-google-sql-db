@@ -360,3 +360,9 @@ variable "enable_default_user" {
   type        = bool
   default     = true
 }
+
+variable "enable_dataplex_integration" {
+  description = "Enable database Dataplex integration"
+  type        = bool
+  default     = false
+}

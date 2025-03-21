@@ -396,6 +396,10 @@ spec:
         description: Enable database ML integration
         varType: bool
         defaultValue: false
+      - name: enable_dataplex_integration
+        description: Enable database Dataplex integration
+        varType: bool
+        defaultValue: false
       - name: database_integration_roles
         description: The roles required by default database instance service account for integration with GCP services
         varType: list(string)
