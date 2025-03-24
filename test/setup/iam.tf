@@ -50,8 +50,8 @@ resource "google_folder_iam_member" "int_test" {
   count = length(local.int_required_roles)
 
   folder = google_folder.autokey_folder.folder_id
-  role    = local.int_required_roles[count.index]
-  member  = "serviceAccount:${google_service_account.int_test.email}"
+  role   = local.int_required_roles[count.index]
+  member = "serviceAccount:${google_service_account.int_test.email}"
 }
 
 
