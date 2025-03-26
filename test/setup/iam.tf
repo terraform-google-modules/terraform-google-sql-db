@@ -17,6 +17,7 @@
 locals {
   int_required_roles = [
     "roles/cloudkms.admin",
+    "roles/cloudkms.autokeyAdmin",
     "roles/cloudkms.cryptoKeyEncrypterDecrypter",
     "roles/cloudscheduler.admin",
     "roles/cloudsql.admin",
@@ -44,6 +45,15 @@ resource "google_project_iam_member" "int_test" {
   role    = local.int_required_roles[count.index]
   member  = "serviceAccount:${google_service_account.int_test.email}"
 }
+
+resource "google_folder_iam_member" "int_test" {
+  count = length(local.int_required_roles)
+
+  folder = google_folder.autokey_folder.folder_id
+  role   = local.int_required_roles[count.index]
+  member = "serviceAccount:${google_service_account.int_test.email}"
+}
+
 
 resource "google_service_account_key" "int_test" {
   service_account_id = google_service_account.int_test.id

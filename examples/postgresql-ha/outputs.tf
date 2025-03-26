@@ -28,9 +28,11 @@ output "authorized_network" {
 }
 
 output "replicas" {
-  value = module.pg.replicas
+  value     = module.pg.replicas
+  sensitive = true
 }
 
 output "instances" {
-  value = module.pg.instances
+  value     = module.pg.instances
+  sensitive = true
 }
