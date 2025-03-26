@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.3.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.2...v25.3.0) (2025-03-26)
+
+
+### Features
+
+* Add support for autokey in postgres module ([#712](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/712)) ([db53c26](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/db53c267bbba6f45d2c7f027b05d46e17f286a0c))
+
 ## [25.2.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.1...v25.2.2) (2025-03-05)
 
 
