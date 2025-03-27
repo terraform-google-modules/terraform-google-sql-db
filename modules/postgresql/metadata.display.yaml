@@ -170,6 +170,9 @@ spec:
         enable_google_ml_integration:
           name: enable_google_ml_integration
           title: Enable Google Ml Integration
+        enable_dataplex_integration:
+          name: enable_dataplex_integration
+          title: Enable Dataplex Integration
         enable_random_password_special:
           name: enable_random_password_special
           title: Enable Random Password Special
