@@ -68,6 +68,7 @@ module "mysql-db" {
 | disk\_size | The disk size (in GB) for the master instance | `number` | `10` | no |
 | disk\_type | The disk type for the master instance. | `string` | `"PD_SSD"` | no |
 | edition | The edition of the instance, can be ENTERPRISE or ENTERPRISE\_PLUS. | `string` | `null` | no |
+| enable\_dataplex\_integration | Enable database Dataplex integration | `bool` | `false` | no |
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
 | enable\_google\_ml\_integration | Enable database ML integration | `bool` | `false` | no |
