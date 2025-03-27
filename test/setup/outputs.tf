@@ -32,3 +32,11 @@ output "cloudsql_mysql_sa" {
   value       = google_service_account.cloudsql_mysql_sa.email
   description = "IAM service account user created for Cloud SQL for MySql."
 }
+
+output "key_project_id" {
+  value = module.autokey-project.project_id
+}
+
+output "folder_id" {
+  value = google_folder.autokey_folder.folder_id
+}

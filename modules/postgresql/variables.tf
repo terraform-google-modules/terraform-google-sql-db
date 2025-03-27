@@ -462,3 +462,9 @@ variable "database_integration_roles" {
   type        = list(string)
   default     = []
 }
+
+variable "use_autokey" {
+  description = "Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project."
+  type        = bool
+  default     = false
+}
