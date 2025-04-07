@@ -47,6 +47,9 @@ locals {
   database_name = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
 
   encryption_key = var.encryption_key_name != null ? var.encryption_key_name : var.use_autokey ? google_kms_key_handle.default[0].kms_key : null
+
+  autokey_location = coalesce(var.region, join("-", slice(split("-", var.zone), 0, 2)))
+  autokey_handle   = try({ "handle" = [for handle in data.google_kms_key_handles.existing.key_handles : handle.name if endswith(handle.name, "/${var.name}")][0] }, {})
 }
 
 resource "random_id" "suffix" {
@@ -214,12 +217,25 @@ resource "google_sql_database_instance" "default" {
   depends_on = [null_resource.module_depends_on]
 }
 
+data "google_kms_key_handles" "existing" {
+  provider               = google-beta
+  project                = var.project_id
+  location               = local.autokey_location
+  resource_type_selector = "sqladmin.googleapis.com/Instance"
+}
+
+import {
+  for_each = local.autokey_handle
+  id       = each.value
+  to       = google_kms_key_handle.default[0]
+}
+
 resource "google_kms_key_handle" "default" {
   count                  = var.use_autokey ? 1 : 0
   provider               = google-beta
   project                = var.project_id
   name                   = local.instance_name
-  location               = coalesce(var.region, join("-", slice(split("-", var.zone), 0, 2)))
+  location               = local.autokey_location
   resource_type_selector = "sqladmin.googleapis.com/Instance"
 }
 
