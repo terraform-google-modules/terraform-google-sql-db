@@ -182,6 +182,7 @@ module "pg" {
 
 | Name | Description |
 |------|-------------|
+| additional\_user\_passwords\_map | Map of auto generated passwords for the additional users |
 | additional\_users | List of maps of additional users and passwords |
 | apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | dns\_name | DNS name of the instance endpoint |
