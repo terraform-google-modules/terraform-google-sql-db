@@ -214,6 +214,14 @@ resource "google_sql_database_instance" "default" {
   depends_on = [null_resource.module_depends_on]
 }
 
+# --- Conditional Import Block ---
+# This block only runs if import_existing_instance is true.
+import {
+  count = var.import_existing_instance ? 1 : 0
+  to    = google_sql_database_instance.default
+  id    = var.import_instance_id
+}
+
 resource "google_kms_key_handle" "default" {
   count                  = var.use_autokey ? 1 : 0
   provider               = google-beta

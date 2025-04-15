@@ -14,6 +14,19 @@
  * limitations under the License.
  */
 
+
+variable "import_existing_instance" {
+  description = "Set to true to import an existing instance instead of creating a new one. If true, 'import_instance_id' must be provided and resource variables (name, project, region, settings, etc.) MUST match the existing instance."
+  type        = bool
+  default     = false
+}
+
+variable "import_instance_id" {
+  description = "The ID of the existing Cloud SQL instance to import when import_existing_instance is true. Format: 'project/region/name' or 'project/name'."
+  type        = string
+  default     = null # Required only if import_existing_instance is true
+}
+
 variable "project_id" {
   type        = string
   description = "The project ID to manage the Cloud SQL resources"

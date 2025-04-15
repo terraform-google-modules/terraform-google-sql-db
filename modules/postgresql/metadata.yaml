@@ -62,6 +62,13 @@ spec:
         location: examples/private_service_access
   interfaces:
     variables:
+      - name: import_existing_instance
+        description: "Set true to import an existing instance instead of creating."
+        varType: bool
+        defaultValue: false
+      - name: import_instance_id
+        description: "ID of the instance to import (project/region/name or project/name). Required if import_existing_instance is true."
+        varType: string
       - name: project_id
         description: The project ID to manage the Cloud SQL resources
         varType: string
