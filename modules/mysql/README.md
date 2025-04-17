@@ -98,7 +98,7 @@ module "mysql-db" {
 | replica\_database\_version | The read replica database version to use. This var should only be used during a database update. The update sequence 1. read-replica 2. master, setting this to an updated version will cause the replica to update, then you may update the master with the var database\_version and remove this field after update is complete | `string` | `""` | no |
 | root\_password | MySQL password for the root user. | `string` | `null` | no |
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
-| tier | The tier for the master instance. | `string` | `"db-n1-standard-1"` | no |
+| tier | The tier for the master instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE\_PLUS, if user wants to change the edition, he should chose compatible tier. | `string` | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_deletion\_policy | The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON". | `string` | `null` | no |
 | user\_host | The host for the default user | `string` | `"%"` | no |
