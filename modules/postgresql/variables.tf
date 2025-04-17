@@ -171,7 +171,7 @@ variable "random_instance_name" {
 }
 
 variable "tier" {
-  description = "The tier for the Cloud SQL instance."
+  description = "The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
   type        = string
   default     = "db-f1-micro"
 }
