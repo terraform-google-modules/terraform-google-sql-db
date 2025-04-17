@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [25.3.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.2...v25.3.0) (2025-04-17)
+
+
+### Features
+
+* Add output to retrieve passwords by user name for additional_users ([#719](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/719)) ([bca69c4](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/bca69c470464d7c6211008cd5c57d11dd1f4b6ce))
+* add setting enable_dataplex_integration ([#713](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/713)) ([f5ad3e6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f5ad3e6e09b040928f481b4b4f7cf0c56feda9d7))
+* Add support for autokey in postgres module ([#712](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/712)) ([db53c26](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/db53c267bbba6f45d2c7f027b05d46e17f286a0c))
+
+
+### Bug Fixes
+
+* Disable SQL instance data_cache when data_cache_enabled variable is false ([#720](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/720)) ([7befe54](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/7befe54c9f4c9b38f5f6ffc4c21da8e14e387119))
+* Postgres read-replica "psc_enabled" permadiff ([923b770](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/923b7707ec468b25f4407f43d069e4124990e965))
+
 ## [25.2.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.1...v25.2.2) (2025-03-05)
 
 
