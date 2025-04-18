@@ -55,9 +55,13 @@ resource "google_project_service_identity" "workflos_sa" {
   service  = "workflows.googleapis.com"
 }
 
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
 resource "google_folder" "autokey_folder" {
   provider            = google-beta
-  display_name        = "ci-sql-db-folder"
+  display_name        = "ci-sql-db-folder-${random_id.suffix.hex}"
   parent              = "folders/${var.folder_id}"
   deletion_protection = false
 }
