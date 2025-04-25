@@ -163,7 +163,7 @@ spec:
         varType: bool
         defaultValue: false
       - name: tier
-        description: The tier for the Cloud SQL instance.
+        description: The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
         varType: string
         defaultValue: db-f1-micro
       - name: zone
@@ -404,7 +404,13 @@ spec:
         description: The roles required by default database instance service account for integration with GCP services
         varType: list(string)
         defaultValue: []
+      - name: use_autokey
+        description: Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project.
+        varType: bool
+        defaultValue: false
     outputs:
+      - name: additional_user_passwords_map
+        description: Map of auto generated passwords for the additional users
       - name: additional_users
         description: List of maps of additional users and passwords
         type:
@@ -902,6 +908,7 @@ spec:
       - level: Project
         roles:
           - roles/cloudkms.admin
+          - roles/cloudkms.autokeyAdmin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
           - roles/cloudscheduler.admin
           - roles/cloudsql.admin

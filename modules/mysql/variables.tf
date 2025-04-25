@@ -178,7 +178,7 @@ variable "instance_type" {
 
 // Master
 variable "tier" {
-  description = "The tier for the master instance."
+  description = "The tier for the master instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
   type        = string
   default     = "db-n1-standard-1"
 }

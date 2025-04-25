@@ -169,7 +169,7 @@ module "pg" {
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |
 | root\_password | Initial root password during creation | `string` | `null` | no |
 | secondary\_zone | The preferred zone for the replica instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
-| tier | The tier for the Cloud SQL instance. | `string` | `"db-f1-micro"` | no |
+| tier | The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE\_PLUS, if user wants to change the edition, he should chose compatible tier. | `string` | `"db-f1-micro"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | use\_autokey | Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project. | `bool` | `false` | no |
 | user\_deletion\_policy | The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON". | `string` | `null` | no |
