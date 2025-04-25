@@ -72,6 +72,7 @@ resource "google_sql_database_instance" "default" {
     deletion_protection_enabled  = var.deletion_protection_enabled
     connector_enforcement        = local.connector_enforcement
     enable_google_ml_integration = var.enable_google_ml_integration
+    enable_dataplex_integration  = var.enable_dataplex_integration
 
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]
@@ -104,7 +105,7 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "data_cache_config" {
-      for_each = var.edition == "ENTERPRISE_PLUS" && var.data_cache_enabled ? ["cache_enabled"] : []
+      for_each = var.edition == "ENTERPRISE_PLUS" ? ["cache_enabled"] : []
       content {
         data_cache_enabled = var.data_cache_enabled
       }

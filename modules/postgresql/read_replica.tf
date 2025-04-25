@@ -63,10 +63,10 @@ resource "google_sql_database_instance" "replicas" {
           }
         }
         dynamic "psc_config" {
-          for_each = ip_configuration.value.psc_enabled ? ["psc_enabled"] : []
+          for_each = ip_configuration.value.psc_enabled ? ["psc_enabled"] : ["psc_disabled"]
           content {
             psc_enabled               = ip_configuration.value.psc_enabled
-            allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+            allowed_consumer_projects = ip_configuration.value.psc_enabled ? ip_configuration.value.psc_allowed_consumer_projects : []
           }
         }
       }

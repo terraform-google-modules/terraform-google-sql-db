@@ -377,7 +377,7 @@ variable "read_replicas" {
     ip_configuration = object({
       authorized_networks                           = optional(list(map(string)), [])
       ipv4_enabled                                  = optional(bool)
-      private_network                               = optional(string, )
+      private_network                               = optional(string)
       ssl_mode                                      = optional(string)
       allocated_ip_range                            = optional(string)
       enable_private_path_for_google_cloud_services = optional(bool, false)
@@ -458,6 +458,12 @@ variable "connector_enforcement" {
 
 variable "enable_google_ml_integration" {
   description = "Enable database ML integration"
+  type        = bool
+  default     = false
+}
+
+variable "enable_dataplex_integration" {
+  description = "Enable database Dataplex integration"
   type        = bool
   default     = false
 }

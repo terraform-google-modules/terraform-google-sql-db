@@ -115,6 +115,12 @@ output "additional_users" {
   sensitive = true
 }
 
+output "additional_user_passwords_map" {
+  description = "Map of auto generated passwords for the additional users"
+  value       = { for u in google_sql_user.additional_users : u.name => u.password }
+  sensitive   = true
+}
+
 output "iam_users" {
   description = "The list of the IAM users with access to the CloudSQL instance"
   value       = var.iam_users

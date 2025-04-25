@@ -32,7 +32,6 @@ module "example" {
   project_id              = var.project_id
   pg_ha_name              = var.pg_ha_name
   pg_ha_external_ip_range = var.pg_ha_external_ip_range
+  key_project_id          = var.key_project_id
+  folder_id               = var.folder_id
 }
-
-
-

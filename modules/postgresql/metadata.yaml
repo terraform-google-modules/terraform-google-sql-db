@@ -313,7 +313,7 @@ spec:
               ip_configuration = object({
                 authorized_networks                           = optional(list(map(string)), [])
                 ipv4_enabled                                  = optional(bool)
-                private_network                               = optional(string, )
+                private_network                               = optional(string)
                 ssl_mode                                      = optional(string)
                 allocated_ip_range                            = optional(string)
                 enable_private_path_for_google_cloud_services = optional(bool, false)
@@ -394,6 +394,10 @@ spec:
         defaultValue: false
       - name: enable_google_ml_integration
         description: Enable database ML integration
+        varType: bool
+        defaultValue: false
+      - name: enable_dataplex_integration
+        description: Enable database Dataplex integration
         varType: bool
         defaultValue: false
       - name: database_integration_roles

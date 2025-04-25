@@ -62,6 +62,7 @@ resource "google_sql_database_instance" "default" {
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
     connector_enforcement       = local.connector_enforcement
+    enable_dataplex_integration = var.enable_dataplex_integration
 
     dynamic "backup_configuration" {
       for_each = !local.is_secondary_instance && var.backup_configuration.enabled ? [var.backup_configuration] : []
@@ -82,7 +83,7 @@ resource "google_sql_database_instance" "default" {
       }
     }
     dynamic "data_cache_config" {
-      for_each = var.edition == "ENTERPRISE_PLUS" && var.data_cache_enabled ? ["cache_enabled"] : []
+      for_each = var.edition == "ENTERPRISE_PLUS" ? ["cache_enabled"] : []
       content {
         data_cache_enabled = var.data_cache_enabled
       }
