@@ -64,6 +64,13 @@ resource "google_sql_database_instance" "default" {
   deletion_protection  = var.deletion_protection
   root_password        = var.root_password == "" ? null : var.root_password
 
+  dynamic "replication_cluster" {
+    for_each = var.failover_dr_replica_name != null ? [var.failover_dr_replica_name] : []
+    content {
+      failover_dr_replica_name = var.failover_dr_replica_name
+    }
+  }
+
   settings {
     tier                         = var.tier
     edition                      = var.edition
