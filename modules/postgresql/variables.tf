@@ -158,6 +158,12 @@ variable "master_instance_name" {
   default     = null
 }
 
+variable "failover_dr_replica_name" {
+  type        = string
+  description = "If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is \"your-project:your-instance\". You can also set this field to \"your-instance\", but cloud SQL backend will convert it to the aforementioned standard format."
+  default     = null
+}
+
 variable "instance_type" {
   type        = string
   description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided"

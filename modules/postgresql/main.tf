@@ -69,6 +69,13 @@ resource "google_sql_database_instance" "default" {
   master_instance_name = var.master_instance_name
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
+  dynamic "replication_cluster" {
+    for_each = var.failover_dr_replica_name != null ? [var.failover_dr_replica_name] : []
+    content {
+      failover_dr_replica_name = var.failover_dr_replica_name
+    }
+  }
+
   settings {
     tier                         = var.tier
     edition                      = var.edition

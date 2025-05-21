@@ -24,6 +24,9 @@ module "safer_mysql" {
   region                          = var.region
   zone                            = var.zone
   secondary_zone                  = var.secondary_zone
+  master_instance_name            = var.master_instance_name
+  failover_dr_replica_name        = var.failover_dr_replica_name
+  instance_type                   = var.instance_type
   follow_gae_application          = var.follow_gae_application
   tier                            = var.tier
   edition                         = var.edition
