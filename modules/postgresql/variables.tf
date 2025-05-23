@@ -468,3 +468,9 @@ variable "use_autokey" {
   type        = bool
   default     = false
 }
+
+variable "use_existing_key_handle" {
+  description = "kms_key_handle resource can not be delete from GCP (https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/kms_key_handle). If you recreate cloudsql instance with same name module will try to create kms_key_handle resource again. This will fail if you have existing key handle. Set this to true to use existing key handle with same name and fail. In that case make this variable true."
+  type        = bool
+  default     = false
+}
