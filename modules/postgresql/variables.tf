@@ -158,6 +158,12 @@ variable "master_instance_name" {
   default     = null
 }
 
+variable "failover_dr_replica_name" {
+  type        = string
+  description = "If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is \"your-project:your-instance\". You can also set this field to \"your-instance\", but cloud SQL backend will convert it to the aforementioned standard format."
+  default     = null
+}
+
 variable "instance_type" {
   type        = string
   description = "The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided"
@@ -171,7 +177,7 @@ variable "random_instance_name" {
 }
 
 variable "tier" {
-  description = "The tier for the Cloud SQL instance."
+  description = "The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
   type        = string
   default     = "db-f1-micro"
 }
@@ -356,7 +362,7 @@ variable "read_replicas" {
     ip_configuration = object({
       authorized_networks                           = optional(list(map(string)), [])
       ipv4_enabled                                  = optional(bool)
-      private_network                               = optional(string, )
+      private_network                               = optional(string)
       ssl_mode                                      = optional(string)
       allocated_ip_range                            = optional(string)
       enable_private_path_for_google_cloud_services = optional(bool, false)

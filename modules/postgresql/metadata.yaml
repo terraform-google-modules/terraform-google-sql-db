@@ -154,6 +154,9 @@ spec:
       - name: master_instance_name
         description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
         varType: string
+      - name: failover_dr_replica_name
+        description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
+        varType: string
       - name: instance_type
         description: The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided
         varType: string
@@ -163,7 +166,7 @@ spec:
         varType: bool
         defaultValue: false
       - name: tier
-        description: The tier for the Cloud SQL instance.
+        description: The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
         varType: string
         defaultValue: db-f1-micro
       - name: zone
@@ -313,7 +316,7 @@ spec:
               ip_configuration = object({
                 authorized_networks                           = optional(list(map(string)), [])
                 ipv4_enabled                                  = optional(bool)
-                private_network                               = optional(string, )
+                private_network                               = optional(string)
                 ssl_mode                                      = optional(string)
                 allocated_ip_range                            = optional(string)
                 enable_private_path_for_google_cloud_services = optional(bool, false)
@@ -404,7 +407,13 @@ spec:
         description: The roles required by default database instance service account for integration with GCP services
         varType: list(string)
         defaultValue: []
+      - name: use_autokey
+        description: Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project.
+        varType: bool
+        defaultValue: false
     outputs:
+      - name: additional_user_passwords_map
+        description: Map of auto generated passwords for the additional users
       - name: additional_users
         description: List of maps of additional users and passwords
         type:
@@ -902,6 +911,7 @@ spec:
       - level: Project
         roles:
           - roles/cloudkms.admin
+          - roles/cloudkms.autokeyAdmin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
           - roles/cloudscheduler.admin
           - roles/cloudsql.admin
