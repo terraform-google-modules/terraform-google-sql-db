@@ -50,7 +50,8 @@ module "safer_mysql" {
 
   user_labels = var.user_labels
 
-  backup_configuration = var.backup_configuration
+  backup_configuration     = var.backup_configuration
+  retain_backups_on_delete = var.retain_backups_on_delete
 
   insights_config = var.insights_config
 
