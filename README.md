@@ -15,7 +15,7 @@ If you find incompatibilities using Terraform `>=1.13`, please open an issue.
 
 ## Upgrading
 
-The current version is 20.X. The following guides are available to assist with upgrades:
+The current version is 25.X. The following guides are available to assist with upgrades:
 
 - [1.X -> 2.0](./docs/upgrading_to_sql_db_2.0.0.md)
 - [2.X -> 3.0](./docs/upgrading_to_sql_db_3.0.0.md)
