@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.0.0...v26.1.0) (2025-06-26)
+
+
+### Features
+
+* Add optional kms_key_handle_name ([#743](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/743)) ([19c3b84](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/19c3b840841a227338e0b83cdb538590dea75d2d))
+
 ## [26.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.2...v26.0.0) (2025-06-18)
 
 
