@@ -473,9 +473,21 @@ variable "database_integration_roles" {
 }
 
 variable "use_autokey" {
-  description = "Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project."
+  description = "Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project"
   type        = bool
   default     = false
+}
+
+variable "create_kms_key_handle" {
+  description = "Create autokey key handle. Set this to false if key handle already exists."
+  type        = bool
+  default     = true
+}
+
+variable "kms_key_handle_name" {
+  description = "autokey key handle name"
+  type        = string
+  default     = null
 }
 
 variable "retain_backups_on_delete" {
