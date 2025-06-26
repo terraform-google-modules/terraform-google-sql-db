@@ -27,4 +27,9 @@ module "mssql" {
   deletion_protection = false
 
   sql_server_audit_config = var.sql_server_audit_config
+
+  insights_config = {
+    query_plans_per_minute = 5
+  }
+
 }

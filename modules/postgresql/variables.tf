@@ -479,13 +479,13 @@ variable "use_autokey" {
 }
 
 variable "create_kms_key_handle" {
-  description = "Create autokey key handle. Set this to false if key handle already exists."
+  description = "KeyHandles cannot be deleted from Google Cloud Platform. Destroying a Terraform-managed KeyHandle will remove it from state but will not delete the resource from the project. Set this to false if key handle already exists"
   type        = bool
   default     = true
 }
 
 variable "kms_key_handle_name" {
-  description = "autokey key handle name"
+  description = "key handle name. If not provided module will use instance name as key handle name"
   type        = string
   default     = null
 }
