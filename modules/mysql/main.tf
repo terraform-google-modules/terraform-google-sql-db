@@ -64,6 +64,13 @@ resource "google_sql_database_instance" "default" {
   deletion_protection  = var.deletion_protection
   root_password        = var.root_password == "" ? null : var.root_password
 
+  dynamic "replication_cluster" {
+    for_each = var.failover_dr_replica_name != null ? [var.failover_dr_replica_name] : []
+    content {
+      failover_dr_replica_name = var.failover_dr_replica_name
+    }
+  }
+
   settings {
     tier                         = var.tier
     edition                      = var.edition
@@ -73,6 +80,7 @@ resource "google_sql_database_instance" "default" {
     connector_enforcement        = local.connector_enforcement
     enable_google_ml_integration = var.enable_google_ml_integration
     enable_dataplex_integration  = var.enable_dataplex_integration
+    retain_backups_on_delete     = var.retain_backups_on_delete
 
     dynamic "backup_configuration" {
       for_each = [var.backup_configuration]

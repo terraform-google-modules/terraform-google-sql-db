@@ -366,3 +366,14 @@ variable "enable_dataplex_integration" {
   type        = bool
   default     = false
 }
+
+variable "insights_config" {
+  description = "The insights_config settings for the database."
+  type = object({
+    query_plans_per_minute  = optional(number, 5)
+    query_string_length     = optional(number, 1024)
+    record_application_tags = optional(bool, false)
+    record_client_address   = optional(bool, false)
+  })
+  default = null
+}

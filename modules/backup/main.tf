@@ -33,7 +33,7 @@ locals {
 resource "google_service_account" "sql_backup_serviceaccount" {
   count        = local.create_service_account ? 1 : 0
   account_id   = trimsuffix(substr("backup-${var.sql_instance}", 0, 28), "-")
-  display_name = "Managed by Terraform - Service account for backup of SQL Instance ${var.sql_instance}"
+  display_name = substr("Managed by Terraform - Service account for backup of SQL Instance ${var.sql_instance}", 0, 100)
   project      = var.project_id
 }
 
