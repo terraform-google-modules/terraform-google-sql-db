@@ -24,7 +24,7 @@ locals {
 
 module "mssql1" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 25.0"
+  version = "~> 26.0"
 
   region = local.region_1
 

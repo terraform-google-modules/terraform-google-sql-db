@@ -477,9 +477,21 @@ variable "database_integration_roles" {
 }
 
 variable "use_autokey" {
-  description = "Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project."
+  description = "Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project"
   type        = bool
   default     = false
+}
+
+variable "create_kms_key_handle" {
+  description = "KeyHandles cannot be deleted from Google Cloud Platform. Destroying a Terraform-managed KeyHandle will remove it from state but will not delete the resource from the project. Set this to false if key handle already exists"
+  type        = bool
+  default     = true
+}
+
+variable "kms_key_handle_name" {
+  description = "key handle name. If not provided module will use instance name as key handle name"
+  type        = string
+  default     = null
 }
 
 variable "retain_backups_on_delete" {
