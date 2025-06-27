@@ -56,7 +56,7 @@ module "mssql1" {
 
 module "mssql2" {
   source  = "terraform-google-modules/sql-db/google//modules/mssql"
-  version = "~> 25.0"
+  version = "~> 26.0"
 
   master_instance_name = module.mssql1.instance_name
 
