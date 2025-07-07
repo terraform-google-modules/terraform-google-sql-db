@@ -24,6 +24,9 @@ module "safer_mysql" {
   region                          = var.region
   zone                            = var.zone
   secondary_zone                  = var.secondary_zone
+  master_instance_name            = var.master_instance_name
+  failover_dr_replica_name        = var.failover_dr_replica_name
+  instance_type                   = var.instance_type
   follow_gae_application          = var.follow_gae_application
   tier                            = var.tier
   edition                         = var.edition
@@ -47,7 +50,8 @@ module "safer_mysql" {
 
   user_labels = var.user_labels
 
-  backup_configuration = var.backup_configuration
+  backup_configuration     = var.backup_configuration
+  retain_backups_on_delete = var.retain_backups_on_delete
 
   insights_config = var.insights_config
 

@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/safer_mysql
-    version: 25.2.2
+    version: 26.1.0
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -192,6 +192,9 @@ spec:
       - name: encryption_key_name
         description: The full path to the encryption key used for the CMEK disk encryption
         varType: string
+      - name: failover_dr_replica_name
+        description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
+        varType: string
       - name: follow_gae_application
         description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
         varType: string
@@ -212,6 +215,9 @@ spec:
               record_application_tags = bool
               record_client_address   = bool
             })
+      - name: instance_type
+        description: Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart.
+        varType: string
       - name: maintenance_window_day
         description: The day of week (1-7) for the master instance maintenance.
         varType: number
@@ -224,6 +230,9 @@ spec:
         description: The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`.
         varType: string
         defaultValue: stable
+      - name: master_instance_name
+        description: The name of the existing instance that will act as the master in the replication setup.
+        varType: string
       - name: module_depends_on
         description: List of modules or resources this module depends on.
         varType: list(any)

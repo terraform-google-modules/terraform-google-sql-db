@@ -46,7 +46,7 @@ locals {
 
   database_name = var.enable_default_db ? var.db_name : (length(var.additional_databases) > 0 ? var.additional_databases[0].name : "")
 
-  encryption_key = var.encryption_key_name != null ? var.encryption_key_name : var.use_autokey ? google_kms_key_handle.default[0].kms_key : null
+  encryption_key = var.encryption_key_name != null ? var.encryption_key_name : var.use_autokey ? try(google_kms_key_handle.default[0].kms_key, data.google_kms_key_handle.key_handle[0].kms_key, null) : null
 }
 
 resource "random_id" "suffix" {
@@ -69,6 +69,13 @@ resource "google_sql_database_instance" "default" {
   master_instance_name = var.master_instance_name
   instance_type        = local.is_secondary_instance ? "READ_REPLICA_INSTANCE" : var.instance_type
 
+  dynamic "replication_cluster" {
+    for_each = var.failover_dr_replica_name != null ? [var.failover_dr_replica_name] : []
+    content {
+      failover_dr_replica_name = var.failover_dr_replica_name
+    }
+  }
+
   settings {
     tier                         = var.tier
     edition                      = var.edition
@@ -78,6 +85,7 @@ resource "google_sql_database_instance" "default" {
     connector_enforcement        = local.connector_enforcement
     enable_google_ml_integration = var.enable_google_ml_integration
     enable_dataplex_integration  = var.enable_dataplex_integration
+    retain_backups_on_delete     = var.retain_backups_on_delete
 
     dynamic "backup_configuration" {
       for_each = local.is_secondary_instance ? [] : [var.backup_configuration]
@@ -119,6 +127,9 @@ resource "google_sql_database_instance" "default" {
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
+        server_ca_mode                                = lookup(ip_configuration.value, "server_ca_mode", null)
+        server_ca_pool                                = lookup(ip_configuration.value, "server_ca_pool", null)
+        custom_subject_alternative_names              = lookup(ip_configuration.value, "custom_subject_alternative_names", [])
 
         dynamic "authorized_networks" {
           for_each = lookup(ip_configuration.value, "authorized_networks", [])
@@ -215,12 +226,20 @@ resource "google_sql_database_instance" "default" {
 }
 
 resource "google_kms_key_handle" "default" {
-  count                  = var.use_autokey ? 1 : 0
+  count                  = var.use_autokey && var.create_kms_key_handle ? 1 : 0
   provider               = google-beta
   project                = var.project_id
-  name                   = local.instance_name
+  name                   = coalesce(var.kms_key_handle_name, local.instance_name) #local.instance_name
   location               = coalesce(var.region, join("-", slice(split("-", var.zone), 0, 2)))
   resource_type_selector = "sqladmin.googleapis.com/Instance"
+}
+
+data "google_kms_key_handle" "key_handle" {
+  provider = google-beta
+  count    = var.use_autokey && !var.create_kms_key_handle && var.kms_key_handle_name != null ? 1 : 0
+  project  = var.project_id
+  name     = coalesce(var.kms_key_handle_name, local.instance_name)
+  location = coalesce(var.region, join("-", slice(split("-", var.zone), 0, 2)))
 }
 
 resource "google_sql_database" "default" {

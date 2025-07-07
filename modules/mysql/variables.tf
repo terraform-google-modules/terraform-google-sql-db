@@ -169,6 +169,13 @@ variable "master_instance_name" {
   default     = null
 }
 
+//optional
+variable "failover_dr_replica_name" {
+  type        = string
+  description = "If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is \"your-project:your-instance\". You can also set this field to \"your-instance\", but cloud SQL backend will convert it to the aforementioned standard format."
+  default     = null
+}
+
 // optional
 variable "instance_type" {
   description = "Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart."
@@ -305,6 +312,12 @@ variable "backup_configuration" {
     retention_unit                 = optional(string)
   })
   default = {}
+}
+
+variable "retain_backups_on_delete" {
+  description = "When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting."
+  type        = bool
+  default     = false
 }
 
 variable "insights_config" {
@@ -473,3 +486,4 @@ variable "database_integration_roles" {
   type        = list(string)
   default     = []
 }
+

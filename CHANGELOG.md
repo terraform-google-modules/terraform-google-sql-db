@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.0.0...v26.1.0) (2025-06-26)
+
+
+### Features
+
+* Add optional kms_key_handle_name ([#743](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/743)) ([19c3b84](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/19c3b840841a227338e0b83cdb538590dea75d2d))
+
+## [26.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.2...v26.0.0) (2025-06-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>6.31:** Support retain_backups_on_delete for mysql, safer_mysql ([#735](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/735))
+* **TPG>6.17:** Adding new variables to define failover dr replica ([#728](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/728))
+
+### Features
+
+* Add output to retrieve passwords by user name for additional_users ([#719](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/719)) ([bca69c4](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/bca69c470464d7c6211008cd5c57d11dd1f4b6ce))
+* add setting enable_dataplex_integration ([#713](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/713)) ([f5ad3e6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f5ad3e6e09b040928f481b4b4f7cf0c56feda9d7))
+* Add support for autokey in postgres module ([#712](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/712)) ([db53c26](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/db53c267bbba6f45d2c7f027b05d46e17f286a0c))
+* add support for server_ca_mode and custom SANs ([#714](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/714)) ([#736](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/736)) ([15e8be8](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/15e8be86f3ea98b36cb3e736c3494c1f40b30e04))
+* Remove condition from data.google_compute_zones.available ([#684](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/684)) ([af7f20c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/af7f20c466b292a6d210a2c21c877d72d46536ea))
+* Support retain_backups_on_delete for postgres ([#737](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/737)) ([eb9b52f](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/eb9b52f549b8767ab9c951abbcff2ad657ceb1dd))
+* **TPG>6.17:** Adding new variables to define failover dr replica ([#728](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/728)) ([90a3e64](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/90a3e64bc9da13885f1fa33ed0f5a24edb1406a7))
+* **TPG>6.31:** Support retain_backups_on_delete for mysql, safer_mysql ([#735](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/735)) ([d0b31dd](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/d0b31dd44d23465df72a91d50755d1209e6c4bdc))
+
+
+### Bug Fixes
+
+* Disable SQL instance data_cache when data_cache_enabled variable is false ([#720](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/720)) ([7befe54](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/7befe54c9f4c9b38f5f6ffc4c21da8e14e387119))
+* Postgres read-replica "psc_enabled" permadiff ([923b770](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/923b7707ec468b25f4407f43d069e4124990e965))
+* replace invalid optional(string, ) with optional(string) ([#725](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/725)) ([056e436](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/056e436283f2802c8e00b3dd17390bff83f95d9b))
+* truncate service account display_name in backup module ([#734](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/734)) ([edc7ee7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/edc7ee79d66658c4458a50c83e2164c0b3da0e67))
+
 ## [25.2.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v25.2.1...v25.2.2) (2025-03-05)
 
 
