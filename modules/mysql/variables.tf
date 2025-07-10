@@ -245,7 +245,7 @@ variable "disk_size" {
 }
 
 variable "disk_type" {
-  description = "The disk type for the master instance, valid values are PD_SSD, PD_HDD, or HYPERDISK_BALANCED."
+  description = "The disk type for the master instance"
   type        = string
   default     = "PD_SSD"
 }
