@@ -190,9 +190,9 @@ spec:
             private_network:
               name: private_network
               title: private_network
-              subtext: Ip configuration of private network
+              subtext: The VPC network from which the Cloud SQL instance is accessible for private IP
               regexValidation: ^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
-              validation: Private network ip configuration is invalid.
+              validation: Private network is invalid.
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
