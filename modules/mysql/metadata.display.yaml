@@ -197,19 +197,9 @@ spec:
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
-          altDefaults:
-            - type: ALTERNATE_TYPE_DC
-              value:
-                min_day_count: 1
-                max_day_count: 7
         maintenance_window_hour:
           name: maintenance_window_hour
           title: Maintenance Window Hour
-          altDefaults:
-            - type: ALTERNATE_TYPE_DC
-              value:
-                min_hour_count: 0
-                max_hour_count: 23
         maintenance_window_update_track:
           name: maintenance_window_update_track
           title: Maintenance Window Update Track
