@@ -192,7 +192,7 @@ spec:
               title: private_network
               subtext: The VPC network from which the Cloud SQL instance is accessible for private IP
               regexValidation: ^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
-              validation: The provided input does not match the expected Google Cloud network name format.
+              validation: The provided private network identifier is invalid. It must be in the format projects/PROJECT_ID/global/networks/NETWORK_NAME, where PROJECT_ID is your Google Cloud project ID and NETWORK_NAME starts with a lowercase letter, contains only lowercase letters, numbers, and hyphens, and ends with a lowercase letter or a number.
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
