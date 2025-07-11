@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.1.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.1.0...v26.1.1) (2025-07-11)
+
+
+### Bug Fixes
+
+* adding regex validation for ip network and changing description for variables ([#747](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/747)) ([d4b8db7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/d4b8db724f889f087a67329d862066943dffd87a))
+
 ## [26.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.0.0...v26.1.0) (2025-06-26)
 
 
