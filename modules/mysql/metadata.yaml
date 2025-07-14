@@ -1,17 +1,3 @@
-# Copyright 2025 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: BlueprintMetadata
 metadata:
@@ -279,6 +265,10 @@ spec:
               retention_unit                 = optional(string)
             })
         defaultValue: {}
+      - name: retain_backups_on_delete
+        description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
+        varType: bool
+        defaultValue: false
       - name: insights_config
         description: The insights_config settings for the database.
         varType: |-
@@ -914,35 +904,17 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/cloudkms.autokeyAdmin
-          - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/cloudscheduler.admin
           - roles/cloudsql.admin
-          - roles/compute.admin
-          - roles/compute.networkAdmin
-          - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
-          - roles/monitoring.editor
-          - roles/resourcemanager.projectIamAdmin
-          - roles/storage.admin
-          - roles/workflows.admin
+          - roles/logging.logWriter
     services:
-      - cloudkms.googleapis.com
-      - cloudresourcemanager.googleapis.com
-      - cloudscheduler.googleapis.com
-      - compute.googleapis.com
-      - iam.googleapis.com
-      - monitoring.googleapis.com
-      - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
-      - workflows.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.1, < 7"
+        version: ">= 6.31, < 7"
       - source: hashicorp/google-beta
-        version: ">= 6.1, < 7"
+        version: ">= 6.31, < 7"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random

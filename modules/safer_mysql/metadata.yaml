@@ -1,17 +1,3 @@
-# Copyright 2024 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: BlueprintMetadata
 metadata:
@@ -62,41 +48,134 @@ spec:
         location: examples/private_service_access
   interfaces:
     variables:
+      - name: project_id
+        description: The project ID to manage the Cloud SQL resources
+        varType: string
+        required: true
+      - name: name
+        description: The name of the Cloud SQL resources
+        varType: string
+        required: true
+      - name: random_instance_name
+        description: Sets random suffix at the end of the Cloud SQL resource name
+        varType: bool
+        defaultValue: false
+      - name: database_version
+        description: The database version to use
+        varType: string
+        required: true
+      - name: maintenance_version
+        description: The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored
+        varType: string
+      - name: region
+        description: The region of the Cloud SQL resources
+        varType: string
+        required: true
+      - name: vpc_network
+        description: Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access.
+        varType: string
+        required: true
+      - name: allocated_ip_range
+        description: Existing allocated IP range name for the Private IP CloudSQL instance. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access.
+        varType: string
+      - name: tier
+        description: The tier for the master instance.
+        varType: string
+        defaultValue: db-n1-standard-1
+      - name: edition
+        description: The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS.
+        varType: string
+      - name: zone
+        description: "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        varType: string
+      - name: secondary_zone
+        description: "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        varType: string
+      - name: master_instance_name
+        description: The name of the existing instance that will act as the master in the replication setup.
+        varType: string
+      - name: failover_dr_replica_name
+        description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
+        varType: string
+      - name: instance_type
+        description: Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart.
+        varType: string
+      - name: follow_gae_application
+        description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
+        varType: string
       - name: activation_policy
         description: The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
         varType: string
         defaultValue: ALWAYS
-      - name: additional_databases
-        description: A list of databases to be created in your cluster
-        varType: |-
-          list(object({
-              name      = string
-              charset   = string
-              collation = string
-            }))
-        defaultValue: []
-      - name: additional_users
-        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
-        varType: |-
-          list(object({
-              name            = string
-              password        = string
-              host            = string
-              type            = string
-              random_password = bool
-            }))
-        defaultValue: []
-      - name: allocated_ip_range
-        description: Existing allocated IP range name for the Private IP CloudSQL instance. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access.
-        varType: string
-      - name: assign_public_ip
-        description: Set to true if the master instance should also have a public IP (less secure).
-        varType: bool
-        defaultValue: false
       - name: availability_type
         description: The availability type for the master instance. Can be either `REGIONAL` or `null`.
         varType: string
         defaultValue: REGIONAL
+      - name: deletion_protection_enabled
+        description: Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+        varType: bool
+        defaultValue: false
+      - name: read_replica_deletion_protection_enabled
+        description: Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+        varType: bool
+        defaultValue: false
+      - name: disk_autoresize
+        description: Configuration to increase storage size
+        varType: bool
+        defaultValue: true
+      - name: disk_autoresize_limit
+        description: The maximum size to which storage can be auto increased.
+        varType: number
+        defaultValue: 0
+      - name: disk_size
+        description: The disk size for the master instance
+        varType: number
+        defaultValue: 10
+      - name: disk_type
+        description: The disk type for the master instance.
+        varType: string
+        defaultValue: PD_SSD
+      - name: pricing_plan
+        description: The pricing plan for the master instance.
+        varType: string
+        defaultValue: PER_USE
+      - name: maintenance_window_day
+        description: The day of week (1-7) for the master instance maintenance.
+        varType: number
+        defaultValue: 1
+      - name: maintenance_window_hour
+        description: The hour of day (0-23) maintenance window for the master instance maintenance.
+        varType: number
+        defaultValue: 23
+      - name: maintenance_window_update_track
+        description: The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`.
+        varType: string
+        defaultValue: stable
+      - name: data_cache_enabled
+        description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
+        varType: bool
+        defaultValue: false
+      - name: deny_maintenance_period
+        description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)
+        varType: |-
+          list(object({
+              end_date   = string
+              start_date = string
+              time       = string
+            }))
+        defaultValue: []
+      - name: database_flags
+        description: The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)
+        varType: |-
+          list(object({
+              name  = string
+              value = string
+            }))
+        defaultValue: []
+      - name: user_labels
+        description: The key/value labels for the master instances.
+        varType: map(string)
+        defaultValue: {}
       - name: backup_configuration
         description: The backup_configuration settings subblock for the database setings
         varType: |-
@@ -117,148 +196,12 @@ spec:
           retention_unit: null
           start_time: null
           transaction_log_retention_days: null
-      - name: create_timeout
-        description: The optional timout that is applied to limit long database creates.
-        varType: string
-        defaultValue: 30m
-      - name: data_cache_enabled
-        description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
-        varType: bool
-        defaultValue: false
-      - name: database_flags
-        description: The database flags for the master instance. See [more details](https://cloud.google.com/sql/docs/mysql/flags)
-        varType: |-
-          list(object({
-              name  = string
-              value = string
-            }))
-        defaultValue: []
-      - name: database_version
-        description: The database version to use
-        varType: string
-        required: true
-      - name: db_charset
-        description: The charset for the default database
-        varType: string
-        defaultValue: ""
-      - name: db_collation
-        description: "The collation for the default database. Example: 'utf8_general_ci'"
-        varType: string
-        defaultValue: ""
-      - name: db_name
-        description: The name of the default database to create
-        varType: string
-        defaultValue: default
-      - name: delete_timeout
-        description: The optional timout that is applied to limit long database deletes.
-        varType: string
-        defaultValue: 30m
-      - name: deletion_protection
-        description: Used to block Terraform from deleting a SQL Instance.
+      - name: retain_backups_on_delete
+        description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
         varType: bool
         defaultValue: true
-      - name: deletion_protection_enabled
-        description: Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
-        varType: bool
-        defaultValue: false
-      - name: deny_maintenance_period
-        description: The Deny Maintenance Period fields to prevent automatic maintenance from occurring during a 90-day time period. List accepts only one value. See [more details](https://cloud.google.com/sql/docs/mysql/maintenance)
-        varType: |-
-          list(object({
-              end_date   = string
-              start_date = string
-              time       = string
-            }))
-        defaultValue: []
-      - name: disk_autoresize
-        description: Configuration to increase storage size
-        varType: bool
-        defaultValue: true
-      - name: disk_autoresize_limit
-        description: The maximum size to which storage can be auto increased.
-        varType: number
-        defaultValue: 0
-      - name: disk_size
-        description: The disk size for the master instance
-        varType: number
-        defaultValue: 10
-      - name: disk_type
-        description: The disk type for the master instance.
-        varType: string
-        defaultValue: PD_SSD
-      - name: edition
-        description: The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS.
-        varType: string
-      - name: encryption_key_name
-        description: The full path to the encryption key used for the CMEK disk encryption
-        varType: string
-      - name: failover_dr_replica_name
-        description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
-        varType: string
-      - name: follow_gae_application
-        description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
-        varType: string
-      - name: iam_users
-        description: A list of IAM users to be created in your CloudSQL instance
-        varType: |-
-          list(object({
-              id    = string,
-              email = string
-            }))
-        defaultValue: []
-      - name: insights_config
-        description: The insights_config settings for the database.
-        varType: |-
-          object({
-              query_plans_per_minute  = number
-              query_string_length     = number
-              record_application_tags = bool
-              record_client_address   = bool
-            })
-      - name: instance_type
-        description: Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart.
-        varType: string
-      - name: maintenance_window_day
-        description: The day of week (1-7) for the master instance maintenance.
-        varType: number
-        defaultValue: 1
-      - name: maintenance_window_hour
-        description: The hour of day (0-23) maintenance window for the master instance maintenance.
-        varType: number
-        defaultValue: 23
-      - name: maintenance_window_update_track
-        description: The update track of maintenance window for the master instance maintenance. Can be either `canary` or `stable`.
-        varType: string
-        defaultValue: stable
-      - name: master_instance_name
-        description: The name of the existing instance that will act as the master in the replication setup.
-        varType: string
-      - name: module_depends_on
-        description: List of modules or resources this module depends on.
-        varType: list(any)
-        defaultValue: []
-      - name: name
-        description: The name of the Cloud SQL resources
-        varType: string
-        required: true
-      - name: pricing_plan
-        description: The pricing plan for the master instance.
-        varType: string
-        defaultValue: PER_USE
-      - name: project_id
-        description: The project ID to manage the Cloud SQL resources
-        varType: string
-        required: true
-      - name: random_instance_name
-        description: Sets random suffix at the end of the Cloud SQL resource name
-        varType: bool
-        defaultValue: false
-      - name: read_replica_deletion_protection
-        description: Used to block Terraform from deleting replica SQL Instances.
-        varType: bool
-        defaultValue: false
-      - name: read_replica_deletion_protection_enabled
-        description: Enables protection of a read replica from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
+      - name: assign_public_ip
+        description: Set to true if the master instance should also have a public IP (less secure).
         varType: bool
         defaultValue: false
       - name: read_replica_name_suffix
@@ -294,31 +237,40 @@ spec:
                 authorized_networks = list(map(string))
                 ipv4_enabled        = bool
                 private_network     = string
-                require_ssl         = bool
                 allocated_ip_range  = string
               })
               encryption_key_name = string
             }))
         defaultValue: []
-      - name: region
-        description: The region of the Cloud SQL resources
+      - name: enable_default_db
+        description: Enable or disable the creation of the default database
+        varType: bool
+        defaultValue: true
+      - name: db_name
+        description: The name of the default database to create
         varType: string
-        required: true
-      - name: secondary_zone
-        description: "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        defaultValue: default
+      - name: db_charset
+        description: The charset for the default database
         varType: string
-      - name: tier
-        description: The tier for the master instance.
+        defaultValue: ""
+      - name: db_collation
+        description: "The collation for the default database. Example: 'utf8_general_ci'"
         varType: string
-        defaultValue: db-n1-standard-1
-      - name: update_timeout
-        description: The optional timout that is applied to limit long database updates.
-        varType: string
-        defaultValue: 30m
-      - name: user_labels
-        description: The key/value labels for the master instances.
-        varType: map(string)
-        defaultValue: {}
+        defaultValue: ""
+      - name: additional_databases
+        description: A list of databases to be created in your cluster
+        varType: |-
+          list(object({
+              name      = string
+              charset   = string
+              collation = string
+            }))
+        defaultValue: []
+      - name: enable_default_user
+        description: Enable or disable the creation of the default user
+        varType: bool
+        defaultValue: true
       - name: user_name
         description: The name of the default user
         varType: string
@@ -327,13 +279,62 @@ spec:
         description: The password for the default user. If not set, a random one will be generated and available in the generated_user_password output variable.
         varType: string
         defaultValue: ""
-      - name: vpc_network
-        description: Existing VPC network to which instances are connected. The networks needs to be configured with https://cloud.google.com/vpc/docs/configure-private-services-access.
+      - name: additional_users
+        description: A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set.
+        varType: |-
+          list(object({
+              name            = string
+              password        = string
+              host            = string
+              type            = string
+              random_password = bool
+            }))
+        defaultValue: []
+      - name: iam_users
+        description: A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP and is required for type CLOUD_IAM_GROUP (IAM groups)
+        varType: |-
+          list(object({
+              id    = string,
+              email = string,
+              type  = optional(string)
+            }))
+        defaultValue: []
+      - name: create_timeout
+        description: The optional timout that is applied to limit long database creates.
         varType: string
-        required: true
-      - name: zone
-        description: "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
+        defaultValue: 30m
+      - name: update_timeout
+        description: The optional timout that is applied to limit long database updates.
         varType: string
+        defaultValue: 30m
+      - name: delete_timeout
+        description: The optional timout that is applied to limit long database deletes.
+        varType: string
+        defaultValue: 30m
+      - name: module_depends_on
+        description: List of modules or resources this module depends on.
+        varType: list(any)
+        defaultValue: []
+      - name: deletion_protection
+        description: Used to block Terraform from deleting a SQL Instance.
+        varType: bool
+        defaultValue: true
+      - name: read_replica_deletion_protection
+        description: Used to block Terraform from deleting replica SQL Instances.
+        varType: bool
+        defaultValue: false
+      - name: encryption_key_name
+        description: The full path to the encryption key used for the CMEK disk encryption
+        varType: string
+      - name: insights_config
+        description: The insights_config settings for the database.
+        varType: |-
+          object({
+              query_plans_per_minute  = number
+              query_string_length     = number
+              record_application_tags = bool
+              record_client_address   = bool
+            })
     outputs:
       - name: generated_user_password
         description: The auto generated default user password if not input password was provided
@@ -369,26 +370,12 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/cloudscheduler.admin
           - roles/cloudsql.admin
-          - roles/compute.admin
-          - roles/compute.networkAdmin
-          - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
-          - roles/monitoring.editor
-          - roles/resourcemanager.projectIamAdmin
-          - roles/storage.admin
-          - roles/workflows.admin
+          - roles/logging.logWriter
     services:
-      - cloudkms.googleapis.com
-      - cloudresourcemanager.googleapis.com
-      - cloudscheduler.googleapis.com
-      - compute.googleapis.com
-      - iam.googleapis.com
-      - monitoring.googleapis.com
-      - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
-      - workflows.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 6.31, < 7"

@@ -15,21 +15,61 @@
  */
 
 locals {
-  int_required_roles = [
+  per_module_roles = {
+    backup = [
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountUser",
+      "roles/logging.logWriter",
+    ]
+    mssql = [
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountUser",
+      "roles/logging.logWriter",
+    ]
+    mysql = [
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountUser",
+      "roles/logging.logWriter",
+    ]
+    postgresql = [
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountUser",
+      "roles/logging.logWriter",
+    ]
+    private_service_access = [
+      "roles/servicenetworking.networksAdmin",
+      "roles/iam.serviceAccountUser",
+    ]
+    restore = [
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountUser",
+      "roles/logging.logWriter",
+    ]
+    safer_mysql = [
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountUser",
+      "roles/logging.logWriter",
+    ]
+    root = [
+      "roles/resourcemanager.projectIamAdmin",
+      "roles/serviceusage.serviceUsageAdmin",
+      "roles/cloudsql.admin",
+      "roles/iam.serviceAccountAdmin",
+      "roles/iam.serviceAccountUser",
+    ]
+  }
+
+  int_required_roles = concat([
     "roles/cloudkms.admin",
     "roles/cloudkms.autokeyAdmin",
     "roles/cloudkms.cryptoKeyEncrypterDecrypter",
     "roles/cloudscheduler.admin",
-    "roles/cloudsql.admin",
     "roles/compute.admin",
     "roles/compute.networkAdmin",
-    "roles/iam.serviceAccountAdmin",
-    "roles/iam.serviceAccountUser",
     "roles/monitoring.editor",
-    "roles/resourcemanager.projectIamAdmin",
     "roles/storage.admin",
     "roles/workflows.admin",
-  ]
+  ], flatten(values(local.per_module_roles)))
 }
 
 resource "google_service_account" "int_test" {

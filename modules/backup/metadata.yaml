@@ -1,17 +1,3 @@
-# Copyright 2024 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: BlueprintMetadata
 metadata:
@@ -61,10 +47,21 @@ spec:
         location: examples/private_service_access
   interfaces:
     variables:
-      - name: backup_monitoring_frequency
-        description: Timeframe in which there should be at least one successfull backup
+      - name: region
+        description: The region where to run the workflow
         varType: string
-        defaultValue: 1d
+        defaultValue: us-central1
+      - name: service_account
+        description: The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that
+        varType: string
+      - name: project_id
+        description: The project ID
+        varType: string
+        required: true
+      - name: sql_instance
+        description: The name of the SQL instance to backup
+        varType: string
+        required: true
       - name: backup_retention_time
         description: The number of days backups should be kept
         varType: number
@@ -73,69 +70,88 @@ spec:
         description: The max amount of backups to list when fetching internal backup runs for the instance. This number must be larger then the amount of backups you wish to keep. E.g. for a daily backup schedule and a backup_retention_time of 30 days, you'd need to set this to at least 31 for old backups to get deleted.
         varType: number
         defaultValue: 31
+      - name: scheduler_timezone
+        description: The Timezone in which the Scheduler Jobs are triggered
+        varType: string
+        defaultValue: Etc/GMT
       - name: backup_schedule
         description: The cron schedule to execute the internal backup
         varType: string
         defaultValue: 45 2 * * *
-      - name: compress_export
-        description: Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL
-        varType: bool
-        defaultValue: true
-      - name: connector_params_timeout
-        description: The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year).
-        varType: number
-        defaultValue: 1800
-      - name: create_notification_channel
-        description: If set to true it will create email notification channel
-        varType: bool
-        defaultValue: false
-      - name: deletion_protection
-        description: Whether Terraform will be prevented from destroying the workflow.
-        varType: bool
-        defaultValue: true
-      - name: enable_backup_monitoring
-        description: Whether to monitor backup workflows or not
-        varType: bool
-        defaultValue: false
-      - name: enable_connector_params
-        description: Whether to enable connector-specific parameters for Google Workflow SQL Export.
-        varType: bool
-        defaultValue: false
-      - name: enable_export_backup
-        description: Weather to create exports to GCS Buckets with this module
-        varType: bool
-        defaultValue: true
-      - name: enable_export_monitoring
-        description: Whether to monitor export workflows or not
-        varType: bool
-        defaultValue: false
+      - name: export_schedule
+        description: The cron schedule to execute the export to GCS
+        varType: string
+        defaultValue: 15 3 * * *
       - name: enable_internal_backup
         description: Wether to create internal backups with this module
+        varType: bool
+        defaultValue: true
+      - name: enable_export_backup
+        description: Weather to create exports to GCS Buckets with this module
         varType: bool
         defaultValue: true
       - name: export_databases
         description: The list of databases that should be exported - if is an empty set all databases will be exported
         varType: set(string)
         defaultValue: []
-      - name: export_monitoring_frequency
-        description: Timeframe in which there should be at least one successfull export
-        varType: string
-        defaultValue: 1d
-      - name: export_schedule
-        description: The cron schedule to execute the export to GCS
-        varType: string
-        defaultValue: 15 3 * * *
       - name: export_uri
         description: The bucket and path uri for exporting to GCS
         varType: string
         required: true
+      - name: compress_export
+        description: Whether or not to compress the export when storing in the bucket; Only valid for MySQL and PostgreSQL
+        varType: bool
+        defaultValue: true
+      - name: enable_connector_params
+        description: Whether to enable connector-specific parameters for Google Workflow SQL Export.
+        varType: bool
+        defaultValue: false
+      - name: connector_params_timeout
+        description: The end-to-end duration the connector call is allowed to run for before throwing a timeout exception. The default value is 1800 and this should be the maximum for connector methods that are not long-running operations. Otherwise, for long-running operations, the maximum timeout for a connector call is 31536000 seconds (one year).
+        varType: number
+        defaultValue: 1800
+      - name: unique_suffix
+        description: Unique suffix to add to scheduler jobs and workflows names.
+        varType: string
+        defaultValue: ""
       - name: log_db_name_to_export
         description: Whether or not to log database name in the export workflow
+        varType: bool
+        defaultValue: false
+      - name: use_sql_instance_replica_in_exporter
+        description: Whether or not to use replica instance on exporter workflow.
+        varType: bool
+        defaultValue: false
+      - name: sql_instance_replica
+        description: The name of the SQL instance replica to export
+        varType: string
+      - name: use_serverless_export
+        description: Whether to use serverless export for DB export
         varType: bool
         defaultValue: false
       - name: monitoring_email
         description: Email address to send alerts
         varType: string
+      - name: enable_backup_monitoring
+        description: Whether to monitor backup workflows or not
+        varType: bool
+        defaultValue: false
+      - name: backup_monitoring_frequency
+        description: Timeframe in which there should be at least one successfull backup
+        varType: string
+        defaultValue: 1d
+      - name: enable_export_monitoring
+        description: Whether to monitor export workflows or not
+        varType: bool
+        defaultValue: false
+      - name: export_monitoring_frequency
+        description: Timeframe in which there should be at least one successfull export
+        varType: string
+        defaultValue: 1d
+      - name: create_notification_channel
+        description: If set to true it will create email notification channel
+        varType: bool
+        defaultValue: false
       - name: notification_channel_name
         description: Name of the email notification channel to be created. Only needed when create_notification_channel is set to true.
         varType: string
@@ -144,40 +160,10 @@ spec:
         description: List of existing notification channels to send alerts to
         varType: list(string)
         defaultValue: []
-      - name: project_id
-        description: The project ID
-        varType: string
-        required: true
-      - name: region
-        description: The region where to run the workflow
-        varType: string
-        defaultValue: us-central1
-      - name: scheduler_timezone
-        description: The Timezone in which the Scheduler Jobs are triggered
-        varType: string
-        defaultValue: Etc/GMT
-      - name: service_account
-        description: The service account to use for running the workflow and triggering the workflow by Cloud Scheduler - If empty or null a service account will be created. If you have provided a service account you need to grant the Cloud SQL Admin and the Workflows Invoker role to that
-        varType: string
-      - name: sql_instance
-        description: The name of the SQL instance to backup
-        varType: string
-        required: true
-      - name: sql_instance_replica
-        description: The name of the SQL instance replica to export
-        varType: string
-      - name: unique_suffix
-        description: Unique suffix to add to scheduler jobs and workflows names.
-        varType: string
-        defaultValue: ""
-      - name: use_serverless_export
-        description: Whether to use serverless export for DB export
+      - name: deletion_protection
+        description: Whether Terraform will be prevented from destroying the workflow.
         varType: bool
-        defaultValue: false
-      - name: use_sql_instance_replica_in_exporter
-        description: Whether or not to use replica instance on exporter workflow.
-        varType: bool
-        defaultValue: false
+        defaultValue: true
     outputs:
       - name: backup_workflow_name
         description: The name for internal backup workflow
@@ -191,26 +177,12 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/cloudscheduler.admin
-          - roles/cloudsql.admin
-          - roles/compute.admin
-          - roles/compute.networkAdmin
-          - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
-          - roles/monitoring.editor
-          - roles/resourcemanager.projectIamAdmin
-          - roles/storage.admin
-          - roles/workflows.admin
+          - roles/logging.logWriter
+          - roles/cloudsql.admin
     services:
-      - cloudkms.googleapis.com
-      - cloudresourcemanager.googleapis.com
-      - cloudscheduler.googleapis.com
-      - compute.googleapis.com
-      - iam.googleapis.com
-      - monitoring.googleapis.com
-      - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
-      - workflows.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 6.11.0, < 7"

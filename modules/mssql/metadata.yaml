@@ -1,17 +1,3 @@
-# Copyright 2024 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: BlueprintMetadata
 metadata:
@@ -81,6 +67,9 @@ spec:
         description: Sets random suffix at the end of the Cloud SQL resource name
         varType: bool
         defaultValue: false
+      - name: maintenance_version
+        description: The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored
+        varType: string
       - name: database_version
         description: "The database version to use: SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB"
         varType: string
@@ -298,6 +287,19 @@ spec:
         description: Enable or disable the creation of the default user
         varType: bool
         defaultValue: true
+      - name: enable_dataplex_integration
+        description: Enable database Dataplex integration
+        varType: bool
+        defaultValue: false
+      - name: insights_config
+        description: The insights_config settings for the database.
+        varType: |-
+          object({
+              query_plans_per_minute  = optional(number, 5)
+              query_string_length     = optional(number, 1024)
+              record_application_tags = optional(bool, false)
+              record_client_address   = optional(bool, false)
+            })
     outputs:
       - name: additional_users
         description: List of maps of additional users and passwords
@@ -547,29 +549,12 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/cloudscheduler.admin
-          - roles/cloudsql.admin
-          - roles/compute.admin
-          - roles/compute.networkAdmin
-          - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
-          - roles/monitoring.editor
-          - roles/resourcemanager.projectIamAdmin
-          - roles/storage.admin
-          - roles/workflows.admin
+          - roles/logging.logWriter
+          - roles/cloudsql.admin
     services:
-      - cloudkms.googleapis.com
-      - cloudresourcemanager.googleapis.com
-      - cloudscheduler.googleapis.com
-      - compute.googleapis.com
-      - iam.googleapis.com
-      - monitoring.googleapis.com
-      - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
-      - workflows.googleapis.com
     providerVersions:
       - source: hashicorp/google
         version: ">= 5.12, < 7"
