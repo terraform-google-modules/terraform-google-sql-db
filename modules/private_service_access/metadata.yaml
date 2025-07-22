@@ -1,4 +1,4 @@
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ spec:
     version: 26.1.1
     actuationTool:
       flavor: Terraform
-      version: ">= 0.13"
+      version: ">= 1.3"
     description: {}
   content:
     examples:
@@ -62,29 +62,6 @@ spec:
         location: examples/private_service_access
   interfaces:
     variables:
-      - name: address
-        description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
-        varType: string
-        defaultValue: ""
-      - name: deletion_policy
-        description: The deletion policy for the service networking connection. Setting to ABANDON allows the resource to be abandoned rather than deleted. This will enable a successful terraform destroy when destroying CloudSQL instances. Use with care as it can lead to dangling resources.
-        varType: string
-      - name: description
-        description: An optional description of the Global Address resource.
-        varType: string
-        defaultValue: ""
-      - name: ip_version
-        description: IP Version for the allocation. Can be IPV4 or IPV6.
-        varType: string
-        defaultValue: ""
-      - name: labels
-        description: The key/value labels for the IP range allocated to the peered network.
-        varType: map(string)
-        defaultValue: {}
-      - name: prefix_length
-        description: Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16.
-        varType: number
-        defaultValue: 16
       - name: project_id
         description: The project ID of the VPC network to peer. This can be a shared VPC host projec.
         varType: string
@@ -93,6 +70,29 @@ spec:
         description: Name of the VPC network to peer.
         varType: string
         required: true
+      - name: address
+        description: First IP address of the IP range to allocate to CLoud SQL instances and other Private Service Access services. If not set, GCP will pick a valid one for you.
+        varType: string
+        defaultValue: ""
+      - name: description
+        description: An optional description of the Global Address resource.
+        varType: string
+        defaultValue: ""
+      - name: prefix_length
+        description: Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16.
+        varType: number
+        defaultValue: 16
+      - name: ip_version
+        description: IP Version for the allocation. Can be IPV4 or IPV6.
+        varType: string
+        defaultValue: ""
+      - name: labels
+        description: The key/value labels for the IP range allocated to the peered network.
+        varType: map(string)
+        defaultValue: {}
+      - name: deletion_policy
+        description: The deletion policy for the service networking connection. Setting to ABANDON allows the resource to be abandoned rather than deleted. This will enable a successful terraform destroy when destroying CloudSQL instances. Use with care as it can lead to dangling resources.
+        varType: string
     outputs:
       - name: address
         description: First IP of the reserved range.
@@ -104,26 +104,15 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/cloudscheduler.admin
-          - roles/cloudsql.admin
-          - roles/compute.admin
-          - roles/compute.networkAdmin
-          - roles/iam.serviceAccountAdmin
+          - roles/servicenetworking.networksAdmin
           - roles/iam.serviceAccountUser
-          - roles/monitoring.editor
-          - roles/resourcemanager.projectIamAdmin
-          - roles/storage.admin
-          - roles/workflows.admin
     services:
-      - cloudkms.googleapis.com
-      - cloudresourcemanager.googleapis.com
-      - cloudscheduler.googleapis.com
-      - compute.googleapis.com
-      - iam.googleapis.com
-      - monitoring.googleapis.com
       - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
-      - sqladmin.googleapis.com
-      - workflows.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 5.38, < 7"
+      - source: hashicorp/google-beta
+        version: ">= 5.38, < 7"
+      - source: hashicorp/null
+        version: ~> 3.1

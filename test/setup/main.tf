@@ -14,6 +14,45 @@
  * limitations under the License.
  */
 
+locals {
+  per_module_services = {
+    backup = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    mssql = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    mysql = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    postgresql = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    private_service_access = [
+      "servicenetworking.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    restore = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    safer_mysql = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+    ]
+    root = [
+      "sqladmin.googleapis.com",
+      "serviceusage.googleapis.com",
+      "iam.googleapis.com",
+      "cloudresourcemanager.googleapis.com",
+    ]
+  }
+}
+
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 18.0"
@@ -25,18 +64,13 @@ module "project" {
   billing_account   = var.billing_account
   deletion_policy   = "DELETE"
 
-  activate_apis = [
+  activate_apis = concat([
     "cloudkms.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
     "cloudscheduler.googleapis.com",
     "compute.googleapis.com",
-    "iam.googleapis.com",
     "monitoring.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "serviceusage.googleapis.com",
-    "sqladmin.googleapis.com",
     "workflows.googleapis.com",
-  ]
+  ], flatten(values(local.per_module_services)))
 }
 
 resource "google_service_account" "cloudsql_pg_sa" {
