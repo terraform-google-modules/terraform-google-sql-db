@@ -177,7 +177,7 @@ variable "random_instance_name" {
 }
 
 variable "tier" {
-  description = "The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
+  description = "The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
   type        = string
   default     = "db-f1-micro"
 }
@@ -283,7 +283,7 @@ variable "deny_maintenance_period" {
 }
 
 variable "backup_configuration" {
-  description = "The backup_configuration settings subblock for the database setings"
+  description = "The backup_configuration settings subblock for the database settings"
   type = object({
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
