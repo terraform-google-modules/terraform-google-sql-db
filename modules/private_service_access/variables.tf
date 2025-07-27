@@ -15,7 +15,7 @@
  */
 
 variable "project_id" {
-  description = "The project ID of the VPC network to peer. This can be a shared VPC host projec."
+  description = "The project ID of the VPC network to peer. This can be a shared VPC host project."
   type        = string
 }
 
