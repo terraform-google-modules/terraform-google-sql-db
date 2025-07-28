@@ -918,9 +918,12 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudsql.admin
-          - roles/iam.serviceAccountUser
+          - roles/cloudkms.cryptoKeyEncrypterDecrypter
           - roles/logging.logWriter
+          - roles/cloudsql.admin
+          - roles/resourcemanager.projectIamAdmin
+          - roles/iam.serviceAccountUser
+          - roles/compute.networkAdmin
     services:
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
