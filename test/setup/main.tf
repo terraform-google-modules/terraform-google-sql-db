@@ -23,6 +23,11 @@ locals {
     mssql = [
       "sqladmin.googleapis.com",
       "serviceusage.googleapis.com",
+      "iam.googleapis.com",
+      "cloudkms.googleapis.com",
+      "cloudresourcemanager.googleapis.com",
+      "compute.googleapis.com",
+      "monitoring.googleapis.com",
     ]
     mysql = [
       "sqladmin.googleapis.com",
@@ -31,6 +36,11 @@ locals {
     postgresql = [
       "sqladmin.googleapis.com",
       "serviceusage.googleapis.com",
+      "iam.googleapis.com",
+      "cloudkms.googleapis.com",
+      "cloudresourcemanager.googleapis.com",
+      "compute.googleapis.com",
+      "monitoring.googleapis.com",
     ]
     private_service_access = [
       "servicenetworking.googleapis.com",

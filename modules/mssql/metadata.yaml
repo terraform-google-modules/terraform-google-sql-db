@@ -563,10 +563,15 @@ spec:
     roles:
       - level: Project
         roles:
+          - roles/cloudsql.admin
           - roles/iam.serviceAccountUser
           - roles/logging.logWriter
-          - roles/cloudsql.admin
     services:
+      - cloudkms.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - compute.googleapis.com
+      - iam.googleapis.com
+      - monitoring.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
     providerVersions:

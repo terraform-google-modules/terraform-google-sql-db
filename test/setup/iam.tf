@@ -28,12 +28,18 @@ locals {
     ]
     mysql = [
       "roles/cloudsql.admin",
+      "roles/resourcemanager.projectIamAdmin",
       "roles/iam.serviceAccountUser",
+      "roles/compute.networkAdmin",
+      "roles/cloudkms.cryptoKeyEncrypterDecrypter",
       "roles/logging.logWriter",
     ]
     postgresql = [
       "roles/cloudsql.admin",
+      "roles/resourcemanager.projectIamAdmin",
       "roles/iam.serviceAccountUser",
+      "roles/compute.networkAdmin",
+      "roles/cloudkms.admin",
       "roles/logging.logWriter",
     ]
     private_service_access = [
