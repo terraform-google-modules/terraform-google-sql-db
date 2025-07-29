@@ -32,6 +32,11 @@ locals {
     mysql = [
       "sqladmin.googleapis.com",
       "serviceusage.googleapis.com",
+      "iam.googleapis.com",
+      "cloudkms.googleapis.com",
+      "cloudresourcemanager.googleapis.com",
+      "compute.googleapis.com",
+      "monitoring.googleapis.com",
     ]
     postgresql = [
       "sqladmin.googleapis.com",
