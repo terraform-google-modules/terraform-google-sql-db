@@ -918,12 +918,12 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudsql.admin
-          - roles/resourcemanager.projectIamAdmin
-          - roles/iam.serviceAccountUser
           - roles/compute.networkAdmin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
           - roles/logging.logWriter
+          - roles/cloudsql.admin
+          - roles/resourcemanager.projectIamAdmin
+          - roles/iam.serviceAccountUser
     services:
       - cloudkms.googleapis.com
       - cloudresourcemanager.googleapis.com
