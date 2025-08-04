@@ -279,6 +279,10 @@ spec:
               retention_unit                 = optional(string)
             })
         defaultValue: {}
+      - name: retain_backups_on_delete
+        description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
+        varType: bool
+        defaultValue: false
       - name: insights_config
         description: The insights_config settings for the database.
         varType: |-
@@ -914,35 +918,26 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/cloudkms.autokeyAdmin
-          - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/cloudscheduler.admin
-          - roles/cloudsql.admin
-          - roles/compute.admin
-          - roles/compute.networkAdmin
-          - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
-          - roles/monitoring.editor
+          - roles/compute.networkAdmin
+          - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/logging.logWriter
+          - roles/cloudsql.admin
           - roles/resourcemanager.projectIamAdmin
-          - roles/storage.admin
-          - roles/workflows.admin
     services:
       - cloudkms.googleapis.com
       - cloudresourcemanager.googleapis.com
-      - cloudscheduler.googleapis.com
       - compute.googleapis.com
       - iam.googleapis.com
       - monitoring.googleapis.com
       - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
-      - workflows.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.1, < 7"
+        version: ">= 6.31, < 7"
       - source: hashicorp/google-beta
-        version: ">= 6.1, < 7"
+        version: ">= 6.31, < 7"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random
