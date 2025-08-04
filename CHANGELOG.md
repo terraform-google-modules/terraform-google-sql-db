@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.1.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.1.1...v26.1.2) (2025-08-04)
+
+
+### Bug Fixes
+
+* revert psc_config workaround - causes permanent drift ([#754](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/754)) ([3cb3eee](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3cb3eeea08525d3d2829b546b8219f30fffa51af))
+
 ## [26.1.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.1.0...v26.1.1) (2025-07-11)
 
 
