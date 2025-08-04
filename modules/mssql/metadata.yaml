@@ -563,9 +563,9 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/logging.logWriter
           - roles/cloudsql.admin
           - roles/iam.serviceAccountUser
+          - roles/logging.logWriter
     services:
       - cloudkms.googleapis.com
       - cloudresourcemanager.googleapis.com
