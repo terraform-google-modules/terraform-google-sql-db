@@ -42,6 +42,7 @@ locals {
     postgresql = [
       "sqladmin.googleapis.com",
       "serviceusage.googleapis.com",
+      "servicenetworking.googleapis.com",
       "iam.googleapis.com",
       "cloudkms.googleapis.com",
       "cloudresourcemanager.googleapis.com",

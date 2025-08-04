@@ -924,21 +924,22 @@ spec:
     roles:
       - level: Project
         roles:
+          - roles/cloudkms.admin
+          - roles/logging.logWriter
           - roles/cloudsql.admin
+          - roles/storage.admin
           - roles/resourcemanager.projectIamAdmin
           - roles/iam.serviceAccountUser
           - roles/compute.networkAdmin
-          - roles/cloudkms.admin
           - roles/cloudkms.autokeyAdmin
-          - roles/storage.admin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
-          - roles/logging.logWriter
     services:
       - cloudkms.googleapis.com
       - cloudresourcemanager.googleapis.com
       - compute.googleapis.com
       - iam.googleapis.com
       - monitoring.googleapis.com
+      - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
     providerVersions:

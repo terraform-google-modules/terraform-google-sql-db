@@ -75,11 +75,11 @@ spec:
     roles:
       - level: Project
         roles:
+          - roles/cloudsql.admin
           - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
           - roles/resourcemanager.projectIamAdmin
           - roles/serviceusage.serviceUsageAdmin
-          - roles/cloudsql.admin
     services:
       - cloudresourcemanager.googleapis.com
       - iam.googleapis.com

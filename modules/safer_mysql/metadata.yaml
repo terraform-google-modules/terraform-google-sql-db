@@ -384,9 +384,9 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudsql.admin
           - roles/iam.serviceAccountUser
           - roles/logging.logWriter
+          - roles/cloudsql.admin
     services:
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
