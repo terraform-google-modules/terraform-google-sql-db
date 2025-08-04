@@ -104,8 +104,8 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/servicenetworking.networksAdmin
           - roles/iam.serviceAccountUser
+          - roles/servicenetworking.networksAdmin
     services:
       - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
