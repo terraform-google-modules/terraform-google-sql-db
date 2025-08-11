@@ -222,7 +222,7 @@ spec:
             - label: PD_HDD
               value: PD_HDD
             - label: HYPERDISK_BALANCED
-              value: HYPERDISK_BALANCED 
+              value: HYPERDISK_BALANCED
         edition:
           name: edition
           title: Edition
@@ -458,7 +458,7 @@ spec:
             - label: MYSQL_5_6
               value: MYSQL_5_6
             - label: MYSQL_5_7
-              value: MYSQL_5_7  
+              value: MYSQL_5_7
         root_password:
           name: root_password
           title: Root Password

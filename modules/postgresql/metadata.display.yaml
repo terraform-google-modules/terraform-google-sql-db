@@ -37,7 +37,7 @@ spec:
             - label: NEVER
               value: NEVER
             - label: ON_DEMAND
-              value: ON_DEMAND  
+              value: ON_DEMAND
         additional_databases:
           name: additional_databases
           title: Additional Databases
@@ -195,7 +195,7 @@ spec:
             - label: PD_HDD
               value: PD_HDD
             - label: HYPERDISK_BALANCED
-              value: HYPERDISK_BALANCED  
+              value: HYPERDISK_BALANCED
         edition:
           name: edition
           title: Edition
@@ -290,7 +290,7 @@ spec:
                 - label: ENCRYPTED_ONLY
                   value: ENCRYPTED_ONLY
                 - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                  value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED  
+                  value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
             server_ca_mode:
               name: server_ca_mode
               title: Server CA Mode
