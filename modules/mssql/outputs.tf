@@ -89,7 +89,7 @@ output "primary" {
 output "apphub_service_uri" {
   value = {
     service_uri = "//cloudsql.googleapis.com/projects${element(split("/projects", google_sql_database_instance.default.self_link), 1)}"
-    service_id  = substr(format("%s-%s", var.name, md5(format("%smssql", var.project_id))), 0, 63)
+    service_id  = substr("${var.name}-${md5("mssql-${var.region}-${var.project_id}")}", 0, 63)
   }
   description = "Service URI in CAIS style to be used by Apphub."
 }
