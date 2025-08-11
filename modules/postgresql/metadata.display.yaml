@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#        http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,12 +31,25 @@ spec:
         activation_policy:
           name: activation_policy
           title: Activation Policy
+          enumValueLabels:
+            - label: ALWAYS
+              value: ALWAYS
+            - label: NEVER
+              value: NEVER
+            - label: ON_DEMAND
+              value: ON_DEMAND  
         additional_databases:
           name: additional_databases
           title: Additional Databases
         additional_users:
           name: additional_users
           title: Additional Users
+          properties:
+            name:
+              name: name
+              title: User Name
+              regexValidation: "^[a-zA-Z0-9-]{1,16}$"
+              validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         availability_type:
           name: availability_type
           title: Availability Type
@@ -44,6 +57,11 @@ spec:
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: REGIONAL
+          enumValueLabels:
+            - label: REGIONAL
+              value: REGIONAL
+            - label: ZONAL
+              value: ZONAL
         backup_configuration:
           name: backup_configuration
           title: Backup Configuration
@@ -53,9 +71,21 @@ spec:
               value:
                 enabled: true
                 point_in_time_recovery_enabled: true
+          properties:
+            retention_unit:
+              name: retention_unit
+              title: Retention Unit
+              enumValueLabels:
+                - label: COUNT
+                  value: COUNT
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
+          enumValueLabels:
+            - label: REQUIRED
+              value: REQUIRED
+            - label: NOT_REQUIRED
+              value: NOT_REQUIRED
         create_timeout:
           name: create_timeout
           title: Create Timeout
@@ -70,6 +100,14 @@ spec:
           name: database_deletion_policy
           title: Database Deletion Policy
           level: 1
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: DELETE
+          enumValueLabels:
+            - label: ABANDON
+              value: ABANDON
+            - label: DELETE
+              value: DELETE
         database_flags:
           name: database_flags
           title: Database Flags
@@ -103,9 +141,13 @@ spec:
         db_charset:
           name: db_charset
           title: Db Charset
+          regexValidation: "^[A-Z0-9]+$"
+          validation: Database charset should contain only uppercase letters and numbers.
         db_collation:
           name: db_collation
           title: Db Collation
+          regexValidation: "^[a-zA-Z0-9_.-]+$"
+          validation: Database collation should contain only letters, numbers, underscores, hyphens, and periods.
         db_name:
           name: db_name
           title: Db Name
@@ -147,6 +189,13 @@ spec:
           name: disk_type
           title: Disk Type
           level: 1
+          enumValueLabels:
+            - label: PD_SSD
+              value: PD_SSD
+            - label: PD_HDD
+              value: PD_HDD
+            - label: HYPERDISK_BALANCED
+              value: HYPERDISK_BALANCED  
         edition:
           name: edition
           title: Edition
@@ -185,12 +234,43 @@ spec:
         iam_users:
           name: iam_users
           title: Iam Users
+          properties:
+            email:
+              name: email
+              title: Email
+              regexValidation: "^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})$"
+              validation: Must be a valid email address or a Google service account email.
+            type:
+              name: type
+              title: Type
+              enumValueLabels:
+                - label: BUILT_IN
+                  value: BUILT_IN
+                - label: CLOUD_IAM_USER
+                  value: CLOUD_IAM_USER
+                - label: CLOUD_IAM_SERVICE_ACCOUNT
+                  value: CLOUD_IAM_SERVICE_ACCOUNT
+                - label: CLOUD_IAM_GROUP
+                  value: CLOUD_IAM_GROUP
+                - label: CLOUD_IAM_GROUP_USER
+                  value: CLOUD_IAM_GROUP_USER
+                - label: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
+                  value: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
         insights_config:
           name: insights_config
           title: Insights Config
         instance_type:
           name: instance_type
           title: Instance Type
+          enumValueLabels:
+            - label: SQL_INSTANCE_TYPE_UNSPECIFIED
+              value: SQL_INSTANCE_TYPE_UNSPECIFIED
+            - label: CLOUD_SQL_INSTANCE
+              value: CLOUD_SQL_INSTANCE
+            - label: ON_PREMISES_INSTANCE
+              value: ON_PREMISES_INSTANCE
+            - label: READ_REPLICA_INSTANCE
+              value: READ_REPLICA_INSTANCE
         ip_configuration:
           name: ip_configuration
           title: Ip Configuration
@@ -201,10 +281,43 @@ spec:
               subtext: The VPC network used to enable private IP access to the Cloud SQL instance. Cannot be unset once configured.
               regexValidation: ^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
               validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
+            ssl_mode:
+              name: ssl_mode
+              title: Ssl Mode
+              enumValueLabels:
+                - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                  value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                - label: ENCRYPTED_ONLY
+                  value: ENCRYPTED_ONLY
+                - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                  value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED  
+            server_ca_mode:
+              name: server_ca_mode
+              title: Server CA Mode
+              enumValueLabels:
+                - label: GOOGLE_MANAGED_INTERNAL_CA
+                  value: GOOGLE_MANAGED_INTERNAL_CA
+                - label: GOOGLE_MANAGED_INTERNAL_CA
+                  value: GOOGLE_MANAGED_INTERNAL_CA
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
+          enumValueLabels:
+            - label: MONDAY
+              value: 1
+            - label: TUESDAY
+              value: 2
+            - label: WEDNESDAY
+              value: 3
+            - label: THURSDAY
+              value: 4
+            - label: FRIDAY
+              value: 5
+            - label: SATURDAY
+              value: 6
+            - label: SUNDAY
+              value: 7
         maintenance_window_hour:
           name: maintenance_window_hour
           title: Maintenance Window Hour
@@ -229,6 +342,12 @@ spec:
           name: pricing_plan
           title: Pricing Plan
           level: 1
+          enumValueLabels:
+            - label: PER_USE
+              value: PER_USE
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: PER_USE
         project_id:
           name: project_id
           title: Project Id
@@ -247,6 +366,55 @@ spec:
         read_replicas:
           name: read_replicas
           title: Read Replicas
+          properties:
+            name:
+              name: name
+              title: Read Replica Name
+              regexValidation: "^[a-z][a-z0-9-]{0,95}[a-z0-9]$"
+              validation: Read replica names must be between 1 and 97 characters long, start with a lowercase letter, and end with a lowercase letter or number. Read replica names can only contain lowercase letters, numbers, and hyphens.
+            edition:
+              name: edition
+              title: Edition
+              enumValueLabels:
+                - label: ENTERPRISE_PLUS
+                  value: ENTERPRISE_PLUS
+                - label: ENTERPRISE
+                  value: ENTERPRISE
+            availability_type:
+              name: availability_type
+              title: Availability Type
+              enumValueLabels:
+                - label: REGIONAL
+                  value: REGIONAL
+                - label: ZONAL
+                  value: ZONAL
+            disk_type:
+              name: disk_type
+              title: Disk Type
+              enumValueLabels:
+                - label: PD_SSD
+                  value: PD_SSD
+                - label: PD_HDD
+                  value: PD_HDD
+            ip_configuration:
+              name: ip_configuration
+              title: Ip Configuration
+              properties:
+                private_network:
+                  name: private_network
+                  title: Private Network
+                  regexValidation: "^(projects/[a-z0-9-]+/)?global/networks/[a-z0-9-]+$"
+                  validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
+                ssl_mode:
+                  name: ssl_mode
+                  title: Ssl Mode
+                  enumValueLabels:
+                  - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                    value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                  - label: ENCRYPTED_ONLY
+                    value: ENCRYPTED_ONLY
+                  - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                    value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
         region:
           name: region
           title: Region
@@ -271,6 +439,9 @@ spec:
         user_deletion_policy:
           name: user_deletion_policy
           title: User Deletion Policy
+          enumValueLabels:
+            - label: ABANDON
+              value: ABANDON
         user_labels:
           name: user_labels
           title: User Labels
@@ -278,6 +449,8 @@ spec:
           name: user_name
           title: User Name
           level: 1
+          regexValidation: "^[a-zA-Z0-9-]{1,16}$"
+          validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         user_password:
           name: user_password
           title: User Password
