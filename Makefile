@@ -18,7 +18,7 @@
 # Make will use bash instead of sh
 SHELL := /usr/bin/env bash
 
-DOCKER_TAG_VERSION_DEVELOPER_TOOLS := 1.22
+DOCKER_TAG_VERSION_DEVELOPER_TOOLS := 1.25
 DOCKER_IMAGE_DEVELOPER_TOOLS := cft/developer-tools
 REGISTRY_URL := gcr.io/cloud-foundation-cicd
 
@@ -80,7 +80,7 @@ docker_generate_docs:
 		-e ENABLE_BPMETADATA \
 		-v "$(CURDIR)":/workspace \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
-		/bin/bash -c 'source /usr/local/bin/task_helper_functions.sh && generate_docs'
+		/bin/bash -c 'source /usr/local/bin/task_helper_functions.sh && generate_docs --per-module-requirements'
 
 # Alias for backwards compatibility
 .PHONY: generate_docs
