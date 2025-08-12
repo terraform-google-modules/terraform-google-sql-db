@@ -33,10 +33,10 @@ resource "google_sql_database_instance" "replicas" {
   project              = var.project_id
   name                 = each.value.name_override == null || each.value.name_override == "" ? "${local.instance_name}-replica${var.read_replica_name_suffix}${each.value.name}" : each.value.name_override
   database_version     = var.database_version
-  region               = join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))
+  region               = join("-", slice(split("-", lookup(each.value, "zone", local.zone)), 0, 2))
   master_instance_name = google_sql_database_instance.default.name
   deletion_protection  = var.read_replica_deletion_protection
-  encryption_key_name  = (join("-", slice(split("-", lookup(each.value, "zone", var.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
+  encryption_key_name  = (join("-", slice(split("-", lookup(each.value, "zone", local.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
 
   settings {
     tier                        = lookup(each.value, "tier", null) == null ? var.tier : lookup(each.value, "tier", null)
