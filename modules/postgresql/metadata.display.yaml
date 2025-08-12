@@ -48,7 +48,7 @@ spec:
             name:
               name: name
               title: User Name
-              regexValidation: "^[a-zA-Z0-9-]{1,16}$"
+              regexValidation: ^[a-zA-Z0-9-]{1,16}$
               validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         availability_type:
           name: availability_type
@@ -141,12 +141,12 @@ spec:
         db_charset:
           name: db_charset
           title: Db Charset
-          regexValidation: "^[A-Z0-9]+$"
+          regexValidation: ^[A-Z0-9]+$
           validation: Database charset should contain only uppercase letters and numbers.
         db_collation:
           name: db_collation
           title: Db Collation
-          regexValidation: "^[a-zA-Z0-9_.-]+$"
+          regexValidation: ^[a-zA-Z0-9_.-]+$
           validation: Database collation should contain only letters, numbers, underscores, hyphens, and periods.
         db_name:
           name: db_name
@@ -238,7 +238,7 @@ spec:
             email:
               name: email
               title: Email
-              regexValidation: "^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})$"
+              regexValidation: ^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})$
               validation: Must be a valid email address or a Google service account email.
             type:
               name: type
@@ -370,7 +370,7 @@ spec:
             name:
               name: name
               title: Read Replica Name
-              regexValidation: "^[a-z][a-z0-9-]{0,95}[a-z0-9]$"
+              regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
               validation: Read replica names must be between 1 and 97 characters long, start with a lowercase letter, and end with a lowercase letter or number. Read replica names can only contain lowercase letters, numbers, and hyphens.
             edition:
               name: edition
@@ -403,7 +403,7 @@ spec:
                 private_network:
                   name: private_network
                   title: Private Network
-                  regexValidation: "^(projects/[a-z0-9-]+/)?global/networks/[a-z0-9-]+$"
+                  regexValidation: ^(projects/[a-z0-9-]+/)?global/networks/[a-z0-9-]+$
                   validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
                 ssl_mode:
                   name: ssl_mode
@@ -449,7 +449,7 @@ spec:
           name: user_name
           title: User Name
           level: 1
-          regexValidation: "^[a-zA-Z0-9-]{1,16}$"
+          regexValidation: ^[a-zA-Z0-9-]{1,16}$
           validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         user_password:
           name: user_password
