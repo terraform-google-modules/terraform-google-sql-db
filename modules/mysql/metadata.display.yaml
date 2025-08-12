@@ -265,7 +265,7 @@ spec:
             email:
               name: email
               title: Email
-              regexValidation: ^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})$
+              regexValidation: ^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$
               validation: Must be a valid email address or a Google service account email.
             type:
               name: type
@@ -325,7 +325,7 @@ spec:
                 value:
                   name: value
                   title: Value
-                  regexValidation: ^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/([0-9]|[1-2][0-9]|3[0-2])$
+                  regexValidation: ^((25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\/(3[0-2]|[1-2]\d|\d)$
                   validation: Must be a valid IPv4 address in CIDR format.
           level: 1
         maintenance_window_day:
