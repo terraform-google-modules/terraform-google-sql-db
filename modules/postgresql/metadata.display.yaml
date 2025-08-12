@@ -303,21 +303,6 @@ spec:
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
-          enumValueLabels:
-            - label: MONDAY
-              value: 1
-            - label: TUESDAY
-              value: 2
-            - label: WEDNESDAY
-              value: 3
-            - label: THURSDAY
-              value: 4
-            - label: FRIDAY
-              value: 5
-            - label: SATURDAY
-              value: 6
-            - label: SUNDAY
-              value: 7
         maintenance_window_hour:
           name: maintenance_window_hour
           title: Maintenance Window Hour
