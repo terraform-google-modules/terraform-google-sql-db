@@ -91,7 +91,6 @@ output "replicas_instance_server_ca_certs" {
 output "replicas_instance_psc_attachments" {
   value       = [for r in google_sql_database_instance.replicas : r.psc_service_attachment_link]
   description = "The psc_service_attachment_links created for the replica instances"
-  sensitive   = true
 }
 
 output "replicas_instance_service_account_email_addresses" {
