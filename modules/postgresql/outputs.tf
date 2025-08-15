@@ -88,6 +88,11 @@ output "replicas_instance_server_ca_certs" {
   sensitive   = true
 }
 
+output "replicas_instance_psc_attachments" {
+  value       = [for r in google_sql_database_instance.replicas : r.psc_service_attachment_link]
+  description = "The psc_service_attachment_links created for the replica instances"
+}
+
 output "replicas_instance_service_account_email_addresses" {
   value       = [for r in google_sql_database_instance.replicas : r.service_account_email_address]
   description = "The service account email addresses assigned to the replica instances"
