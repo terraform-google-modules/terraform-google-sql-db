@@ -88,6 +88,11 @@ output "replicas_instance_server_ca_certs" {
   sensitive   = true
 }
 
+output "replicas_instance_psc_attachments" {
+  value       = [for r in google_sql_database_instance.replicas : r.psc_service_attachment_link]
+  description = "The psc_service_attachment_links created for the replica instances"
+}
+
 output "replicas_instance_service_account_email_addresses" {
   value       = [for r in google_sql_database_instance.replicas : r.service_account_email_address]
   description = "The service account email addresses assigned to the replica instances"
@@ -162,7 +167,7 @@ output "env_vars" {
 output "apphub_service_uri" {
   value = {
     service_uri = "//sqladmin.googleapis.com/projects${element(split("/projects", google_sql_database_instance.default.self_link), 1)}"
-    service_id  = substr("${var.name}-${md5("${var.region}-${var.project_id}")}", 0, 63)
+    service_id  = substr("${var.name}-${md5("postgresql-${var.region}-${var.project_id}")}", 0, 63)
     location    = var.region
   }
   description = "Service URI in CAIS style to be used by Apphub."

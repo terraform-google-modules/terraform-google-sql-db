@@ -209,6 +209,7 @@ module "pg" {
 | replicas | A list of `google_sql_database_instance` resources representing the replicas |
 | replicas\_instance\_connection\_names | The connection names of the replica instances to be used in connection strings |
 | replicas\_instance\_first\_ip\_addresses | The first IPv4 addresses of the addresses assigned for the replica instances |
+| replicas\_instance\_psc\_attachments | The psc\_service\_attachment\_links created for the replica instances |
 | replicas\_instance\_self\_links | The URIs of the replica instances |
 | replicas\_instance\_server\_ca\_certs | The CA certificates information used to connect to the replica instances via SSL |
 | replicas\_instance\_service\_account\_email\_addresses | The service account email addresses assigned to the replica instances |
