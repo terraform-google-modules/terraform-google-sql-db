@@ -100,14 +100,11 @@ spec:
           name: database_deletion_policy
           title: Database Deletion Policy
           level: 1
-          altDefaults:
-            - type: ALTERNATE_TYPE_DC
-              value: DELETE
           enumValueLabels:
-            - label: ABANDON
-              value: ABANDON
             - label: DELETE
               value: DELETE
+            - label: ABANDON
+              value: ABANDON  
         database_flags:
           name: database_flags
           title: Database Flags
@@ -329,9 +326,6 @@ spec:
           level: 1
           enumValueLabels:
             - label: PER_USE
-              value: PER_USE
-          altDefaults:
-            - type: ALTERNATE_TYPE_DC
               value: PER_USE
         project_id:
           name: project_id
