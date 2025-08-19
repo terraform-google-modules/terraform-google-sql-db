@@ -104,7 +104,7 @@ spec:
             - label: DELETE
               value: DELETE
             - label: ABANDON
-              value: ABANDON  
+              value: ABANDON
         database_flags:
           name: database_flags
           title: Database Flags
