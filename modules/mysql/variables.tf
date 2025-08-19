@@ -185,7 +185,7 @@ variable "instance_type" {
 
 // Master
 variable "tier" {
-  description = "The tier for the master instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
+  description = "The tier for the master instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
   type        = string
   default     = "db-n1-standard-1"
 }
@@ -301,7 +301,7 @@ variable "deny_maintenance_period" {
 }
 
 variable "backup_configuration" {
-  description = "The backup_configuration settings subblock for the database setings"
+  description = "The backup_configuration settings subblock for the database settings"
   type = object({
     binary_log_enabled             = optional(bool, false)
     enabled                        = optional(bool, false)

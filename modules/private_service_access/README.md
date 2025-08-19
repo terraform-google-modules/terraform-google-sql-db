@@ -38,7 +38,7 @@ module "test_psa" {
 | ip\_version | IP Version for the allocation. Can be IPV4 or IPV6. | `string` | `""` | no |
 | labels | The key/value labels for the IP range allocated to the peered network. | `map(string)` | `{}` | no |
 | prefix\_length | Prefix length of the IP range reserved for Cloud SQL instances and other Private Service Access services. Defaults to /16. | `number` | `16` | no |
-| project\_id | The project ID of the VPC network to peer. This can be a shared VPC host projec. | `string` | n/a | yes |
+| project\_id | The project ID of the VPC network to peer. This can be a shared VPC host project. | `string` | n/a | yes |
 | vpc\_network | Name of the VPC network to peer. | `string` | n/a | yes |
 
 ## Outputs
