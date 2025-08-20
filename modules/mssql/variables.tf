@@ -224,6 +224,7 @@ variable "backup_configuration" {
   type = object({
     binary_log_enabled             = bool
     enabled                        = bool
+    location                       = string
     point_in_time_recovery_enabled = bool
     start_time                     = string
     transaction_log_retention_days = string
@@ -233,6 +234,7 @@ variable "backup_configuration" {
   default = {
     binary_log_enabled             = null
     enabled                        = false
+    location                       = null
     point_in_time_recovery_enabled = null
     start_time                     = null
     transaction_log_retention_days = null
