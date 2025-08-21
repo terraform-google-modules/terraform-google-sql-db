@@ -31,12 +31,57 @@ spec:
         activation_policy:
           name: activation_policy
           title: Activation Policy
+          enumValueLabels:
+            - label: ALWAYS
+              value: ALWAYS
+            - label: NEVER
+              value: NEVER
+            - label: ON_DEMAND
+              value: ON_DEMAND
         additional_databases:
           name: additional_databases
           title: Additional Databases
+          properties:
+            name:
+              name: name
+              title: Database Name
+              regexValidation: ^[a-zA-Z][a-zA-Z0-9_]{0,63}$
+              validation: Database names must be between 1 and 64 characters long, start with a letter, and can only contain letters, numbers, and underscores.
+            charset:
+              name: charset
+              title: Charset
+              regexValidation: ^[a-zA-Z0-9]+$
+              validation: Database charset should contain only letters and numbers (e.g. 'utf8').
+            collation:
+              name: collation
+              title: Collation
+              regexValidation: ^[a-z0-9_]+$
+              validation: Database collation should contain only lowercase letters, numbers, and underscores.
         additional_users:
           name: additional_users
           title: Additional Users
+          properties:
+            name:
+              name: name
+              title: User Name
+              regexValidation: ^[a-zA-Z][a-zA-Z0-9_]{0,31}$
+              validation: User names must be between 1 and 32 characters long, start with a letter, and can only contain letters, numbers, and underscores.
+            type:
+              name: type
+              title: Type
+              enumValueLabels:
+                - label: BUILT_IN
+                  value: BUILT_IN
+                - label: CLOUD_IAM_USER
+                  value: CLOUD_IAM_USER
+                - label: CLOUD_IAM_SERVICE_ACCOUNT
+                  value: CLOUD_IAM_SERVICE_ACCOUNT
+                - label: CLOUD_IAM_GROUP
+                  value: CLOUD_IAM_GROUP
+                - label: CLOUD_IAM_GROUP_USER
+                  value: CLOUD_IAM_GROUP_USER
+                - label: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
+                  value: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
         availability_type:
           name: availability_type
           title: Availability Type
@@ -58,9 +103,21 @@ spec:
               value:
                 enabled: true
                 binary_log_enabled: true
+          properties:
+            retention_unit:
+              name: retention_unit
+              title: Retention Unit
+              enumValueLabels:
+                - label: COUNT
+                  value: COUNT
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
+          enumValueLabels:
+            - label: REQUIRED
+              value: REQUIRED
+            - label: NOT_REQUIRED
+              value: NOT_REQUIRED
         create_timeout:
           name: create_timeout
           title: Create Timeout
@@ -95,9 +152,13 @@ spec:
         db_charset:
           name: db_charset
           title: Db Charset
+          regexValidation: ^[a-z0-9]+$
+          validation: Database charset should contain only lowercase letters and numbers.
         db_collation:
           name: db_collation
           title: Db Collation
+          regexValidation: ^[a-z0-9_]+$
+          validation: Database collation should contain only lowercase letters, numbers, and underscores.
         db_name:
           name: db_name
           title: Db Name
@@ -120,6 +181,22 @@ spec:
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
+          properties:
+            end_date:
+              name: end_date
+              title: End Date
+              regexValidation: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
+              validation: End date must be in YYYY-MM-DD format.
+            start_date:
+              name: start_date
+              title: Start Date
+              regexValidation: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
+              validation: Start date must be in YYYY-MM-DD format.
+            time:
+              name: time
+              title: Time
+              regexValidation: ^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$
+              validation: Time must be in HH:MM:SS format (24-hour clock).
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
@@ -139,6 +216,13 @@ spec:
           name: disk_type
           title: Disk Type
           level: 1
+          enumValueLabels:
+            - label: PD_SSD
+              value: PD_SSD
+            - label: PD_HDD
+              value: PD_HDD
+            - label: HYPERDISK_BALANCED
+              value: HYPERDISK_BALANCED
         edition:
           name: edition
           title: Edition
@@ -177,12 +261,43 @@ spec:
         iam_users:
           name: iam_users
           title: Iam Users
+          properties:
+            email:
+              name: email
+              title: Email
+              regexValidation: ^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$
+              validation: Must be a valid email address or a Google service account email.
+            type:
+              name: type
+              title: Type
+              enumValueLabels:
+                - label: BUILT_IN
+                  value: BUILT_IN
+                - label: CLOUD_IAM_USER
+                  value: CLOUD_IAM_USER
+                - label: CLOUD_IAM_SERVICE_ACCOUNT
+                  value: CLOUD_IAM_SERVICE_ACCOUNT
+                - label: CLOUD_IAM_GROUP
+                  value: CLOUD_IAM_GROUP
+                - label: CLOUD_IAM_GROUP_USER
+                  value: CLOUD_IAM_GROUP_USER
+                - label: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
+                  value: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
         insights_config:
           name: insights_config
           title: Insights Config
         instance_type:
           name: instance_type
           title: Instance Type
+          enumValueLabels:
+            - label: SQL_INSTANCE_TYPE_UNSPECIFIED
+              value: SQL_INSTANCE_TYPE_UNSPECIFIED
+            - label: CLOUD_SQL_INSTANCE
+              value: CLOUD_SQL_INSTANCE
+            - label: ON_PREMISES_INSTANCE
+              value: ON_PREMISES_INSTANCE
+            - label: READ_REPLICA_INSTANCE
+              value: READ_REPLICA_INSTANCE
         ip_configuration:
           name: ip_configuration
           title: Ip Configuration
@@ -193,6 +308,25 @@ spec:
               subtext: The VPC network used to enable private IP access to the Cloud SQL instance. Cannot be unset once configured.
               regexValidation: ^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
               validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
+            ssl_mode:
+              name: ssl_mode
+              title: Ssl Mode
+              enumValueLabels:
+                - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                  value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                - label: ENCRYPTED_ONLY
+                  value: ENCRYPTED_ONLY
+                - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                  value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+            authorized_networks:
+              name: authorized_networks
+              title: Authorized Networks
+              properties:
+                value:
+                  name: value
+                  title: Value
+                  regexValidation: ^((25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\/(3[0-2]|[1-2]\d|\d)$
+                  validation: Must be a valid IPv4 address in CIDR format.
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
@@ -221,6 +355,9 @@ spec:
           name: pricing_plan
           title: Pricing Plan
           level: 1
+          enumValueLabels:
+            - label: PER_USE
+              value: PER_USE
         project_id:
           name: project_id
           title: Project Id
@@ -239,6 +376,55 @@ spec:
         read_replicas:
           name: read_replicas
           title: Read Replicas
+          properties:
+            name:
+              name: name
+              title: Read Replica Name
+              regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
+              validation: Read replica names must be between 1 and 97 characters long, start with a lowercase letter, and end with a lowercase letter or number. Read replica names can only contain lowercase letters, numbers, and hyphens.
+            edition:
+              name: edition
+              title: Edition
+              enumValueLabels:
+                - label: ENTERPRISE_PLUS
+                  value: ENTERPRISE_PLUS
+                - label: ENTERPRISE
+                  value: ENTERPRISE
+            availability_type:
+              name: availability_type
+              title: Availability Type
+              enumValueLabels:
+                - label: REGIONAL
+                  value: REGIONAL
+                - label: ZONAL
+                  value: ZONAL
+            disk_type:
+              name: disk_type
+              title: Disk Type
+              enumValueLabels:
+                - label: PD_SSD
+                  value: PD_SSD
+                - label: PD_HDD
+                  value: PD_HDD
+            ip_configuration:
+              name: ip_configuration
+              title: Ip Configuration
+              properties:
+                private_network:
+                  name: private_network
+                  title: Private Network
+                  regexValidation: ^(projects/[a-z0-9-]+/)?global/networks/[a-z0-9-]+$
+                  validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
+                ssl_mode:
+                  name: ssl_mode
+                  title: Ssl Mode
+                  enumValueLabels:
+                  - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                    value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                  - label: ENCRYPTED_ONLY
+                    value: ENCRYPTED_ONLY
+                  - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                    value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
         region:
           name: region
           title: Region
@@ -246,6 +432,15 @@ spec:
         replica_database_version:
           name: replica_database_version
           title: Replica Database Version
+          enumValueLabels:
+            - label: MYSQL_8_4
+              value: MYSQL_8_4
+            - label: MYSQL_8_0
+              value: MYSQL_8_0
+            - label: MYSQL_5_6
+              value: MYSQL_5_6
+            - label: MYSQL_5_7
+              value: MYSQL_5_7
         root_password:
           name: root_password
           title: Root Password
@@ -266,6 +461,9 @@ spec:
         user_deletion_policy:
           name: user_deletion_policy
           title: User Deletion Policy
+          enumValueLabels:
+            - label: ABANDON
+              value: ABANDON
         user_host:
           name: user_host
           title: User Host
@@ -276,6 +474,8 @@ spec:
           name: user_name
           title: User Name
           level: 1
+          regexValidation: ^[a-zA-Z0-9-]{1,16}$
+          validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         user_password:
           name: user_password
           title: User Password
