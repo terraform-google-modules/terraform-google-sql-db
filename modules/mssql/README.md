@@ -74,6 +74,7 @@ module "mssql" {
 | project\_id | The project ID to manage the Cloud SQL resources | `string` | n/a | yes |
 | random\_instance\_name | Sets random suffix at the end of the Cloud SQL resource name | `bool` | `false` | no |
 | region | The region of the Cloud SQL resources | `string` | `"us-central1"` | no |
+| retain\_backups\_on\_delete | When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON\_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting. | `bool` | `false` | no |
 | root\_password | MSSERVER password for the root user. If not set, a random one will be generated and available in the root\_password output variable. | `string` | `""` | no |
 | secondary\_zone | The preferred zone for the read replica instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 | sql\_server\_audit\_config | SQL server audit config settings. | `map(string)` | `{}` | no |
