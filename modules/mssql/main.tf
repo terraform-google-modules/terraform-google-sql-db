@@ -69,6 +69,7 @@ resource "google_sql_database_instance" "default" {
       content {
         binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
         enabled                        = lookup(backup_configuration.value, "enabled", null)
+        location                       = lookup(backup_configuration.value, "location", null)
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
