@@ -38,25 +38,12 @@ spec:
               value: NEVER
             - label: ON_DEMAND
               value: ON_DEMAND
-          enumValueLabels:
-            - label: ALWAYS
-              value: ALWAYS
-            - label: NEVER
-              value: NEVER
-            - label: ON_DEMAND
-              value: ON_DEMAND
         additional_databases:
           name: additional_databases
           title: Additional Databases
         additional_users:
           name: additional_users
           title: Additional Users
-          properties:
-            name:
-              name: name
-              title: User Name
-              regexValidation: ^[a-zA-Z0-9-]{1,16}$
-              validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
           properties:
             name:
               name: name
@@ -70,11 +57,6 @@ spec:
           altDefaults:
             - type: ALTERNATE_TYPE_DC
               value: REGIONAL
-          enumValueLabels:
-            - label: REGIONAL
-              value: REGIONAL
-            - label: ZONAL
-              value: ZONAL
           enumValueLabels:
             - label: REGIONAL
               value: REGIONAL
@@ -96,21 +78,9 @@ spec:
               enumValueLabels:
                 - label: COUNT
                   value: COUNT
-          properties:
-            retention_unit:
-              name: retention_unit
-              title: Retention Unit
-              enumValueLabels:
-                - label: COUNT
-                  value: COUNT
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
-          enumValueLabels:
-            - label: REQUIRED
-              value: REQUIRED
-            - label: NOT_REQUIRED
-              value: NOT_REQUIRED
           enumValueLabels:
             - label: REQUIRED
               value: REQUIRED
@@ -130,11 +100,6 @@ spec:
           name: database_deletion_policy
           title: Database Deletion Policy
           level: 1
-          enumValueLabels:
-            - label: DELETE
-              value: DELETE
-            - label: ABANDON
-              value: ABANDON
           enumValueLabels:
             - label: DELETE
               value: DELETE
@@ -175,13 +140,9 @@ spec:
           title: Db Charset
           regexValidation: ^[A-Z0-9]+$
           validation: Database charset should contain only uppercase letters and numbers.
-          regexValidation: ^[A-Z0-9]+$
-          validation: Database charset should contain only uppercase letters and numbers.
         db_collation:
           name: db_collation
           title: Db Collation
-          regexValidation: ^[a-zA-Z0-9_.-]+$
-          validation: Database collation should contain only letters, numbers, underscores, hyphens, and periods.
           regexValidation: ^[a-zA-Z0-9_.-]+$
           validation: Database collation should contain only letters, numbers, underscores, hyphens, and periods.
         db_name:
@@ -232,13 +193,6 @@ spec:
               value: PD_HDD
             - label: HYPERDISK_BALANCED
               value: HYPERDISK_BALANCED
-          enumValueLabels:
-            - label: PD_SSD
-              value: PD_SSD
-            - label: PD_HDD
-              value: PD_HDD
-            - label: HYPERDISK_BALANCED
-              value: HYPERDISK_BALANCED
         edition:
           name: edition
           title: Edition
@@ -281,7 +235,7 @@ spec:
             email:
               name: email
               title: Email
-              regexValidation: "^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})$"
+              regexValidation: "^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,})$"
               validation: Must be a valid email address or a Google service account email.
             type:
               name: type
@@ -314,15 +268,6 @@ spec:
               value: ON_PREMISES_INSTANCE
             - label: READ_REPLICA_INSTANCE
               value: READ_REPLICA_INSTANCE
-          enumValueLabels:
-            - label: SQL_INSTANCE_TYPE_UNSPECIFIED
-              value: SQL_INSTANCE_TYPE_UNSPECIFIED
-            - label: CLOUD_SQL_INSTANCE
-              value: CLOUD_SQL_INSTANCE
-            - label: ON_PREMISES_INSTANCE
-              value: ON_PREMISES_INSTANCE
-            - label: READ_REPLICA_INSTANCE
-              value: READ_REPLICA_INSTANCE
         ip_configuration:
           name: ip_configuration
           title: Ip Configuration
@@ -331,7 +276,7 @@ spec:
               name: private_network
               title: private_network
               subtext: The VPC network used to enable private IP access to the Cloud SQL instance. Cannot be unset once configured.
-              regexValidation: ^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
+              regexValidation: "^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$"
               validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
             ssl_mode:
               name: ssl_mode
@@ -367,8 +312,6 @@ spec:
               enumValueLabels:
                 - label: GOOGLE_MANAGED_INTERNAL_CA
                   value: GOOGLE_MANAGED_INTERNAL_CA
-                - label: GOOGLE_MANAGED_INTERNAL_CA
-                  value: GOOGLE_MANAGED_INTERNAL_CA
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
@@ -397,9 +340,6 @@ spec:
           name: pricing_plan
           title: Pricing Plan
           level: 1
-          enumValueLabels:
-            - label: PER_USE
-              value: PER_USE
           enumValueLabels:
             - label: PER_USE
               value: PER_USE
@@ -546,9 +486,6 @@ spec:
           enumValueLabels:
             - label: ABANDON
               value: ABANDON
-          enumValueLabels:
-            - label: ABANDON
-              value: ABANDON
         user_labels:
           name: user_labels
           title: User Labels
@@ -556,8 +493,6 @@ spec:
           name: user_name
           title: User Name
           level: 1
-          regexValidation: ^[a-zA-Z0-9-]{1,16}$
-          validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
           regexValidation: ^[a-zA-Z0-9-]{1,16}$
           validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         user_password:

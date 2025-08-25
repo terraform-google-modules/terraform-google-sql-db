@@ -38,32 +38,9 @@ spec:
               value: NEVER
             - label: ON_DEMAND
               value: ON_DEMAND
-          enumValueLabels:
-            - label: ALWAYS
-              value: ALWAYS
-            - label: NEVER
-              value: NEVER
-            - label: ON_DEMAND
-              value: ON_DEMAND
         additional_databases:
           name: additional_databases
           title: Additional Databases
-          properties:
-            name:
-              name: name
-              title: Database Name
-              regexValidation: ^[a-zA-Z][a-zA-Z0-9_]{0,63}$
-              validation: Database names must be between 1 and 64 characters long, start with a letter, and can only contain letters, numbers, and underscores.
-            charset:
-              name: charset
-              title: Charset
-              regexValidation: ^[a-zA-Z0-9]+$
-              validation: Database charset should contain only letters and numbers (e.g. 'utf8').
-            collation:
-              name: collation
-              title: Collation
-              regexValidation: ^[a-z0-9_]+$
-              validation: Database collation should contain only lowercase letters, numbers, and underscores.
           properties:
             name:
               name: name
@@ -155,21 +132,9 @@ spec:
               enumValueLabels:
                 - label: COUNT
                   value: COUNT
-          properties:
-            retention_unit:
-              name: retention_unit
-              title: Retention Unit
-              enumValueLabels:
-                - label: COUNT
-                  value: COUNT
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
-          enumValueLabels:
-            - label: REQUIRED
-              value: REQUIRED
-            - label: NOT_REQUIRED
-              value: NOT_REQUIRED
           enumValueLabels:
             - label: REQUIRED
               value: REQUIRED
@@ -218,8 +183,6 @@ spec:
           title: Db Collation
           regexValidation: ^[a-z0-9_]+$
           validation: Database collation should contain only lowercase letters, numbers, and underscores.
-          regexValidation: ^[a-z0-9_]+$
-          validation: Database collation should contain only lowercase letters, numbers, and underscores.
         db_name:
           name: db_name
           title: Db Name
@@ -258,22 +221,6 @@ spec:
               title: Time
               regexValidation: ^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$
               validation: Time must be in HH:MM:SS format (24-hour clock).
-          properties:
-            end_date:
-              name: end_date
-              title: End Date
-              regexValidation: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
-              validation: End date must be in YYYY-MM-DD format.
-            start_date:
-              name: start_date
-              title: Start Date
-              regexValidation: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
-              validation: Start date must be in YYYY-MM-DD format.
-            time:
-              name: time
-              title: Time
-              regexValidation: ^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$
-              validation: Time must be in HH:MM:SS format (24-hour clock).
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
@@ -293,13 +240,6 @@ spec:
           name: disk_type
           title: Disk Type
           level: 1
-          enumValueLabels:
-            - label: PD_SSD
-              value: PD_SSD
-            - label: PD_HDD
-              value: PD_HDD
-            - label: HYPERDISK_BALANCED
-              value: HYPERDISK_BALANCED
           enumValueLabels:
             - label: PD_SSD
               value: PD_SSD
@@ -349,7 +289,7 @@ spec:
             email:
               name: email
               title: Email
-              regexValidation: "^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})$"
+              regexValidation: "^([a-zA-Z][a-zA-Z0-9_]{0,15}|[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,})$"
               validation: Must be a valid email address or a Google service account email.
             type:
               name: type
@@ -382,15 +322,6 @@ spec:
               value: ON_PREMISES_INSTANCE
             - label: READ_REPLICA_INSTANCE
               value: READ_REPLICA_INSTANCE
-          enumValueLabels:
-            - label: SQL_INSTANCE_TYPE_UNSPECIFIED
-              value: SQL_INSTANCE_TYPE_UNSPECIFIED
-            - label: CLOUD_SQL_INSTANCE
-              value: CLOUD_SQL_INSTANCE
-            - label: ON_PREMISES_INSTANCE
-              value: ON_PREMISES_INSTANCE
-            - label: READ_REPLICA_INSTANCE
-              value: READ_REPLICA_INSTANCE
         ip_configuration:
           name: ip_configuration
           title: Ip Configuration
@@ -399,7 +330,7 @@ spec:
               name: private_network
               title: private_network
               subtext: The VPC network used to enable private IP access to the Cloud SQL instance. Cannot be unset once configured.
-              regexValidation: ^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
+              regexValidation: "^(?:http(?:s)?://.+/)?projects/((?:(?:[-a-z0-9]{1,63}.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/global/networks/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$"
               validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
             ssl_mode:
               name: ssl_mode
@@ -448,9 +379,6 @@ spec:
           name: pricing_plan
           title: Pricing Plan
           level: 1
-          enumValueLabels:
-            - label: PER_USE
-              value: PER_USE
           enumValueLabels:
             - label: PER_USE
               value: PER_USE
@@ -586,15 +514,6 @@ spec:
               value: MYSQL_5_6
             - label: MYSQL_5_7
               value: MYSQL_5_7
-          enumValueLabels:
-            - label: MYSQL_8_4
-              value: MYSQL_8_4
-            - label: MYSQL_8_0
-              value: MYSQL_8_0
-            - label: MYSQL_5_6
-              value: MYSQL_5_6
-            - label: MYSQL_5_7
-              value: MYSQL_5_7
         root_password:
           name: root_password
           title: Root Password
@@ -631,8 +550,6 @@ spec:
           name: user_name
           title: User Name
           level: 1
-          regexValidation: ^[a-zA-Z0-9-]{1,16}$
-          validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
           regexValidation: ^[a-zA-Z0-9-]{1,16}$
           validation: User names must be between 1 and 16 characters long and can contain lowercase letters, numbers, and hyphens.
         user_password:
