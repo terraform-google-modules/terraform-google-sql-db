@@ -82,28 +82,6 @@ spec:
                   value: CLOUD_IAM_GROUP_USER
                 - label: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
                   value: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
-          properties:
-            name:
-              name: name
-              title: User Name
-              regexValidation: ^[a-zA-Z][a-zA-Z0-9_]{0,31}$
-              validation: User names must be between 1 and 32 characters long, start with a letter, and can only contain letters, numbers, and underscores.
-            type:
-              name: type
-              title: Type
-              enumValueLabels:
-                - label: BUILT_IN
-                  value: BUILT_IN
-                - label: CLOUD_IAM_USER
-                  value: CLOUD_IAM_USER
-                - label: CLOUD_IAM_SERVICE_ACCOUNT
-                  value: CLOUD_IAM_SERVICE_ACCOUNT
-                - label: CLOUD_IAM_GROUP
-                  value: CLOUD_IAM_GROUP
-                - label: CLOUD_IAM_GROUP_USER
-                  value: CLOUD_IAM_GROUP_USER
-                - label: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
-                  value: CLOUD_IAM_GROUP_SERVICE_ACCOUNT
         availability_type:
           name: availability_type
           title: Availability Type
@@ -174,8 +152,6 @@ spec:
         db_charset:
           name: db_charset
           title: Db Charset
-          regexValidation: ^[a-z0-9]+$
-          validation: Database charset should contain only lowercase letters and numbers.
           regexValidation: ^[a-z0-9]+$
           validation: Database charset should contain only lowercase letters and numbers.
         db_collation:
@@ -449,55 +425,6 @@ spec:
                     value: ENCRYPTED_ONLY
                   - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                     value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-          properties:
-            name:
-              name: name
-              title: Read Replica Name
-              regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
-              validation: Read replica names must be between 1 and 97 characters long, start with a lowercase letter, and end with a lowercase letter or number. Read replica names can only contain lowercase letters, numbers, and hyphens.
-            edition:
-              name: edition
-              title: Edition
-              enumValueLabels:
-                - label: ENTERPRISE_PLUS
-                  value: ENTERPRISE_PLUS
-                - label: ENTERPRISE
-                  value: ENTERPRISE
-            availability_type:
-              name: availability_type
-              title: Availability Type
-              enumValueLabels:
-                - label: REGIONAL
-                  value: REGIONAL
-                - label: ZONAL
-                  value: ZONAL
-            disk_type:
-              name: disk_type
-              title: Disk Type
-              enumValueLabels:
-                - label: PD_SSD
-                  value: PD_SSD
-                - label: PD_HDD
-                  value: PD_HDD
-            ip_configuration:
-              name: ip_configuration
-              title: Ip Configuration
-              properties:
-                private_network:
-                  name: private_network
-                  title: Private Network
-                  regexValidation: ^(projects/[a-z0-9-]+/)?global/networks/[a-z0-9-]+$
-                  validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
-                ssl_mode:
-                  name: ssl_mode
-                  title: Ssl Mode
-                  enumValueLabels:
-                  - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                    value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                  - label: ENCRYPTED_ONLY
-                    value: ENCRYPTED_ONLY
-                  - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                    value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
         region:
           name: region
           title: Region
@@ -534,9 +461,6 @@ spec:
         user_deletion_policy:
           name: user_deletion_policy
           title: User Deletion Policy
-          enumValueLabels:
-            - label: ABANDON
-              value: ABANDON
           enumValueLabels:
             - label: ABANDON
               value: ABANDON

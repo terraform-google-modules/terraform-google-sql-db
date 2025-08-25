@@ -294,24 +294,6 @@ spec:
               enumValueLabels:
                 - label: GOOGLE_MANAGED_INTERNAL_CA
                   value: GOOGLE_MANAGED_INTERNAL_CA
-                - label: GOOGLE_MANAGED_INTERNAL_CA
-                  value: GOOGLE_MANAGED_INTERNAL_CA
-            ssl_mode:
-              name: ssl_mode
-              title: Ssl Mode
-              enumValueLabels:
-                - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                  value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                - label: ENCRYPTED_ONLY
-                  value: ENCRYPTED_ONLY
-                - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                  value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-            server_ca_mode:
-              name: server_ca_mode
-              title: Server CA Mode
-              enumValueLabels:
-                - label: GOOGLE_MANAGED_INTERNAL_CA
-                  value: GOOGLE_MANAGED_INTERNAL_CA
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
@@ -361,55 +343,6 @@ spec:
         read_replicas:
           name: read_replicas
           title: Read Replicas
-          properties:
-            name:
-              name: name
-              title: Read Replica Name
-              regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
-              validation: Read replica names must be between 1 and 97 characters long, start with a lowercase letter, and end with a lowercase letter or number. Read replica names can only contain lowercase letters, numbers, and hyphens.
-            edition:
-              name: edition
-              title: Edition
-              enumValueLabels:
-                - label: ENTERPRISE_PLUS
-                  value: ENTERPRISE_PLUS
-                - label: ENTERPRISE
-                  value: ENTERPRISE
-            availability_type:
-              name: availability_type
-              title: Availability Type
-              enumValueLabels:
-                - label: REGIONAL
-                  value: REGIONAL
-                - label: ZONAL
-                  value: ZONAL
-            disk_type:
-              name: disk_type
-              title: Disk Type
-              enumValueLabels:
-                - label: PD_SSD
-                  value: PD_SSD
-                - label: PD_HDD
-                  value: PD_HDD
-            ip_configuration:
-              name: ip_configuration
-              title: Ip Configuration
-              properties:
-                private_network:
-                  name: private_network
-                  title: Private Network
-                  regexValidation: ^(projects/[a-z0-9-]+/)?global/networks/[a-z0-9-]+$
-                  validation: Invalid format. Expected a valid Google Cloud network resource name, e.g. projects/{project}/global/networks/{network}.
-                ssl_mode:
-                  name: ssl_mode
-                  title: Ssl Mode
-                  enumValueLabels:
-                  - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                    value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                  - label: ENCRYPTED_ONLY
-                    value: ENCRYPTED_ONLY
-                  - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                    value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
           properties:
             name:
               name: name
