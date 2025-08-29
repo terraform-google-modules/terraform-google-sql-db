@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.1.1...v26.2.0) (2025-08-29)
+
+
+### Features
+
+* **deps:** Update Terraform Google Provider to v7 (major) ([#767](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/767)) ([3eb4c96](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3eb4c964a06b8786956b8bf5d0c25535083efe1b))
+* Output the Service Attachment links for Replicas ([#758](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/758)) ([e5446b7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e5446b7c2d8ba5f227aa108b8431f3f082c281a9))
+* per module requirements ([#749](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/749)) ([0475973](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0475973f7cf91e815dd176f2c2d8e8951aac4434))
+
+
+### Bug Fixes
+
+* Addng UI validations for MySql and PostgreSQL ([#759](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/759)) ([0b75726](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/0b757267c216276741c90b080984f0b20f318ad7))
+* correct typos in README and variables.tf descriptions ([#753](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/753)) ([1615d75](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/1615d7566e8681c7909bad1fbf71fc207e86a185))
+* rename app hub service id ([#757](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/757)) ([e9a7830](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e9a7830fc6f3566b62aa18954da32e8b9fe606f4))
+* revert psc_config workaround - causes permanent drift ([#754](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/754)) ([3cb3eee](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3cb3eeea08525d3d2829b546b8219f30fffa51af))
+* use local.zone fallback for replica region calculation ([#760](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/760)) ([4eb9309](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/4eb930993faf83cfdbc1b3b282f7389690b69431))
+
 ## [26.1.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.1.0...v26.1.1) (2025-07-11)
 
 
