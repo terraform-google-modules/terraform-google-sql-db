@@ -241,6 +241,12 @@ variable "backup_configuration" {
   }
 }
 
+variable "retain_backups_on_delete" {
+  description = "When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting."
+  type        = bool
+  default     = false
+}
+
 variable "db_name" {
   description = "The name of the default database to create"
   type        = string

@@ -63,6 +63,7 @@ resource "google_sql_database_instance" "default" {
     deletion_protection_enabled = var.deletion_protection_enabled
     connector_enforcement       = local.connector_enforcement
     enable_dataplex_integration = var.enable_dataplex_integration
+    retain_backups_on_delete    = var.retain_backups_on_delete
 
     dynamic "backup_configuration" {
       for_each = !local.is_secondary_instance && var.backup_configuration.enabled ? [var.backup_configuration] : []
