@@ -107,9 +107,6 @@ spec:
             retention_unit:
               name: retention_unit
               title: Retention Unit
-              enumValueLabels:
-                - label: COUNT
-                  value: COUNT
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -355,9 +352,6 @@ spec:
           name: pricing_plan
           title: Pricing Plan
           level: 1
-          enumValueLabels:
-            - label: PER_USE
-              value: PER_USE
         project_id:
           name: project_id
           title: Project Id
@@ -461,9 +455,6 @@ spec:
         user_deletion_policy:
           name: user_deletion_policy
           title: User Deletion Policy
-          enumValueLabels:
-            - label: ABANDON
-              value: ABANDON
         user_host:
           name: user_host
           title: User Host
