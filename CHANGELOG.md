@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.2.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.0...v26.2.1) (2025-09-03)
+
+
+### Bug Fixes
+
+* add retain_backups_on_delete to mssql submodule ([#764](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/764)) ([a074efc](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a074efc4e81334c42bfa0aed3d867edacd3b9ece))
+* removed enum validation from fields where only single value is available ([#770](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/770)) ([2b823b3](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/2b823b36ba2a187cb65d4cf98260c746990992aa))
+
 ## [26.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.1.1...v26.2.0) (2025-08-29)
 
 
