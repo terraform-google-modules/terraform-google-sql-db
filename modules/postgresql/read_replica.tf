@@ -37,6 +37,8 @@ resource "google_sql_database_instance" "replicas" {
   master_instance_name = google_sql_database_instance.default.name
   deletion_protection  = var.read_replica_deletion_protection
   encryption_key_name  = (join("-", slice(split("-", lookup(each.value, "zone", local.zone)), 0, 2))) == var.region ? null : each.value.encryption_key_name
+  instance_type        = lookup(each.value, "node_count", null) != null ? "READ_POOL_INSTANCE" : "READ_REPLICA_INSTANCE"
+  node_count           = lookup(each.value, "node_count", null)
 
   settings {
     tier                        = lookup(each.value, "tier", null) == null ? var.tier : lookup(each.value, "tier", null)
@@ -98,8 +100,11 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
-    location_preference {
-      zone = lookup(each.value, "zone", local.zone)
+    dynamic "location_preference" {
+      for_each = lookup(each.value, "node_count", null) == null ? ["read_pool_instance"] : []
+      content {
+        zone = lookup(each.value, "zone", local.zone)
+      }
     }
 
     dynamic "data_cache_config" {
