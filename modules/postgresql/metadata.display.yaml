@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,10 +71,6 @@ spec:
               value:
                 enabled: true
                 point_in_time_recovery_enabled: true
-          properties:
-            retention_unit:
-              name: retention_unit
-              title: Retention Unit
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
@@ -164,6 +160,22 @@ spec:
         deny_maintenance_period:
           name: deny_maintenance_period
           title: Deny Maintenance Period
+          properties:
+            end_date:
+              name: end_date
+              title: End Date
+              regexValidation: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
+              validation: End date must be in YYYY-MM-DD format.
+            start_date:
+              name: start_date
+              title: Start Date
+              regexValidation: ^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
+              validation: Start date must be in YYYY-MM-DD format.
+            time:
+              name: time
+              title: Time
+              regexValidation: ^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$
+              validation: Time must be in HH:MM:SS format (24-hour clock).
         disk_autoresize:
           name: disk_autoresize
           title: Disk Autoresize
@@ -179,6 +191,7 @@ spec:
           name: disk_size
           title: Disk Size
           level: 1
+          min: 10
         disk_type:
           name: disk_type
           title: Disk Type
@@ -253,6 +266,17 @@ spec:
         insights_config:
           name: insights_config
           title: Insights Config
+          properties:
+            query_plans_per_minute:
+              name: query_plans_per_minute
+              title: Query Plans Per Minute
+              min: 0
+              max: 20
+            query_string_length:
+              name: query_string_length
+              title: Query String Length
+              min: 256
+              max: 4500
         instance_type:
           name: instance_type
           title: Instance Type
@@ -293,13 +317,26 @@ spec:
                   value: GOOGLE_MANAGED_INTERNAL_CA
                 - label: GOOGLE_MANAGED_CAS_CA
                   value: GOOGLE_MANAGED_CAS_CA
+            authorized_networks:
+              name: authorized_networks
+              title: Authorized Networks
+              properties:
+                value:
+                  name: value
+                  title: Value
+                  regexValidation: "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\\/(3[0-2]|[1-2][0-9]|[0-9])$"
+                  validation: Must be a valid IPv4 address in CIDR format.
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
+          min: 1
+          max: 7
         maintenance_window_hour:
           name: maintenance_window_hour
           title: Maintenance Window Hour
+          min: 0
+          max: 23
         maintenance_window_update_track:
           name: maintenance_window_update_track
           title: Maintenance Window Update Track
@@ -369,6 +406,20 @@ spec:
                   value: PD_SSD
                 - label: PD_HDD
                   value: PD_HDD
+            insights_config:
+              name: insights_config
+              title: Insights Config
+              properties:
+                query_plans_per_minute:
+                  name: query_plans_per_minute
+                  title: Query Plans Per Minute
+                  min: 0
+                  max: 20
+                query_string_length:
+                  name: query_string_length
+                  title: Query String Length
+                  min: 256
+                  max: 4500
             ip_configuration:
               name: ip_configuration
               title: Ip Configuration
@@ -382,12 +433,12 @@ spec:
                   name: ssl_mode
                   title: Ssl Mode
                   enumValueLabels:
-                  - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                    value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                  - label: ENCRYPTED_ONLY
-                    value: ENCRYPTED_ONLY
-                  - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                    value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                    - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                      value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                    - label: ENCRYPTED_ONLY
+                      value: ENCRYPTED_ONLY
+                    - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                      value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
         region:
           name: region
           title: Region
@@ -429,3 +480,17 @@ spec:
           name: zone
           title: Zone
           level: 1
+    runtime:
+      outputs:
+        instance_name:
+          visibility: VISIBILITY_ROOT
+        region:
+          visibility: VISIBILITY_ROOT
+        public_ip_address:
+          visibility: VISIBILITY_ROOT
+        private_ip_address:
+          visibility: VISIBILITY_ROOT
+        generated_user_password:
+          visibility: VISIBILITY_ROOT
+        database_user:
+          visibility: VISIBILITY_ROOT
