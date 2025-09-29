@@ -382,6 +382,13 @@ variable "read_replicas" {
     disk_autoresize_limit = optional(number)
     disk_size             = optional(string)
     user_labels           = map(string)
+    connection_pool_config = optional(object({
+      enabled = optional(bool, false)
+      flags = optional(list(object({
+        name  = string
+        value = string
+      })), [])
+    }), null)
     database_flags = list(object({
       name  = string
       value = string
@@ -500,3 +507,13 @@ variable "database_integration_roles" {
   default     = []
 }
 
+variable "connection_pool_config" {
+  description = "Manager connection pooling configuration"
+  type = object({
+    enabled = optional(bool, false)
+    flags = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+  })
+}

@@ -426,3 +426,14 @@ variable "final_backup_config" {
   })
   default = null
 }
+
+variable "connection_pool_config" {
+  description = "Manager connection pooling configuration"
+  type = object({
+    enabled = optional(bool, false)
+    flags = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+  })
+}
