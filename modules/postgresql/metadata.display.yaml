@@ -74,7 +74,7 @@ spec:
           properties:
             retention_unit:
               name: retention_unit
-              title: Retention Unit     
+              title: Retention Unit   
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
