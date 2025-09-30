@@ -70,7 +70,11 @@ spec:
             - type: ALTERNATE_TYPE_DC
               value:
                 enabled: true
-                point_in_time_recovery_enabled: true        
+                point_in_time_recovery_enabled: true   
+          properties:
+            retention_unit:
+              name: retention_unit
+              title: Retention Unit     
         connector_enforcement:
           name: connector_enforcement
           title: Connector Enforcement
