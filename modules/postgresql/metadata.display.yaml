@@ -179,6 +179,7 @@ spec:
           name: disk_size
           title: Disk Size
           level: 1
+          min: 10
         disk_type:
           name: disk_type
           title: Disk Type
@@ -253,6 +254,17 @@ spec:
         insights_config:
           name: insights_config
           title: Insights Config
+          properties:
+            query_plans_per_minute:
+              name: query_plans_per_minute
+              title: Query Plans Per Minute
+              min: 0
+              max: 20
+            query_string_length:
+              name: query_string_length
+              title: Query String Length
+              min: 256
+              max: 4500
         instance_type:
           name: instance_type
           title: Instance Type
@@ -297,9 +309,13 @@ spec:
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
+          min: 1
+          max: 7
         maintenance_window_hour:
           name: maintenance_window_hour
           title: Maintenance Window Hour
+          min: 0
+          max: 23
         maintenance_window_update_track:
           name: maintenance_window_update_track
           title: Maintenance Window Update Track
@@ -369,6 +385,20 @@ spec:
                   value: PD_SSD
                 - label: PD_HDD
                   value: PD_HDD
+            insights_config:
+              name: insights_config
+              title: Insights Config
+              properties:
+                query_plans_per_minute:
+                  name: query_plans_per_minute
+                  title: Query Plans Per Minute
+                  min: 0
+                  max: 20
+                query_string_length:
+                  name: query_string_length
+                  title: Query String Length
+                  min: 256
+                  max: 4500
             ip_configuration:
               name: ip_configuration
               title: Ip Configuration
@@ -382,12 +412,12 @@ spec:
                   name: ssl_mode
                   title: Ssl Mode
                   enumValueLabels:
-                  - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                    value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
-                  - label: ENCRYPTED_ONLY
-                    value: ENCRYPTED_ONLY
-                  - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                    value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                    - label: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                      value: ALLOW_UNENCRYPTED_AND_ENCRYPTED
+                    - label: ENCRYPTED_ONLY
+                      value: ENCRYPTED_ONLY
+                    - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                      value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
         region:
           name: region
           title: Region
