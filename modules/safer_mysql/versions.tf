@@ -25,7 +25,7 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:safer_mysql/v26.2.1"
+    module_name = "blueprints/terraform/terraform-google-sql-db:safer_mysql/v26.2.2"
   }
 
 }
