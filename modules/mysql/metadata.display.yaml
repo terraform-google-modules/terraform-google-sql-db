@@ -519,17 +519,3 @@ spec:
           name: zone
           title: Zone
           level: 1
-    runtime:
-      outputs:
-        instance_name:
-          visibility: VISIBILITY_ROOT
-        region:
-          visibility: VISIBILITY_ROOT
-        public_ip_address:
-          visibility: VISIBILITY_ROOT
-        private_ip_address:
-          visibility: VISIBILITY_ROOT
-        generated_user_password:
-          visibility: VISIBILITY_ROOT
-        database_user:
-          visibility: VISIBILITY_ROOT
