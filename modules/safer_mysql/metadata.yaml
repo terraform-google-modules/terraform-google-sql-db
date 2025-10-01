@@ -191,7 +191,7 @@ spec:
         varType: map(string)
         defaultValue: {}
       - name: backup_configuration
-        description: The backup_configuration settings subblock for the database setings
+        description: The backup_configuration settings subblock for the database settings
         varType: |-
           object({
               binary_log_enabled             = bool
@@ -384,12 +384,12 @@ spec:
     roles:
       - level: Project
         roles:
+          - roles/cloudsql.admin
           - roles/iam.serviceAccountUser
           - roles/logging.logWriter
-          - roles/cloudsql.admin
     services:
       - serviceusage.googleapis.com
       - sqladmin.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.31, < 7"
+        version: ">= 6.31, < 8"
