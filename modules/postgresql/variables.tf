@@ -374,6 +374,7 @@ variable "read_replicas" {
     })
     encryption_key_name = optional(string)
     data_cache_enabled  = optional(bool)
+    node_count          = optional(number)
   }))
   default = []
 }
