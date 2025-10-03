@@ -104,6 +104,11 @@ spec:
                 enabled: true
                 binary_log_enabled: true
           properties:
+            transaction_log_retention_days:
+              name: transaction_log_retention_days
+              title: Transaction Log Retention Days
+              min: 1
+              max: 35
             retention_unit:
               name: retention_unit
               title: Retention Unit
@@ -209,6 +214,7 @@ spec:
           name: disk_size
           title: Disk Size
           level: 1
+          min: 10
         disk_type:
           name: disk_type
           title: Disk Type
@@ -283,6 +289,17 @@ spec:
         insights_config:
           name: insights_config
           title: Insights Config
+          properties:
+            query_plans_per_minute:
+              name: query_plans_per_minute
+              title: Query Plans Per Minute
+              min: 0
+              max: 20
+            query_string_length:
+              name: query_string_length
+              title: Query String Length
+              min: 256
+              max: 4500
         instance_type:
           name: instance_type
           title: Instance Type
@@ -328,9 +345,13 @@ spec:
         maintenance_window_day:
           name: maintenance_window_day
           title: Maintenance Window Day
+          min: 1
+          max: 7
         maintenance_window_hour:
           name: maintenance_window_hour
           title: Maintenance Window Hour
+          min: 0
+          max: 23
         maintenance_window_update_track:
           name: maintenance_window_update_track
           title: Maintenance Window Update Track
@@ -376,6 +397,12 @@ spec:
               title: Read Replica Name
               regexValidation: ^[a-z][a-z0-9-]{0,95}[a-z0-9]$
               validation: Read replica names must be between 1 and 97 characters long, start with a lowercase letter, and end with a lowercase letter or number. Read replica names can only contain lowercase letters, numbers, and hyphens.
+            disk_autoresize_limit:
+              name: disk_autoresize_limit
+              title: Disk Autoresize Limit
+            disk_size:
+              name: disk_size
+              title: Disk Size
             edition:
               name: edition
               title: Edition
@@ -400,6 +427,23 @@ spec:
                   value: PD_SSD
                 - label: PD_HDD
                   value: PD_HDD
+            backup_configuration:
+              name: backup_configuration
+              title: Backup Configuration
+            insights_config:
+              name: insights_config
+              title: Insights Config
+              properties:
+                query_plans_per_minute:
+                  name: query_plans_per_minute
+                  title: Query Plans Per Minute
+                  min: 0
+                  max: 20
+                query_string_length:
+                  name: query_string_length
+                  title: Query String Length
+                  min: 256
+                  max: 4500
             ip_configuration:
               name: ip_configuration
               title: Ip Configuration
