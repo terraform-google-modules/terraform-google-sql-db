@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [26.2.3](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.2...v26.2.3) (2025-10-08)
+
+
+### Bug Fixes
+
+* added missing validations ([#781](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/781)) ([3d30555](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3d305555f95871cf5793f18409644c21f5d91da5))
+
 ## [26.2.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.1...v26.2.2) (2025-09-30)
 
 
