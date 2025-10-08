@@ -369,6 +369,15 @@ spec:
         password_validation_policy_config:
           name: password_validation_policy_config
           title: Password Validation Policy Config
+          properties:
+            complexity:
+              name: complexity
+              title: complexity
+              enumValueLabels:
+                - label: COMPLEXITY_DEFAULT
+                  value: COMPLEXITY_DEFAULT
+                - label: COMPLEXITY_UNSPECIFIED
+                  value: COMPLEXITY_UNSPECIFIED
         pricing_plan:
           name: pricing_plan
           title: Pricing Plan
