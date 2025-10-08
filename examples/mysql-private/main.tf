@@ -29,7 +29,7 @@ locals {
 
 module "network-safer-mysql-simple" {
   source  = "terraform-google-modules/network/google"
-  version = "~> 11.0"
+  version = "~> 12.0"
 
   project_id   = var.project_id
   network_name = local.network_name
