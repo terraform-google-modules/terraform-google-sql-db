@@ -204,21 +204,21 @@ variable "user_labels" {
 variable "ip_configuration" {
   description = "The ip configuration for the Cloud SQL instances."
   type = object({
-    authorized_networks = optional(list(map(string)), [])
-    ipv4_enabled        = optional(bool)
-    private_network     = optional(string)
-    allocated_ip_range  = optional(string)
-    ssl_mode            = optional(string)
-    psc_enabled         = optional(bool, false)
+    authorized_networks           = optional(list(map(string)), [])
+    ipv4_enabled                  = optional(bool)
+    private_network               = optional(string)
+    allocated_ip_range            = optional(string)
+    ssl_mode                      = optional(string)
+    psc_enabled                   = optional(bool, false)
     psc_allowed_consumer_projects = optional(list(string), [])
   })
   default = {
     authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    allocated_ip_range  = null
-    ssl_mode            = null
-    psc_enabled         = false
+    ipv4_enabled                  = true
+    private_network               = null
+    allocated_ip_range            = null
+    ssl_mode                      = null
+    psc_enabled                   = false
     psc_allowed_consumer_projects = []
   }
 }
