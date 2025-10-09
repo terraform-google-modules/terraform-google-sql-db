@@ -7,5 +7,3 @@
 .idea
 .kitchen
 credentials.json
-.kitchen/
-.kitchen.local.yml
