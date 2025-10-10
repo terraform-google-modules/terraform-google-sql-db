@@ -132,6 +132,9 @@ resource "google_sql_database_instance" "replicas" {
       settings[0].maintenance_window,
       encryption_key_name,
     ]
+    replace_triggered_by = [
+      google_sql_database_instance.default.master_instance_name
+    ]
   }
 
   timeouts {
