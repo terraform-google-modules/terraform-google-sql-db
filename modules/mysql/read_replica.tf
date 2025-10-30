@@ -55,6 +55,10 @@ resource "google_sql_database_instance" "replicas" {
       content {
         binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        backup_retention_settings {
+          retained_backups = lookup(backup_configuration.value, "transaction_log_retention_days", 0) > 7 ? lookup(backup_configuration.value, "transaction_log_retention_days") + 1 : null
+          retention_unit   = "COUNT"
+        }
       }
     }
 
