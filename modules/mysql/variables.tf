@@ -307,11 +307,15 @@ variable "backup_configuration" {
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
-    transaction_log_retention_days = optional(string)
-    retained_backups               = optional(number)
+    transaction_log_retention_days = optional(string, 7)
+    retained_backups               = optional(number, 8)
     retention_unit                 = optional(string)
   })
   default = {}
+  validation {
+    condition     = var.backup_configuration.retained_backups > var.backup_configuration.transaction_log_retention_days
+    error_message = "backup retention should be > transaction log retention"
+  }
 }
 
 variable "retain_backups_on_delete" {
