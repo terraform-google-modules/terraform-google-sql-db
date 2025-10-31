@@ -296,6 +296,15 @@ variable "backup_configuration" {
   default = {}
 }
 
+variable "final_backup_config" {
+  description = "The final_backup_config settings for the database."
+  type = object({
+    enabled        = optional(bool, false)
+    retention_days = optional(number, 1)
+  })
+  default = null
+}
+
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
@@ -361,6 +370,10 @@ variable "read_replicas" {
       query_string_length     = optional(number, 1024)
       record_application_tags = optional(bool, false)
       record_client_address   = optional(bool, false)
+    }), null)
+    final_backup_config = optional(object({
+      enabled        = optional(bool, false)
+      retention_days = optional(number, 1)
     }), null)
     ip_configuration = object({
       authorized_networks                           = optional(list(map(string)), [])
