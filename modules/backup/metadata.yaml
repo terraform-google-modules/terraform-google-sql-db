@@ -199,4 +199,4 @@ spec:
       - sqladmin.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.11.0, < 7"
+        version: ">= 6.11.0, < 8"

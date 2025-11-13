@@ -32,6 +32,7 @@ module "safer_mysql" {
   edition                         = var.edition
   activation_policy               = var.activation_policy
   availability_type               = var.availability_type
+  connection_pool_config          = var.connection_pool_config
   deletion_protection_enabled     = var.deletion_protection_enabled
   disk_autoresize                 = var.disk_autoresize
   disk_autoresize_limit           = var.disk_autoresize_limit
