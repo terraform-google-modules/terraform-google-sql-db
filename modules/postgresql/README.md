@@ -13,7 +13,7 @@ Basic usage of this module is as follows:
 ```hcl
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 26.2"
+  version = "~> 26.3"
 
   name                 = var.pg_ha_name
   random_instance_name = true
