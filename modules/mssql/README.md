@@ -59,6 +59,7 @@ module "mssql" {
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
+| final\_backup\_config | The final\_backup\_config settings for the database. | <pre>object({<br>    enabled        = optional(bool, false)<br>    retention_days = optional(number, 0)<br>  })</pre> | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = optional(number, 5)<br>    query_string_length     = optional(number, 1024)<br>    record_application_tags = optional(bool, false)<br>    record_client_address   = optional(bool, false)<br>  })</pre> | `null` | no |
 | instance\_type | The type of the instance. The supported values are SQL\_INSTANCE\_TYPE\_UNSPECIFIED, CLOUD\_SQL\_INSTANCE, ON\_PREMISES\_INSTANCE and READ\_REPLICA\_INSTANCE. Set to READ\_REPLICA\_INSTANCE when primary\_instance\_name is provided | `string` | `"CLOUD_SQL_INSTANCE"` | no |

@@ -70,6 +70,15 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
+    dynamic "final_backup_config" {
+      for_each = var.final_backup_config != null ? [var.final_backup_config] : []
+
+      content {
+        enabled        = lookup(final_backup_config.value, "enabled", false)
+        retention_days = lookup(final_backup_config.value, "retention_days", 0)
+      }
+    }
+
     dynamic "ip_configuration" {
       for_each = [lookup(each.value, "ip_configuration", {})]
       content {

@@ -417,3 +417,12 @@ variable "insights_config" {
   })
   default = null
 }
+
+variable "final_backup_config" {
+  description = "The final_backup_config settings for the database."
+  type = object({
+    enabled        = bool
+    retention_days = number
+  })
+  default = null
+}
