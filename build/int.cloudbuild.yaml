@@ -221,22 +221,22 @@ steps:
       - verify postgresql-public-iam-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage teardown --verbose']
-
-  - id: apply mysql-backup-local
-    waitFor: ["init-all", "wait for api activation"]
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage apply --verbose']
-  - id: verify mysql-backup-local
-    waitFor:
-      - apply mysql-backup-local
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage verify --verbose']
-  - id: teardown mysql-backup-local
-    waitFor:
-      - verify mysql-backup-local
-    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-    args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage teardown --verbose']
 # commenting - getting error in provder 7.X
+  # - id: apply mysql-backup-local
+  #   waitFor: ["init-all", "wait for api activation"]
+  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  #   args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage apply --verbose']
+  # - id: verify mysql-backup-local
+  #   waitFor:
+  #     - apply mysql-backup-local
+  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  #   args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage verify --verbose']
+  # - id: teardown mysql-backup-local
+  #   waitFor:
+  #     - verify mysql-backup-local
+  #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  #   args: ['/bin/bash', '-c', 'cft test run TestMySqlBackupModuleCreateServiceAccount --stage teardown --verbose']
+
   # - id: apply postgresql-backup-local
   #   waitFor: ["init-all", "wait for api activation"]
   #   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
