@@ -436,4 +436,5 @@ variable "connection_pool_config" {
       value = string
     })), [])
   })
+  default = null
 }
