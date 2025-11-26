@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [27.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.2...v27.0.0) (2025-11-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>7.2:** add final backup config ([#786](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/786))
+
+### Features
+
+* Backup configuration location for mssql ([#775](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/775)) ([1848851](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/18488518c4d381b8c8a5362287d7c13f0d434b8a))
+* **TPG>7.2:** add final backup config ([#786](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/786)) ([e67e0e0](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e67e0e0427d0ca6a89319d9138d87ef8cbd9d799))
+
+
+### Bug Fixes
+
+* added missing validations ([#781](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/781)) ([3d30555](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3d305555f95871cf5793f18409644c21f5d91da5))
+
 ## [26.2.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.1...v26.2.2) (2025-09-30)
 
 
