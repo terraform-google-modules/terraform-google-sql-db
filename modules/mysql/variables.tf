@@ -331,6 +331,15 @@ variable "insights_config" {
   default = null
 }
 
+variable "final_backup_config" {
+  description = "The final_backup_config settings for the database."
+  type = object({
+    enabled        = optional(bool, false)
+    retention_days = optional(number, 0)
+  })
+  default = null
+}
+
 variable "ip_configuration" {
   description = "The ip_configuration settings subblock"
   type = object({
@@ -373,6 +382,13 @@ variable "read_replicas" {
     disk_autoresize_limit = optional(number)
     disk_size             = optional(string)
     user_labels           = map(string)
+    connection_pool_config = optional(object({
+      enabled = optional(bool, false)
+      flags = optional(list(object({
+        name  = string
+        value = string
+      })), [])
+    }), null)
     database_flags = list(object({
       name  = string
       value = string
@@ -387,6 +403,10 @@ variable "read_replicas" {
       record_application_tags = bool
       record_client_address   = bool
     }))
+    final_backup_config = optional(object({
+      enabled        = optional(bool, false)
+      retention_days = optional(number, 1)
+    }), null)
     ip_configuration = object({
       authorized_networks                           = optional(list(map(string)), [])
       ipv4_enabled                                  = optional(bool)
@@ -487,3 +507,14 @@ variable "database_integration_roles" {
   default     = []
 }
 
+variable "connection_pool_config" {
+  description = "Manager connection pooling configuration"
+  type = object({
+    enabled = optional(bool, false)
+    flags = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+  })
+  default = null
+}

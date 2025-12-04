@@ -32,7 +32,7 @@ locals {
 
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 26.0"
+  version = "~> 27.0"
 
   name                 = var.pg_ha_name
   random_instance_name = false

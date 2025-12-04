@@ -32,6 +32,7 @@ module "safer_mysql" {
   edition                         = var.edition
   activation_policy               = var.activation_policy
   availability_type               = var.availability_type
+  connection_pool_config          = var.connection_pool_config
   deletion_protection_enabled     = var.deletion_protection_enabled
   disk_autoresize                 = var.disk_autoresize
   disk_autoresize_limit           = var.disk_autoresize_limit
@@ -54,6 +55,8 @@ module "safer_mysql" {
   retain_backups_on_delete = var.retain_backups_on_delete
 
   insights_config = var.insights_config
+
+  final_backup_config = var.final_backup_config
 
   ip_configuration = {
     ipv4_enabled = var.assign_public_ip

@@ -417,3 +417,24 @@ variable "insights_config" {
   })
   default = null
 }
+
+variable "final_backup_config" {
+  description = "The final_backup_config settings for the database."
+  type = object({
+    enabled        = bool
+    retention_days = number
+  })
+  default = null
+}
+
+variable "connection_pool_config" {
+  description = "Manager connection pooling configuration"
+  type = object({
+    enabled = optional(bool, false)
+    flags = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+  })
+  default = null
+}

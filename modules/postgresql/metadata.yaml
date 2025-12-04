@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/postgresql
-    version: 26.2.2
+    version: 27.0.0
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -166,7 +166,7 @@ spec:
         varType: bool
         defaultValue: false
       - name: tier
-        description: The tier for the Cloud SQL instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
+        description: The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
         varType: string
         defaultValue: db-f1-micro
       - name: zone
@@ -236,7 +236,7 @@ spec:
             }))
         defaultValue: []
       - name: backup_configuration
-        description: The backup_configuration settings subblock for the database setings
+        description: The backup_configuration settings subblock for the database settings
         varType: |-
           object({
               enabled                        = optional(bool, false)
@@ -306,6 +306,13 @@ spec:
               disk_autoresize_limit = optional(number)
               disk_size             = optional(string)
               user_labels           = map(string)
+              connection_pool_config = optional(object({
+                enabled = optional(bool, false)
+                flags = optional(list(object({
+                  name  = string
+                  value = string
+                })), [])
+              }), null)
               database_flags = optional(list(object({
                 name  = string
                 value = string
@@ -425,6 +432,17 @@ spec:
         description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
         varType: bool
         defaultValue: false
+      - name: connection_pool_config
+        description: Manager connection pooling configuration
+        varType: |-
+          object({
+              enabled = optional(bool, false)
+              flags = optional(list(object({
+                name  = string
+                value = string
+              })), [])
+            })
+        required: true
     outputs:
       - name: additional_user_passwords_map
         description: Map of auto generated passwords for the additional users
@@ -905,6 +923,8 @@ spec:
         type:
           - tuple
           - []
+      - name: replicas_instance_psc_attachments
+        description: The psc_service_attachment_links created for the replica instances
       - name: replicas_instance_self_links
         description: The URIs of the replica instances
         type:
@@ -924,15 +944,15 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/cloudkms.admin
-          - roles/logging.logWriter
           - roles/cloudsql.admin
-          - roles/storage.admin
           - roles/resourcemanager.projectIamAdmin
           - roles/iam.serviceAccountUser
           - roles/compute.networkAdmin
+          - roles/cloudkms.admin
           - roles/cloudkms.autokeyAdmin
+          - roles/storage.admin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/logging.logWriter
     services:
       - cloudkms.googleapis.com
       - cloudresourcemanager.googleapis.com
@@ -944,9 +964,9 @@ spec:
       - sqladmin.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.31, < 7"
+        version: ">= 6.31, < 8"
       - source: hashicorp/google-beta
-        version: ">= 6.31, < 7"
+        version: ">= 6.31, < 8"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random

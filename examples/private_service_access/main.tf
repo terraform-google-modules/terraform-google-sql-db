@@ -23,7 +23,7 @@ resource "google_compute_network" "default" {
 
 module "test_psa" {
   source  = "terraform-google-modules/sql-db/google//modules/private_service_access"
-  version = "~> 26.0"
+  version = "~> 27.0"
 
   project_id      = var.project_id
   vpc_network     = google_compute_network.default.name

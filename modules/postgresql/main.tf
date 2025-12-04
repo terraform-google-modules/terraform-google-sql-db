@@ -161,6 +161,14 @@ resource "google_sql_database_instance" "default" {
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
       }
     }
+    dynamic "final_backup_config" {
+      for_each = var.final_backup_config != null ? [var.final_backup_config] : []
+
+      content {
+        enabled        = lookup(final_backup_config.value, "enabled", false)
+        retention_days = lookup(final_backup_config.value, "retention_days", 1)
+      }
+    }
 
     dynamic "password_validation_policy" {
       for_each = !local.is_secondary_instance && var.password_validation_policy_config != null ? [var.password_validation_policy_config] : []
@@ -180,6 +188,20 @@ resource "google_sql_database_instance" "default" {
     disk_size             = var.disk_size
     disk_type             = var.disk_type
     pricing_plan          = var.pricing_plan
+
+    dynamic "connection_pool_config" {
+      for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
+      content {
+        connection_pooling_enabled = var.connection_pool_config.enabled
+        dynamic "flags" {
+          for_each = var.connection_pool_config.flags
+          content {
+            name  = flags.value.name
+            value = flags.value.value
+          }
+        }
+      }
+    }
 
     dynamic "database_flags" {
       for_each = var.database_flags
