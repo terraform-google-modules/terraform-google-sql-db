@@ -397,6 +397,10 @@ variable "read_replicas" {
     node_count          = optional(number)
   }))
   default = []
+  validation {
+    condition     = length([for replica in var.read_replicas : false if contains(keys(replica), "node_count") && (replica.node_count < 1 || replica.node_count > 20)]) == 0
+    error_message = "node_count for read replica must be between 1 and 20."
+  }
 }
 
 variable "read_replica_name_suffix" {
