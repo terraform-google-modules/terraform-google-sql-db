@@ -63,7 +63,7 @@ spec:
   interfaces:
     variables:
       - name: project_id
-        description: The project ID of the VPC network to peer. This can be a shared VPC host projec.
+        description: The project ID of the VPC network to peer. This can be a shared VPC host project.
         varType: string
         required: true
       - name: vpc_network
@@ -104,15 +104,15 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/servicenetworking.networksAdmin
           - roles/iam.serviceAccountUser
+          - roles/servicenetworking.networksAdmin
     services:
       - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 5.38, < 7"
+        version: ">= 5.38, < 8"
       - source: hashicorp/google-beta
-        version: ">= 5.38, < 7"
+        version: ">= 5.38, < 8"
       - source: hashicorp/null
         version: ~> 3.1

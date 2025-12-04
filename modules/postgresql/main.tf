@@ -189,6 +189,20 @@ resource "google_sql_database_instance" "default" {
     disk_type             = var.disk_type
     pricing_plan          = var.pricing_plan
 
+    dynamic "connection_pool_config" {
+      for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
+      content {
+        connection_pooling_enabled = var.connection_pool_config.enabled
+        dynamic "flags" {
+          for_each = var.connection_pool_config.flags
+          content {
+            name  = flags.value.name
+            value = flags.value.value
+          }
+        }
+      }
+    }
+
     dynamic "database_flags" {
       for_each = var.database_flags
       content {
