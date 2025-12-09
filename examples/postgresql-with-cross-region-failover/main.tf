@@ -46,7 +46,7 @@ data "google_compute_zones" "available_region2" {
 
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 26.0"
+  version = "~> 27.0"
 
 
   name                 = var.pg_name_1
@@ -155,7 +155,7 @@ module "pg1" {
 
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 26.0"
+  version = "~> 27.0"
 
 
   # Comment this parameter to promote instance 2 as primary instance.
