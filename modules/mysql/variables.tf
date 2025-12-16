@@ -257,9 +257,9 @@ variable "pricing_plan" {
 }
 
 variable "maintenance_window_day" {
-  description = "The day of week (1-7) for the master instance maintenance."
+  description = "The day of week (1-7) for the master instance maintenance. 0 means 'Any' (default)"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "maintenance_window_hour" {

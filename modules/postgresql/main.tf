@@ -223,7 +223,7 @@ resource "google_sql_database_instance" "default" {
     }
 
     dynamic "maintenance_window" {
-      for_each = local.is_secondary_instance ? [] : ["maintenance_window"]
+      for_each = local.is_secondary_instance && var.maintenance_window_day != 0 ? [] : ["maintenance_window"]
       content {
         day          = var.maintenance_window_day
         hour         = var.maintenance_window_hour
