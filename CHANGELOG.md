@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [27.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.0.0...v27.1.0) (2026-01-07)
+
+
+### Features
+
+* add pooling configuration for postgresql and mysql ([#777](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/777)) ([a5d69b6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a5d69b60787136d3c54086d6c91f720eb72b1873))
+* **tpostgressql:** Add connection for compute_instance ([#798](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/798)) ([e527cb7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e527cb768dd558b8a83efc4fcf417d8468dbe9e0))
+
 ## [27.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.2...v27.0.0) (2025-11-20)
 
 
