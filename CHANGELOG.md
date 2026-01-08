@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [27.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.1.0...v27.2.0) (2026-01-08)
+
+
+### Features
+
+* **compute_instance:** Update metadata file ([#802](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/802)) ([67733a2](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/67733a258cf0c904939f58f559980ae49b419e6b))
+* **compute_instance:** Update outputExpr to use service account name ([#799](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/799)) ([cf937a3](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/cf937a370feae50d6b63a31259c80b8c2a080eee))
+
 ## [27.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.0.0...v27.1.0) (2026-01-07)
 
 
