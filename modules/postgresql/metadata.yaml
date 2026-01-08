@@ -378,7 +378,8 @@ spec:
               source: github.com/terraform-google-modules/terraform-google-vm//modules/compute_instance
               version: ">= 14.1.0"
             spec:
-              outputExpr: "{\"id\": instances_details[0].id, \"email\": instances_details[0].service_account[0].email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"      - name: create_timeout
+              outputExpr: "{\"id\": instance_name, \"email\": instances_details[0].service_account[0].email, \"type\": \"CLOUD_IAM_SERVICE_ACCOUNT\"}"
+      - name: create_timeout
         description: The optional timout that is applied to limit long database creates.
         varType: string
         defaultValue: 30m
