@@ -215,7 +215,7 @@ resource "google_sql_database_instance" "default" {
 
     // Maintenance windows cannot be set for read replicas: https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-window-2ndgen
     dynamic "maintenance_window" {
-      for_each = var.master_instance_name != null ? [] : ["true"]
+      for_each = var.master_instance_name != null && var.maintenance_window_day != 0 ? [] : ["true"]
 
       content {
         day          = var.maintenance_window_day
