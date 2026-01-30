@@ -67,6 +67,13 @@ resource "google_sql_database_instance" "replicas" {
           content {
             psc_enabled               = ip_configuration.value.psc_enabled
             allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+            dynamic "psc_auto_connections" {
+              for_each = ip_configuration.value.psc_auto_connections != null ? ip_configuration.value.psc_auto_connections : []
+              content {
+                consumer_network            = psc_auto_connections.value.consumer_network
+                consumer_service_project_id = psc_auto_connections.value.consumer_service_project_id
+              }
+            }
           }
         }
       }
