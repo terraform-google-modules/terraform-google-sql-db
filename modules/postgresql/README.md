@@ -194,6 +194,7 @@ module "pg" {
 | dns\_name | DNS name of the instance endpoint |
 | env\_vars | Exported environment variables |
 | generated\_user\_password | The auto generated default user password if not input password was provided |
+| psa\_write\_endpoint | The Private Service Access (PSA) write endpoint for the master instance |
 | iam\_users | The list of the IAM users with access to the CloudSQL instance |
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
