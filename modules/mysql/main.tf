@@ -33,8 +33,8 @@ locals {
   }
 
   // HA method using REGIONAL availability_type requires binary logs to be enabled
-  binary_log_enabled = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
-  backups_enabled    = var.availability_type == "REGIONAL" ? true : lookup(var.backup_configuration, "enabled", null)
+  binary_log_enabled = var.availability_type == "REGIONAL" && var.enhanced_backup_enabled == false ? true : lookup(var.backup_configuration, "binary_log_enabled", null)
+  backups_enabled    = var.availability_type == "REGIONAL" && var.enhanced_backup_enabled == false ? true : lookup(var.backup_configuration, "enabled", null)
 
   retained_backups = lookup(var.backup_configuration, "retained_backups", null)
   retention_unit   = lookup(var.backup_configuration, "retention_unit", null)

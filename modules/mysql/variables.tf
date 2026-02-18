@@ -518,3 +518,9 @@ variable "connection_pool_config" {
   })
   default = null
 }
+
+variable "enhanced_backup_enabled" {
+  description = "Used to override values for backup_configuration.binary_logs_enabled and backup_configuration.enabled if enhanced backups are enabled to prevent false config drift"
+  type        = bool
+  default     = false
+}
