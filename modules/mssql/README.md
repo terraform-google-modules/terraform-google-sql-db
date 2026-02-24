@@ -63,7 +63,7 @@ module "mssql" {
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    query_plans_per_minute  = optional(number, 5)<br>    query_string_length     = optional(number, 1024)<br>    record_application_tags = optional(bool, false)<br>    record_client_address   = optional(bool, false)<br>  })</pre> | `null` | no |
 | instance\_type | The type of the instance. The supported values are SQL\_INSTANCE\_TYPE\_UNSPECIFIED, CLOUD\_SQL\_INSTANCE, ON\_PREMISES\_INSTANCE and READ\_REPLICA\_INSTANCE. Set to READ\_REPLICA\_INSTANCE when primary\_instance\_name is provided | `string` | `"CLOUD_SQL_INSTANCE"` | no |
-| ip\_configuration | The ip configuration for the Cloud SQL instances. | <pre>object({<br>    authorized_networks = optional(list(map(string)), [])<br>    ipv4_enabled        = optional(bool)<br>    private_network     = optional(string)<br>    allocated_ip_range  = optional(string)<br>    ssl_mode            = optional(string)<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "ssl_mode": null<br>}</pre> | no |
+| ip\_configuration | The ip configuration for the Cloud SQL instances. | <pre>object({<br>    authorized_networks = optional(list(map(string)), [])<br>    ipv4_enabled        = optional(bool)<br>    private_network     = optional(string)<br>    allocated_ip_range  = optional(string)<br>    ssl_mode            = optional(string)<br>    psc_enabled         = optional(bool, false)<br>    psc_allowed_consumer_projects = optional(list(string), [])<br>  })</pre> | <pre>{<br>  "allocated_ip_range": null,<br>  "authorized_networks": [],<br>  "ipv4_enabled": true,<br>  "private_network": null,<br>  "psc_allowed_consumer_projects": [],<br>  "psc_enabled": false,<br>  "ssl_mode": null<br>}</pre> | no |
 | maintenance\_version | The current software version on the instance. This attribute can not be set during creation. Refer to available\_maintenance\_versions attribute to see what maintenance\_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance\_version value that is older than the current one on the instance will be ignored | `string` | `null` | no |
 | maintenance\_window\_day | The day of week (1-7) for the Cloud SQL maintenance. | `number` | `1` | no |
 | maintenance\_window\_hour | The hour of day (0-23) maintenance window for the Cloud SQL maintenance. | `number` | `23` | no |
@@ -98,6 +98,7 @@ module "mssql" {
 | instance\_connection\_name | The connection name of the master instance to be used in connection strings |
 | instance\_first\_ip\_address | The first IPv4 address of the addresses assigned. |
 | instance\_name | The instance name for the master instance |
+| instance\_psc\_attachment | The psc\_service\_attachment\_link created for the master instance |
 | instance\_self\_link | The URI of the master instance |
 | instance\_server\_ca\_cert | The CA certificate information used to connect to the SQL instance via SSL |
 | instance\_service\_account\_email\_address | The service account email address assigned to the master instance |
