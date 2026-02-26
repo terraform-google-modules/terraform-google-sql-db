@@ -229,6 +229,7 @@ variable "backup_configuration" {
     transaction_log_retention_days = string
     retained_backups               = number
     retention_unit                 = string
+    location                       = string
   })
   default = {
     binary_log_enabled             = null
@@ -238,6 +239,7 @@ variable "backup_configuration" {
     transaction_log_retention_days = null
     retained_backups               = null
     retention_unit                 = null
+    location                       = null
   }
 }
 
@@ -380,6 +382,15 @@ variable "insights_config" {
     query_string_length     = optional(number, 1024)
     record_application_tags = optional(bool, false)
     record_client_address   = optional(bool, false)
+  })
+  default = null
+}
+
+variable "final_backup_config" {
+  description = "The final_backup_config settings for the database."
+  type = object({
+    enabled        = optional(bool, false)
+    retention_days = optional(number, 0)
   })
   default = null
 }

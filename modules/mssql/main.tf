@@ -73,6 +73,7 @@ resource "google_sql_database_instance" "default" {
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        location                       = lookup(backup_configuration.value, "location", null)
 
         dynamic "backup_retention_settings" {
           for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
@@ -125,6 +126,14 @@ resource "google_sql_database_instance" "default" {
         query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
         record_application_tags = lookup(insights_config.value, "record_application_tags", false)
         record_client_address   = lookup(insights_config.value, "record_client_address", false)
+      }
+    }
+    dynamic "final_backup_config" {
+      for_each = var.final_backup_config != null ? [var.final_backup_config] : []
+
+      content {
+        enabled        = lookup(final_backup_config.value, "enabled", false)
+        retention_days = lookup(final_backup_config.value, "retention_days", 0)
       }
     }
 

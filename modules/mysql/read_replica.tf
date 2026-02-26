@@ -70,6 +70,15 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
+    dynamic "final_backup_config" {
+      for_each = var.final_backup_config != null ? [var.final_backup_config] : []
+
+      content {
+        enabled        = lookup(final_backup_config.value, "enabled", false)
+        retention_days = lookup(final_backup_config.value, "retention_days", 0)
+      }
+    }
+
     dynamic "ip_configuration" {
       for_each = [lookup(each.value, "ip_configuration", {})]
       content {
@@ -103,6 +112,20 @@ resource "google_sql_database_instance" "replicas" {
     disk_type             = lookup(each.value, "disk_type", var.disk_type)
     pricing_plan          = "PER_USE"
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
+
+    dynamic "connection_pool_config" {
+      for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
+      content {
+        connection_pooling_enabled = var.connection_pool_config.enabled
+        dynamic "flags" {
+          for_each = var.connection_pool_config.flags
+          content {
+            name  = flags.value.name
+            value = flags.value.value
+          }
+        }
+      }
+    }
 
     dynamic "database_flags" {
       for_each = lookup(each.value, "database_flags", [])

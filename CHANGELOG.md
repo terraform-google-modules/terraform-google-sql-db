@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [27.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.1.0...v27.2.0) (2026-01-08)
+
+
+### Features
+
+* **compute_instance:** Update metadata file ([#802](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/802)) ([67733a2](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/67733a258cf0c904939f58f559980ae49b419e6b))
+* **compute_instance:** Update outputExpr to use service account name ([#799](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/799)) ([cf937a3](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/cf937a370feae50d6b63a31259c80b8c2a080eee))
+
+## [27.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.0.0...v27.1.0) (2026-01-07)
+
+
+### Features
+
+* add pooling configuration for postgresql and mysql ([#777](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/777)) ([a5d69b6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a5d69b60787136d3c54086d6c91f720eb72b1873))
+* **tpostgressql:** Add connection for compute_instance ([#798](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/798)) ([e527cb7](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e527cb768dd558b8a83efc4fcf417d8468dbe9e0))
+
+## [27.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.2...v27.0.0) (2025-11-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>7.2:** add final backup config ([#786](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/786))
+
+### Features
+
+* Backup configuration location for mssql ([#775](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/775)) ([1848851](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/18488518c4d381b8c8a5362287d7c13f0d434b8a))
+* **TPG>7.2:** add final backup config ([#786](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/786)) ([e67e0e0](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e67e0e0427d0ca6a89319d9138d87ef8cbd9d799))
+
+
+### Bug Fixes
+
+* added missing validations ([#781](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/781)) ([3d30555](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/3d305555f95871cf5793f18409644c21f5d91da5))
+
+## [26.2.2](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.1...v26.2.2) (2025-09-30)
+
+
+### Bug Fixes
+
+* Add min max validations ([#776](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/776)) ([9f66839](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/9f668399569eb7bae35dd369f67213afd271dc81))
+
 ## [26.2.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v26.2.0...v26.2.1) (2025-09-03)
 
 

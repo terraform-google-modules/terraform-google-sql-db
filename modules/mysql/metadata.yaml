@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/mysql
-    version: 26.2.1
+    version: 27.2.0
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -189,7 +189,7 @@ spec:
         description: Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart.
         varType: string
       - name: tier
-        description: The tier for the master instance, for ADC its defualt value will be db-perf-optimized-N-8 which is tier value for edtion ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
+        description: The tier for the master instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
         varType: string
         defaultValue: db-n1-standard-1
       - name: zone
@@ -267,7 +267,7 @@ spec:
             }))
         defaultValue: []
       - name: backup_configuration
-        description: The backup_configuration settings subblock for the database setings
+        description: The backup_configuration settings subblock for the database settings
         varType: |-
           object({
               binary_log_enabled             = optional(bool, false)
@@ -338,6 +338,13 @@ spec:
               disk_autoresize_limit = optional(number)
               disk_size             = optional(string)
               user_labels           = map(string)
+              connection_pool_config = optional(object({
+                enabled = optional(bool, false)
+                flags = optional(list(object({
+                  name  = string
+                  value = string
+                })), [])
+              }), null)
               database_flags = list(object({
                 name  = string
                 value = string
@@ -421,6 +428,17 @@ spec:
         description: The roles required by default database instance service account for integration with GCP services
         varType: list(string)
         defaultValue: []
+      - name: connection_pool_config
+        description: Manager connection pooling configuration
+        varType: |-
+          object({
+              enabled = optional(bool, false)
+              flags = optional(list(object({
+                name  = string
+                value = string
+              })), [])
+            })
+        required: true
     outputs:
       - name: additional_users
         description: List of maps of additional users and passwords
@@ -918,12 +936,12 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/iam.serviceAccountUser
-          - roles/compute.networkAdmin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
           - roles/logging.logWriter
           - roles/cloudsql.admin
           - roles/resourcemanager.projectIamAdmin
+          - roles/iam.serviceAccountUser
+          - roles/compute.networkAdmin
     services:
       - cloudkms.googleapis.com
       - cloudresourcemanager.googleapis.com
@@ -935,9 +953,9 @@ spec:
       - sqladmin.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.31, < 7"
+        version: ">= 6.31, < 8"
       - source: hashicorp/google-beta
-        version: ">= 6.31, < 7"
+        version: ">= 6.31, < 8"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random

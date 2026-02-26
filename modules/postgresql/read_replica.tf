@@ -83,12 +83,35 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
+    dynamic "final_backup_config" {
+      for_each = lookup(each.value, "final_backup_config") != null ? [lookup(each.value, "final_backup_config")] : []
+
+      content {
+        enabled        = lookup(final_backup_config.value, "enabled", false)
+        retention_days = lookup(final_backup_config.value, "retention_days", 1)
+      }
+    }
+
     disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
     disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
     disk_size             = lookup(each.value, "disk_size", var.disk_size)
     disk_type             = lookup(each.value, "disk_type", var.disk_type)
     pricing_plan          = "PER_USE"
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
+
+    dynamic "connection_pool_config" {
+      for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
+      content {
+        connection_pooling_enabled = var.connection_pool_config.enabled
+        dynamic "flags" {
+          for_each = var.connection_pool_config.flags
+          content {
+            name  = flags.value.name
+            value = flags.value.value
+          }
+        }
+      }
+    }
 
     dynamic "database_flags" {
       for_each = lookup(each.value, "database_flags", [])

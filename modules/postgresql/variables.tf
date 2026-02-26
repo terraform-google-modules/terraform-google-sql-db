@@ -296,6 +296,15 @@ variable "backup_configuration" {
   default = {}
 }
 
+variable "final_backup_config" {
+  description = "The final_backup_config settings for the database."
+  type = object({
+    enabled        = optional(bool, false)
+    retention_days = optional(number, 1)
+  })
+  default = null
+}
+
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
@@ -352,6 +361,13 @@ variable "read_replicas" {
     disk_autoresize_limit = optional(number)
     disk_size             = optional(string)
     user_labels           = map(string)
+    connection_pool_config = optional(object({
+      enabled = optional(bool, false)
+      flags = optional(list(object({
+        name  = string
+        value = string
+      })), [])
+    }), null)
     database_flags = optional(list(object({
       name  = string
       value = string
@@ -361,6 +377,10 @@ variable "read_replicas" {
       query_string_length     = optional(number, 1024)
       record_application_tags = optional(bool, false)
       record_client_address   = optional(bool, false)
+    }), null)
+    final_backup_config = optional(object({
+      enabled        = optional(bool, false)
+      retention_days = optional(number, 1)
     }), null)
     ip_configuration = object({
       authorized_networks                           = optional(list(map(string)), [])
@@ -495,4 +515,16 @@ variable "retain_backups_on_delete" {
   description = "When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting."
   type        = bool
   default     = false
+}
+
+variable "connection_pool_config" {
+  description = "Manager connection pooling configuration"
+  type = object({
+    enabled = optional(bool, false)
+    flags = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+  })
+  default = null
 }
