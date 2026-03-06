@@ -214,6 +214,12 @@ variable "activation_policy" {
   default     = "ALWAYS"
 }
 
+variable "auto_upgrade_enabled" {
+  description = "Enables Automatic Version Upgrade for MYSQL_8_0 based minor versions. The database_version must be MYSQL_8_0_35 or higher. Once enabled, this cannot be unset."
+  type        = bool
+  default     = null
+}
+
 variable "deletion_protection_enabled" {
   description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
