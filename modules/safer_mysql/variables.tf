@@ -118,6 +118,12 @@ variable "activation_policy" {
   default     = "ALWAYS"
 }
 
+variable "auto_upgrade_enabled" {
+  description = "Enables Automatic Version Upgrade for MYSQL_8_0 based minor versions. The database_version must be MYSQL_8_0_35 or higher. Once enabled, this cannot be unset."
+  type        = bool
+  default     = null
+}
+
 variable "availability_type" {
   description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
   type        = string
