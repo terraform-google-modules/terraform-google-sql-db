@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.2.0...v28.0.0) (2026-03-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>7.22:** MySQL auto upgrade enabled
+
+### Features
+
+* **TPG>7.22:** MySQL auto upgrade enabled ([f5bda6e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f5bda6e581f84b6179d324457cd2000f748c26ce))
+
 ## [27.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.1.0...v27.2.0) (2026-01-08)
 
 
