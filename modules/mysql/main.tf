@@ -77,6 +77,7 @@ resource "google_sql_database_instance" "default" {
     edition                      = var.edition
     activation_policy            = var.activation_policy
     availability_type            = var.availability_type
+    auto_upgrade_enabled         = var.auto_upgrade_enabled
     deletion_protection_enabled  = var.deletion_protection_enabled
     connector_enforcement        = local.connector_enforcement
     enable_google_ml_integration = var.enable_google_ml_integration
