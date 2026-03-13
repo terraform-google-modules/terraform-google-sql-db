@@ -169,6 +169,7 @@ resource "google_sql_database_instance" "default" {
           content {
             psc_enabled               = ip_configuration.value.psc_enabled
             allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+            network_attachment_uri    = ip_configuration.value.psc_network_attachment_uri
           }
         }
 
