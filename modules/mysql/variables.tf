@@ -423,7 +423,7 @@ variable "read_replicas" {
       enable_private_path_for_google_cloud_services = optional(bool, false)
       psc_enabled                                   = optional(bool, false)
       psc_allowed_consumer_projects                 = optional(list(string), [])
-      psc_allowed_consumer_projects                 = optional(list(string), [])
+      psc_network_attachment_uri                    = optional(string)
     })
     encryption_key_name = optional(string)
     data_cache_enabled  = optional(bool)
