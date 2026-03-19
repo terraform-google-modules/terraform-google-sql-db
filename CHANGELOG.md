@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.2.0...v28.0.0) (2026-03-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>7.22:** add advanced insights field
+* **TPG>7.22:** MySQL auto upgrade enabled
+
+### Features
+
+* **TPG>7.22:** add advanced insights field ([c441055](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/c44105592104f6a154ce533bae02586a187a4864))
+* **TPG>7.22:** MySQL auto upgrade enabled ([f5bda6e](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/f5bda6e581f84b6179d324457cd2000f748c26ce))
+
+
+### Bug Fixes
+
+* Enforce backup retention should be &gt; transaction log retention' on mysql replica ([#785](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/785)) ([cf3d314](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/cf3d3140e271341c3e84c7c09c945c1de067facb))
+* **mysql:** Add 'server_ca_mode' missing ip configuration object definition ([#818](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/818)) ([550c17d](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/550c17ddb741ccd9fa16560a91b1bacb170ad64f))
+
 ## [27.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.1.0...v27.2.0) (2026-01-08)
 
 
