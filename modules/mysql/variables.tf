@@ -329,10 +329,11 @@ variable "retain_backups_on_delete" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
-    query_plans_per_minute  = number
-    query_string_length     = number
-    record_application_tags = bool
-    record_client_address   = bool
+    enhanced_query_insights_enabled = bool
+    query_plans_per_minute          = number
+    query_string_length             = number
+    record_application_tags         = bool
+    record_client_address           = bool
   })
   default = null
 }
@@ -405,10 +406,11 @@ variable "read_replicas" {
       transaction_log_retention_days = string
     }))
     insights_config = optional(object({
-      query_plans_per_minute  = number
-      query_string_length     = number
-      record_application_tags = bool
-      record_client_address   = bool
+      enhanced_query_insights_enabled = bool
+      query_plans_per_minute          = number
+      query_string_length             = number
+      record_application_tags         = bool
+      record_client_address           = bool
     }))
     final_backup_config = optional(object({
       enabled        = optional(bool, false)
