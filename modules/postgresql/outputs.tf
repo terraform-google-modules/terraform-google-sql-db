@@ -155,6 +155,11 @@ output "dns_name" {
   description = "DNS name of the instance endpoint"
 }
 
+output "psa_write_endpoint" {
+  value       = try(google_sql_database_instance.default.replication_cluster[0].psa_write_endpoint, null)
+  description = "The Private Service Access (PSA) write endpoint for the master instance"
+}
+
 output "env_vars" {
   description = "Exported environment variables"
   value = {
