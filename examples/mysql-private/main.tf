@@ -95,8 +95,9 @@ module "safer-mysql-db" {
       email = var.cloudsql_mysql_sa
     },
     {
-      id    = "dbadmin",
-      email = "dbadmin@develop.blueprints.joonix.net"
+      id             = "dbadmin",
+      email          = "dbadmin@develop.blueprints.joonix.net"
+      database_roles = ["role1", "role2"]
     },
     {
       id    = "subtest",
