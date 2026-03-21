@@ -55,6 +55,13 @@ resource "google_sql_database_instance" "replicas" {
       content {
         binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        dynamic "backup_retention_settings" {
+          for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
+          content {
+            retained_backups = local.retained_backups
+            retention_unit   = local.retention_unit
+          }
+        }
       }
     }
 
@@ -85,6 +92,7 @@ resource "google_sql_database_instance" "replicas" {
         ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network                               = lookup(ip_configuration.value, "private_network", null)
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
+        server_ca_mode                                = lookup(ip_configuration.value, "server_ca_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 

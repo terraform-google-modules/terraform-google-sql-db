@@ -314,11 +314,15 @@ variable "backup_configuration" {
     enabled                        = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
-    transaction_log_retention_days = optional(string)
-    retained_backups               = optional(number)
+    transaction_log_retention_days = optional(string, 7)
+    retained_backups               = optional(number, 8)
     retention_unit                 = optional(string)
   })
   default = {}
+  validation {
+    condition     = var.backup_configuration.retained_backups > var.backup_configuration.transaction_log_retention_days
+    error_message = "backup retention should be > transaction log retention"
+  }
 }
 
 variable "retain_backups_on_delete" {
@@ -330,10 +334,11 @@ variable "retain_backups_on_delete" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
-    query_plans_per_minute  = number
-    query_string_length     = number
-    record_application_tags = bool
-    record_client_address   = bool
+    enhanced_query_insights_enabled = bool
+    query_plans_per_minute          = number
+    query_string_length             = number
+    record_application_tags         = bool
+    record_client_address           = bool
   })
   default = null
 }
@@ -354,6 +359,7 @@ variable "ip_configuration" {
     ipv4_enabled                                  = optional(bool, true)
     private_network                               = optional(string)
     ssl_mode                                      = optional(string)
+    server_ca_mode                                = optional(string)
     allocated_ip_range                            = optional(string)
     enable_private_path_for_google_cloud_services = optional(bool, false)
     psc_enabled                                   = optional(bool, false)
@@ -405,10 +411,11 @@ variable "read_replicas" {
       transaction_log_retention_days = string
     }))
     insights_config = optional(object({
-      query_plans_per_minute  = number
-      query_string_length     = number
-      record_application_tags = bool
-      record_client_address   = bool
+      enhanced_query_insights_enabled = bool
+      query_plans_per_minute          = number
+      query_string_length             = number
+      record_application_tags         = bool
+      record_client_address           = bool
     }))
     final_backup_config = optional(object({
       enabled        = optional(bool, false)
