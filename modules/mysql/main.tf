@@ -188,12 +188,12 @@ resource "google_sql_database_instance" "default" {
     dynamic "connection_pool_config" {
       for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
       content {
-        connection_pooling_enabled = var.connection_pool_config.enabled
+        connection_pooling_enabled = connection_pool_config.enabled
         dynamic "flags" {
-          for_each = var.connection_pool_config.flags
+          for_each = try(connection_pool_config.value.flags, [])
           content {
-            name  = flags.name
-            value = flags.value
+            name  = flags.value.name
+            value = flags.value.value
           }
         }
       }
