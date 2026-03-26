@@ -61,6 +61,10 @@ module "pg" {
     ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
   }
 
+  final_backup_config = {
+    enabled = false
+  }
+
   backup_configuration = {
     enabled                        = true
     start_time                     = "20:55"

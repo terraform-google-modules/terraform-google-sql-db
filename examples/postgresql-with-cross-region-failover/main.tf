@@ -105,6 +105,11 @@ module "pg1" {
     ]
   }
 
+  final_backup_config = {
+    enabled        = true
+    retention_days = 1
+  }
+
   backup_configuration = {
     enabled                        = true
     start_time                     = "20:55"
