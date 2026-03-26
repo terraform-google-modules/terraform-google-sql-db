@@ -70,7 +70,10 @@ module "pg" {
     retained_backups               = 365
     retention_unit                 = "COUNT"
   }
-
+  connection_pool_config = {
+    enabled = false
+    flags   = []
+  }
   // Read replica configurations
   read_replica_name_suffix = "-test-psc"
   read_replicas = [

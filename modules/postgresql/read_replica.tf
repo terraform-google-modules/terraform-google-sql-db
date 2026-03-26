@@ -102,9 +102,9 @@ resource "google_sql_database_instance" "replicas" {
     dynamic "connection_pool_config" {
       for_each = lookup(each.value, "connection_pool_config") != null ? lookup(each.value, "connection_pool_config") : { enabled = false, flags = [] }
       content {
-        connection_pooling_enabled = lookup(connection_pool_config.value, "enabled", false)
+        connection_pooling_enabled = lookup(connection_pool_config, "enabled", false)
         dynamic "flags" {
-          for_each = { for x in lookup(connection_pool_config.value, "flags", []) : x.name => x.value }
+          for_each = { for x in lookup(connection_pool_config, "flags", []) : x.name => x.value }
           content {
             name  = flags.key
             value = flags.value
