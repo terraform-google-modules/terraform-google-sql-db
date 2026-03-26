@@ -46,7 +46,7 @@ data "google_compute_zones" "available_region2" {
 
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
 
   name                 = var.pg_name_1
@@ -134,6 +134,19 @@ module "pg1" {
       insights_config = {
         query_plans_per_minute = 5
       }
+      connection_pool_config = {
+        enabled = true
+        flags = [
+          {
+            name  = "max_pool_size"
+            value = "103"
+          },
+          {
+            name  = "min_pool_size"
+            value = "5"
+          }
+        ]
+      }
     },
   ]
 
@@ -155,7 +168,7 @@ module "pg1" {
 
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
 
   # Comment this parameter to promote instance 2 as primary instance.
