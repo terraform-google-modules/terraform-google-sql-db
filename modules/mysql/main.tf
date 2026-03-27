@@ -192,8 +192,8 @@ resource "google_sql_database_instance" "default" {
         dynamic "flags" {
           for_each = var.connection_pool_config.flags
           content {
-            name  = flags.name
-            value = flags.value
+            name  = flags.value.name
+            value = flags.value.value
           }
         }
       }
