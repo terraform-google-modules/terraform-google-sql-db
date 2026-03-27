@@ -44,7 +44,7 @@ module "mysql" {
   deletion_protection = false
 
   // Master configurations
-  tier                            = "db-n1-standard-1"
+  tier                            = "db-perf-optimized-N-2"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
