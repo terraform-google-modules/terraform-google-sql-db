@@ -46,13 +46,13 @@ data "google_compute_zones" "available_region2" {
 
 module "pg1" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
 
   name                 = var.pg_name_1
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "POSTGRES_17"
+  database_version     = "POSTGRES_18"
   region               = local.region_1
 
   edition            = local.edition
@@ -105,6 +105,11 @@ module "pg1" {
     ]
   }
 
+  final_backup_config = {
+    enabled        = true
+    retention_days = 1
+  }
+
   backup_configuration = {
     enabled                        = true
     start_time                     = "20:55"
@@ -113,6 +118,20 @@ module "pg1" {
     transaction_log_retention_days = null
     retained_backups               = 365
     retention_unit                 = "COUNT"
+  }
+
+  connection_pool_config = {
+    enabled = true
+    flags = [
+      {
+        name  = "max_pool_size"
+        value = "101"
+      },
+      {
+        name  = "min_pool_size"
+        value = "7"
+      }
+    ]
   }
 
   // Read replica configurations
@@ -133,6 +152,19 @@ module "pg1" {
       encryption_key_name   = google_kms_crypto_key.cloudsql_region1_key.id
       insights_config = {
         query_plans_per_minute = 5
+      }
+      connection_pool_config = {
+        enabled = true
+        flags = [
+          {
+            name  = "max_pool_size"
+            value = "103"
+          },
+          {
+            name  = "min_pool_size"
+            value = "5"
+          }
+        ]
       }
     },
   ]
@@ -155,7 +187,7 @@ module "pg1" {
 
 module "pg2" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
 
   # Comment this parameter to promote instance 2 as primary instance.

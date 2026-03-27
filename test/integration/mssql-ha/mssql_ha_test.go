@@ -41,7 +41,7 @@ func TestMsSqlHaModule(t *testing.T) {
 		assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 		assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 		assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-		assert.Equal("db-custom-1-3840", op.Get("settings.tier").String(), "Expected db-custom-1-3840 tier")
+		assert.Equal("db-perf-optimized-N-2", op.Get("settings.tier").String(), "Expected db-perf-optimized-N-2 tier")
 
 		// assert location database settings
 		assert.Equal("sql#locationPreference", op.Get("settings.locationPreference.kind").String(), "Expected sql#locationPreference locationPreference.kind")

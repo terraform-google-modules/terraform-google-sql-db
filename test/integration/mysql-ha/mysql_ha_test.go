@@ -47,7 +47,7 @@ func TestMySqlHaModule(t *testing.T) {
 			assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 			assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 			assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-			assert.Equal("db-n1-standard-1", op.Get("settings.tier").String(), "Expected db-n1-standard-1 tier")
+			assert.Equal("db-perf-optimized-N-2", op.Get("settings.tier").String(), "Expected db-perf-optimized-N-2 tier")
 
 			// assert database flags
 			assert.JSONEqf(`{"name": "long_query_time", "value": "1"}`, op.Get("settings.databaseFlags").Array()[0].Raw, `Expected {"name": "long_query_time", "value": "1"} databaseFlags`)
@@ -60,7 +60,7 @@ func TestMySqlHaModule(t *testing.T) {
 			assert.Equal(mySql.GetStringOutput("authorized_network"), authNetworkMap["value"].String(), "Expected auth network within cdir range")
 
 			// assert standard database settings
-			assert.Equal("MYSQL_5_7", op.Get("databaseVersion").String(), "Expected MYSQL_5_7 databaseVersion")
+			assert.Equal("MYSQL_8_4", op.Get("databaseVersion").String(), "Expected MYSQL_8_4 databaseVersion")
 			assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 			assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 			assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
