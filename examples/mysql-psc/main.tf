@@ -83,13 +83,13 @@ module "mysql" {
 
   // Read replica configurations
   read_replica_name_suffix = "-test-psc"
-  replica_database_version = "MYSQL_8_0"
+  replica_database_version = "MYSQL_8_4"
   read_replicas = [
     {
       name              = "0"
       zone              = "us-central1-a"
       availability_type = "REGIONAL"
-      tier              = "db-custom-2-7680"
+      tier              = "db-perf-optimized-N-2"
       ip_configuration  = local.read_replica_ip_configuration
       database_flags    = [{ name = "long_query_time", value = 1 }]
       disk_type         = "PD_SSD"
