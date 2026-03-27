@@ -74,6 +74,11 @@ module "mysql" {
     retention_unit                 = "COUNT"
   }
 
+  connection_pool_config = {
+    enabled = false
+    flags   = []
+  }
+
   // Read replica configurations
   read_replica_name_suffix = "-test-psc"
   replica_database_version = "MYSQL_8_0"

@@ -70,6 +70,20 @@ module "mysql" {
     ]
   }
 
+  connection_pool_config = {
+    enabled = true
+    flags = [
+      {
+        name  = "max_pool_size"
+        value = "101"
+      },
+      {
+        name  = "min_pool_size"
+        value = "7"
+      }
+    ]
+  }
+
   password_validation_policy_config = {
     enable_password_policy      = true
     complexity                  = "COMPLEXITY_DEFAULT"
