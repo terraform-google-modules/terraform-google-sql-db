@@ -43,6 +43,8 @@ module "mysql" {
 
   deletion_protection = false
 
+  edition = "ENTERPRISE_PLUS"
+
   // Master configurations
   tier                            = "db-perf-optimized-N-2"
   zone                            = "us-central1-c"
@@ -75,11 +77,7 @@ module "mysql" {
     flags = [
       {
         name  = "max_pool_size"
-        value = "101"
-      },
-      {
-        name  = "min_pool_size"
-        value = "7"
+        value = "10"
       }
     ]
   }

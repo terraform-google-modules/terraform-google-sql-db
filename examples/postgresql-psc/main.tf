@@ -34,6 +34,8 @@ module "pg" {
   database_version     = "POSTGRES_18"
   region               = "us-central1"
 
+  edition = "ENTERPRISE_PLUS"
+
   // Master configurations
   tier                            = "db-perf-optimized-N-2"
   zone                            = "us-central1-c"

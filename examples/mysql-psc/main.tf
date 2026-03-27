@@ -37,6 +37,8 @@ module "mysql" {
 
   deletion_protection = false
 
+  edition = "ENTERPRISE_PLUS"
+
   // Master configurations
   tier                            = "db-perf-optimized-N-2"
   zone                            = "us-central1-c"
