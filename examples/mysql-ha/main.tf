@@ -101,13 +101,13 @@ module "mysql" {
 
   // Read replica configurations
   read_replica_name_suffix = "-test-ha"
-  replica_database_version = "MYSQL_5_7"
+  replica_database_version = "MYSQL_8_4"
   read_replicas = [
     {
       name                  = "0"
       zone                  = "us-central1-a"
       availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
+      tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
       disk_autoresize       = null
@@ -121,7 +121,7 @@ module "mysql" {
       name                  = "1"
       zone                  = "us-central1-b"
       availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
+      tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
       disk_autoresize       = null
@@ -135,7 +135,7 @@ module "mysql" {
       name                  = "2"
       zone                  = "us-central1-c"
       availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
+      tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
       disk_autoresize       = null
