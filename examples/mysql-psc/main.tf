@@ -32,7 +32,7 @@ module "mysql" {
   name                 = var.mysql_ha_name
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "MYSQL_8_0"
+  database_version     = "MYSQL_8_4"
   region               = "us-central1"
 
   deletion_protection = false

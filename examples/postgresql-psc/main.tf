@@ -31,7 +31,7 @@ module "pg" {
   name                 = var.pg_psc_name
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "POSTGRES_15"
+  database_version     = "POSTGRES_18"
   region               = "us-central1"
 
   // Master configurations

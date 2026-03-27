@@ -56,7 +56,7 @@ func TestPostgreSqlPscModule(t *testing.T) {
 			assert.Equal(0, len(authNetworks), "Expected Zero auth network")
 
 			/// assert standard database settings
-			assert.Equal("POSTGRES_15", op.Get("databaseVersion").String(), "Expected POSTGRES_15 databaseVersion")
+			assert.Equal("POSTGRES_18", op.Get("databaseVersion").String(), "Expected POSTGRES_18 databaseVersion")
 			assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 			assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 			assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
