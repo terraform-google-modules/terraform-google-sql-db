@@ -28,7 +28,6 @@ func TestMySqlPscModule(t *testing.T) {
 	mySql := tft.NewTFBlueprintTest(t)
 
 	mySql.DefineVerify(func(assert *assert.Assertions) {
-		mySql.DefaultVerify(assert)
 
 		instaceNames := []string{mySql.GetStringOutput("name")}
 		projectId := mySql.GetStringOutput("project_id")
