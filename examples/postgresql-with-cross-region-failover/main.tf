@@ -196,7 +196,7 @@ module "pg2" {
   name                 = var.pg_name_2
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "POSTGRES_17"
+  database_version     = "POSTGRES_18"
   region               = local.region_2
 
   edition            = local.edition
