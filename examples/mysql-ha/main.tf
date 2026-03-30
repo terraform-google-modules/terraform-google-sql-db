@@ -113,7 +113,7 @@ module "mysql" {
       disk_autoresize       = null
       disk_autoresize_limit = null
       disk_size             = null
-      disk_type             = "PD_HDD"
+      disk_type             = "PD_SSD"
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },
@@ -127,7 +127,7 @@ module "mysql" {
       disk_autoresize       = null
       disk_autoresize_limit = null
       disk_size             = null
-      disk_type             = "PD_HDD"
+      disk_type             = "PD_SSD"
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },
@@ -141,7 +141,7 @@ module "mysql" {
       disk_autoresize       = null
       disk_autoresize_limit = null
       disk_size             = null
-      disk_type             = "PD_HDD"
+      disk_type             = "PD_SSD"
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },

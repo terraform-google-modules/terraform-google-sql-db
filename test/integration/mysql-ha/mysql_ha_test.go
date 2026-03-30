@@ -108,7 +108,7 @@ func TestMySqlHaModule(t *testing.T) {
 			} else {
 				// assert general database settings
 				assert.Equal("ZONAL", op.Get("settings.availabilityType").String(), "Expected ZONAL availabilityType")
-				assert.Equal("PD_HDD", op.Get("settings.dataDiskType").String(), "Expected PD_HDD dataDiskType")
+				assert.Equal("PD_SSD", op.Get("settings.dataDiskType").String(), "Expected PD_SSD dataDiskType")
 
 				// assert user labels
 				assert.JSONEq(`{"bar": "baz"}`, op.Get("settings.userLabels").Raw, `Expected {"bar": "baz"} userLabels`)
