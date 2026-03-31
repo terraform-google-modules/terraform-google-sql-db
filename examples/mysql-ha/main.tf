@@ -33,18 +33,20 @@ locals {
 
 module "mysql" {
   source  = "terraform-google-modules/sql-db/google//modules/mysql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
   name                 = var.mysql_ha_name
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "MYSQL_5_7"
+  database_version     = "MYSQL_8_4"
   region               = "us-central1"
 
   deletion_protection = false
 
+  edition = "ENTERPRISE_PLUS"
+
   // Master configurations
-  tier                            = "db-n1-standard-1"
+  tier                            = "db-perf-optimized-N-2"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
@@ -70,6 +72,16 @@ module "mysql" {
     ]
   }
 
+  connection_pool_config = {
+    enabled = true
+    flags = [
+      {
+        name  = "max_pool_size"
+        value = "10"
+      }
+    ]
+  }
+
   password_validation_policy_config = {
     enable_password_policy      = true
     complexity                  = "COMPLEXITY_DEFAULT"
@@ -89,19 +101,19 @@ module "mysql" {
 
   // Read replica configurations
   read_replica_name_suffix = "-test-ha"
-  replica_database_version = "MYSQL_5_7"
+  replica_database_version = "MYSQL_8_4"
   read_replicas = [
     {
       name                  = "0"
       zone                  = "us-central1-a"
       availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
+      tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
       disk_autoresize       = null
       disk_autoresize_limit = null
       disk_size             = null
-      disk_type             = "PD_HDD"
+      disk_type             = "PD_SSD"
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },
@@ -109,13 +121,13 @@ module "mysql" {
       name                  = "1"
       zone                  = "us-central1-b"
       availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
+      tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
       disk_autoresize       = null
       disk_autoresize_limit = null
       disk_size             = null
-      disk_type             = "PD_HDD"
+      disk_type             = "PD_SSD"
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },
@@ -123,13 +135,13 @@ module "mysql" {
       name                  = "2"
       zone                  = "us-central1-c"
       availability_type     = "ZONAL"
-      tier                  = "db-n1-standard-1"
+      tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
       database_flags        = [{ name = "long_query_time", value = 1 }]
       disk_autoresize       = null
       disk_autoresize_limit = null
       disk_size             = null
-      disk_type             = "PD_HDD"
+      disk_type             = "PD_SSD"
       user_labels           = { bar = "baz" }
       encryption_key_name   = null
     },
