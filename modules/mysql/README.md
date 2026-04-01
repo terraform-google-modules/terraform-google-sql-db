@@ -3,6 +3,7 @@
 Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen) feature which can cause a [Terraform configuration drift](https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform) due to the value in `disk_size` variable, and hence any updates to this variable is ignored in the [Terraform lifecycle](https://www.terraform.io/docs/configuration/resources.html#ignore_changes).
 
 ## Usage
+
 Functional examples are included in the [examples](../../examples/) directory. Basic usage of this module is as follows:
 
 - Create simple mysql instance
@@ -103,7 +104,7 @@ module "mysql-db" {
 | retain\_backups\_on\_delete | When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON\_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting. | `bool` | `false` | no |
 | root\_password | MySQL password for the root user. | `string` | `null` | no |
 | secondary\_zone | The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
-| tier | The tier for the master instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE\_PLUS, if user wants to change the edition, he should chose compatible tier. | `string` | `"db-n1-standard-1"` | no |
+| tier | The tier for the master instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE\_PLUS, if user wants to change the edition, they should chose compatible tier. | `string` | `"db-n1-standard-1"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | user\_deletion\_policy | The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON". | `string` | `null` | no |
 | user\_host | The host for the default user | `string` | `"%"` | no |

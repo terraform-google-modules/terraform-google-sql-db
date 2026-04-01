@@ -166,7 +166,7 @@ spec:
         varType: bool
         defaultValue: false
       - name: tier
-        description: The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier.
+        description: The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, they should chose compatible tier.
         varType: string
         defaultValue: db-f1-micro
       - name: zone
