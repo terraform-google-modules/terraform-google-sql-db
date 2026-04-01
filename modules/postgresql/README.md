@@ -2,8 +2,8 @@
 
 Note: CloudSQL provides [disk autoresize](https://cloud.google.com/sql/docs/mysql/instance-settings#automatic-storage-increase-2ndgen) feature which can cause a [Terraform configuration drift](https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform) due to the value in `disk_size` variable, and hence any updates to this variable is ignored in the [Terraform lifecycle](https://www.terraform.io/docs/configuration/resources.html#ignore_changes).
 
-
 ## Usage
+
 Functional examples are included in the [examples](../../examples/) directory. If you want to create an instance with failover replica and manage lifecycle of primary and secondary instance lifecycle using this module follow example in [postgresql-with-cross-region-failover](../../examples/postgresql-with-cross-region-failover/)
 
 Basic usage of this module is as follows:
@@ -111,6 +111,7 @@ module "pg" {
 }
 
 ```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
@@ -175,7 +176,7 @@ module "pg" {
 | retain\_backups\_on\_delete | When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON\_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting. | `bool` | `false` | no |
 | root\_password | Initial root password during creation | `string` | `null` | no |
 | secondary\_zone | The preferred zone for the replica instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
-| tier | The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE\_PLUS, if user wants to change the edition, he should chose compatible tier. | `string` | `"db-f1-micro"` | no |
+| tier | The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE\_PLUS, if user wants to change the edition, they should chose compatible tier. | `string` | `"db-f1-micro"` | no |
 | update\_timeout | The optional timout that is applied to limit long database updates. | `string` | `"30m"` | no |
 | use\_autokey | Enable the use of autokeys from Google Cloud KMS for CMEK. This requires autokey already configured in the project | `bool` | `false` | no |
 | user\_deletion\_policy | The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: "ABANDON". | `string` | `null` | no |
