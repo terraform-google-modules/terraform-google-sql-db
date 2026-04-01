@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.0.0...v28.0.1) (2026-03-31)
+
+
+### Bug Fixes
+
+* connection pool config separate for readpool ([#826](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/826)) ([e39dbd6](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/e39dbd685dd7c454c98c082870c61032e0b113c6))
+
 ## [28.0.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v27.2.0...v28.0.0) (2026-03-19)
 
 
