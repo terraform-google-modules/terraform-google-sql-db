@@ -79,7 +79,7 @@ module "postgresql-db" {
     {
       id             = "dbadmin",
       email          = "dbadmin@develop.blueprints.joonix.net"
-      database_roles = ["role1", "role2"]
+      database_roles = ["cloudsqlsuperuser"]
     },
     {
       id    = "subtest",
