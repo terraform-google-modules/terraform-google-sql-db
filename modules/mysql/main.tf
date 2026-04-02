@@ -120,7 +120,7 @@ resource "google_sql_database_instance" "default" {
 
       content {
         enabled        = lookup(final_backup_config.value, "enabled", false)
-        retention_days = lookup(final_backup_config.value, "retention_days", 0)
+        retention_days = lookup(final_backup_config.value, "enabled", false) ? lookup(final_backup_config.value, "retention_days") : null
       }
     }
     dynamic "data_cache_config" {
@@ -193,8 +193,8 @@ resource "google_sql_database_instance" "default" {
         dynamic "flags" {
           for_each = var.connection_pool_config.flags
           content {
-            name  = flags.name
-            value = flags.value
+            name  = flags.value.name
+            value = flags.value.value
           }
         }
       }

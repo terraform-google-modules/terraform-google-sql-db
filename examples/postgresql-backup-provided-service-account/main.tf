@@ -16,7 +16,7 @@
 
 module "postgresql" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
   name                 = "example-postgres"
   random_instance_name = true
@@ -56,7 +56,7 @@ resource "google_monitoring_notification_channel" "email" {
 
 module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
   region                      = "us-central1"
   project_id                  = var.project_id

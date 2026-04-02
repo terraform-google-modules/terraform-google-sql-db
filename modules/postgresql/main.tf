@@ -168,7 +168,7 @@ resource "google_sql_database_instance" "default" {
 
       content {
         enabled        = lookup(final_backup_config.value, "enabled", false)
-        retention_days = lookup(final_backup_config.value, "retention_days", 1)
+        retention_days = lookup(final_backup_config.value, "enabled", false) ? lookup(final_backup_config.value, "retention_days") : null
       }
     }
 

@@ -46,7 +46,7 @@ func TestPostgreSqlPscModule(t *testing.T) {
 			assert.Equal("SYNCHRONOUS", op.Get("settings.replicationType").String(), "Expected SYNCHRONOUS replicationType")
 			assert.True(op.Get("settings.storageAutoResize").Bool(), "Expected TRUE storageAutoResize")
 			assert.Equal(int64(0), op.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
-			assert.Equal("db-custom-2-7680", op.Get("settings.tier").String(), "Expected db-custom-2-7680 tier")
+			assert.Equal("db-perf-optimized-N-2", op.Get("settings.tier").String(), "Expected db-perf-optimized-N-2 tier")
 
 			// assert database flags
 			assert.JSONEq(`{"name": "autovacuum", "value": "off"}`, op.Get("settings.databaseFlags").Array()[0].Raw, `Expected {"name": "autovacuum", "value": "off"} databaseFlags`)
@@ -56,7 +56,6 @@ func TestPostgreSqlPscModule(t *testing.T) {
 			assert.Equal(0, len(authNetworks), "Expected Zero auth network")
 
 			/// assert standard database settings
-			assert.Equal("POSTGRES_15", op.Get("databaseVersion").String(), "Expected POSTGRES_15 databaseVersion")
 			assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 			assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
 			assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")

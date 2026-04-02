@@ -88,7 +88,7 @@ resource "google_sql_database_instance" "replicas" {
 
       content {
         enabled        = lookup(final_backup_config.value, "enabled", false)
-        retention_days = lookup(final_backup_config.value, "retention_days", 1)
+        retention_days = lookup(final_backup_config.value, "enabled", false) ? lookup(final_backup_config.value, "retention_days", 1) : null
       }
     }
 
@@ -100,11 +100,11 @@ resource "google_sql_database_instance" "replicas" {
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
 
     dynamic "connection_pool_config" {
-      for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
+      for_each = each.value.connection_pool_config != null ? [each.value.connection_pool_config] : []
       content {
-        connection_pooling_enabled = var.connection_pool_config.enabled
+        connection_pooling_enabled = connection_pool_config.value.enabled
         dynamic "flags" {
-          for_each = var.connection_pool_config.flags
+          for_each = connection_pool_config.value.flags != null ? connection_pool_config.value.flags : []
           content {
             name  = flags.value.name
             value = flags.value.value
