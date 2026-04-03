@@ -466,6 +466,9 @@ spec:
       - name: dns_name
         description: DNS name of the instance endpoint
         type: string
+      - name: psa_write_endpoint
+        description: The Private Service Access (PSA) write endpoint for the master instance
+        type: string
       - name: env_vars
         description: Exported environment variables
         type:
@@ -543,6 +546,7 @@ spec:
                 dns_name: string
                 encryption_key_name: string
                 first_ip_address: string
+                psa_write_endpoint: string
                 id: string
                 instance_type: string
                 ip_address:
@@ -734,6 +738,7 @@ spec:
             dns_name: string
             encryption_key_name: string
             first_ip_address: string
+            psa_write_endpoint: string
             id: string
             instance_type: string
             ip_address:
