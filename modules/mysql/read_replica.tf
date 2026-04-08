@@ -55,6 +55,13 @@ resource "google_sql_database_instance" "replicas" {
       content {
         binary_log_enabled             = lookup(backup_configuration.value, "binary_log_enabled", null)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
+        dynamic "backup_retention_settings" {
+          for_each = local.retained_backups != null || local.retention_unit != null ? [var.backup_configuration] : []
+          content {
+            retained_backups = local.retained_backups
+            retention_unit   = local.retention_unit
+          }
+        }
       }
     }
 
@@ -75,7 +82,7 @@ resource "google_sql_database_instance" "replicas" {
 
       content {
         enabled        = lookup(final_backup_config.value, "enabled", false)
-        retention_days = lookup(final_backup_config.value, "retention_days", 0)
+        retention_days = lookup(final_backup_config.value, "enabled", false) ? lookup(final_backup_config.value, "retention_days") : null
       }
     }
 
@@ -85,6 +92,7 @@ resource "google_sql_database_instance" "replicas" {
         ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network                               = lookup(ip_configuration.value, "private_network", null)
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
+        server_ca_mode                                = lookup(ip_configuration.value, "server_ca_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 
@@ -114,11 +122,11 @@ resource "google_sql_database_instance" "replicas" {
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
 
     dynamic "connection_pool_config" {
-      for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
+      for_each = each.value.connection_pool_config != null ? [each.value.connection_pool_config] : []
       content {
-        connection_pooling_enabled = var.connection_pool_config.enabled
+        connection_pooling_enabled = connection_pool_config.value.enabled
         dynamic "flags" {
-          for_each = var.connection_pool_config.flags
+          for_each = connection_pool_config.value.flags != null ? connection_pool_config.value.flags : []
           content {
             name  = flags.value.name
             value = flags.value.value

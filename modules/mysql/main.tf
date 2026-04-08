@@ -76,6 +76,7 @@ resource "google_sql_database_instance" "default" {
     edition                      = var.edition
     activation_policy            = var.activation_policy
     availability_type            = var.availability_type
+    auto_upgrade_enabled         = var.auto_upgrade_enabled
     deletion_protection_enabled  = var.deletion_protection_enabled
     connector_enforcement        = local.connector_enforcement
     enable_google_ml_integration = var.enable_google_ml_integration
@@ -105,11 +106,12 @@ resource "google_sql_database_instance" "default" {
       for_each = var.insights_config != null ? [var.insights_config] : []
 
       content {
-        query_insights_enabled  = true
-        query_plans_per_minute  = lookup(insights_config.value, "query_plans_per_minute", 5)
-        query_string_length     = lookup(insights_config.value, "query_string_length", 1024)
-        record_application_tags = lookup(insights_config.value, "record_application_tags", false)
-        record_client_address   = lookup(insights_config.value, "record_client_address", false)
+        query_insights_enabled          = true
+        enhanced_query_insights_enabled = lookup(insights_config.value, "enhanced_query_insights_enabled", false)
+        query_plans_per_minute          = lookup(insights_config.value, "query_plans_per_minute", 5)
+        query_string_length             = lookup(insights_config.value, "query_string_length", 1024)
+        record_application_tags         = lookup(insights_config.value, "record_application_tags", false)
+        record_client_address           = lookup(insights_config.value, "record_client_address", false)
       }
     }
     dynamic "final_backup_config" {
@@ -117,7 +119,7 @@ resource "google_sql_database_instance" "default" {
 
       content {
         enabled        = lookup(final_backup_config.value, "enabled", false)
-        retention_days = lookup(final_backup_config.value, "retention_days", 0)
+        retention_days = lookup(final_backup_config.value, "enabled", false) ? lookup(final_backup_config.value, "retention_days") : null
       }
     }
     dynamic "data_cache_config" {
@@ -151,6 +153,7 @@ resource "google_sql_database_instance" "default" {
         ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
         private_network                               = lookup(ip_configuration.value, "private_network", null)
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
+        server_ca_mode                                = lookup(ip_configuration.value, "server_ca_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 
@@ -189,8 +192,8 @@ resource "google_sql_database_instance" "default" {
         dynamic "flags" {
           for_each = var.connection_pool_config.flags
           content {
-            name  = flags.name
-            value = flags.value
+            name  = flags.value.name
+            value = flags.value.value
           }
         }
       }

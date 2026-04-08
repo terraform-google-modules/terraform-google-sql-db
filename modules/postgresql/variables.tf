@@ -177,7 +177,7 @@ variable "random_instance_name" {
 }
 
 variable "tier" {
-  description = "The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, he should chose compatible tier."
+  description = "The tier for the Cloud SQL instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, they should chose compatible tier."
   type        = string
   default     = "db-f1-micro"
 }
@@ -308,10 +308,11 @@ variable "final_backup_config" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
-    query_plans_per_minute  = optional(number, 5)
-    query_string_length     = optional(number, 1024)
-    record_application_tags = optional(bool, false)
-    record_client_address   = optional(bool, false)
+    enhanced_query_insights_enabled = optional(bool, false)
+    query_plans_per_minute          = optional(number, 5)
+    query_string_length             = optional(number, 1024)
+    record_application_tags         = optional(bool, false)
+    record_client_address           = optional(bool, false)
   })
   default = null
 }
@@ -373,10 +374,11 @@ variable "read_replicas" {
       value = string
     })), [])
     insights_config = optional(object({
-      query_plans_per_minute  = optional(number, 5)
-      query_string_length     = optional(number, 1024)
-      record_application_tags = optional(bool, false)
-      record_client_address   = optional(bool, false)
+      enhanced_query_insights_enabled = optional(bool, false)
+      query_plans_per_minute          = optional(number, 5)
+      query_string_length             = optional(number, 1024)
+      record_application_tags         = optional(bool, false)
+      record_client_address           = optional(bool, false)
     }), null)
     final_backup_config = optional(object({
       enabled        = optional(bool, false)

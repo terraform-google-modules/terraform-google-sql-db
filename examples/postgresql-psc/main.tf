@@ -26,16 +26,18 @@ locals {
 
 module "pg" {
   source  = "terraform-google-modules/sql-db/google//modules/postgresql"
-  version = "~> 27.0"
+  version = "~> 28.0"
 
   name                 = var.pg_psc_name
   random_instance_name = true
   project_id           = var.project_id
-  database_version     = "POSTGRES_15"
+  database_version     = "POSTGRES_18"
   region               = "us-central1"
 
+  edition = "ENTERPRISE_PLUS"
+
   // Master configurations
-  tier                            = "db-custom-2-7680"
+  tier                            = "db-perf-optimized-N-2"
   zone                            = "us-central1-c"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
@@ -61,6 +63,10 @@ module "pg" {
     ssl_mode                      = "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
   }
 
+  final_backup_config = {
+    enabled = false
+  }
+
   backup_configuration = {
     enabled                        = true
     start_time                     = "20:55"
@@ -71,6 +77,11 @@ module "pg" {
     retention_unit                 = "COUNT"
   }
 
+  connection_pool_config = {
+    enabled = false
+    flags   = []
+  }
+
   // Read replica configurations
   read_replica_name_suffix = "-test-psc"
   read_replicas = [
@@ -78,7 +89,7 @@ module "pg" {
       name              = "0"
       zone              = "us-central1-a"
       availability_type = "REGIONAL"
-      tier              = "db-custom-2-7680"
+      tier              = "db-perf-optimized-N-2" # "db-custom-2-7680"
       ip_configuration  = local.read_replica_ip_configuration
       database_flags    = [{ name = "autovacuum", value = "off" }]
       disk_type         = "PD_SSD"

@@ -118,6 +118,12 @@ variable "activation_policy" {
   default     = "ALWAYS"
 }
 
+variable "auto_upgrade_enabled" {
+  description = "Enables Automatic Version Upgrade for MYSQL_8_0 based minor versions. The database_version must be MYSQL_8_0_35 or higher. Once enabled, this cannot be unset."
+  type        = bool
+  default     = null
+}
+
 variable "availability_type" {
   description = "The availability type for the master instance. Can be either `REGIONAL` or `null`."
   type        = string
@@ -275,10 +281,11 @@ variable "read_replicas" {
       value = string
     }))
     insights_config = optional(object({
-      query_plans_per_minute  = number
-      query_string_length     = number
-      record_application_tags = bool
-      record_client_address   = bool
+      enhanced_query_insights_enabled = bool
+      query_plans_per_minute          = number
+      query_string_length             = number
+      record_application_tags         = bool
+      record_client_address           = bool
     }))
     ip_configuration = object({
       authorized_networks = list(map(string))
@@ -410,10 +417,11 @@ variable "encryption_key_name" {
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({
-    query_plans_per_minute  = number
-    query_string_length     = number
-    record_application_tags = bool
-    record_client_address   = bool
+    enhanced_query_insights_enabled = bool
+    query_plans_per_minute          = number
+    query_string_length             = number
+    record_application_tags         = bool
+    record_client_address           = bool
   })
   default = null
 }
