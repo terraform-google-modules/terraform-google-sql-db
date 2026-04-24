@@ -313,6 +313,12 @@ spec:
             spec:
               outputExpr: network_id
               inputPath: private_network
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-network
+              version: ">= 16.0.1"
+            spec:
+              outputExpr: network_self_link
+              inputPath: private_network
       - name: password_validation_policy_config
         description: The password validation policy settings for the database instance.
         varType: |-
