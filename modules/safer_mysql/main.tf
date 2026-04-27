@@ -85,6 +85,8 @@ module "safer_mysql" {
   additional_users = var.additional_users
   iam_users        = var.iam_users
 
+  user_password_policy = var.user_password_policy
+
   // Read replica
   read_replica_name_suffix                 = var.read_replica_name_suffix
   read_replica_deletion_protection         = var.read_replica_deletion_protection
