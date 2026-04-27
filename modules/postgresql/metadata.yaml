@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-sql-db.git
       sourceType: git
       dir: /modules/postgresql
-    version: 28.0.1
+    version: 28.1.0
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -290,6 +290,12 @@ spec:
               version: ">= 9.1"
             spec:
               outputExpr: network_id
+              inputPath: private_network
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-network
+              version: ">= 16.0.1"
+            spec:
+              outputExpr: network_self_link
               inputPath: private_network
       - name: read_replicas
         description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null
