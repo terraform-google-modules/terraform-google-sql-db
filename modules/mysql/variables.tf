@@ -85,6 +85,12 @@ variable "user_password" {
   default     = ""
 }
 
+variable "user_password_wo_version" {
+  description = "Version number for the default user's write-only password. Increment this to trigger a password update."
+  type        = number
+  default     = 1
+}
+
 variable "user_host" {
   description = "The host for the default user"
   type        = string
@@ -128,11 +134,12 @@ variable "additional_databases" {
 variable "additional_users" {
   description = "A list of users to be created in your cluster. A random password would be set for the user if the `random_password` variable is set."
   type = list(object({
-    name            = string
-    password        = string
-    random_password = bool
-    type            = string
-    host            = string
+    name                = string
+    password            = string
+    random_password     = bool
+    type                = string
+    host                = string
+    password_wo_version = optional(number, 1)
   }))
   default = []
   validation {
