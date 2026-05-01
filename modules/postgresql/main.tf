@@ -330,11 +330,12 @@ resource "random_password" "additional_passwords" {
 }
 
 resource "google_sql_user" "default" {
-  count    = var.enable_default_user ? 1 : 0
-  name     = var.user_name
-  project  = var.project_id
-  instance = google_sql_database_instance.default.name
-  password = var.user_password == "" ? random_password.user-password[0].result : var.user_password
+  count               = var.enable_default_user ? 1 : 0
+  name                = var.user_name
+  project             = var.project_id
+  instance            = google_sql_database_instance.default.name
+  password_wo         = var.user_password == "" ? random_password.user-password[0].result : var.user_password
+  password_wo_version = var.user_password_wo_version
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,
@@ -344,11 +345,12 @@ resource "google_sql_user" "default" {
 }
 
 resource "google_sql_user" "additional_users" {
-  for_each = local.users
-  project  = var.project_id
-  name     = each.value.name
-  password = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
-  instance = google_sql_database_instance.default.name
+  for_each            = local.users
+  project             = var.project_id
+  name                = each.value.name
+  password_wo         = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
+  password_wo_version = each.value.password_wo_version
+  instance            = google_sql_database_instance.default.name
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,
