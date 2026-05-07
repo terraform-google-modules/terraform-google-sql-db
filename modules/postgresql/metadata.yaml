@@ -453,7 +453,7 @@ spec:
                 value = string
               })), [])
             })
-        required: false
+        defaultValue: null
     outputs:
       - name: additional_user_passwords_map
         description: Map of auto generated passwords for the additional users
