@@ -444,7 +444,7 @@ spec:
                 value = string
               })), [])
             })
-        required: false
+        defaultValue: null
     outputs:
       - name: additional_users
         description: List of maps of additional users and passwords
