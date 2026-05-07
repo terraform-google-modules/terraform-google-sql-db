@@ -214,8 +214,9 @@ module "safer-mysql-db" {
       email = var.cloudsql_mysql_sa
     },
     {
-      id    = "dbadmin",
-      email = "dbadmin@develop.blueprints.joonix.net"
+      id             = "dbadmin",
+      email          = "dbadmin@develop.blueprints.joonix.net"
+      database_roles = ["cloudsqlsuperuser"]
     },
     {
       id    = "subtest",
@@ -269,7 +270,7 @@ module "safer-mysql-db" {
 | failover\_dr\_replica\_name | If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format. | `string` | `null` | no |
 | final\_backup\_config | The final\_backup\_config settings for the database. | <pre>object({<br>    enabled        = bool<br>    retention_days = number<br>  })</pre> | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
-| iam\_users | A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD\_IAM\_USER, CLOUD\_IAM\_SERVICE\_ACCOUNT, CLOUD\_IAM\_GROUP and is required for type CLOUD\_IAM\_GROUP (IAM groups) | <pre>list(object({<br>    id    = string,<br>    email = string,<br>    type  = optional(string)<br>  }))</pre> | `[]` | no |
+| iam\_users | A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD\_IAM\_USER, CLOUD\_IAM\_SERVICE\_ACCOUNT, CLOUD\_IAM\_GROUP and is required for type CLOUD\_IAM\_GROUP (IAM groups) | <pre>list(object({<br>    id             = string,<br>    email          = string,<br>    type           = optional(string)<br>    database_roles = optional(list(string), [])<br>  }))</pre> | `[]` | no |
 | insights\_config | The insights\_config settings for the database. | <pre>object({<br>    enhanced_query_insights_enabled = bool<br>    query_plans_per_minute          = number<br>    query_string_length             = number<br>    record_application_tags         = bool<br>    record_client_address           = bool<br>  })</pre> | `null` | no |
 | instance\_type | Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance\_type. To promote, users have to set the instance\_type property as CLOUD\_SQL\_INSTANCE and remove/unset master\_instance\_name and replica\_configuration from instance configuration. This operation might cause your instance to restart. | `string` | `null` | no |
 | maintenance\_version | The current software version on the instance. This attribute can not be set during creation. Refer to available\_maintenance\_versions attribute to see what maintenance\_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance\_version value that is older than the current one on the instance will be ignored | `string` | `null` | no |
