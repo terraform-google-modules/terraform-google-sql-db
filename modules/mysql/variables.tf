@@ -379,6 +379,17 @@ variable "password_validation_policy_config" {
   default = null
 }
 
+variable "user_password_policy" {
+  description = "The per-user password policy for built-in database users. Applies to the default user and all additional_users. See https://cloud.google.com/sql/docs/mysql/built-in-authentication#password_policy"
+  type = object({
+    allowed_failed_attempts      = optional(number)
+    enable_failed_attempts_check = optional(bool)
+    enable_password_verification = optional(bool)
+    password_expiration_duration = optional(string)
+  })
+  default = null
+}
+
 // Read Replicas
 variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"

@@ -335,6 +335,17 @@ resource "google_sql_user" "default" {
   project  = var.project_id
   instance = google_sql_database_instance.default.name
   password = var.user_password == "" ? random_password.user-password[0].result : var.user_password
+
+  dynamic "password_policy" {
+    for_each = var.user_password_policy != null ? [var.user_password_policy] : []
+    content {
+      allowed_failed_attempts      = password_policy.value.allowed_failed_attempts
+      enable_failed_attempts_check = password_policy.value.enable_failed_attempts_check
+      enable_password_verification = password_policy.value.enable_password_verification
+      password_expiration_duration = password_policy.value.password_expiration_duration
+    }
+  }
+
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,
@@ -349,6 +360,17 @@ resource "google_sql_user" "additional_users" {
   name     = each.value.name
   password = each.value.random_password ? random_password.additional_passwords[each.value.name].result : each.value.password
   instance = google_sql_database_instance.default.name
+
+  dynamic "password_policy" {
+    for_each = var.user_password_policy != null ? [var.user_password_policy] : []
+    content {
+      allowed_failed_attempts      = password_policy.value.allowed_failed_attempts
+      enable_failed_attempts_check = password_policy.value.enable_failed_attempts_check
+      enable_password_verification = password_policy.value.enable_password_verification
+      password_expiration_duration = password_policy.value.password_expiration_duration
+    }
+  }
+
   depends_on = [
     null_resource.module_depends_on,
     google_sql_database_instance.default,

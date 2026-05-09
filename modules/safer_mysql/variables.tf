@@ -372,6 +372,17 @@ variable "iam_users" {
   default = []
 }
 
+variable "user_password_policy" {
+  description = "The per-user password policy for built-in database users. Applies to the default user and all additional_users. See https://cloud.google.com/sql/docs/mysql/built-in-authentication#password_policy"
+  type = object({
+    allowed_failed_attempts      = optional(number)
+    enable_failed_attempts_check = optional(bool)
+    enable_password_verification = optional(bool)
+    password_expiration_duration = optional(string)
+  })
+  default = null
+}
+
 variable "create_timeout" {
   description = "The optional timout that is applied to limit long database creates."
   type        = string

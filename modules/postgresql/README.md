@@ -183,6 +183,7 @@ module "pg" {
 | user\_labels | The key/value labels for the Cloud SQL instances. | `map(string)` | `{}` | no |
 | user\_name | The name of the default user | `string` | `"default"` | no |
 | user\_password | The password for the default user. If not set, a random one will be generated and available in the generated\_user\_password output variable. | `string` | `""` | no |
+| user\_password\_policy | The per-user password policy for built-in database users. Applies to the default user and all additional\_users. See https://cloud.google.com/sql/docs/postgres/built-in-authentication#password_policy | <pre>object({<br>    allowed_failed_attempts      = optional(number)<br>    enable_failed_attempts_check = optional(bool)<br>    enable_password_verification = optional(bool)<br>    password_expiration_duration = optional(string)<br>  })</pre> | `null` | no |
 | zone | The zone for the Cloud SQL instance, it should be something like: `us-central1-a`, `us-east1-c`. | `string` | `null` | no |
 
 ## Outputs
