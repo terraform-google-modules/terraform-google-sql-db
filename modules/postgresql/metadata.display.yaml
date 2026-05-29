@@ -297,6 +297,9 @@ spec:
                   value: ENCRYPTED_ONLY
                 - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                   value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+              altDefaults:
+                - type: ALTERNATE_TYPE_DC
+                  value: ENCRYPTED_ONLY
             server_ca_mode:
               name: server_ca_mode
               title: Server CA Mode
@@ -427,6 +430,9 @@ spec:
                       value: ENCRYPTED_ONLY
                     - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                       value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                  altDefaults:
+                    - type: ALTERNATE_TYPE_DC
+                      value: ENCRYPTED_ONLY
         region:
           name: region
           title: Region

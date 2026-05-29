@@ -332,6 +332,9 @@ spec:
                   value: ENCRYPTED_ONLY
                 - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                   value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+              altDefaults:
+                - type: ALTERNATE_TYPE_DC
+                  value: ENCRYPTED_ONLY
             authorized_networks:
               name: authorized_networks
               title: Authorized Networks
@@ -472,6 +475,9 @@ spec:
                     value: ENCRYPTED_ONLY
                   - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                     value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+                  altDefaults:
+                    - type: ALTERNATE_TYPE_DC
+                      value: ENCRYPTED_ONLY
         region:
           name: region
           title: Region
