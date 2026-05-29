@@ -476,11 +476,6 @@ spec:
                     value: ENCRYPTED_ONLY
                   - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                     value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-          altDefaults:
-            - type: ALTERNATE_TYPE_DC
-              value:
-                ip_configuration:
-                  ssl_mode: ENCRYPTED_ONLY
         region:
           name: region
           title: Region
