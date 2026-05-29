@@ -297,9 +297,6 @@ spec:
                   value: ENCRYPTED_ONLY
                 - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                   value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-              altDefaults:
-                - type: ALTERNATE_TYPE_DC
-                  value: ENCRYPTED_ONLY
             server_ca_mode:
               name: server_ca_mode
               title: Server CA Mode
@@ -308,6 +305,10 @@ spec:
                   value: GOOGLE_MANAGED_INTERNAL_CA
                 - label: GOOGLE_MANAGED_CAS_CA
                   value: GOOGLE_MANAGED_CAS_CA
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                ssl_mode: ENCRYPTED_ONLY
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
@@ -430,9 +431,10 @@ spec:
                       value: ENCRYPTED_ONLY
                     - label: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
                       value: TRUSTED_CLIENT_CERTIFICATE_REQUIRED
-                  altDefaults:
-                    - type: ALTERNATE_TYPE_DC
-                      value: ENCRYPTED_ONLY
+              altDefaults:
+                - type: ALTERNATE_TYPE_DC
+                  value:
+                    ssl_mode: ENCRYPTED_ONLY
         region:
           name: region
           title: Region
