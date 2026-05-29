@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.1.1...v28.2.0) (2026-05-29)
+
+
+### Features
+
+* Add default value ENCRYPTED_ONLY for ssl_mode ([#843](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/843)) ([5f20d56](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5f20d569e3ccff8298507583035c1d95e5e79910))
+
 ## [28.1.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.1.0...v28.1.1) (2026-05-07)
 
 
