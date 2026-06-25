@@ -394,6 +394,7 @@ variable "read_replicas" {
     disk_autoresize_limit = optional(number)
     disk_size             = optional(string)
     user_labels           = map(string)
+    data_api_access       = optional(string)
     connection_pool_config = optional(object({
       enabled = optional(bool, false)
       flags = optional(list(object({
@@ -530,4 +531,14 @@ variable "connection_pool_config" {
     })), [])
   })
   default = null
+}
+
+variable "data_api_access" {
+  description = "Configures the ExecuteSql (Cloud SQL Data API) API's access to the instance. Can be `ALLOW_DATA_API` or `DISALLOW_DATA_API`. When null, the API default (`DISALLOW_DATA_API`) applies. For private IP instances, `ALLOW_DATA_API` lets authorized users access the instance from the public internet using the ExecuteSql API."
+  type        = string
+  default     = null
+  validation {
+    condition     = var.data_api_access == null ? true : contains(["ALLOW_DATA_API", "DISALLOW_DATA_API"], var.data_api_access)
+    error_message = "data_api_access must be either \"ALLOW_DATA_API\" or \"DISALLOW_DATA_API\"."
+  }
 }

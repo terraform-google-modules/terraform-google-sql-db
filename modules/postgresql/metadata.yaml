@@ -312,6 +312,7 @@ spec:
               disk_autoresize_limit = optional(number)
               disk_size             = optional(string)
               user_labels           = map(string)
+              data_api_access       = optional(string)
               connection_pool_config = optional(object({
                 enabled = optional(bool, false)
                 flags = optional(list(object({
@@ -453,6 +454,10 @@ spec:
                 value = string
               })), [])
             })
+        defaultValue: null
+      - name: data_api_access
+        description: Configures the ExecuteSql (Cloud SQL Data API) API's access to the instance. Can be `ALLOW_DATA_API` or `DISALLOW_DATA_API`. When null, the API default (`DISALLOW_DATA_API`) applies. For private IP instances, `ALLOW_DATA_API` lets authorized users access the instance from the public internet using the ExecuteSql API.
+        varType: string
         defaultValue: null
     outputs:
       - name: additional_user_passwords_map
