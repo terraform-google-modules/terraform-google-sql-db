@@ -141,10 +141,25 @@ resource "google_sql_database_instance" "default" {
         }
 
         dynamic "psc_config" {
-          for_each = ip_configuration.value.psc_enabled ? ["psc_enabled"] : []
+          for_each = (
+            ip_configuration.value.psc_enabled ||
+            ip_configuration.value.psc_network_attachment_uri != null ||
+            length(ip_configuration.value.psc_auto_connections) > 0
+          ) ? ["psc_config"] : []
           content {
-            psc_enabled               = ip_configuration.value.psc_enabled
-            allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
+            psc_enabled                    = ip_configuration.value.psc_enabled
+            allowed_consumer_projects      = ip_configuration.value.psc_allowed_consumer_projects
+            psc_auto_dns_enabled           = ip_configuration.value.psc_auto_dns_enabled
+            psc_write_endpoint_dns_enabled = ip_configuration.value.psc_write_endpoint_dns_enabled
+            network_attachment_uri         = ip_configuration.value.psc_network_attachment_uri
+
+            dynamic "psc_auto_connections" {
+              for_each = ip_configuration.value.psc_auto_connections
+              content {
+                consumer_network            = psc_auto_connections.value.consumer_network
+                consumer_service_project_id = psc_auto_connections.value.consumer_service_project_id
+              }
+            }
           }
         }
 

@@ -304,6 +304,13 @@ spec:
               enable_private_path_for_google_cloud_services = optional(bool, false)
               psc_enabled                                   = optional(bool, false)
               psc_allowed_consumer_projects                 = optional(list(string), [])
+              psc_auto_dns_enabled                          = optional(bool)
+              psc_write_endpoint_dns_enabled                = optional(bool)
+              psc_network_attachment_uri                    = optional(string)
+              psc_auto_connections = optional(list(object({
+                consumer_network            = string
+                consumer_service_project_id = optional(string)
+              })), [])
             })
         defaultValue: {}
         connections:
@@ -374,6 +381,13 @@ spec:
                 enable_private_path_for_google_cloud_services = optional(bool, false)
                 psc_enabled                                   = optional(bool, false)
                 psc_allowed_consumer_projects                 = optional(list(string), [])
+                psc_auto_dns_enabled                          = optional(bool)
+                psc_write_endpoint_dns_enabled                = optional(bool)
+                psc_network_attachment_uri                    = optional(string)
+                psc_auto_connections = optional(list(object({
+                  consumer_network            = string
+                  consumer_service_project_id = optional(string)
+                })), [])
               })
               encryption_key_name = optional(string)
               data_cache_enabled  = optional(bool)
@@ -495,6 +509,8 @@ spec:
       - name: instance_psc_attachment
         description: The psc_service_attachment_link created for the master instance
         type: string
+      - name: instance_psc_auto_connections
+        description: The psc_auto_connections (including computed status, ip_address and consumer_network_status) for the master instance
       - name: instance_self_link
         description: The URI of the master instance
         type: string
@@ -661,7 +677,18 @@ spec:
                                 - allowed_consumer_projects:
                                     - set
                                     - string
+                                  network_attachment_uri: string
+                                  psc_auto_connections:
+                                    - list
+                                    - - object
+                                      - consumer_network: string
+                                        consumer_network_status: string
+                                        consumer_service_project_id: string
+                                        ip_address: string
+                                        status: string
+                                  psc_auto_dns_enabled: bool
                                   psc_enabled: bool
+                                  psc_write_endpoint_dns_enabled: bool
                             server_ca_mode: string
                             ssl_mode: string
                       location_preference:
@@ -852,7 +879,18 @@ spec:
                             - allowed_consumer_projects:
                                 - set
                                 - string
+                              network_attachment_uri: string
+                              psc_auto_connections:
+                                - list
+                                - - object
+                                  - consumer_network: string
+                                    consumer_network_status: string
+                                    consumer_service_project_id: string
+                                    ip_address: string
+                                    status: string
+                              psc_auto_dns_enabled: bool
                               psc_enabled: bool
+                              psc_write_endpoint_dns_enabled: bool
                         server_ca_mode: string
                         ssl_mode: string
                   location_preference:
@@ -920,6 +958,11 @@ spec:
           - []
       - name: replicas_instance_first_ip_addresses
         description: The first IPv4 addresses of the addresses assigned for the replica instances
+        type:
+          - tuple
+          - []
+      - name: replicas_instance_psc_auto_connections
+        description: The psc_auto_connections for the replica instances
         type:
           - tuple
           - []
