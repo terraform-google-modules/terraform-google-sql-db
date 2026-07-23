@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.1.1...v28.2.0) (2026-05-29)
+
+
+### Features
+
+* Add default value ENCRYPTED_ONLY for ssl_mode ([#843](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/843)) ([5f20d56](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5f20d569e3ccff8298507583035c1d95e5e79910))
+
+## [28.1.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.1.0...v28.1.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* Change 'required' field in connection_pool_config variable to 'default' in mysql and postgresql metadata yaml files ([#841](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/841)) ([267e148](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/267e1484ccd2eceae55dc705ad184e0fefb3fe94))
+
+## [28.1.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.0.1...v28.1.0) (2026-04-24)
+
+
+### Features
+
+* Add postgresql & mysql connections with vpc ([#838](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/838)) ([8aab8e1](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/8aab8e1d398ebed3a956be780e2d7191de6d1e61))
+
+
+### Bug Fixes
+
+* **postgresql,mysql:** ignore psa_write_endpoint to prevent drift when using failover_dr_replica_name ([#807](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/807)) ([ef1d30c](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/ef1d30c97cae873d105475438226419fd7500668))
+
 ## [28.0.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.0.0...v28.0.1) (2026-03-31)
 
 

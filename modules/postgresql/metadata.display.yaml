@@ -305,6 +305,10 @@ spec:
                   value: GOOGLE_MANAGED_INTERNAL_CA
                 - label: GOOGLE_MANAGED_CAS_CA
                   value: GOOGLE_MANAGED_CAS_CA
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                ssl_mode: ENCRYPTED_ONLY
           level: 1
         maintenance_window_day:
           name: maintenance_window_day
