@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.3.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.2.0...v28.3.0) (2026-09-09)
+
+
+### Features
+
+* add database_roles support in mysql/postgres ([#815](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/815)) ([a77dac9](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/a77dac9b496b45bdd3ddd0adc08e569ecfd1501e))
+* **deps:** Update Terraform Google Provider to v8 ([#856](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/856)) ([9c952aa](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/9c952aa7b471dc9dbe05c9c84ee71bca3f69c9f7))
+
 ## [28.2.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.1.1...v28.2.0) (2026-05-29)
 
 
