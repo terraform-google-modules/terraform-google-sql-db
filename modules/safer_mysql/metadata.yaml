@@ -214,6 +214,10 @@ spec:
         description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
         varType: bool
         defaultValue: true
+      - name: data_api_access
+        description: Configures the ExecuteSql (Cloud SQL Data API) API's access to the instance. Can be `ALLOW_DATA_API` or `DISALLOW_DATA_API`. When null, the API default (`DISALLOW_DATA_API`) applies. For private IP instances, `ALLOW_DATA_API` lets authorized users access the instance from the public internet using the ExecuteSql API.
+        varType: string
+        defaultValue: null
       - name: assign_public_ip
         description: Set to true if the master instance should also have a public IP (less secure).
         varType: bool
