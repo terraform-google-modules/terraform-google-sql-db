@@ -53,6 +53,7 @@ resource "google_sql_database_instance" "replicas" {
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
+        server_certificate_rotation_mode              = lookup(ip_configuration.value, "server_certificate_rotation_mode", null)
 
         dynamic "authorized_networks" {
           for_each = lookup(ip_configuration.value, "authorized_networks", [])
