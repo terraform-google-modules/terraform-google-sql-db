@@ -61,6 +61,11 @@ output "instance_psc_attachment" {
   description = "The psc_service_attachment_link created for the master instance"
 }
 
+output "instance_psc_auto_connections" {
+  value       = try(one(google_sql_database_instance.default.settings[0].ip_configuration[0].psc_config).psc_auto_connections, [])
+  description = "The psc_auto_connections (including computed status, ip_address and consumer_network_status) for the master instance"
+}
+
 // Replicas
 output "replicas_instance_first_ip_addresses" {
   value       = [for r in google_sql_database_instance.replicas : r.ip_address]
@@ -86,6 +91,11 @@ output "replicas_instance_server_ca_certs" {
 output "replicas_instance_service_account_email_addresses" {
   value       = [for r in google_sql_database_instance.replicas : r.service_account_email_address]
   description = "The service account email addresses assigned to the replica instances"
+}
+
+output "replicas_instance_psc_auto_connections" {
+  value       = [for r in google_sql_database_instance.replicas : try(one(r.settings[0].ip_configuration[0].psc_config).psc_auto_connections, [])]
+  description = "The psc_auto_connections for the replica instances"
 }
 
 output "read_replica_instance_names" {
