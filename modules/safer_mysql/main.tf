@@ -34,6 +34,7 @@ module "safer_mysql" {
   availability_type               = var.availability_type
   auto_upgrade_enabled            = var.auto_upgrade_enabled
   connection_pool_config          = var.connection_pool_config
+  data_api_access                 = var.data_api_access
   deletion_protection_enabled     = var.deletion_protection_enabled
   disk_autoresize                 = var.disk_autoresize
   disk_autoresize_limit           = var.disk_autoresize_limit
