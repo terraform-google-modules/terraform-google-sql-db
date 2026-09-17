@@ -343,6 +343,10 @@ variable "ip_configuration" {
     server_ca_mode                                = optional(string)
     server_ca_pool                                = optional(string)
     custom_subject_alternative_names              = optional(list(string), [])
+    psc_auto_connections = optional(list(object({
+      consumer_network            = string
+      consumer_service_project_id = optional(string)
+    })), [])
   })
   default = {}
 }
