@@ -77,8 +77,9 @@ module "postgresql-db" {
       email = var.cloudsql_pg_sa
     },
     {
-      id    = "dbadmin",
-      email = "dbadmin@develop.blueprints.joonix.net"
+      id             = "dbadmin",
+      email          = "dbadmin@develop.blueprints.joonix.net"
+      database_roles = ["cloudsqlsuperuser"]
     },
     {
       id    = "subtest",

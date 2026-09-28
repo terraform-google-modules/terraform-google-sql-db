@@ -27,19 +27,19 @@ terraform {
     }
     google = {
       source  = "hashicorp/google"
-      version = ">= 7.22, < 8"
+      version = ">= 7.22, < 9"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = ">= 7.22, < 8"
+      version = ">= 7.22, < 9"
     }
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v28.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v28.3.0"
   }
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v28.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mysql/v28.3.0"
   }
 
 }
