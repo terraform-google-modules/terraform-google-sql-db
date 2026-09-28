@@ -389,6 +389,7 @@ variable "read_replicas" {
       ipv4_enabled                                  = optional(bool)
       private_network                               = optional(string)
       ssl_mode                                      = optional(string)
+      server_ca_mode                                = optional(string)
       allocated_ip_range                            = optional(string)
       enable_private_path_for_google_cloud_services = optional(bool, false)
       psc_enabled                                   = optional(bool, false)
