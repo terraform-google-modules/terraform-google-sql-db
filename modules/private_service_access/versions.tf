@@ -23,20 +23,20 @@ terraform {
     }
     google = {
       source  = "hashicorp/google"
-      version = ">= 5.38, < 8"
+      version = ">= 5.38, < 9"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = ">= 5.38, < 8"
+      version = ">= 5.38, < 9"
     }
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v28.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v28.3.0"
   }
 
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v28.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:private_service_access/v28.3.0"
   }
 
 }

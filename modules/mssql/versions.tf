@@ -19,11 +19,11 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">= 7.22, < 8"
+      version = ">= 7.22, < 9"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = ">= 7.22, < 8"
+      version = ">= 7.22, < 9"
     }
     random = {
       source  = "hashicorp/random"
@@ -36,7 +36,7 @@ terraform {
   }
 
   provider_meta "google-beta" {
-    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v28.2.0"
+    module_name = "blueprints/terraform/terraform-google-sql-db:mssql/v28.3.0"
   }
 
 }
