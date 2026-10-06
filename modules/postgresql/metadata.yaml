@@ -77,6 +77,7 @@ spec:
       - name: edition
         description: The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS.
         varType: string
+        defaultValue: null
       - name: database_version
         description: The database version to use. Can be 9_6, 14, 15, 16, 17.
         varType: string
@@ -84,6 +85,7 @@ spec:
       - name: maintenance_version
         description: The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored
         varType: string
+        defaultValue: null
       - name: availability_type
         description: The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.
         varType: string
@@ -111,6 +113,7 @@ spec:
       - name: root_password
         description: Initial root password during creation
         varType: string
+        defaultValue: null
       - name: deletion_protection
         description: Used to block Terraform from deleting a SQL Instance.
         varType: bool
@@ -126,9 +129,11 @@ spec:
       - name: database_deletion_policy
         description: "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
         varType: string
+        defaultValue: null
       - name: user_deletion_policy
         description: "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
         varType: string
+        defaultValue: null
       - name: data_cache_enabled
         description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
         varType: bool
@@ -154,9 +159,11 @@ spec:
       - name: master_instance_name
         description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
         varType: string
+        defaultValue: null
       - name: failover_dr_replica_name
         description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
         varType: string
+        defaultValue: null
       - name: instance_type
         description: The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided
         varType: string
@@ -172,12 +179,15 @@ spec:
       - name: zone
         description: "The zone for the Cloud SQL instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
+        defaultValue: null
       - name: secondary_zone
         description: "The preferred zone for the replica instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
+        defaultValue: null
       - name: follow_gae_application
         description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
         varType: string
+        defaultValue: null
       - name: activation_policy
         description: The activation policy for the Cloud SQL instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
         varType: string
@@ -248,15 +258,25 @@ spec:
               retention_unit                 = optional(string)
             })
         defaultValue: {}
+      - name: final_backup_config
+        description: The final_backup_config settings for the database.
+        varType: |-
+          object({
+              enabled        = optional(bool, false)
+              retention_days = optional(number, 1)
+            })
+        defaultValue: null
       - name: insights_config
         description: The insights_config settings for the database.
         varType: |-
           object({
-              query_plans_per_minute  = optional(number, 5)
-              query_string_length     = optional(number, 1024)
-              record_application_tags = optional(bool, false)
-              record_client_address   = optional(bool, false)
+              enhanced_query_insights_enabled = optional(bool, false)
+              query_plans_per_minute          = optional(number, 5)
+              query_string_length             = optional(number, 1024)
+              record_application_tags         = optional(bool, false)
+              record_client_address           = optional(bool, false)
             })
+        defaultValue: null
       - name: password_validation_policy_config
         description: The password validation policy settings for the database instance.
         varType: |-
@@ -267,6 +287,7 @@ spec:
               disallow_username_substring = optional(bool)
               password_change_interval    = optional(string)
             })
+        defaultValue: null
       - name: ip_configuration
         description: The ip configuration for the Cloud SQL instances.
         varType: |-
@@ -324,10 +345,15 @@ spec:
                 value = string
               })), [])
               insights_config = optional(object({
-                query_plans_per_minute  = optional(number, 5)
-                query_string_length     = optional(number, 1024)
-                record_application_tags = optional(bool, false)
-                record_client_address   = optional(bool, false)
+                enhanced_query_insights_enabled = optional(bool, false)
+                query_plans_per_minute          = optional(number, 5)
+                query_string_length             = optional(number, 1024)
+                record_application_tags         = optional(bool, false)
+                record_client_address           = optional(bool, false)
+              }), null)
+              final_backup_config = optional(object({
+                enabled        = optional(bool, false)
+                retention_days = optional(number, 1)
               }), null)
               ip_configuration = object({
                 authorized_networks                           = optional(list(map(string)), [])
@@ -401,6 +427,7 @@ spec:
       - name: encryption_key_name
         description: The full path to the encryption key used for the CMEK disk encryption
         varType: string
+        defaultValue: null
       - name: module_depends_on
         description: List of modules or resources this module depends on.
         varType: list(any)
@@ -440,6 +467,7 @@ spec:
       - name: kms_key_handle_name
         description: key handle name. If not provided module will use instance name as key handle name
         varType: string
+        defaultValue: null
       - name: retain_backups_on_delete
         description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
         varType: bool
