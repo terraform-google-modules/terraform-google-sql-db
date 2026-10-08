@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.3.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.3.0...v28.3.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* populate null defaultValue in mysql blueprint metadata ([#862](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/862)) ([501e225](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/501e225feaab59afa89045300072711e13d96f17))
+* populate null defaultValue in postgresql blueprint metadata ([#863](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/863)) ([5178f82](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/5178f8274e8c58965af7ee4508f4a64bbf9edc54))
+
 ## [28.3.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.2.0...v28.3.0) (2026-09-09)
 
 
