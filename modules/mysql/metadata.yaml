@@ -77,6 +77,7 @@ spec:
       - name: edition
         description: The edition of the instance, can be ENTERPRISE or ENTERPRISE_PLUS.
         varType: string
+        defaultValue: null
       - name: database_version
         description: The database version to use
         varType: string
@@ -84,6 +85,7 @@ spec:
       - name: maintenance_version
         description: The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored
         varType: string
+        defaultValue: null
       - name: availability_type
         description: The availability type for the master instance. Can be either `REGIONAL` or `null`.
         varType: string
@@ -115,6 +117,7 @@ spec:
       - name: root_password
         description: MySQL password for the root user.
         varType: string
+        defaultValue: null
       - name: deletion_protection
         description: Used to block Terraform from deleting a SQL Instance.
         varType: bool
@@ -122,6 +125,7 @@ spec:
       - name: user_deletion_policy
         description: "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
         varType: string
+        defaultValue: null
       - name: data_cache_enabled
         description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
         varType: bool
@@ -150,9 +154,10 @@ spec:
         description: A list of IAM users to be created in your CloudSQL instance. iam.users.type can be CLOUD_IAM_USER, CLOUD_IAM_SERVICE_ACCOUNT, CLOUD_IAM_GROUP and is required for type CLOUD_IAM_GROUP (IAM groups)
         varType: |-
           list(object({
-              id    = string,
-              email = string,
-              type  = optional(string)
+              id             = string,
+              email          = string,
+              type           = optional(string)
+              database_roles = optional(list(string), [])
             }))
         defaultValue: []
         connections:
@@ -182,12 +187,15 @@ spec:
       - name: master_instance_name
         description: The name of the existing instance that will act as the master in the replication setup.
         varType: string
+        defaultValue: null
       - name: failover_dr_replica_name
         description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
         varType: string
+        defaultValue: null
       - name: instance_type
         description: Users can upgrade a read replica instance to a stand-alone Cloud SQL instance with the help of instance_type. To promote, users have to set the instance_type property as CLOUD_SQL_INSTANCE and remove/unset master_instance_name and replica_configuration from instance configuration. This operation might cause your instance to restart.
         varType: string
+        defaultValue: null
       - name: tier
         description: The tier for the master instance, for ADC its default value will be db-perf-optimized-N-8 which is tier value for edition ENTERPRISE_PLUS, if user wants to change the edition, they should chose compatible tier.
         varType: string
@@ -195,16 +203,23 @@ spec:
       - name: zone
         description: "The zone for the master instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
+        defaultValue: null
       - name: secondary_zone
         description: "The preferred zone for the secondary/failover instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
+        defaultValue: null
       - name: follow_gae_application
         description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
         varType: string
+        defaultValue: null
       - name: activation_policy
         description: The activation policy for the master instance. Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
         varType: string
         defaultValue: ALWAYS
+      - name: auto_upgrade_enabled
+        description: Enables Automatic Version Upgrade for MYSQL_8_0 based minor versions. The database_version must be MYSQL_8_0_35 or higher. Once enabled, this cannot be unset.
+        varType: bool
+        defaultValue: null
       - name: deletion_protection_enabled
         description: Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform).
         varType: bool
@@ -274,8 +289,8 @@ spec:
               enabled                        = optional(bool, false)
               start_time                     = optional(string)
               location                       = optional(string)
-              transaction_log_retention_days = optional(string)
-              retained_backups               = optional(number)
+              transaction_log_retention_days = optional(string, 7)
+              retained_backups               = optional(number, 8)
               retention_unit                 = optional(string)
             })
         defaultValue: {}
@@ -287,11 +302,21 @@ spec:
         description: The insights_config settings for the database.
         varType: |-
           object({
-              query_plans_per_minute  = number
-              query_string_length     = number
-              record_application_tags = bool
-              record_client_address   = bool
+              enhanced_query_insights_enabled = bool
+              query_plans_per_minute          = number
+              query_string_length             = number
+              record_application_tags         = bool
+              record_client_address           = bool
             })
+        defaultValue: null
+      - name: final_backup_config
+        description: The final_backup_config settings for the database.
+        varType: |-
+          object({
+              enabled        = optional(bool, false)
+              retention_days = optional(number, 0)
+            })
+        defaultValue: null
       - name: ip_configuration
         description: The ip_configuration settings subblock
         varType: |-
@@ -300,6 +325,7 @@ spec:
               ipv4_enabled                                  = optional(bool, true)
               private_network                               = optional(string)
               ssl_mode                                      = optional(string)
+              server_ca_mode                                = optional(string)
               allocated_ip_range                            = optional(string)
               enable_private_path_for_google_cloud_services = optional(bool, false)
               psc_enabled                                   = optional(bool, false)
@@ -329,6 +355,7 @@ spec:
               disallow_username_substring = optional(bool)
               reuse_interval              = optional(number)
             })
+        defaultValue: null
       - name: read_replicas
         description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null
         varType: |-
@@ -360,11 +387,16 @@ spec:
                 transaction_log_retention_days = string
               }))
               insights_config = optional(object({
-                query_plans_per_minute  = number
-                query_string_length     = number
-                record_application_tags = bool
-                record_client_address   = bool
+                enhanced_query_insights_enabled = bool
+                query_plans_per_minute          = number
+                query_string_length             = number
+                record_application_tags         = bool
+                record_client_address           = bool
               }))
+              final_backup_config = optional(object({
+                enabled        = optional(bool, false)
+                retention_days = optional(number, 1)
+              }), null)
               ip_configuration = object({
                 authorized_networks                           = optional(list(map(string)), [])
                 ipv4_enabled                                  = optional(bool)
@@ -406,6 +438,7 @@ spec:
       - name: encryption_key_name
         description: The full path to the encryption key used for the CMEK disk encryption
         varType: string
+        defaultValue: null
       - name: module_depends_on
         description: List of modules or resources this module depends on.
         varType: list(any)
