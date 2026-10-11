@@ -98,6 +98,7 @@ resource "google_sql_database_instance" "replicas" {
     disk_type             = lookup(each.value, "disk_type", var.disk_type)
     pricing_plan          = "PER_USE"
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
+    data_api_access       = lookup(each.value, "data_api_access", var.data_api_access)
 
     dynamic "connection_pool_config" {
       for_each = each.value.connection_pool_config != null ? [each.value.connection_pool_config] : []
