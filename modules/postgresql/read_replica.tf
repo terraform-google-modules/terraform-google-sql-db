@@ -97,6 +97,7 @@ resource "google_sql_database_instance" "replicas" {
     disk_size             = lookup(each.value, "disk_size", var.disk_size)
     disk_type             = lookup(each.value, "disk_type", var.disk_type)
     pricing_plan          = "PER_USE"
+    connector_enforcement = coalesce(each.value.connector_enforcement, var.connector_enforcement) ? "REQUIRED" : "NOT_REQUIRED"
     user_labels           = lookup(each.value, "user_labels", var.user_labels)
 
     dynamic "connection_pool_config" {
