@@ -221,6 +221,12 @@ variable "auto_upgrade_enabled" {
   default     = null
 }
 
+variable "include_replicas_for_major_version_upgrade" {
+  description = "When `true`, a major version upgrade (a change to `database_version`) also upgrades the instance's read replicas in place, in the same operation. Required to upgrade the major version of a primary that has read replicas. Input-only and not persisted; it only takes effect during a major version upgrade."
+  type        = bool
+  default     = null
+}
+
 variable "deletion_protection_enabled" {
   description = "Enables protection of an instance from accidental deletion across all surfaces (API, gcloud, Cloud Console and Terraform)."
   type        = bool
