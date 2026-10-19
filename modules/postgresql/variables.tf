@@ -349,7 +349,7 @@ variable "ip_configuration" {
 
 // Read Replicas
 variable "read_replicas" {
-  description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
+  description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null. connector_enforcement defaults to the primary instance's connector_enforcement"
   type = list(object({
     name                  = string
     name_override         = optional(string)
@@ -394,8 +394,9 @@ variable "read_replicas" {
       psc_enabled                                   = optional(bool, false)
       psc_allowed_consumer_projects                 = optional(list(string), [])
     })
-    encryption_key_name = optional(string)
-    data_cache_enabled  = optional(bool)
+    encryption_key_name   = optional(string)
+    data_cache_enabled    = optional(bool)
+    connector_enforcement = optional(bool)
   }))
   default = []
 }

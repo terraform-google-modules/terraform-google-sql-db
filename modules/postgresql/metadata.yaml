@@ -319,7 +319,7 @@ spec:
               outputExpr: network_self_link
               inputPath: private_network
       - name: read_replicas
-        description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null
+        description: List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null. connector_enforcement defaults to the primary instance's connector_enforcement
         varType: |-
           list(object({
               name                  = string
@@ -365,8 +365,9 @@ spec:
                 psc_enabled                                   = optional(bool, false)
                 psc_allowed_consumer_projects                 = optional(list(string), [])
               })
-              encryption_key_name = optional(string)
-              data_cache_enabled  = optional(bool)
+              encryption_key_name   = optional(string)
+              data_cache_enabled    = optional(bool)
+              connector_enforcement = optional(bool)
             }))
         defaultValue: []
       - name: read_replica_name_suffix
