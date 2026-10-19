@@ -51,6 +51,11 @@ output "instance_server_ca_cert" {
   sensitive   = true
 }
 
+output "instance_psc_attachment" {
+  value       = google_sql_database_instance.default.psc_service_attachment_link
+  description = "The psc_service_attachment_link created for the master instance"
+}
+
 output "instance_service_account_email_address" {
   value       = google_sql_database_instance.default.service_account_email_address
   description = "The service account email address assigned to the master instance"

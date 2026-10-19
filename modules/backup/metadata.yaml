@@ -33,6 +33,8 @@ spec:
     examples:
       - name: mssql-failover-replica
         location: examples/mssql-failover-replica
+      - name: mssql-psc
+        location: examples/mssql-psc
       - name: mssql-public
         location: examples/mssql-public
       - name: mysql-backup-create-service-account
