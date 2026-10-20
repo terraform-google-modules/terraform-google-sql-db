@@ -221,6 +221,16 @@ variable "ip_configuration" {
     psc_enabled                   = false
     psc_allowed_consumer_projects = []
   }
+
+  validation {
+    condition     = var.ip_configuration.psc_enabled || length(var.ip_configuration.psc_allowed_consumer_projects) == 0
+    error_message = "ip_configuration.psc_allowed_consumer_projects is only used when ip_configuration.psc_enabled is true."
+  }
+
+  validation {
+    condition     = !var.ip_configuration.psc_enabled || length(var.ip_configuration.psc_allowed_consumer_projects) > 0
+    error_message = "ip_configuration.psc_enabled requires at least one project in ip_configuration.psc_allowed_consumer_projects."
+  }
 }
 
 variable "backup_configuration" {

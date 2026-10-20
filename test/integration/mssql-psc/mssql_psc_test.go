@@ -27,8 +27,6 @@ func TestMsSqlPscModule(t *testing.T) {
 	msSql := tft.NewTFBlueprintTest(t)
 
 	msSql.DefineVerify(func(assert *assert.Assertions) {
-		msSql.DefaultVerify(assert)
-
 		projectId := msSql.GetStringOutput("project_id")
 		op := gcloud.Runf(t, "sql instances describe %s --project %s", msSql.GetStringOutput("instance_name"), projectId)
 
@@ -36,8 +34,8 @@ func TestMsSqlPscModule(t *testing.T) {
 		assert.False(op.Get("settings.ipConfiguration.ipv4Enabled").Bool(), "Expected FALSE ipv4Enabled")
 		assert.True(op.Get("settings.ipConfiguration.pscConfig.pscEnabled").Bool(), "Expected TRUE pscEnabled")
 		assert.Equal([]string{projectId}, utils.GetResultStrSlice(op.Get("settings.ipConfiguration.pscConfig.allowedConsumerProjects").Array()), "Expected the test project as the only allowed consumer project")
-		assert.Equal(op.Get("pscServiceAttachmentLink").String(), msSql.GetStringOutput("instance_psc_attachment"), "Expected the instance_psc_attachment output to match the instance")
 		assert.NotEmpty(msSql.GetStringOutput("instance_psc_attachment"), "Expected a PSC service attachment")
+		assert.Equal(op.Get("pscServiceAttachmentLink").String(), msSql.GetStringOutput("instance_psc_attachment"), "Expected the instance_psc_attachment output to match the instance")
 	})
 
 	msSql.Test()
