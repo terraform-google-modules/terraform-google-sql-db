@@ -34,6 +34,8 @@ spec:
     examples:
       - name: mssql-failover-replica
         location: examples/mssql-failover-replica
+      - name: mssql-psc
+        location: examples/mssql-psc
       - name: mssql-public
         location: examples/mssql-public
       - name: mysql-backup-create-service-account
@@ -189,17 +191,21 @@ spec:
         description: The ip configuration for the Cloud SQL instances.
         varType: |-
           object({
-              authorized_networks = optional(list(map(string)), [])
-              ipv4_enabled        = optional(bool)
-              private_network     = optional(string)
-              allocated_ip_range  = optional(string)
-              ssl_mode            = optional(string)
+              authorized_networks           = optional(list(map(string)), [])
+              ipv4_enabled                  = optional(bool)
+              private_network               = optional(string)
+              allocated_ip_range            = optional(string)
+              ssl_mode                      = optional(string)
+              psc_enabled                   = optional(bool, false)
+              psc_allowed_consumer_projects = optional(list(string), [])
             })
         defaultValue:
           allocated_ip_range: null
           authorized_networks: []
           ipv4_enabled: true
           private_network: null
+          psc_allowed_consumer_projects: []
+          psc_enabled: false
           ssl_mode: null
       - name: backup_configuration
         description: The database backup configuration.
@@ -349,6 +355,9 @@ spec:
         type: string
       - name: instance_name
         description: The instance name for the master instance
+        type: string
+      - name: instance_psc_attachment
+        description: The psc_service_attachment_link created for the master instance
         type: string
       - name: instance_self_link
         description: The URI of the master instance

@@ -204,18 +204,32 @@ variable "user_labels" {
 variable "ip_configuration" {
   description = "The ip configuration for the Cloud SQL instances."
   type = object({
-    authorized_networks = optional(list(map(string)), [])
-    ipv4_enabled        = optional(bool)
-    private_network     = optional(string)
-    allocated_ip_range  = optional(string)
-    ssl_mode            = optional(string)
+    authorized_networks           = optional(list(map(string)), [])
+    ipv4_enabled                  = optional(bool)
+    private_network               = optional(string)
+    allocated_ip_range            = optional(string)
+    ssl_mode                      = optional(string)
+    psc_enabled                   = optional(bool, false)
+    psc_allowed_consumer_projects = optional(list(string), [])
   })
   default = {
-    authorized_networks = []
-    ipv4_enabled        = true
-    private_network     = null
-    allocated_ip_range  = null
-    ssl_mode            = null
+    authorized_networks           = []
+    ipv4_enabled                  = true
+    private_network               = null
+    allocated_ip_range            = null
+    ssl_mode                      = null
+    psc_enabled                   = false
+    psc_allowed_consumer_projects = []
+  }
+
+  validation {
+    condition     = var.ip_configuration.psc_enabled || length(var.ip_configuration.psc_allowed_consumer_projects) == 0
+    error_message = "ip_configuration.psc_allowed_consumer_projects is only used when ip_configuration.psc_enabled is true."
+  }
+
+  validation {
+    condition     = !var.ip_configuration.psc_enabled || length(var.ip_configuration.psc_allowed_consumer_projects) > 0
+    error_message = "ip_configuration.psc_enabled requires at least one project in ip_configuration.psc_allowed_consumer_projects."
   }
 }
 
