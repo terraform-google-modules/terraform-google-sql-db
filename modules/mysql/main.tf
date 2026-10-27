@@ -186,6 +186,9 @@ resource "google_sql_database_instance" "default" {
     pricing_plan = var.pricing_plan
     user_labels  = var.user_labels
 
+    data_disk_provisioned_iops       = var.data_disk_provisioned_iops
+    data_disk_provisioned_throughput = var.data_disk_provisioned_throughput
+
     dynamic "connection_pool_config" {
       for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
       content {

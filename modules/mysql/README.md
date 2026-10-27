@@ -56,6 +56,8 @@ module "mysql-db" {
 | connector\_enforcement | Enforce that clients use the connector library | `bool` | `false` | no |
 | create\_timeout | The optional timout that is applied to limit long database creates. | `string` | `"30m"` | no |
 | data\_cache\_enabled | Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE\_PLUS tier and supported database\_versions | `bool` | `false` | no |
+| data\_disk\_provisioned\_iops | Provisioned number of I/O operations per second for the data disk. Only used with the HYPERDISK\_BALANCED disk type. | `number` | `null` | no |
+| data\_disk\_provisioned\_throughput | Provisioned throughput in MiB per second for the data disk. Only used with the HYPERDISK\_BALANCED disk type. | `number` | `null` | no |
 | database\_flags | List of Cloud SQL flags that are applied to the database server. See [more details](https://cloud.google.com/sql/docs/mysql/flags) | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | database\_integration\_roles | The roles required by default database instance service account for integration with GCP services | `list(string)` | `[]` | no |
 | database\_version | The database version to use | `string` | n/a | yes |
