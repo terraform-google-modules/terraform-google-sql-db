@@ -257,6 +257,18 @@ variable "disk_type" {
   default     = "PD_SSD"
 }
 
+variable "data_disk_provisioned_iops" {
+  description = "Provisioned number of I/O operations per second for the data disk. Only used with the HYPERDISK_BALANCED disk type."
+  type        = number
+  default     = null
+}
+
+variable "data_disk_provisioned_throughput" {
+  description = "Provisioned throughput in MiB per second for the data disk. Only used with the HYPERDISK_BALANCED disk type."
+  type        = number
+  default     = null
+}
+
 variable "pricing_plan" {
   description = "The pricing plan for the master instance."
   type        = string
