@@ -32,6 +32,6 @@ variable "ha_external_ip_range" {
 }
 
 variable "region" {
-  default = "us-central1"
+  default = "us-east1"
   type    = string
 }

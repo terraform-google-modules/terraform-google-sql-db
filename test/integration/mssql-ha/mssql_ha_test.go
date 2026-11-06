@@ -68,7 +68,7 @@ func TestMsSqlHaModule(t *testing.T) {
 		assert.Equal("SQLSERVER_2017_STANDARD", op.Get("databaseVersion").String(), "Expected SQLSERVER_2017_STANDARD databaseVersion")
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
-		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
+		assert.Equal("us-east1", op.Get("region").String(), "Expected us-east1 region")
 
 		// assert users
 		op = gcloud.Run(t, fmt.Sprintf("sql users list --instance %s --project %s", msSql.GetStringOutput("name"), msSql.GetStringOutput("project_id")))
