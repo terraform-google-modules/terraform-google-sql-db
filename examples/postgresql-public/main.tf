@@ -23,8 +23,8 @@ module "postgresql-db" {
   random_instance_name = true
   database_version     = "POSTGRES_14"
   project_id           = var.project_id
-  zone                 = "us-central1-c"
-  region               = "us-central1"
+  zone                 = "us-east1-d"
+  region               = "us-east1"
   edition              = "ENTERPRISE_PLUS"
   tier                 = "db-perf-optimized-N-2"
   data_cache_enabled   = true

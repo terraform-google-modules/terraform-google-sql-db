@@ -61,7 +61,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		/// assert standard database settings
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
-		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
+		assert.Equal("us-east1", op.Get("region").String(), "Expected us-east1 region")
 
 		// assert general database settings
 		assert.Equal("REGIONAL", op.Get("settings.availabilityType").String(), "Expected REGIONAL availabilityType")
@@ -100,7 +100,7 @@ func TestPostgreSqlCrossRegionFailover(t *testing.T) {
 		op2 := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", instace2Name, projectID))
 		assert.Equal(instace2Name, op2.Get("name").String(), "Expected instance2 name")
 		assert.Equal("READ_REPLICA_INSTANCE", op2.Get("instanceType").String(), "Expected instanceType READ_REPLICA_INSTANCE")
-		assert.Equal("us-east1", op2.Get("region").String(), "Expected us-east1 region")
+		assert.Equal("us-west3", op2.Get("region").String(), "Expected us-west3 region")
 		assert.Equal(projectID+":"+masterInstanceName, op2.Get("masterInstanceName").String(), "Expected master instance name")
 	})
 
