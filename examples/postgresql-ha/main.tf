@@ -38,11 +38,11 @@ module "pg" {
   random_instance_name = false
   project_id           = var.project_id
   database_version     = "POSTGRES_9_6"
-  region               = "us-central1"
+  region               = "us-east1"
 
   // Master configurations
   tier                            = "db-custom-1-3840"
-  zone                            = "us-central1-c"
+  zone                            = "us-east1-d"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
@@ -85,7 +85,7 @@ module "pg" {
   read_replicas = [
     {
       name                  = "0"
-      zone                  = "us-central1-a"
+      zone                  = "us-east1-b"
       availability_type     = "REGIONAL"
       tier                  = "db-custom-1-3840"
       ip_configuration      = local.read_replica_ip_configuration

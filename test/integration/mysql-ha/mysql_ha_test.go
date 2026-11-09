@@ -63,7 +63,7 @@ func TestMySqlHaModule(t *testing.T) {
 			assert.Equal("MYSQL_8_4", op.Get("databaseVersion").String(), "Expected MYSQL_8_4 databaseVersion")
 			assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 			assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
-			assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
+			assert.Equal("us-east1", op.Get("region").String(), "Expected us-east1 region")
 
 			// master specific validation
 			if instance == mySql.GetStringOutput("name") {
@@ -77,8 +77,8 @@ func TestMySqlHaModule(t *testing.T) {
 
 				// assert location database settings
 				assert.Equal("sql#locationPreference", op.Get("settings.locationPreference.kind").String(), "Expected sql#locationPreference locationPreference.kind")
-				assert.Equal("us-central1-c", op.Get("settings.locationPreference.zone").String(), "Expected us-central1-c locationPreference.zone")
-				assert.Equal("us-central1-c", op.Get("gceZone").String(), "Expected us-central1-c gceZone")
+				assert.Equal("us-east1-d", op.Get("settings.locationPreference.zone").String(), "Expected us-east1-d locationPreference.zone")
+				assert.Equal("us-east1-d", op.Get("gceZone").String(), "Expected us-east1-d gceZone")
 
 				// assert maintenance windows
 				assert.Equal("sql#maintenanceWindow", op.Get("settings.maintenanceWindow.kind").String(), "Expected sql#maintenanceWindow maintenanceWindow.kind")

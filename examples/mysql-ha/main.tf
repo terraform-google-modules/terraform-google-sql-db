@@ -39,7 +39,7 @@ module "mysql" {
   random_instance_name = true
   project_id           = var.project_id
   database_version     = "MYSQL_8_4"
-  region               = "us-central1"
+  region               = "us-east1"
 
   deletion_protection = false
 
@@ -47,7 +47,7 @@ module "mysql" {
 
   // Master configurations
   tier                            = "db-perf-optimized-N-2"
-  zone                            = "us-central1-c"
+  zone                            = "us-east1-d"
   availability_type               = "REGIONAL"
   maintenance_window_day          = 7
   maintenance_window_hour         = 12
@@ -105,7 +105,7 @@ module "mysql" {
   read_replicas = [
     {
       name                  = "0"
-      zone                  = "us-central1-a"
+      zone                  = "us-east1-b"
       availability_type     = "ZONAL"
       tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
@@ -119,7 +119,7 @@ module "mysql" {
     },
     {
       name                  = "1"
-      zone                  = "us-central1-b"
+      zone                  = "us-east1-c"
       availability_type     = "ZONAL"
       tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration
@@ -133,7 +133,7 @@ module "mysql" {
     },
     {
       name                  = "2"
-      zone                  = "us-central1-c"
+      zone                  = "us-east1-d"
       availability_type     = "ZONAL"
       tier                  = "db-perf-optimized-N-2"
       ip_configuration      = local.read_replica_ip_configuration

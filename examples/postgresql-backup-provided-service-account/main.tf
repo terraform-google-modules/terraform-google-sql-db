@@ -22,8 +22,8 @@ module "postgresql" {
   random_instance_name = true
   database_version     = "POSTGRES_9_6"
   project_id           = var.project_id
-  zone                 = "us-central1-a"
-  region               = "us-central1"
+  zone                 = "us-east1-b"
+  region               = "us-east1"
   tier                 = "db-custom-1-3840"
 
   deletion_protection = false
@@ -39,7 +39,7 @@ module "postgresql" {
 
 resource "google_storage_bucket" "backup" {
   name     = "${module.postgresql.instance_name}-backup"
-  location = "us-central1"
+  location = "us-east1"
   # TODO: don't use force_destroy for production this is just required for testing
   force_destroy = true
   project       = var.project_id
@@ -58,7 +58,7 @@ module "backup" {
   source  = "terraform-google-modules/sql-db/google//modules/backup"
   version = "~> 28.0"
 
-  region                      = "us-central1"
+  region                      = "us-east1"
   project_id                  = var.project_id
   sql_instance                = module.postgresql.instance_name
   export_databases            = []

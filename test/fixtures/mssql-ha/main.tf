@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  region = var.region
-}
-
-provider "google-beta" {
-  region = var.region
-}
-
 resource "random_id" "instance_name_suffix" {
   byte_length = 5
 }
@@ -40,6 +32,7 @@ module "mssql" {
   name       = local.instance_name
   project_id = var.project_id
   db_name    = var.ha_name
+  region     = "us-east1"
 
   deletion_protection = false
 
