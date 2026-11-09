@@ -16,8 +16,8 @@
 
 
 locals {
-  region_1 = "us-central1"
-  region_2 = "us-east1"
+  region_1 = "us-east1"
+  region_2 = "us-west3"
 }
 
 # Instance 1

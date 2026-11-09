@@ -55,7 +55,7 @@ func TestMsSqlFailoverReplica(t *testing.T) {
 		assert.Equal("SQLSERVER_2022_ENTERPRISE", op.Get("databaseVersion").String(), "Expected SQLSERVER_2022_ENTERPRISE databaseVersion")
 		assert.Equal("SECOND_GEN", op.Get("backendType").String(), "Expected SECOND_GEN backendType")
 		assert.Equal("RUNNABLE", op.Get("state").String(), "Expected RUNNABLE state")
-		assert.Equal("us-central1", op.Get("region").String(), "Expected us-central1 region")
+		assert.Equal("us-east1", op.Get("region").String(), "Expected us-east1 region")
 
 		op2 := gcloud.Run(t, fmt.Sprintf("sql instances describe %s --project %s", msSql.GetStringOutput("instance_name2"), msSql.GetStringOutput("project_id")))
 
@@ -71,7 +71,7 @@ func TestMsSqlFailoverReplica(t *testing.T) {
 		assert.Equal(int64(0), op2.Get("settings.storageAutoResizeLimit").Int(), "Expected 0 storageAutoResizeLimit")
 		assert.Equal("db-custom-4-15360", op2.Get("settings.tier").String(), "Expected db-custom-4-15360 tier")
 
-		assert.Equal(msSql.GetStringOutput("project_id") + ":" + msSql.GetStringOutput("master_instance_name2"), op2.Get("masterInstanceName").String(), "Expected ALWAYS activationPolicy")
+		assert.Equal(msSql.GetStringOutput("project_id")+":"+msSql.GetStringOutput("master_instance_name2"), op2.Get("masterInstanceName").String(), "Expected ALWAYS activationPolicy")
 
 	})
 

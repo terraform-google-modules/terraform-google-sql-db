@@ -18,8 +18,8 @@
 # Create Network with a subnetwork and private service access for both netapp.servicenetworking.goog and servicenetworking.googleapis.com
 
 locals {
-  region_1 = "us-central1"
-  region_2 = "us-east1"
+  region_1 = "us-east1"
+  region_2 = "us-west3"
 }
 resource "google_compute_network" "default" {
   name                    = var.network_name

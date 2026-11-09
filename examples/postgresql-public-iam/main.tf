@@ -23,8 +23,8 @@ module "postgresql-db" {
   random_instance_name = true
   database_version     = "POSTGRES_9_6"
   project_id           = var.project_id
-  zone                 = "us-central1-c"
-  region               = "us-central1"
+  zone                 = "us-east1-d"
+  region               = "us-east1"
   tier                 = "db-custom-1-3840"
 
   deletion_protection = false
