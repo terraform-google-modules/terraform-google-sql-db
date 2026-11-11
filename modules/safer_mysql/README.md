@@ -267,6 +267,7 @@ module "safer-mysql-db" {
 | enable\_default\_db | Enable or disable the creation of the default database | `bool` | `true` | no |
 | enable\_default\_user | Enable or disable the creation of the default user | `bool` | `true` | no |
 | encryption\_key\_name | The full path to the encryption key used for the CMEK disk encryption | `string` | `null` | no |
+| enforce\_new\_sql\_network\_architecture | Whether the instance uses the new Cloud SQL network architecture. Setting it to true on an existing instance upgrades it in place: the upgrade cannot be undone and restarts the instance. Null (default) keeps the current architecture. | `bool` | `null` | no |
 | failover\_dr\_replica\_name | If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format. | `string` | `null` | no |
 | final\_backup\_config | The final\_backup\_config settings for the database. | <pre>object({<br>    enabled        = bool<br>    retention_days = number<br>  })</pre> | `null` | no |
 | follow\_gae\_application | A Google App Engine application whose zone to remain in. Must be in the same region as this instance. | `string` | `null` | no |
