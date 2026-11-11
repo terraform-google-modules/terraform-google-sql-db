@@ -479,6 +479,12 @@ variable "encryption_key_name" {
   default     = null
 }
 
+variable "enforce_new_sql_network_architecture" {
+  description = "Whether the instance uses the new Cloud SQL network architecture. Setting it to true on an existing instance upgrades it in place: the upgrade cannot be undone and restarts the instance. Null (default) keeps the current architecture."
+  type        = bool
+  default     = null
+}
+
 variable "module_depends_on" {
   description = "List of modules or resources this module depends on."
   type        = list(any)

@@ -65,6 +65,8 @@ resource "google_sql_database_instance" "default" {
   deletion_protection  = var.deletion_protection
   root_password        = var.root_password == "" ? null : var.root_password
 
+  enforce_new_sql_network_architecture = var.enforce_new_sql_network_architecture
+
   dynamic "replication_cluster" {
     for_each = var.failover_dr_replica_name != null ? [var.failover_dr_replica_name] : []
     content {

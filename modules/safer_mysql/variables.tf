@@ -415,6 +415,12 @@ variable "encryption_key_name" {
   default     = null
 }
 
+variable "enforce_new_sql_network_architecture" {
+  description = "Whether the instance uses the new Cloud SQL network architecture. Setting it to true on an existing instance upgrades it in place: the upgrade cannot be undone and restarts the instance. Null (default) keeps the current architecture."
+  type        = bool
+  default     = null
+}
+
 variable "insights_config" {
   description = "The insights_config settings for the database."
   type = object({

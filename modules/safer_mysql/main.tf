@@ -50,6 +50,8 @@ module "safer_mysql" {
 
   deletion_protection = var.deletion_protection
 
+  enforce_new_sql_network_architecture = var.enforce_new_sql_network_architecture
+
   user_labels = var.user_labels
 
   backup_configuration     = var.backup_configuration
