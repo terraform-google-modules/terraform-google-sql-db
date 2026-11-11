@@ -257,6 +257,26 @@ variable "disk_type" {
   default     = "PD_SSD"
 }
 
+variable "data_disk_provisioned_iops" {
+  description = "Provisioned number of I/O operations per second for the data disk. Only used with the HYPERDISK_BALANCED disk type."
+  type        = number
+  default     = null
+  validation {
+    condition     = var.data_disk_provisioned_iops == null || (var.data_disk_provisioned_iops > 0 && floor(var.data_disk_provisioned_iops) == var.data_disk_provisioned_iops)
+    error_message = "data_disk_provisioned_iops must be a positive integer when set (leave null to use the Cloud SQL baseline)."
+  }
+}
+
+variable "data_disk_provisioned_throughput" {
+  description = "Provisioned throughput in MiB per second for the data disk. Only used with the HYPERDISK_BALANCED disk type."
+  type        = number
+  default     = null
+  validation {
+    condition     = var.data_disk_provisioned_throughput == null || (var.data_disk_provisioned_throughput > 0 && floor(var.data_disk_provisioned_throughput) == var.data_disk_provisioned_throughput)
+    error_message = "data_disk_provisioned_throughput must be a positive integer when set (leave null to use the Cloud SQL baseline)."
+  }
+}
+
 variable "pricing_plan" {
   description = "The pricing plan for the master instance."
   type        = string
