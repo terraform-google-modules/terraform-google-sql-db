@@ -292,6 +292,7 @@ variable "read_replicas" {
       ipv4_enabled        = bool
       private_network     = string
       allocated_ip_range  = string
+      ssl_mode            = optional(string)
     })
     encryption_key_name = string
   }))
