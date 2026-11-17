@@ -257,6 +257,18 @@ variable "disk_type" {
   default     = "PD_SSD"
 }
 
+variable "data_disk_provisioned_iops" {
+  description = "Provisioned number of I/O operations per second for the data disk. Only used for HYPERDISK_BALANCED."
+  type        = number
+  default     = null
+}
+
+variable "data_disk_provisioned_throughput" {
+  description = "Provisioned throughput measured in MiB per second for the data disk. Only used for HYPERDISK_BALANCED."
+  type        = number
+  default     = null
+}
+
 variable "pricing_plan" {
   description = "The pricing plan for the master instance."
   type        = string
@@ -384,17 +396,19 @@ variable "password_validation_policy_config" {
 variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
-    name                  = string
-    name_override         = optional(string)
-    tier                  = optional(string)
-    edition               = optional(string)
-    availability_type     = optional(string)
-    zone                  = optional(string)
-    disk_type             = optional(string)
-    disk_autoresize       = optional(bool)
-    disk_autoresize_limit = optional(number)
-    disk_size             = optional(string)
-    user_labels           = map(string)
+    name                             = string
+    name_override                    = optional(string)
+    tier                             = optional(string)
+    edition                          = optional(string)
+    availability_type                = optional(string)
+    zone                             = optional(string)
+    disk_type                        = optional(string)
+    disk_autoresize                  = optional(bool)
+    disk_autoresize_limit            = optional(number)
+    disk_size                        = optional(string)
+    data_disk_provisioned_iops       = optional(number)
+    data_disk_provisioned_throughput = optional(number)
+    user_labels                      = map(string)
     connection_pool_config = optional(object({
       enabled = optional(bool, false)
       flags = optional(list(object({

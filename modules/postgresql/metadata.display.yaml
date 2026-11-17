@@ -191,6 +191,14 @@ spec:
               value: PD_HDD
             - label: HYPERDISK_BALANCED
               value: HYPERDISK_BALANCED
+        data_disk_provisioned_iops:
+          name: data_disk_provisioned_iops
+          title: Data Disk Provisioned IOPS
+          level: 2
+        data_disk_provisioned_throughput:
+          name: data_disk_provisioned_throughput
+          title: Data Disk Provisioned Throughput
+          level: 2
         edition:
           name: edition
           title: Edition
