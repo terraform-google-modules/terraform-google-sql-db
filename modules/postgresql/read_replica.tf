@@ -128,9 +128,9 @@ resource "google_sql_database_instance" "replicas" {
     }
 
     dynamic "data_cache_config" {
-      for_each = coalesce(each.value.edition, var.edition, "ENTERPRISE") == "ENTERPRISE_PLUS" && coalesce(each.value.data_cache_enabled, var.data_cache_enabled, false) ? ["cache_enabled"] : []
+      for_each = coalesce(each.value.edition, var.edition, "ENTERPRISE") == "ENTERPRISE_PLUS" ? ["cache_enabled"] : []
       content {
-        data_cache_enabled = lookup(each.value, "data_cache_enabled", var.data_cache_enabled)
+        data_cache_enabled = coalesce(each.value.data_cache_enabled, var.data_cache_enabled, false)
       }
     }
 
