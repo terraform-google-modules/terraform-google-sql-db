@@ -155,6 +155,9 @@ resource "google_sql_database_instance" "default" {
         private_network                               = lookup(ip_configuration.value, "private_network", null)
         ssl_mode                                      = lookup(ip_configuration.value, "ssl_mode", null)
         server_ca_mode                                = lookup(ip_configuration.value, "server_ca_mode", null)
+        server_ca_pool                                = lookup(ip_configuration.value, "server_ca_pool", null)
+        custom_subject_alternative_names              = lookup(ip_configuration.value, "custom_subject_alternative_names", [])
+        server_certificate_rotation_mode              = lookup(ip_configuration.value, "server_certificate_rotation_mode", null)
         allocated_ip_range                            = lookup(ip_configuration.value, "allocated_ip_range", null)
         enable_private_path_for_google_cloud_services = lookup(ip_configuration.value, "enable_private_path_for_google_cloud_services", false)
 
