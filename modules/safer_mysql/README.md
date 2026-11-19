@@ -167,7 +167,7 @@ Functional examples are included in the [examples](../../examples/) directory. B
 ```hcl
 module "safer-mysql-db" {
   source  = "terraform-google-modules/sql-db/google//modules/safer_mysql"
-  version = "~> 28.3"
+  version = "~> 28.4"
 
 
   name                 = var.db_name
