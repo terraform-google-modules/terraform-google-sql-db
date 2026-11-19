@@ -262,7 +262,7 @@ variable "data_disk_provisioned_iops" {
   type        = number
   default     = null
   validation {
-    condition     = var.data_disk_provisioned_iops == null || (var.data_disk_provisioned_iops > 0 && floor(var.data_disk_provisioned_iops) == var.data_disk_provisioned_iops)
+    condition     = var.data_disk_provisioned_iops == null ? true : (var.data_disk_provisioned_iops > 0 && floor(var.data_disk_provisioned_iops) == var.data_disk_provisioned_iops)
     error_message = "data_disk_provisioned_iops must be a positive integer when set (leave null to use the Cloud SQL baseline)."
   }
 }
@@ -272,7 +272,7 @@ variable "data_disk_provisioned_throughput" {
   type        = number
   default     = null
   validation {
-    condition     = var.data_disk_provisioned_throughput == null || (var.data_disk_provisioned_throughput > 0 && floor(var.data_disk_provisioned_throughput) == var.data_disk_provisioned_throughput)
+    condition     = var.data_disk_provisioned_throughput == null ? true : (var.data_disk_provisioned_throughput > 0 && floor(var.data_disk_provisioned_throughput) == var.data_disk_provisioned_throughput)
     error_message = "data_disk_provisioned_throughput must be a positive integer when set (leave null to use the Cloud SQL baseline)."
   }
 }
