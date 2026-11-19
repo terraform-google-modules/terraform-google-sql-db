@@ -216,6 +216,12 @@ spec:
         description: The disk type for the Cloud SQL instance.
         varType: string
         defaultValue: PD_SSD
+      - name: data_disk_provisioned_iops
+        description: Provisioned number of I/O operations per second for the data disk. Only used for HYPERDISK_BALANCED.
+        varType: number
+      - name: data_disk_provisioned_throughput
+        description: Provisioned throughput measured in MiB per second for the data disk. Only used for HYPERDISK_BALANCED.
+        varType: number
       - name: pricing_plan
         description: The pricing plan for the Cloud SQL instance.
         varType: string
@@ -329,10 +335,12 @@ spec:
               edition               = optional(string)
               availability_type     = optional(string)
               zone                  = optional(string)
-              disk_type             = optional(string)
-              disk_autoresize       = optional(bool)
-              disk_autoresize_limit = optional(number)
-              disk_size             = optional(string)
+              disk_type                        = optional(string)
+              disk_autoresize                  = optional(bool)
+              disk_autoresize_limit            = optional(number)
+              disk_size                        = optional(string)
+              data_disk_provisioned_iops       = optional(number)
+              data_disk_provisioned_throughput = optional(number)
               user_labels           = map(string)
               connection_pool_config = optional(object({
                 enabled = optional(bool, false)
@@ -676,6 +684,8 @@ spec:
                       disk_autoresize_limit: number
                       disk_size: number
                       disk_type: string
+                      data_disk_provisioned_iops: number
+                      data_disk_provisioned_throughput: number
                       edition: string
                       enable_dataplex_integration: bool
                       enable_google_ml_integration: bool
@@ -867,6 +877,8 @@ spec:
                   disk_autoresize_limit: number
                   disk_size: number
                   disk_type: string
+                  data_disk_provisioned_iops: number
+                  data_disk_provisioned_throughput: number
                   edition: string
                   enable_dataplex_integration: bool
                   enable_google_ml_integration: bool

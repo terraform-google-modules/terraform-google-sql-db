@@ -94,6 +94,12 @@ spec:
         disk_type:
           name: disk_type
           title: Disk Type
+        data_disk_provisioned_iops:
+          name: data_disk_provisioned_iops
+          title: Data Disk Provisioned IOPS
+        data_disk_provisioned_throughput:
+          name: data_disk_provisioned_throughput
+          title: Data Disk Provisioned Throughput
         edition:
           name: edition
           title: Edition
