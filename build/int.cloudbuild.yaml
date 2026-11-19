@@ -221,6 +221,20 @@ steps:
       - verify postgresql-public-iam-local
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlPublicIamModule --stage teardown --verbose']
+  - id: apply postgresql-with-alerts
+    waitFor: ["init-all", "wait for api activation"]
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlWithAlertsModule --stage apply --verbose']
+  - id: verify postgresql-with-alerts
+    waitFor:
+      - apply postgresql-with-alerts
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlWithAlertsModule --stage verify --verbose']
+  - id: teardown postgresql-with-alerts
+    waitFor:
+      - verify postgresql-with-alerts
+    name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+    args: ['/bin/bash', '-c', 'cft test run TestPostgreSqlWithAlertsModule --stage teardown --verbose']
 # commenting - getting error in provder 7.X
   # - id: apply mysql-backup-local
   #   waitFor: ["init-all", "wait for api activation"]

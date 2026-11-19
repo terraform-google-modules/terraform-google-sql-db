@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -56,6 +56,8 @@ spec:
         location: examples/postgresql-public
       - name: postgresql-public-iam
         location: examples/postgresql-public-iam
+      - name: postgresql-with-alerts
+        location: examples/postgresql-with-alerts
       - name: postgresql-with-cross-region-failover
         location: examples/postgresql-with-cross-region-failover
       - name: private_service_access
@@ -77,7 +79,6 @@ spec:
       - name: edition
         description: The edition of the Cloud SQL instance, can be ENTERPRISE or ENTERPRISE_PLUS.
         varType: string
-        defaultValue: null
       - name: database_version
         description: The database version to use. Can be 9_6, 14, 15, 16, 17.
         varType: string
@@ -85,7 +86,6 @@ spec:
       - name: maintenance_version
         description: The current software version on the instance. This attribute can not be set during creation. Refer to available_maintenance_versions attribute to see what maintenance_version are available for upgrade. When this attribute gets updated, it will cause an instance restart. Setting a maintenance_version value that is older than the current one on the instance will be ignored
         varType: string
-        defaultValue: null
       - name: availability_type
         description: The availability type for the Cloud SQL instance.This is only used to set up high availability for the PostgreSQL instance. Can be either `ZONAL` or `REGIONAL`.
         varType: string
@@ -113,7 +113,6 @@ spec:
       - name: root_password
         description: Initial root password during creation
         varType: string
-        defaultValue: null
       - name: deletion_protection
         description: Used to block Terraform from deleting a SQL Instance.
         varType: bool
@@ -129,11 +128,9 @@ spec:
       - name: database_deletion_policy
         description: "The deletion policy for the database. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where databases cannot be deleted from the API if there are users other than cloudsqlsuperuser with access. Possible values are: \"ABANDON\"."
         varType: string
-        defaultValue: null
       - name: user_deletion_policy
         description: "The deletion policy for the user. Setting ABANDON allows the resource to be abandoned rather than deleted. This is useful for Postgres, where users cannot be deleted from the API if they have been granted SQL roles. Possible values are: \"ABANDON\"."
         varType: string
-        defaultValue: null
       - name: data_cache_enabled
         description: Whether data cache is enabled for the instance. Defaults to false. Feature is only available for ENTERPRISE_PLUS tier and supported database_versions
         varType: bool
@@ -159,11 +156,9 @@ spec:
       - name: master_instance_name
         description: Name of the master instance if this is a failover replica. Required for creating failover replica instance. Not needed for master instance. When removed, next terraform apply will promote this failover failover replica instance as master instance
         varType: string
-        defaultValue: null
       - name: failover_dr_replica_name
         description: If the instance is a primary instance, then this field identifies the disaster recovery (DR) replica. The standard format of this field is "your-project:your-instance". You can also set this field to "your-instance", but cloud SQL backend will convert it to the aforementioned standard format.
         varType: string
-        defaultValue: null
       - name: instance_type
         description: The type of the instance. The supported values are SQL_INSTANCE_TYPE_UNSPECIFIED, CLOUD_SQL_INSTANCE, ON_PREMISES_INSTANCE and READ_REPLICA_INSTANCE. Set to READ_REPLICA_INSTANCE if master_instance_name value is provided
         varType: string
@@ -179,15 +174,12 @@ spec:
       - name: zone
         description: "The zone for the Cloud SQL instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
-        defaultValue: null
       - name: secondary_zone
         description: "The preferred zone for the replica instance, it should be something like: `us-central1-a`, `us-east1-c`."
         varType: string
-        defaultValue: null
       - name: follow_gae_application
         description: A Google App Engine application whose zone to remain in. Must be in the same region as this instance.
         varType: string
-        defaultValue: null
       - name: activation_policy
         description: The activation policy for the Cloud SQL instance.Can be either `ALWAYS`, `NEVER` or `ON_DEMAND`.
         varType: string
@@ -265,7 +257,6 @@ spec:
               enabled        = optional(bool, false)
               retention_days = optional(number, 1)
             })
-        defaultValue: null
       - name: insights_config
         description: The insights_config settings for the database.
         varType: |-
@@ -276,7 +267,6 @@ spec:
               record_application_tags         = optional(bool, false)
               record_client_address           = optional(bool, false)
             })
-        defaultValue: null
       - name: password_validation_policy_config
         description: The password validation policy settings for the database instance.
         varType: |-
@@ -287,7 +277,6 @@ spec:
               disallow_username_substring = optional(bool)
               password_change_interval    = optional(string)
             })
-        defaultValue: null
       - name: ip_configuration
         description: The ip configuration for the Cloud SQL instances.
         varType: |-
@@ -361,6 +350,7 @@ spec:
                 ipv4_enabled                                  = optional(bool)
                 private_network                               = optional(string)
                 ssl_mode                                      = optional(string)
+                server_ca_mode                                = optional(string)
                 allocated_ip_range                            = optional(string)
                 enable_private_path_for_google_cloud_services = optional(bool, false)
                 psc_enabled                                   = optional(bool, false)
@@ -429,7 +419,6 @@ spec:
       - name: encryption_key_name
         description: The full path to the encryption key used for the CMEK disk encryption
         varType: string
-        defaultValue: null
       - name: module_depends_on
         description: List of modules or resources this module depends on.
         varType: list(any)
@@ -469,7 +458,6 @@ spec:
       - name: kms_key_handle_name
         description: key handle name. If not provided module will use instance name as key handle name
         varType: string
-        defaultValue: null
       - name: retain_backups_on_delete
         description: When this parameter is set to true, Cloud SQL retains backups of the instance even after the instance is deleted. The ON_DEMAND backup will be retained until customer deletes the backup or the project. The AUTOMATED backup will be retained based on the backups retention setting.
         varType: bool
@@ -484,7 +472,63 @@ spec:
                 value = string
               })), [])
             })
-        defaultValue: null
+      - name: alerts
+        description: |
+          Opt-in Cloud Monitoring alert policies.
+
+          `alerts = null` disables all alerts (default behavior).
+
+          Setting `notification_channels` enables the built-in alerts with their defaults:
+
+          ```
+          alerts = {
+            notification_channels = ["projects/p/notificationChannels/123"]
+          }
+          ```
+
+          Each alert's default parameters can be overridden:
+
+          ```
+          alerts = {
+            notification_channels = ["projects/p/notificationChannels/123"]
+            disk_utilization      = { threshold = 0.85 }
+            memory_utilization    = { enabled = false }
+          }
+          ```
+        varType: |-
+          object({
+              notification_channels = list(string)
+              cpu_utilization = optional(object({
+                enabled   = optional(bool, true)
+                threshold = optional(number, 0.8)
+                duration  = optional(string, "900s")
+                severity  = optional(string, "WARNING")
+              }), {})
+              memory_utilization = optional(object({
+                enabled   = optional(bool, true)
+                threshold = optional(number, 0.9)
+                duration  = optional(string, "300s")
+                severity  = optional(string, "ERROR")
+              }), {})
+              disk_utilization = optional(object({
+                enabled   = optional(bool) // default derived from disk_autoresize and disk_autoresize_limit
+                threshold = optional(number, 0.8)
+                duration  = optional(string, "300s")
+                severity  = optional(string, "ERROR")
+              }), {})
+              instance_down = optional(object({
+                enabled   = optional(bool) // default derived from activation_policy
+                threshold = optional(number, 1)
+                duration  = optional(string, "300s")
+                severity  = optional(string, "CRITICAL")
+              }), {})
+              transaction_id_utilization = optional(object({
+                enabled   = optional(bool, true)
+                threshold = optional(number, 0.7)
+                duration  = optional(string, "600s")
+                severity  = optional(string, "ERROR")
+              }), {})
+            })
     outputs:
       - name: additional_user_passwords_map
         description: Map of auto generated passwords for the additional users
@@ -493,6 +537,8 @@ spec:
         type:
           - tuple
           - []
+      - name: alert_policies
+        description: Alert policies created for the instance, as a map of alert name to policy resource name.
       - name: apphub_service_uri
         description: Service URI in CAIS style to be used by Apphub.
         type:
@@ -987,13 +1033,13 @@ spec:
       - level: Project
         roles:
           - roles/cloudsql.admin
-          - roles/resourcemanager.projectIamAdmin
-          - roles/iam.serviceAccountUser
+          - roles/storage.admin
           - roles/compute.networkAdmin
           - roles/cloudkms.admin
-          - roles/cloudkms.autokeyAdmin
-          - roles/storage.admin
           - roles/cloudkms.cryptoKeyEncrypterDecrypter
+          - roles/resourcemanager.projectIamAdmin
+          - roles/iam.serviceAccountUser
+          - roles/cloudkms.autokeyAdmin
           - roles/logging.logWriter
     services:
       - cloudkms.googleapis.com
@@ -1006,9 +1052,9 @@ spec:
       - sqladmin.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.31, < 8"
+        version: ">= 7.26, < 9"
       - source: hashicorp/google-beta
-        version: ">= 6.31, < 8"
+        version: ">= 7.26, < 9"
       - source: hashicorp/null
         version: ~> 3.1
       - source: hashicorp/random

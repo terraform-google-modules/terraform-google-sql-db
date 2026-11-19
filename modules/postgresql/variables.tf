@@ -533,3 +533,79 @@ variable "connection_pool_config" {
   })
   default = null
 }
+
+// Alerting
+
+variable "alerts" {
+  description = <<EOT
+Opt-in Cloud Monitoring alert policies.
+
+`alerts = null` disables all alerts (default behavior).
+
+Setting `notification_channels` enables the built-in alerts with their defaults:
+
+```
+alerts = {
+  notification_channels = ["projects/p/notificationChannels/123"]
+}
+```
+
+Each alert's default parameters can be overridden:
+
+```
+alerts = {
+  notification_channels = ["projects/p/notificationChannels/123"]
+  disk_utilization      = { threshold = 0.85 }
+  memory_utilization    = { enabled = false }
+}
+```
+EOT
+
+  type = object({
+    notification_channels = list(string)
+    cpu_utilization = optional(object({
+      enabled   = optional(bool, true)
+      threshold = optional(number, 0.8)
+      duration  = optional(string, "900s")
+      severity  = optional(string, "WARNING")
+    }), {})
+    memory_utilization = optional(object({
+      enabled   = optional(bool, true)
+      threshold = optional(number, 0.9)
+      duration  = optional(string, "300s")
+      severity  = optional(string, "ERROR")
+    }), {})
+    disk_utilization = optional(object({
+      enabled   = optional(bool) // default derived from disk_autoresize and disk_autoresize_limit
+      threshold = optional(number, 0.8)
+      duration  = optional(string, "300s")
+      severity  = optional(string, "ERROR")
+    }), {})
+    instance_down = optional(object({
+      enabled   = optional(bool) // default derived from activation_policy
+      threshold = optional(number, 1)
+      duration  = optional(string, "300s")
+      severity  = optional(string, "CRITICAL")
+    }), {})
+    transaction_id_utilization = optional(object({
+      enabled   = optional(bool, true)
+      threshold = optional(number, 0.7)
+      duration  = optional(string, "600s")
+      severity  = optional(string, "ERROR")
+    }), {})
+  })
+  default = null
+
+  validation {
+    condition = var.alerts == null ? true : alltrue([
+      for name in ["cpu_utilization", "memory_utilization", "disk_utilization", "instance_down", "transaction_id_utilization"] :
+      contains(["CRITICAL", "ERROR", "WARNING"], var.alerts[name].severity)
+    ])
+    error_message = "alerts.*.severity must be one of CRITICAL, ERROR or WARNING."
+  }
+
+  validation {
+    condition     = var.alerts == null ? true : var.alerts.notification_channels != null
+    error_message = "alerts.notification_channels must be set if var.alerts is configured."
+  }
+}

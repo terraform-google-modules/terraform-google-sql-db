@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,6 +66,8 @@ spec:
         location: examples/postgresql-public
       - name: postgresql-public-iam
         location: examples/postgresql-public-iam
+      - name: postgresql-with-alerts
+        location: examples/postgresql-with-alerts
       - name: postgresql-with-cross-region-failover
         location: examples/postgresql-with-cross-region-failover
       - name: private_service_access
@@ -75,11 +77,11 @@ spec:
     roles:
       - level: Project
         roles:
-          - roles/resourcemanager.projectIamAdmin
-          - roles/serviceusage.serviceUsageAdmin
           - roles/cloudsql.admin
           - roles/iam.serviceAccountAdmin
           - roles/iam.serviceAccountUser
+          - roles/resourcemanager.projectIamAdmin
+          - roles/serviceusage.serviceUsageAdmin
     services:
       - cloudresourcemanager.googleapis.com
       - iam.googleapis.com
