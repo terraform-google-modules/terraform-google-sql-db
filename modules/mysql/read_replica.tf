@@ -114,12 +114,14 @@ resource "google_sql_database_instance" "replicas" {
       }
     }
 
-    disk_autoresize       = lookup(each.value, "disk_autoresize", var.disk_autoresize)
-    disk_autoresize_limit = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
-    disk_size             = lookup(each.value, "disk_size", var.disk_size)
-    disk_type             = lookup(each.value, "disk_type", var.disk_type)
-    pricing_plan          = "PER_USE"
-    user_labels           = lookup(each.value, "user_labels", var.user_labels)
+    disk_autoresize                  = lookup(each.value, "disk_autoresize", var.disk_autoresize)
+    disk_autoresize_limit            = lookup(each.value, "disk_autoresize_limit", var.disk_autoresize_limit)
+    disk_size                        = lookup(each.value, "disk_size", var.disk_size)
+    disk_type                        = lookup(each.value, "disk_type", var.disk_type)
+    data_disk_provisioned_iops       = each.value.data_disk_provisioned_iops != null ? each.value.data_disk_provisioned_iops : (each.value.disk_type == null || each.value.disk_type == "HYPERDISK_BALANCED" ? var.data_disk_provisioned_iops : null)
+    data_disk_provisioned_throughput = each.value.data_disk_provisioned_throughput != null ? each.value.data_disk_provisioned_throughput : (each.value.disk_type == null || each.value.disk_type == "HYPERDISK_BALANCED" ? var.data_disk_provisioned_throughput : null)
+    pricing_plan                     = "PER_USE"
+    user_labels                      = lookup(each.value, "user_labels", var.user_labels)
 
     dynamic "connection_pool_config" {
       for_each = each.value.connection_pool_config != null ? [each.value.connection_pool_config] : []

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [28.4.0](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.3.1...v28.4.0) (2026-11-19)
+
+
+### Features
+
+* **postgresql:** add server certificate rotation mode ([#846](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/846)) ([57a5bed](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/57a5bed69bdbba7b249cc870ebbc6e64c29366b6))
+* support data_disk_provisioned_iops and data_disk_provisioned_throughput for postgresql and mysql ([#884](https://github.com/terraform-google-modules/terraform-google-sql-db/issues/884)) ([30e959b](https://github.com/terraform-google-modules/terraform-google-sql-db/commit/30e959b3e671f6223579cb439425bf5564dafd48))
+
 ## [28.3.1](https://github.com/terraform-google-modules/terraform-google-sql-db/compare/v28.3.0...v28.3.1) (2026-11-09)
 
 

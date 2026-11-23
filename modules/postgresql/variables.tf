@@ -242,6 +242,26 @@ variable "disk_type" {
   default     = "PD_SSD"
 }
 
+variable "data_disk_provisioned_iops" {
+  description = "Provisioned number of I/O operations per second for the data disk. Only used for HYPERDISK_BALANCED."
+  type        = number
+  default     = null
+  validation {
+    condition     = var.data_disk_provisioned_iops == null ? true : (var.data_disk_provisioned_iops > 0 && floor(var.data_disk_provisioned_iops) == var.data_disk_provisioned_iops)
+    error_message = "data_disk_provisioned_iops must be a positive integer when set (leave null to use the Cloud SQL baseline)."
+  }
+}
+
+variable "data_disk_provisioned_throughput" {
+  description = "Provisioned throughput measured in MiB per second for the data disk. Only used for HYPERDISK_BALANCED."
+  type        = number
+  default     = null
+  validation {
+    condition     = var.data_disk_provisioned_throughput == null ? true : (var.data_disk_provisioned_throughput > 0 && floor(var.data_disk_provisioned_throughput) == var.data_disk_provisioned_throughput)
+    error_message = "data_disk_provisioned_throughput must be a positive integer when set (leave null to use the Cloud SQL baseline)."
+  }
+}
+
 variable "pricing_plan" {
   description = "The pricing plan for the Cloud SQL instance."
   type        = string
@@ -352,17 +372,19 @@ variable "ip_configuration" {
 variable "read_replicas" {
   description = "List of read replicas to create. Encryption key is required for replica in different region. For replica in same region as master set encryption_key_name = null"
   type = list(object({
-    name                  = string
-    name_override         = optional(string)
-    tier                  = optional(string)
-    edition               = optional(string)
-    availability_type     = optional(string)
-    zone                  = optional(string)
-    disk_type             = optional(string)
-    disk_autoresize       = optional(bool)
-    disk_autoresize_limit = optional(number)
-    disk_size             = optional(string)
-    user_labels           = map(string)
+    name                             = string
+    name_override                    = optional(string)
+    tier                             = optional(string)
+    edition                          = optional(string)
+    availability_type                = optional(string)
+    zone                             = optional(string)
+    disk_type                        = optional(string)
+    disk_autoresize                  = optional(bool)
+    disk_autoresize_limit            = optional(number)
+    disk_size                        = optional(string)
+    data_disk_provisioned_iops       = optional(number)
+    data_disk_provisioned_throughput = optional(number)
+    user_labels                      = map(string)
     connection_pool_config = optional(object({
       enabled = optional(bool, false)
       flags = optional(list(object({

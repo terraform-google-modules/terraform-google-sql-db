@@ -180,13 +180,14 @@ resource "google_sql_database_instance" "default" {
       }
     }
 
-    disk_autoresize       = var.disk_autoresize
-    disk_autoresize_limit = var.disk_autoresize_limit
-
-    disk_size    = var.disk_size
-    disk_type    = var.disk_type
-    pricing_plan = var.pricing_plan
-    user_labels  = var.user_labels
+    disk_autoresize                  = var.disk_autoresize
+    disk_autoresize_limit            = var.disk_autoresize_limit
+    disk_size                        = var.disk_size
+    disk_type                        = var.disk_type
+    data_disk_provisioned_iops       = var.data_disk_provisioned_iops
+    data_disk_provisioned_throughput = var.data_disk_provisioned_throughput
+    pricing_plan                     = var.pricing_plan
+    user_labels                      = var.user_labels
 
     dynamic "connection_pool_config" {
       for_each = var.connection_pool_config != null ? [var.connection_pool_config] : []
