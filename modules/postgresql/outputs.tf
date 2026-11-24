@@ -172,3 +172,8 @@ output "apphub_service_uri" {
   }
   description = "Service URI in CAIS style to be used by Apphub."
 }
+
+output "alert_policies" {
+  description = "Alert policies created for the instance, as a map of alert name to policy resource name."
+  value       = { for k, p in google_monitoring_alert_policy.default : k => p.name }
+}
