@@ -453,8 +453,9 @@ variable "read_replicas" {
       psc_enabled                                   = optional(bool, false)
       psc_allowed_consumer_projects                 = optional(list(string), [])
     })
-    encryption_key_name = optional(string)
-    data_cache_enabled  = optional(bool)
+    encryption_key_name                  = optional(string)
+    data_cache_enabled                   = optional(bool)
+    enforce_new_sql_network_architecture = optional(bool)
   }))
   default = []
 }
@@ -502,7 +503,7 @@ variable "encryption_key_name" {
 }
 
 variable "enforce_new_sql_network_architecture" {
-  description = "Whether the instance uses the new Cloud SQL network architecture. Setting it to true on an existing instance upgrades it in place: the upgrade cannot be undone and restarts the instance. Null (default) keeps the current architecture."
+  description = "Set to true to use the new Cloud SQL network architecture. On an existing instance this upgrades it in place: the upgrade cannot be undone and restarts the instance. Null (default) or false leaves the architecture unchanged. Applies to the primary instance only; set it per replica in read_replicas."
   type        = bool
   default     = null
 }
