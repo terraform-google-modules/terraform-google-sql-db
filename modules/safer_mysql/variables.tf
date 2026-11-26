@@ -315,7 +315,8 @@ variable "read_replicas" {
       private_network     = string
       allocated_ip_range  = string
     })
-    encryption_key_name = string
+    encryption_key_name                  = string
+    enforce_new_sql_network_architecture = optional(bool)
   }))
   default = []
 }
@@ -434,6 +435,12 @@ variable "read_replica_deletion_protection" {
 variable "encryption_key_name" {
   description = "The full path to the encryption key used for the CMEK disk encryption"
   type        = string
+  default     = null
+}
+
+variable "enforce_new_sql_network_architecture" {
+  description = "Set to true to use the new Cloud SQL network architecture. On an existing instance this upgrades it in place: the upgrade cannot be undone and restarts the instance. Null (default) or false leaves the architecture unchanged. Applies to the primary instance only; set it per replica in read_replicas."
+  type        = bool
   default     = null
 }
 
